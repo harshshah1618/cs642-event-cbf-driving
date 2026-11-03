@@ -1,0 +1,296 @@
+{
+  "router": "openai_compat_dryrun(dry-run-skill-router)",
+  "router_name": "openai_compat_dryrun",
+  "milestone": "M2",
+  "gauntlet": [
+    {
+      "mode": "unshielded_skill",
+      "crash_time": 3.44,
+      "crashed": true,
+      "route_pct": 35.35,
+      "avg_speed": 20.552,
+      "router_calls": 0,
+      "peak_lateral_jerk": 0.67,
+      "freeze": false,
+      "peak_sigma": 0.644,
+      "x": 70.7,
+      "y": -0.004,
+      "vx": 20.824,
+      "end_time": 3.44,
+      "calls": []
+    },
+    {
+      "mode": "static_cbf",
+      "crash_time": null,
+      "crashed": false,
+      "route_pct": 34.53,
+      "avg_speed": 5.755,
+      "router_calls": 0,
+      "peak_lateral_jerk": 0.67,
+      "freeze": true,
+      "peak_sigma": 5.92,
+      "x": 69.06,
+      "y": 0.17,
+      "vx": 0.0,
+      "end_time": 12.0,
+      "calls": []
+    },
+    {
+      "mode": "fixed_rate_vlm",
+      "crash_time": 5.86,
+      "crashed": true,
+      "route_pct": 62.9,
+      "avg_speed": 21.468,
+      "router_calls": 6,
+      "peak_lateral_jerk": 81.51,
+      "freeze": false,
+      "peak_sigma": 19.071,
+      "x": 125.81,
+      "y": 3.958,
+      "vx": 21.128,
+      "end_time": 5.86,
+      "calls": [
+        {
+          "t": 0.0,
+          "from": "CRUISE_RIGHT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "fixed_rate",
+          "sigma": 0.6428945673963404,
+          "backend": "openai_compat_dryrun",
+          "ready_at": 0.3
+        },
+        {
+          "t": 1.0,
+          "from": "OVERTAKE_LEFT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "fixed_rate",
+          "sigma": 18.217717042253238,
+          "backend": "openai_compat_dryrun",
+          "ready_at": 1.3
+        },
+        {
+          "t": 2.0,
+          "from": "OVERTAKE_LEFT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "fixed_rate",
+          "sigma": 7.342927585875156,
+          "backend": "openai_compat_dryrun",
+          "ready_at": 2.3
+        },
+        {
+          "t": 3.0,
+          "from": "OVERTAKE_LEFT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "fixed_rate",
+          "sigma": 1.1758882077277266,
+          "backend": "openai_compat_dryrun",
+          "ready_at": 3.3
+        },
+        {
+          "t": 4.0,
+          "from": "OVERTAKE_LEFT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "fixed_rate",
+          "sigma": 2.138694921730383,
+          "backend": "openai_compat_dryrun",
+          "ready_at": 4.3
+        },
+        {
+          "t": 5.0,
+          "from": "OVERTAKE_LEFT",
+          "to": "RETURN_RIGHT",
+          "reason": "fixed_rate",
+          "sigma": 0.16840532007999184,
+          "backend": "openai_compat_dryrun",
+          "ready_at": 5.3
+        }
+      ]
+    },
+    {
+      "mode": "proposed",
+      "crash_time": null,
+      "crashed": false,
+      "route_pct": 80.86,
+      "avg_speed": 13.477,
+      "router_calls": 5,
+      "peak_lateral_jerk": 12.75,
+      "freeze": false,
+      "peak_sigma": 22.384,
+      "x": 161.72,
+      "y": -1.309,
+      "vx": 18.297,
+      "end_time": 12.0,
+      "calls": [
+        {
+          "t": 1.78,
+          "from": "CRUISE_RIGHT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "shield",
+          "sigma": 0.6405092838648231,
+          "backend": "openai_compat_dryrun",
+          "ready_at": 2.08
+        },
+        {
+          "t": 2.54,
+          "from": "OVERTAKE_LEFT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "shield+sigma",
+          "sigma": 9.616501208430517,
+          "backend": "openai_compat_dryrun",
+          "ready_at": 2.84
+        },
+        {
+          "t": 3.22,
+          "from": "OVERTAKE_LEFT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "shield+sigma",
+          "sigma": 5.427739179236289,
+          "backend": "openai_compat_dryrun",
+          "ready_at": 3.52
+        },
+        {
+          "t": 7.22,
+          "from": "OVERTAKE_LEFT",
+          "to": "RETURN_RIGHT",
+          "reason": "shield",
+          "sigma": 2.3342298764581084,
+          "backend": "openai_compat_dryrun",
+          "ready_at": 7.52
+        },
+        {
+          "t": 8.66,
+          "from": "RETURN_RIGHT",
+          "to": "RETURN_RIGHT",
+          "reason": "shield+sigma",
+          "sigma": 6.033454139863872,
+          "backend": "openai_compat_dryrun",
+          "ready_at": 8.96
+        }
+      ]
+    }
+  ],
+  "merge": [
+    {
+      "mode": "unshielded_skill",
+      "crash_time": 5.82,
+      "crashed": true,
+      "route_pct": 66.88,
+      "avg_speed": 20.683,
+      "router_calls": 0,
+      "peak_lateral_jerk": 0.67,
+      "freeze": false,
+      "peak_sigma": 0.644,
+      "x": 120.38,
+      "y": -0.0,
+      "vx": 20.902,
+      "end_time": 5.82
+    },
+    {
+      "mode": "static_cbf",
+      "crash_time": null,
+      "crashed": false,
+      "route_pct": 100.0,
+      "avg_speed": 16.484,
+      "router_calls": 0,
+      "peak_lateral_jerk": 0.67,
+      "freeze": false,
+      "peak_sigma": 0.644,
+      "x": 180.0,
+      "y": -0.041,
+      "vx": 12.034,
+      "end_time": 10.92
+    },
+    {
+      "mode": "fixed_rate_vlm",
+      "crash_time": 3.46,
+      "crashed": true,
+      "route_pct": 41.15,
+      "avg_speed": 21.407,
+      "router_calls": 4,
+      "peak_lateral_jerk": 63.47,
+      "freeze": false,
+      "peak_sigma": 19.071,
+      "x": 74.07,
+      "y": 3.565,
+      "vx": 21.938,
+      "end_time": 3.46
+    },
+    {
+      "mode": "proposed",
+      "crash_time": null,
+      "crashed": false,
+      "route_pct": 100.0,
+      "avg_speed": 16.166,
+      "router_calls": 6,
+      "peak_lateral_jerk": 15.19,
+      "freeze": false,
+      "peak_sigma": 13.813,
+      "x": 180.09,
+      "y": 4.335,
+      "vx": 17.414,
+      "end_time": 11.14
+    }
+  ],
+  "dense_highway": [
+    {
+      "mode": "unshielded_skill",
+      "crash_time": 4.22,
+      "crashed": true,
+      "route_pct": 39.53,
+      "avg_speed": 20.607,
+      "router_calls": 0,
+      "peak_lateral_jerk": 0.67,
+      "freeze": false,
+      "peak_sigma": 0.644,
+      "x": 86.96,
+      "y": -0.002,
+      "vx": 20.864,
+      "end_time": 4.22
+    },
+    {
+      "mode": "static_cbf",
+      "crash_time": null,
+      "crashed": false,
+      "route_pct": 97.73,
+      "avg_speed": 13.437,
+      "router_calls": 0,
+      "peak_lateral_jerk": 0.67,
+      "freeze": false,
+      "peak_sigma": 0.994,
+      "x": 215.0,
+      "y": -0.031,
+      "vx": 11.0,
+      "end_time": 16.0
+    },
+    {
+      "mode": "fixed_rate_vlm",
+      "crash_time": 3.94,
+      "crashed": true,
+      "route_pct": 38.14,
+      "avg_speed": 21.299,
+      "router_calls": 4,
+      "peak_lateral_jerk": 127.75,
+      "freeze": false,
+      "peak_sigma": 21.187,
+      "x": 83.92,
+      "y": 1.43,
+      "vx": 21.683,
+      "end_time": 3.94
+    },
+    {
+      "mode": "proposed",
+      "crash_time": null,
+      "crashed": false,
+      "route_pct": 97.4,
+      "avg_speed": 13.393,
+      "router_calls": 2,
+      "peak_lateral_jerk": 14.34,
+      "freeze": false,
+      "peak_sigma": 8.969,
+      "x": 214.29,
+      "y": -0.09,
+      "vx": 11.381,
+      "end_time": 16.0
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=0.85in]{geometry}
+\usepackage{times}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage[hidelinks]{hyperref}
+\usepackage{natbib}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+\setstretch{1.02}
+\setlength{\parskip}{0.22em}
+\setlength{\parindent}{1.0em}
+\setlist[itemize]{leftmargin=1.25em,itemsep=0.08em,topsep=0.12em,parsep=0pt}
+\titleformat{\section}{\normalsize\bfseries}{\thesection.}{0.45em}{}
+\titlespacing*{\section}{0pt}{0.55em}{0.18em}
+
+\title{\vspace{-1.1em}Safe Fast Control While a Slow Language Model Thinks:\\
+RL Skills, Event-Triggered Routing, and a Delay-Aware Safety Filter}
+\author{Akash Ravi \quad Harsh Shah \quad Ved Chadderwala\\
+\small CS642 Course Project Proposal}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.6em}
+
+\begin{abstract}
+\noindent
+We want to drive safely in a highway simulator while a slow language model is still deciding which high-level skill to use. The stack has three known pieces: an event-triggered LLM/VLM that only picks a discrete skill, fast PPO skills that run at control rate, and a CBF-style filter that can brake using current geometry and that can grow clearance while a skill call is pending. This is a systems and measurement project under course forms~(a)/(b), not a new algorithm~(c). We ask to finish the stack, run shared-skill baselines under controlled delays, and report the numbers.
+\end{abstract}
+
+\section{Problem}
+An LLM can choose cruise, pass, or return, but a call often takes hundreds of milliseconds. Steering and braking still need to run many times per second. If we wait only on the LLM, the car can fail during that wait. If we keep a fast controller plus a hard brake and never change the plan, the car can freeze behind a stalled lead~\citep{trautman2010freezing}. If we poll the LLM on a timer and snap skills, we often get a crash during the wait or large lateral jerk at the switch.
+
+We will build one closed-loop stack and measure those failures. The slow model outputs only a skill id. Separate RL skills drive at control rate. A CBF-style filter overrides unsafe acceleration. We call the LLM on events (high critic uncertainty or sustained shield override), not on a fixed timer. Skill changes blend over a short window.
+
+\section{Why Grow Clearance While the LLM Thinks}
+Fresh observations are not the issue. The fast loop keeps current state and can still brake from current geometry. What is delayed is the \emph{high-level skill choice}: until the LLM reply arrives and is accepted, the stack stays locked into the current skill's intent (for example, keep cruising instead of switching to pass or return).
+
+During that lock, the active RL skill keeps proposing actions for the old intent. The base filter can still cut acceleration when geometry is tight, but without extra clearance the car may only react late, and the locked skill may keep pushing progress that fights the shield. The pending-call margin is therefore time to revise the plan, not compensation for stale sensors. It buys buffer while skill revision is unavailable. Conceptually we grow headway with critic uncertainty, and while a call is in flight by a term on the order of speed times expected call delay.
+
+This is different from Periotto et~al.~\citep{periotto2024mpccbf}, who inflate because \emph{state/control feedback} is delayed in teleoperation. Our local state is fresh; our delay is \emph{semantic/skill} delay. We treat the pending-call margin as a hypothesis to ablate (off vs on). We do not claim it always helps.
+
+\section{How This Differs from Prior Work}
+We borrow pieces; we do not claim priority. The measurement target is interrupt + delayed skill switch + filter interaction under shared frozen skills.
+
+\begin{itemize}
+  \item \textbf{vs LeapAD / DriveVLM-Dual}~\citep{mei2024leapad,tian2024drivevlm}: both use a slow+fast split. We study the interrupt, the wait before a skill can switch, and how the filter behaves with a shared frozen skill bank during that wait.
+  \item \textbf{vs FASIONAD++ / AdaDrive}~\citep{qian2025fasionadpp,zhang2025adadrive}: both use the slow model selectively. We isolate the call trigger, a pending-call margin, and skill-bank switching under controlled delay schedules.
+  \item \textbf{vs CERT-Replan}~\citep{suganda2026certreplan}: barrier-risk replan without an LLM skill bank. We test whether LLM routing adds value over simpler replan or rule routing on the same skills and metrics.
+  \item \textbf{vs Yu et~al.}~\citep{yu2025usdc}: uncertainty-tightened barriers for RL control. We add the pending-skill-revision delay term and an event-triggered LLM.
+  \item \textbf{vs Periotto et~al.}~\citep{periotto2024mpccbf}: delayed plant feedback. We have delayed high-level advice with fresh local state.
+\end{itemize}
+
+Platform donors only: CoDrivingLLM / DiLu on highway-env; optional later CoLMDriver on CARLA~\citep{fang2024codrivingllm,wen2024dilu,liu2025colmdriver}.
+
+\section{Approach}
+We train separate PPO skills (cruise, overtake, return as needed) and then freeze them for all methods. The LLM/VLM router is not a continuous policy input; it only selects which frozen skill is active. The filter runs at the same rate as the skills. Triggers: critic uncertainty above a frozen threshold, or sustained longitudinal override by the shield. On a skill change we blend actions over a short window (prototype used a short sigmoid mix).
+
+First platform: highway-env. Router backend: a research-usable instruct model or API fallback. We keep a stub/rule router for delay ablations so we can set call latency without depending on live model jitter. Optional later: same contracts on CARLA. We will not build the closed-loop core on archived open-loop LLM planners.
+
+\section{Evaluation}
+Same simulator, same frozen skill checkpoints, same seeds, and same metrics for every method. We do not retrain skills per baseline. Baselines: unshielded RL; static CBF only (no skill change); timer + hard switch (e.g., 1\,Hz); FASIONAD-style uncertainty wake-up into one planner; CERT-style barrier-risk replan without VLM; proposed interrupt + blend, with and without the pending-call margin. Where a named system is only ``in the style of,'' we say so.
+
+Delay schedules: fixed stub delays (so the wait is known) and measured live-router latency. Scenarios: stall ahead, cut-in while a call is in flight, dense freeze-risk traffic. Metrics: crash / time-to-crash; freeze with progress left; route completion; survival while a call is pending; peak/mean lateral jerk; router call count. Secondary logs: shield override fraction and critic uncertainty at interrupt.
+
+Pass bar: lower crash than unshielded and timer+hard-switch; lower freeze than static CBF; fewer calls than high-rate polling at matched or better progress; jerk not dominated by hard switches. The pending-call margin stands or falls on the ablation. If it does not help under matched delay, we report that.
+
+\section{Scope}
+We do not claim a new barrier theorem, OEM deployment, foundation-VLM training, V2X hardware, or formal CBF proofs under learned dynamics. Course fit is brief: closed-loop control and a runtime filter (robotics) plus RL skills, optional LLM routing, and critic uncertainty (ML). Ask: approval under~(a)/(b) to finish the stack, run the bake-off, and write measured results. Guidance welcome on simulator scope, router strength, and how strictly baselines must match named systems.
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

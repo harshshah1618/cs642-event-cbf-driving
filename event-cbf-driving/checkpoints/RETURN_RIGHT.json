@@ -1,0 +1,10 @@
+{
+  "name": "RETURN_RIGHT",
+  "target_lane": 0,
+  "y_target": 0.0,
+  "threshold": 3.8063009665774423,
+  "sigma_mean": 0.8063009665774422,
+  "sigma_std": 1.0,
+  "spread": 5.031283467597741,
+  "history_len": 130
+}

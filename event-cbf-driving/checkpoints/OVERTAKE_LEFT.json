@@ -1,0 +1,10 @@
+{
+  "name": "OVERTAKE_LEFT",
+  "target_lane": 1,
+  "y_target": 4.0,
+  "threshold": 3.13519476957407,
+  "sigma_mean": 1.0,
+  "sigma_std": 0.7117315898580233,
+  "spread": 2.0796918439865113,
+  "history_len": 110
+}

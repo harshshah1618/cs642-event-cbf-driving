@@ -1,0 +1,159 @@
+{
+  "rollouts": [
+    {
+      "mode": "unshielded_cruise",
+      "crash_time": 3.54,
+      "crashed": true,
+      "route_pct": 35.4,
+      "avg_speed": 20.0,
+      "freeze": false,
+      "router_calls": 0,
+      "peak_lateral_jerk": 0.0,
+      "x": 70.8,
+      "y": 0.0,
+      "vx": 20.0,
+      "end_time": 3.54,
+      "calls": []
+    },
+    {
+      "mode": "static_cbf",
+      "crash_time": null,
+      "crashed": false,
+      "route_pct": 34.5,
+      "avg_speed": 5.75,
+      "freeze": true,
+      "router_calls": 0,
+      "peak_lateral_jerk": 0.0,
+      "x": 68.999,
+      "y": 0.0,
+      "vx": 0.001,
+      "end_time": 12.0,
+      "calls": []
+    },
+    {
+      "mode": "fixed_1hz",
+      "crash_time": null,
+      "crashed": false,
+      "route_pct": 100.0,
+      "avg_speed": 20.0,
+      "freeze": false,
+      "router_calls": 10,
+      "peak_lateral_jerk": 252.85,
+      "x": 200.0,
+      "y": 0.012,
+      "vx": 20.0,
+      "end_time": 10.0,
+      "calls": [
+        {
+          "t": 0.0,
+          "from": "CRUISE_RIGHT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "1hz"
+        },
+        {
+          "t": 1.0,
+          "from": "OVERTAKE_LEFT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "1hz"
+        },
+        {
+          "t": 2.0,
+          "from": "OVERTAKE_LEFT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "1hz"
+        },
+        {
+          "t": 3.0,
+          "from": "OVERTAKE_LEFT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "1hz"
+        },
+        {
+          "t": 4.0,
+          "from": "OVERTAKE_LEFT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "1hz"
+        },
+        {
+          "t": 5.0,
+          "from": "OVERTAKE_LEFT",
+          "to": "CRUISE_RIGHT",
+          "reason": "1hz"
+        },
+        {
+          "t": 6.0,
+          "from": "CRUISE_RIGHT",
+          "to": "CRUISE_RIGHT",
+          "reason": "1hz"
+        },
+        {
+          "t": 7.0,
+          "from": "CRUISE_RIGHT",
+          "to": "CRUISE_RIGHT",
+          "reason": "1hz"
+        },
+        {
+          "t": 8.0,
+          "from": "CRUISE_RIGHT",
+          "to": "CRUISE_RIGHT",
+          "reason": "1hz"
+        },
+        {
+          "t": 9.0,
+          "from": "CRUISE_RIGHT",
+          "to": "CRUISE_RIGHT",
+          "reason": "1hz"
+        }
+      ]
+    },
+    {
+      "mode": "proposed",
+      "crash_time": null,
+      "crashed": false,
+      "route_pct": 100.0,
+      "avg_speed": 17.054,
+      "freeze": false,
+      "router_calls": 2,
+      "peak_lateral_jerk": 32.89,
+      "x": 200.213,
+      "y": 0.016,
+      "vx": 19.976,
+      "end_time": 11.74,
+      "calls": [
+        {
+          "t": 1.96,
+          "from": "CRUISE_RIGHT",
+          "to": "OVERTAKE_LEFT",
+          "reason": "shield"
+        },
+        {
+          "t": 6.02,
+          "from": "OVERTAKE_LEFT",
+          "to": "CRUISE_RIGHT",
+          "reason": "shield"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "CRUISE_RIGHT": {
+      "y_target": 0.0,
+      "kind": "PD_stand_in",
+      "hold_err": 0.0,
+      "acquire_t16": 0.84,
+      "final_y": 0.016,
+      "threshold": 1.0,
+      "spread": 1.0
+    },
+    "OVERTAKE_LEFT": {
+      "y_target": 4.0,
+      "kind": "PD_stand_in",
+      "hold_err": 0.0,
+      "acquire_t16": 0.84,
+      "final_y": 3.984,
+      "threshold": 1.0,
+      "spread": 1.0
+    }
+  },
+  "wall_s": 2.31
+}
