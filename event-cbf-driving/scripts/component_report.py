@@ -274,7 +274,9 @@ def main():
     (OUT / "statistics.json").write_text(json.dumps(payload, indent=2, allow_nan=False) + "\n")
     (OUT / "audit.json").write_text(json.dumps(audit, indent=2) + "\n")
     with (OUT / "cells.csv").open("w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["cell", *next(iter(cells.values())).keys()])
+        writer = csv.DictWriter(
+            f, fieldnames=["cell", *next(iter(cells.values())).keys()], lineterminator="\n"
+        )
         writer.writeheader()
         writer.writerows({"cell": k, **v} for k, v in cells.items())
     appendix = ["# Complete scenario/router/delay tables", ""]
