@@ -59,21 +59,25 @@ def main():
     p.add_argument("--output", type=Path, default=base.ROOT / "runs/research-phase")
     args = p.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
-    original_selection = json.loads(
-        (base.ROOT / "runs/research-isolation/selection.json").read_text()
-    )
+    isolation_lock_path = base.ROOT / "runs/research-isolation/locked-selection.json"
+    original_selection = json.loads(isolation_lock_path.read_text())
     delays = ["nominal", "long", "jitter"]
     candidates = [("periodic", r) for r in (0.1, 0.25, 0.5, 1, 2, 10)]
     seeds = range(111, 115)
     if args.stage == "test":
         selected = verify("phase", args.output)
+        if (
+            selected["isolation_lock_sha256"]
+            != hashlib.sha256(isolation_lock_path.read_bytes()).hexdigest()
+        ):
+            raise ValueError("upstream isolation selection changed after phase freeze")
         seeds = range(1101, 1141)
         candidates = [
             ("legacy", 0),
             ("ttc", 0),
             ("benefit", 0),
-            ("no_latency_matched", original_selection["deadline"]),
-            ("deadline", original_selection["deadline"]),
+            ("no_latency_matched", selected["deadline_buffer_s"]),
+            ("deadline", selected["deadline_buffer_s"]),
             ("periodic", selected["periodic"]),
             ("periodic_gated", 10.0),
         ]
@@ -139,6 +143,8 @@ def main():
         selected = {
             "periodic": max(scores)[1],
             "validation_sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
+            "deadline_buffer_s": original_selection["deadline"],
+            "isolation_lock_sha256": hashlib.sha256(isolation_lock_path.read_bytes()).hexdigest(),
         }
         (args.output / "selection.json").write_text(json.dumps(selected, indent=2) + "\n")
         print(selected, flush=True)
