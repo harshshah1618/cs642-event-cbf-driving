@@ -1,0 +1,6 @@
+ActiveState=active
+MemoryCurrent=5169729536
+MemoryPeak=5243363328
+CPUQuotaPerSecUSec=4s
+MemoryMax=10737418240
+MemorySwapMax=0

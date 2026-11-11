@@ -1,0 +1,80 @@
+{
+  "kind": "actual_trained_cpu_physical_camera_pilot",
+  "actual_model": true,
+  "seed": 6301,
+  "route_pct": 33.265214655119905,
+  "crashed": false,
+  "success": false,
+  "freeze": true,
+  "end_time_sim_s": 60.0,
+  "episode_wall_s_including_render_startup": 136.50425173700205,
+  "real_model_predictions": 4,
+  "recorded_live_calls": 4,
+  "calls_applied": 3,
+  "calls_rejected": 0,
+  "fallbacks": 0,
+  "skills_used": [
+    "CRUISE_RIGHT",
+    "OVERTAKE_LEFT"
+  ],
+  "peak_process_rss_kib": 10951004,
+  "prediction_times_s": [
+    18.475663174001966,
+    19.516509631997906,
+    18.485992485002498,
+    12.868873933999566
+  ],
+  "adapter_audit": {
+    "verified_tensor_count": 504,
+    "nonzero_elements": 29933568,
+    "active_adapters": [
+      "default"
+    ],
+    "all_keys_shapes_values_equal": true,
+    "adapter_sha256": "e0b999e98601d58bf8a180d1296d4d075fd40058dec5f55e05fb71ae8ea803ab",
+    "adapter_config_sha256": "67cae10cad31c61e6b75b080f4c02b4c32bde18204dfc5c0c10a7fdb82e3e2e6",
+    "prompt_source_sha256": "0e6ea6d72a9492dc97c12ae71818aaf24d8cec3f656c8633148c8f0b913ebc5e",
+    "base_config_sha256": "7ed3eed5be6924cc800e8a5e53fc405c1aab1aaf36bad65c33403b36c56827f5",
+    "base_path": "/home/harsh/.cache/huggingface/hub/models--Qwen--Qwen2.5-VL-3B-Instruct/snapshots/66285546d2b821cf421d4f5eb2576359d3770cd3",
+    "adapter_path": "/home/harsh/Projects/cs642-event-cbf-vlm/vlm-study/model/adapter",
+    "base_revision_original_training": null,
+    "dtype": "bfloat16",
+    "device": "cpu",
+    "threads": 4,
+    "load_and_adapter_verify_s": 0.34883792299660854
+  },
+  "checkpoints": {
+    "directory": "/home/harsh/Projects/cs642-event-cbf-vlm/event-cbf-driving/checkpoints/metadrive-calibrated",
+    "required": [
+      "CRUISE_RIGHT",
+      "OVERTAKE_LEFT"
+    ],
+    "aliases": {
+      "RETURN_RIGHT": "CRUISE_RIGHT"
+    },
+    "fallbacks": [],
+    "missing": [],
+    "sources": {
+      "CRUISE_RIGHT": {
+        "path": "/home/harsh/Projects/cs642-event-cbf-vlm/event-cbf-driving/checkpoints/metadrive-calibrated/CRUISE_RIGHT.pt"
+      },
+      "OVERTAKE_LEFT": {
+        "path": "/home/harsh/Projects/cs642-event-cbf-vlm/event-cbf-driving/checkpoints/metadrive-calibrated/OVERTAKE_LEFT.pt"
+      },
+      "RETURN_RIGHT": {
+        "alias_of": "CRUISE_RIGHT",
+        "path": "/home/harsh/Projects/cs642-event-cbf-vlm/event-cbf-driving/checkpoints/metadrive-calibrated/CRUISE_RIGHT.pt"
+      }
+    },
+    "allow_missing_checkpoints": false,
+    "warnings": [
+      "RETURN_RIGHT.pt is missing in /home/harsh/Projects/cs642-event-cbf-vlm/event-cbf-driving/checkpoints/metadrive-calibrated; using CRUISE_RIGHT weights as an explicit RETURN_RIGHT alias."
+    ]
+  },
+  "limitations": [
+    "One exploratory seed, CPU inference, v1 parked-car/constant20 prompt on dynamic physical scenes",
+    "No paired ablation or GPU latency/safety/generalization conclusion",
+    "Paced simulation can fall behind wall clock; full wall and simulator times retained",
+    "Eight actual predictions maximum; reject errors/budget exhaustion without scripted substitution"
+  ]
+}

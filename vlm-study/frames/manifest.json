@@ -1,0 +1,171 @@
+[
+  {
+    "name": "overtake",
+    "expected": "B",
+    "lane": "RIGHT",
+    "current_skill": "CRUISE_RIGHT",
+    "path": "overtake.png",
+    "sha256": "74ecea2a4cac74b55427855a566ee297b093de512b4776fa8d6c9c37b4990f5f",
+    "scene": {
+      "name": "dense_highway",
+      "route_length": null,
+      "duration": 0.1,
+      "seed": 0,
+      "randomize": false,
+      "params": {
+        "rgb_camera": true,
+        "initial_y": 0.0,
+        "initial_traffic": [
+          {
+            "x": 40.0,
+            "y": 0.0,
+            "vx": 0.0
+          }
+        ]
+      },
+      "simulator": "metadrive"
+    },
+    "initial_state": {
+      "ego": {
+        "x": 0.0,
+        "y": 0.0,
+        "vx": 20.0,
+        "vy": 0.0,
+        "ax": 0.0,
+        "ay": 0.0,
+        "length": 4.515,
+        "width": 1.852,
+        "lane_id": 0,
+        "speed_limit": 0.0
+      },
+      "others": [
+        {
+          "x": 40.0,
+          "y": 0.0,
+          "vx": 0.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        }
+      ]
+    },
+    "actual_physical_camera": true,
+    "model_prediction": null
+  },
+  {
+    "name": "clear",
+    "expected": "A",
+    "lane": "RIGHT",
+    "current_skill": "CRUISE_RIGHT",
+    "path": "clear.png",
+    "sha256": "cc8441a03a0faa44dca0e53df84fcb9907d4af3e8ffd66eeddea6f4ef5faf5b5",
+    "scene": {
+      "name": "dense_highway",
+      "route_length": null,
+      "duration": 0.1,
+      "seed": 0,
+      "randomize": false,
+      "params": {
+        "rgb_camera": true,
+        "initial_y": 0.0,
+        "initial_traffic": []
+      },
+      "simulator": "metadrive"
+    },
+    "initial_state": {
+      "ego": {
+        "x": 0.0,
+        "y": 0.0,
+        "vx": 20.0,
+        "vy": 0.0,
+        "ax": 0.0,
+        "ay": 0.0,
+        "length": 4.515,
+        "width": 1.852,
+        "lane_id": 0,
+        "speed_limit": 0.0
+      },
+      "others": []
+    },
+    "actual_physical_camera": true,
+    "model_prediction": null
+  },
+  {
+    "name": "blocked",
+    "expected": "A",
+    "lane": "RIGHT",
+    "current_skill": "CRUISE_RIGHT",
+    "path": "blocked.png",
+    "sha256": "135f24c39a047d4c605209aef50e06db68fa01dd1812e43e62ac8d61a5c3cbaf",
+    "scene": {
+      "name": "dense_highway",
+      "route_length": null,
+      "duration": 0.1,
+      "seed": 0,
+      "randomize": false,
+      "params": {
+        "rgb_camera": true,
+        "initial_y": 0.0,
+        "initial_traffic": [
+          {
+            "x": 40.0,
+            "y": 0.0,
+            "vx": 0.0
+          },
+          {
+            "x": 45.0,
+            "y": 4.0,
+            "vx": 0.0
+          }
+        ]
+      },
+      "simulator": "metadrive"
+    },
+    "initial_state": {
+      "ego": {
+        "x": 0.0,
+        "y": 0.0,
+        "vx": 20.0,
+        "vy": 0.0,
+        "ax": 0.0,
+        "ay": 0.0,
+        "length": 4.515,
+        "width": 1.852,
+        "lane_id": 0,
+        "speed_limit": 0.0
+      },
+      "others": [
+        {
+          "x": 40.0,
+          "y": 0.0,
+          "vx": 0.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        },
+        {
+          "x": 45.0,
+          "y": 4.0,
+          "vx": 0.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 1,
+          "speed_limit": 0.0
+        }
+      ]
+    },
+    "actual_physical_camera": true,
+    "model_prediction": null
+  }
+]
