@@ -12,6 +12,7 @@ import math
 import shutil
 from collections import defaultdict
 from datetime import datetime, timezone
+from pathlib import Path
 from xml.sax.saxutils import escape
 
 import matplotlib
@@ -19,12 +20,16 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import reportlab
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import inch
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
     Image,
+    KeepTogether,
     PageBreak,
     Paragraph,
     SimpleDocTemplate,
@@ -50,6 +55,10 @@ LABELS = {
     "never": "No replanning",
     "idm": "Upstream IDM (40km/h)",
     "expert": "Released PPO expert",
+    "ppo_controller": "Frozen PPO (sigma-free)",
+    "pd_controller": "Fixed PD (sigma-free)",
+    "deadline_live": "Deadline + actual Qwen",
+    "polling_live": "Polling + actual Qwen",
 }
 
 
@@ -89,8 +98,12 @@ def summary(rows):
             "scheduler_process_s",
             "control_process_s",
             "freeze",
+            "plant_peak_lateral_jerk",
+            "peak_lateral_jerk",
+            "infeasible_ticks",
+            "override_fraction",
         ):
-            if not all(metric in r for r in group):
+            if not all(metric in r and r[metric] is not None for r in group):
                 continue
             d[metric] = float(np.mean([r[metric] for r in group]))
             clusters = [np.mean([r[metric] for r in group if r["seed"] == seed]) for seed in seeds]
@@ -120,8 +133,11 @@ def paired(rows, method, baseline):
         "crashed",
         "planner_process_s",
         "control_process_s",
+        "plant_peak_lateral_jerk",
     ):
-        if not all(metric in r for r in first.values()):
+        if not all(
+            metric in r and r[metric] is not None for r in [*first.values(), *second.values()]
+        ):
             continue
         differences = defaultdict(list)
         for k, r in first.items():
@@ -161,53 +177,74 @@ def figures(summaries):
             "axes.spines.right": False,
         }
     )
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4.5), constrained_layout=True)
-    for axis, (suite, data) in zip(axes, summaries.items(), strict=True):
-        for method, row in data.items():
-            if method in ("idm", "expert"):
-                continue
-            color = (
-                "#176b87"
-                if method == "deadline"
-                else ("#b45f25" if method == "periodic_conditioned" else "#667581")
+    paths = []
+    for index, (suite, data) in enumerate(summaries.items()):
+        fig, axes = plt.subplots(
+            1,
+            2,
+            figsize=(8, 4.5),
+            constrained_layout=True,
+            sharey=True,
+            gridspec_kw={"width_ratios": [1.1, 1]},
+        )
+        methods = sorted(data, key=lambda m: data[m]["router_calls"])
+        y = np.arange(len(methods))
+        palette = [
+            "#176b87"
+            if m == "deadline"
+            else ("#b45f25" if m == "periodic_conditioned" else "#80929d")
+            for m in methods
+        ]
+        for axis, metric, scale, label in (
+            (axes[0], "router_calls", 1, "Planner calls / episode"),
+            (axes[1], "success", 100, "Success (%)"),
+        ):
+            means = np.asarray([data[m][metric] * scale for m in methods])
+            ci = np.asarray([data[m][metric + "_ci95"] for m in methods]) * scale
+            axis.barh(y, means, color=palette, height=0.65)
+            axis.errorbar(
+                means,
+                y,
+                xerr=np.maximum(0, np.array([means - ci[:, 0], ci[:, 1] - means])),
+                fmt="none",
+                color="#263640",
+                capsize=2,
+                linewidth=0.8,
             )
-            axis.scatter(
-                row["router_calls"],
-                row["success"] * 100,
-                s=55,
-                c=color,
-                marker="D" if method == "deadline" else "o",
-            )
-            axis.annotate(
-                LABELS[method],
-                (row["router_calls"], row["success"] * 100),
-                xytext=(3, 5 if method != "benefit" else -14),
-                textcoords="offset points",
-                fontsize=7,
-            )
-        axis.set(title=suite, xlabel="Planner calls per episode", ylabel="Success (%)")
-        axis.grid(alpha=0.15)
-    path = OUT / "call-success-frontiers.png"
-    fig.savefig(path, dpi=180)
-    plt.close(fig)
-    return path
+            axis.set_xlabel(label)
+            axis.grid(axis="x", alpha=0.15)
+        axes[0].set_yticks(y, [LABELS[m] for m in methods], fontsize=8)
+        axes[0].invert_yaxis()
+        axes[1].set_xlim(0, 104)
+        fig.suptitle(suite, fontsize=12, weight="bold")
+        path = OUT / ("call-success-frontiers.png" if index == 0 else f"call-success-{index}.png")
+        fig.savefig(path, dpi=180)
+        plt.close(fig)
+        paths.append(path)
+    return paths
 
 
 def pdf_report(sections, chart):
+    fonts = Path(reportlab.__file__).parent / "fonts"
+    pdfmetrics.registerFont(TTFont("ResearchSans", str(fonts / "Vera.ttf")))
+    pdfmetrics.registerFont(TTFont("ResearchSans-Bold", str(fonts / "VeraBd.ttf")))
     styles = getSampleStyleSheet()
+    for style in styles.byName.values():
+        if hasattr(style, "fontName"):
+            style.fontName = "ResearchSans-Bold" if "Bold" in style.fontName else "ResearchSans"
     styles.add(
         ParagraphStyle(
             name="BodyResearch",
-            fontName="Helvetica",
+            fontName="ResearchSans",
             fontSize=9,
-            leading=13,
-            spaceAfter=7,
+            leading=12,
+            spaceAfter=6,
             alignment=TA_LEFT,
         )
     )
     styles.add(
         ParagraphStyle(
-            name="SmallResearch", fontName="Helvetica", fontSize=7, leading=10, spaceAfter=5
+            name="SmallResearch", fontName="ResearchSans", fontSize=7, leading=10, spaceAfter=5
         )
     )
     story = []
@@ -224,7 +261,7 @@ def pdf_report(sections, chart):
     )
     for title, content in sections:
         story.append(Paragraph(escape(title), styles["Heading2"]))
-        for block in content:
+        for block_index, block in enumerate(content):
             if isinstance(block, dict):
                 rows = [["Method", "n", "Success", "Crash", "Route", "Calls"]]
                 for method, row in block.items():
@@ -242,7 +279,8 @@ def pdf_report(sections, chart):
                 t.setStyle(
                     TableStyle(
                         [
-                            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                            ("FONTNAME", (0, 0), (-1, -1), "ResearchSans"),
+                            ("FONTNAME", (0, 0), (-1, 0), "ResearchSans-Bold"),
                             ("FONTSIZE", (0, 0), (-1, -1), 8),
                             ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#eaf0f4")),
                             (
@@ -257,21 +295,27 @@ def pdf_report(sections, chart):
                         ]
                     )
                 )
-                story.extend([t, Spacer(1, 10)])
+                if block_index == 0:
+                    heading = story.pop()
+                    story.append(KeepTogether([heading, t, Spacer(1, 10)]))
+                else:
+                    story.extend([t, Spacer(1, 10)])
             else:
                 para(block)
     story.append(PageBreak())
-    story.append(Paragraph("Call / success frontiers", styles["Heading2"]))
-    story.append(Image(str(chart), width=7 * inch, height=2.1 * inch))
+    story.append(Paragraph("Calls and successful completion", styles["Heading2"]))
+    for path in chart:
+        story.append(Image(str(path), width=7 * inch, height=3.94 * inch))
+        story.append(Spacer(1, 12))
     para(
-        "Each point summarizes a frozen comparison. See the machine-readable statistics for seed-clustered confidence intervals and every paired difference. Overlapping labels do not imply equal performance."
+        "Bars show frozen comparisons and seed-clustered 95% intervals. See the machine-readable statistics for every paired difference. Zero-width empirical intervals do not establish zero population risk."
     )
     para(
         "Artifacts: research/results/statistics.json; audit.json; data/*.jsonl.gz; locked selections; source and checkpoint hashes; complete reproducibility instructions in research/README.md."
     )
 
     def footer(canvas, doc):
-        canvas.setFont("Helvetica", 8)
+        canvas.setFont("ResearchSans", 8)
         canvas.setFillColor(colors.HexColor("#576571"))
         canvas.drawString(42, 25, "CS642 Event-CBF | Audited scheduling study")
         canvas.drawRightString(570, 25, f"{doc.page}")
@@ -312,6 +356,81 @@ def main():
             OUT / f"{suite}-locked-selection.json",
         )
     runtime = runtime_audit(locks)
+    clock_dir = ROOT / "runs/research-clock"
+    clock_analysis = json.loads((clock_dir / "analysis.json").read_text())
+    clock_lock = json.loads((clock_dir / "lock.json").read_text())
+    if (
+        clock_analysis["test_sha256"] != digest(clock_dir / "test.jsonl")
+        or clock_analysis["phase_test_sha256"] != digest(ROOT / "runs/research-phase/test.jsonl")
+        or clock_lock["script_sha256"] != digest(ROOT / "scripts/research_clock_control.py")
+    ):
+        raise ValueError("clock control data/source changed")
+    if len((clock_dir / "test.jsonl").read_text().splitlines()) != 1080:
+        raise ValueError("clock control incomplete")
+    for filename in ("analysis.json", "lock.json"):
+        shutil.copy2(clock_dir / filename, OUT / ("clock-" + filename))
+    with gzip.GzipFile(
+        filename=str(data_dir / "clock-control.jsonl.gz"), mode="wb", mtime=0
+    ) as stream:
+        stream.write((clock_dir / "test.jsonl").read_bytes())
+    controller_path = ROOT / "runs/research-controller/test.jsonl"
+    controller_rows = [json.loads(line) for line in controller_path.read_text().splitlines()]
+    if len(controller_rows) != 1200 or len({r["id"] for r in controller_rows}) != 1200:
+        raise ValueError("controller ablation incomplete or duplicate")
+    controller_lock_path = ROOT / "runs/research-controller/lock.json"
+    controller_lock = json.loads(controller_lock_path.read_text())
+    if digest(ROOT / "scripts/research_controller_ablation.py") != controller_lock["source_sha256"]:
+        raise ValueError("controller ablation source changed")
+    if controller_lock["source_isolation_lock_sha256"] != digest(
+        ROOT / "runs/research-isolation/locked-selection.json"
+    ):
+        raise ValueError("controller ablation selection dependency changed")
+    expected_controller = {
+        (scene, seed, delay, method, controller): value
+        for scene in ("two_trap", "merge", "dense_highway")
+        for seed in range(1001, 1011)
+        for delay in ("fast", "nominal", "slow", "long", "jitter")
+        for controller in ("ppo", "pd")
+        for method, value in (
+            ("deadline", locks["isolation"]["deadline"]),
+            ("periodic", locks["isolation"]["periodic"]),
+            ("periodic_gated", 10.0),
+            ("benefit", 0),
+        )
+    }
+    actual_controller = {
+        (r["scenario"], r["seed"], r["delay"], r["method"], r["controller"]): r["value"]
+        for r in controller_rows
+    }
+    if actual_controller != expected_controller or any(
+        r["gamma_sigma"] != 0 for r in controller_rows
+    ):
+        raise ValueError("controller ablation cells/configuration differ from design")
+    controller_summary = summary(
+        [{**r, "method": r["controller"] + "_controller"} for r in controller_rows]
+    )
+    controller_pairs = {}
+    for method in controller_lock["methods"]:
+        rows = [{**r, "method": r["controller"]} for r in controller_rows if r["method"] == method]
+        controller_pairs[method] = paired(rows, "pd", "ppo")
+    with gzip.GzipFile(
+        filename=str(data_dir / "controller-ablation.jsonl.gz"), mode="wb", mtime=0
+    ) as stream:
+        stream.write(controller_path.read_bytes())
+    shutil.copy2(controller_lock_path, OUT / "controller-ablation-lock.json")
+    live_dir = ROOT / "runs/research-live/exploratory-single-seed"
+    live = json.loads((live_dir / "results.json").read_text())
+    live_rows = [
+        {
+            **r,
+            "method": "deadline_live" if r["mode"] == "proposed" else "polling_live",
+            "success": not r["crashed"] and r["route_pct"] >= 99,
+        }
+        for r in live["episodes"]
+    ]
+    if len(live_rows) != 6 or any(r["router_fallbacks"] for r in live_rows):
+        raise ValueError("unexpected live probe size/fallback")
+    shutil.copytree(live_dir, OUT / "live-qwen", dirs_exist_ok=True)
     summaries = {
         "Original scenarios": summary(data["isolation"]),
         "Random initial polling offset": summary(data["phase"]),
@@ -404,20 +523,36 @@ def main():
         "created_at": datetime.now(timezone.utc).isoformat(),
         "summaries": summaries,
         "by_delay": by_delay,
+        "controller_ablation": controller_summary,
+        "controller_paired_comparisons": controller_pairs,
+        "live_qwen_exploratory": summary(live_rows),
+        "clock_control": clock_analysis,
         "paired_comparisons": comparisons,
         "audit": audit,
     }
     (OUT / "statistics.json").write_text(json.dumps(payload, indent=2, allow_nan=False) + "\n")
     (OUT / "audit.json").write_text(json.dumps(audit, indent=2) + "\n")
     chart = figures(summaries)
-    sections = []
+    phase_result = summaries["Random initial polling offset"]["deadline"]
+    phase_poll = summaries["Random initial polling offset"]["periodic_conditioned"]
+    call_saving = 100 * (1 - phase_result["router_calls"] / phase_poll["router_calls"])
+    sections = [
+        (
+            "Measured outcome",
+            [
+                f"The clean scheduling win occurs in the randomized-initial-offset suite: {call_saving:.1f}% fewer planner calls than scenario/delay-conditioned polling, with observed route-success {100 * phase_result['success']:.2f}% versus {100 * phase_poll['success']:.2f}%, and zero crashes in both 360-episode groups. Native route-success means at least 99% of the route, not necessarily exact arrival.",
+                "This is not a universal win. The original zero-offset suite loses a small amount of strict success, the upstream procedural-road controller still crashes/timeouts, and the matched no-latency/TTC controls are highly competitive. The principal contribution is a controlled evaluation and timing-sensitivity finding, not established algorithmic novelty.",
+            ],
+        )
+    ]
     sections.append(
         (
             "Question and experimental controls",
             [
                 "Can forecasting maneuver opportunity loss relative to planning delay improve the safety-progress-call tradeoff? Every scheduler in a suite shares the same driver, planner, observations and safety backup. The latency ablation changes only estimated latency after copying the selected deadline buffer.",
-                "The strongest opponents include polling tuned independently for each scenario/environment and delay, a10Hz polling policy with the same cheap usefulness gate, immediate usefulness, and TTC. Gated polling has a shorter minimum query cooldown; it is a strong comparator, not a pure deadline ablation.",
-                f"Validation: 2,928 physical episodes. Held-out: {audit['heldout_episodes']:,} episodes. Original-scenario seeds1001-1040; random-offset seeds1101-1140; upstream road seeds2001-2040. Every selection and source/checkpoint hash was frozen before its held-out launch.",
+                "There are two implementations: the original straight-road scenarios retain the existing frozen PPO lane regulators and CBF-style filter; upstream procedural roads use a separate classical PID/IDM tracker, finite-horizon lane/speed planner and common guard. This is not a demonstrated port of the original learned controller or CBF certificate to curved roads.",
+                "The strongest opponents include polling tuned independently for each scenario/environment and delay, a 10Hz polling policy with the same cheap usefulness gate, immediate usefulness, and TTC. Gated polling has a shorter minimum query cooldown; it is a strong comparator, not a pure deadline ablation.",
+                f"Validation: 2,928 physical episodes. Held-out: {audit['heldout_episodes']:,} episodes. Original-scenario seeds 1001-1040; random-offset seeds 1101-1140; upstream road seeds 2001-2040. Every selection and source/checkpoint hash was frozen before its held-out launch.",
             ],
         )
     )
@@ -455,11 +590,40 @@ def main():
         )
     sections.append(
         (
+            "Frozen PPO versus simple PD control",
+            [
+                controller_summary,
+                "A separate 1,200-episode paired ablation uses 10 scene seeds, four schedulers and five delays. Critic-distance inflation is zero for BOTH banks, with the same backup and admission guards. PD gains were fixed before these runs. The 10 seeds are the prospective controller-ablation subset, not another independent training population.",
+            ],
+        )
+    )
+    sections.append(
+        (
+            "Actual language-model integration (exploratory)",
+            [
+                summary(live_rows),
+                f"Six physical episodes use pinned Qwen2.5-1.5B CPU inference with wall-clock-paced control. The model made {sum(r['router_live_calls'] for r in live_rows)} actual closed-loop calls and used no fallbacks. Both systems stalled in the two-trap scenario; the deadline system reached 83.1% versus 85.2% for polling. This single-seed integration check does not establish model superiority and is excluded from the controlled benchmark statistics.",
+            ],
+        )
+    )
+    sections.append(
+        (
+            "Controlled initial-offset finding",
+            [
+                "An additional 1,080 physical runs plus 360 reused phase-suite rows compare zero versus uniformly randomized initial timer offsets on exactly matched scenes, delays and 40 seed clusters. At fixed 0.1 Hz, observed success falls from 360/360 to 282/360: -21.67 percentage points (95% paired seed-cluster interval -26.67 to -16.67). No collisions occur in either group. At 1 Hz the offset effect reverses: success rises from 340/360 to 349/360 (+2.50 points, interval +0.83 to +4.72).",
+                "Thus a large apparent polling result can depend on its initial clock alignment, and the direction depends on rate. These are rolling timers reset on actual submissions, not absolute wall-clock schedules. This post-primary mechanistic control is exploratory and does not establish a new phenomenon in the literature or a universal scheduler advantage.",
+            ],
+        )
+    )
+    sections.append(
+        (
             "Interpretation and limitations",
             [
                 "This is a reproducible environment-based benchmark study. The report's exploratory call-win screen checks a negative paired call-difference interval, success-difference lower bound at least -2 percentage points, route-difference lower bound at least -1 point, and no higher observed collision incidence. This descriptive screen is not a preregistered formal noninferiority test, a rare-event safety guarantee or a multiplicity-corrected SOTA claim.",
                 "Bootstrap resampling clusters by scene seed jointly across scenarios, environments and delays. Safe and generalization share a geometry for the same seed. Frozen existing policies provide conditional evaluation; independent training-seed variation is not measured. Zero observed crashes or zero-width bootstrap intervals do not establish zero population risk.",
                 "Native study records call counts, not end-to-end compute savings. Road artifacts separately record process CPU, elapsed planner/scheduler sections, and complete control CPU. All planner delays are injected stress conditions, not measured LLM inference. Neither curves, uncertainty modelling nor empirical survival establish a CBF theorem.",
+                "The native held-out bulk runs did not record achieved lateral jerk; those values are null and must not be treated as zero or inferred from commanded jerk. Nine supplementary full action traces were replayed successfully, but that subset does not supply a population comfort estimate. Mean episode duration includes failures/timeouts and is not unconditional time-to-goal.",
+                "The original zero-offset comparison reduces calls by 47% versus tuned polling but loses 0.83 percentage points of observed success; its success-difference lower interval is -2.50 points, failing the report's exploratory 2-point screen. Dense traffic exposes missed spatial opportunities in the speed-based gate. A gap-aware candidate was evaluated on development data only and was not promoted to a fresh held-out claim. TTC and matched no-latency controls remain competitive; the latency term itself has no established incremental benefit.",
                 "Independent review corrected a mismatched no-latency buffer, an unintended road polling cap, and stale stop-plan recovery, including a stopped mid-transition vehicle. All pre-freeze development versions and failures are retained and excluded from final selection.",
                 "Algorithmic novelty is not established: event-triggered MPC, risk-triggered replanning and robot metareasoning already address close questions. The useful contribution is the controlled comparison, audited failure mechanisms and measured operating conditions.",
             ],
@@ -478,7 +642,7 @@ def main():
     lines = [
         "# When should a slow maneuver planner run?",
         "",
-        "Audited physical MetaDrive scheduling study. November11,2026.",
+        "Audited physical MetaDrive scheduling study. November 11, 2026.",
         "",
     ]
     for title, blocks in sections:

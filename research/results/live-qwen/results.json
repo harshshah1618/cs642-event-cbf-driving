@@ -1,0 +1,2447 @@
+{
+  "aggregates": {
+    "dense_highway": {
+      "fixed_rate_shielded": {
+        "acceleration_tracking_rmse": {
+          "ci95": 0.0,
+          "max": 0.00043055741982408113,
+          "mean": 0.00043055741982408113,
+          "min": 0.00043055741982408113,
+          "n": 1,
+          "std": 0.0
+        },
+        "actuator_saturation_fraction": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "avg_speed": {
+          "ci95": 0.0,
+          "max": 12.495739316561435,
+          "mean": 12.495739316561435,
+          "min": 12.495739316561435,
+          "n": 1,
+          "std": 0.0
+        },
+        "braking_infeasible_ticks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "call_attempts": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_applied": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_rejected": {
+          "ci95": 0.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_suppressed": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "crash_count": 0,
+        "crash_pct": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "crash_rate": 0.0,
+        "end_reason": {
+          "route_complete": 1
+        },
+        "freeze_count": 0,
+        "freeze_pct": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "freeze_rate": 0.0,
+        "infeasible_ticks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "max_pending_s": {
+          "ci95": 0.0,
+          "max": 12.0,
+          "mean": 12.0,
+          "min": 12.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "mean_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 0.008462897425157611,
+          "mean": 0.008462897425157611,
+          "min": 0.008462897425157611,
+          "n": 1,
+          "std": 0.0
+        },
+        "min_barrier_h": {
+          "ci95": 0.0,
+          "max": -2.4708462715148922,
+          "mean": -2.4708462715148922,
+          "min": -2.4708462715148922,
+          "n": 1,
+          "std": 0.0
+        },
+        "min_braking_h": {
+          "ci95": 0.0,
+          "max": 4.211434834297432,
+          "mean": 4.211434834297432,
+          "min": 4.211434834297432,
+          "n": 1,
+          "std": 0.0
+        },
+        "n": 1,
+        "out_of_road": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "override_fraction": {
+          "ci95": 0.0,
+          "max": 0.9614074914869466,
+          "mean": 0.9614074914869466,
+          "min": 0.9614074914869466,
+          "n": 1,
+          "std": 0.0
+        },
+        "peak_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 0.6724544800817966,
+          "mean": 0.6724544800817966,
+          "min": 0.6724544800817966,
+          "n": 1,
+          "std": 0.0
+        },
+        "peak_sigma": {
+          "ci95": 0.0,
+          "max": 4.423915104000643,
+          "mean": 4.423915104000643,
+          "min": 4.423915104000643,
+          "n": 1,
+          "std": 0.0
+        },
+        "pending_survival_rate": 1.0,
+        "pending_ticks": {
+          "ci95": 0.0,
+          "max": 870.0,
+          "mean": 870.0,
+          "min": 870.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "plant_peak_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 0.2421341196168214,
+          "mean": 0.2421341196168214,
+          "min": 0.2421341196168214,
+          "n": 1,
+          "std": 0.0
+        },
+        "route_pct": {
+          "ci95": 0.0,
+          "max": 100.0,
+          "mean": 100.0,
+          "min": 100.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_calls": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_completion_tokens": {
+          "ci95": 0.0,
+          "max": 10.0,
+          "mean": 10.0,
+          "min": 10.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_fallbacks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_live_calls": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_live_fraction": 1.0,
+        "router_models": [
+          "Qwen/Qwen2.5-1.5B-Instruct"
+        ],
+        "router_prompt_tokens": {
+          "ci95": 0.0,
+          "max": 1222.0,
+          "mean": 1222.0,
+          "min": 1222.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_tokens": {
+          "ci95": 0.0,
+          "max": 1232.0,
+          "mean": 1232.0,
+          "min": 1232.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "safety_abort": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "safety_events": {
+          "ci95": 0.0,
+          "max": 139.0,
+          "mean": 139.0,
+          "min": 139.0,
+          "n": 1,
+          "std": 0.0
+        }
+      },
+      "proposed": {
+        "acceleration_tracking_rmse": {
+          "ci95": 0.0,
+          "max": 0.00043055741982408113,
+          "mean": 0.00043055741982408113,
+          "min": 0.00043055741982408113,
+          "n": 1,
+          "std": 0.0
+        },
+        "actuator_saturation_fraction": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "avg_speed": {
+          "ci95": 0.0,
+          "max": 12.495739316561435,
+          "mean": 12.495739316561435,
+          "min": 12.495739316561435,
+          "n": 1,
+          "std": 0.0
+        },
+        "braking_infeasible_ticks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "call_attempts": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_applied": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_rejected": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_suppressed": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "crash_count": 0,
+        "crash_pct": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "crash_rate": 0.0,
+        "end_reason": {
+          "route_complete": 1
+        },
+        "freeze_count": 0,
+        "freeze_pct": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "freeze_rate": 0.0,
+        "infeasible_ticks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "max_pending_s": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "mean_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 0.008462897425157611,
+          "mean": 0.008462897425157611,
+          "min": 0.008462897425157611,
+          "n": 1,
+          "std": 0.0
+        },
+        "min_barrier_h": {
+          "ci95": 0.0,
+          "max": -2.4708462715148922,
+          "mean": -2.4708462715148922,
+          "min": -2.4708462715148922,
+          "n": 1,
+          "std": 0.0
+        },
+        "min_braking_h": {
+          "ci95": 0.0,
+          "max": 4.211434834297432,
+          "mean": 4.211434834297432,
+          "min": 4.211434834297432,
+          "n": 1,
+          "std": 0.0
+        },
+        "n": 1,
+        "out_of_road": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "override_fraction": {
+          "ci95": 0.0,
+          "max": 0.9614074914869466,
+          "mean": 0.9614074914869466,
+          "min": 0.9614074914869466,
+          "n": 1,
+          "std": 0.0
+        },
+        "peak_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 0.6724544800817966,
+          "mean": 0.6724544800817966,
+          "min": 0.6724544800817966,
+          "n": 1,
+          "std": 0.0
+        },
+        "peak_sigma": {
+          "ci95": 0.0,
+          "max": 4.423915104000643,
+          "mean": 4.423915104000643,
+          "min": 4.423915104000643,
+          "n": 1,
+          "std": 0.0
+        },
+        "pending_survival_rate": 1.0,
+        "pending_ticks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "plant_peak_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 0.2421341196168214,
+          "mean": 0.2421341196168214,
+          "min": 0.2421341196168214,
+          "n": 1,
+          "std": 0.0
+        },
+        "route_pct": {
+          "ci95": 0.0,
+          "max": 100.0,
+          "mean": 100.0,
+          "min": 100.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_calls": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_completion_tokens": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_fallbacks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_live_calls": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_live_fraction": 0.0,
+        "router_models": [],
+        "router_prompt_tokens": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_tokens": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "safety_abort": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "safety_events": {
+          "ci95": 0.0,
+          "max": 139.0,
+          "mean": 139.0,
+          "min": 139.0,
+          "n": 1,
+          "std": 0.0
+        }
+      }
+    },
+    "merge": {
+      "fixed_rate_shielded": {
+        "acceleration_tracking_rmse": {
+          "ci95": 0.0,
+          "max": 0.04261859895311688,
+          "mean": 0.04261859895311688,
+          "min": 0.04261859895311688,
+          "n": 1,
+          "std": 0.0
+        },
+        "actuator_saturation_fraction": {
+          "ci95": 0.0,
+          "max": 0.08743169398907104,
+          "mean": 0.08743169398907104,
+          "min": 0.08743169398907104,
+          "n": 1,
+          "std": 0.0
+        },
+        "avg_speed": {
+          "ci95": 0.0,
+          "max": 15.037455324266777,
+          "mean": 15.037455324266777,
+          "min": 15.037455324266777,
+          "n": 1,
+          "std": 0.0
+        },
+        "braking_infeasible_ticks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "call_attempts": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_applied": {
+          "ci95": 0.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_rejected": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_suppressed": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "crash_count": 0,
+        "crash_pct": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "crash_rate": 0.0,
+        "end_reason": {
+          "route_complete": 1
+        },
+        "freeze_count": 0,
+        "freeze_pct": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "freeze_rate": 0.0,
+        "infeasible_ticks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "max_pending_s": {
+          "ci95": 0.0,
+          "max": 9.64,
+          "mean": 9.64,
+          "min": 9.64,
+          "n": 1,
+          "std": 0.0
+        },
+        "mean_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 0.37048008310749986,
+          "mean": 0.37048008310749986,
+          "min": 0.37048008310749986,
+          "n": 1,
+          "std": 0.0
+        },
+        "min_barrier_h": {
+          "ci95": 0.0,
+          "max": -1.417557334899902,
+          "mean": -1.417557334899902,
+          "min": -1.417557334899902,
+          "n": 1,
+          "std": 0.0
+        },
+        "min_braking_h": {
+          "ci95": 0.0,
+          "max": 2.617955672805072,
+          "mean": 2.617955672805072,
+          "min": 2.617955672805072,
+          "n": 1,
+          "std": 0.0
+        },
+        "n": 1,
+        "out_of_road": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "override_fraction": {
+          "ci95": 0.0,
+          "max": 0.8538251366120219,
+          "mean": 0.8538251366120219,
+          "min": 0.8538251366120219,
+          "n": 1,
+          "std": 0.0
+        },
+        "peak_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 9.008103609085083,
+          "mean": 9.008103609085083,
+          "min": 9.008103609085083,
+          "n": 1,
+          "std": 0.0
+        },
+        "peak_sigma": {
+          "ci95": 0.0,
+          "max": 3.78414382104596,
+          "mean": 3.78414382104596,
+          "min": 3.78414382104596,
+          "n": 1,
+          "std": 0.0
+        },
+        "pending_survival_rate": 1.0,
+        "pending_ticks": {
+          "ci95": 0.0,
+          "max": 709.0,
+          "mean": 709.0,
+          "min": 709.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "plant_peak_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 30.9792160987854,
+          "mean": 30.9792160987854,
+          "min": 30.9792160987854,
+          "n": 1,
+          "std": 0.0
+        },
+        "route_pct": {
+          "ci95": 0.0,
+          "max": 100.0,
+          "mean": 100.0,
+          "min": 100.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_calls": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_completion_tokens": {
+          "ci95": 0.0,
+          "max": 10.0,
+          "mean": 10.0,
+          "min": 10.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_fallbacks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_live_calls": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_live_fraction": 1.0,
+        "router_models": [
+          "Qwen/Qwen2.5-1.5B-Instruct"
+        ],
+        "router_prompt_tokens": {
+          "ci95": 0.0,
+          "max": 948.0,
+          "mean": 948.0,
+          "min": 948.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_tokens": {
+          "ci95": 0.0,
+          "max": 958.0,
+          "mean": 958.0,
+          "min": 958.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "safety_abort": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "safety_events": {
+          "ci95": 0.0,
+          "max": 18.0,
+          "mean": 18.0,
+          "min": 18.0,
+          "n": 1,
+          "std": 0.0
+        }
+      },
+      "proposed": {
+        "acceleration_tracking_rmse": {
+          "ci95": 0.0,
+          "max": 0.0425369475997704,
+          "mean": 0.0425369475997704,
+          "min": 0.0425369475997704,
+          "n": 1,
+          "std": 0.0
+        },
+        "actuator_saturation_fraction": {
+          "ci95": 0.0,
+          "max": 0.08755129958960328,
+          "mean": 0.08755129958960328,
+          "min": 0.08755129958960328,
+          "n": 1,
+          "std": 0.0
+        },
+        "avg_speed": {
+          "ci95": 0.0,
+          "max": 15.07334363444233,
+          "mean": 15.07334363444233,
+          "min": 15.07334363444233,
+          "n": 1,
+          "std": 0.0
+        },
+        "braking_infeasible_ticks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "call_attempts": {
+          "ci95": 0.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_applied": {
+          "ci95": 0.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_rejected": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_suppressed": {
+          "ci95": 0.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "crash_count": 0,
+        "crash_pct": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "crash_rate": 0.0,
+        "end_reason": {
+          "route_complete": 1
+        },
+        "freeze_count": 0,
+        "freeze_pct": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "freeze_rate": 0.0,
+        "infeasible_ticks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "max_pending_s": {
+          "ci95": 0.0,
+          "max": 9.540000000000001,
+          "mean": 9.540000000000001,
+          "min": 9.540000000000001,
+          "n": 1,
+          "std": 0.0
+        },
+        "mean_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 0.37363279929818355,
+          "mean": 0.37363279929818355,
+          "min": 0.37363279929818355,
+          "n": 1,
+          "std": 0.0
+        },
+        "min_barrier_h": {
+          "ci95": 0.0,
+          "max": -1.4201095581054695,
+          "mean": -1.4201095581054695,
+          "min": -1.4201095581054695,
+          "n": 1,
+          "std": 0.0
+        },
+        "min_braking_h": {
+          "ci95": 0.0,
+          "max": 2.617955672805072,
+          "mean": 2.617955672805072,
+          "min": 2.617955672805072,
+          "n": 1,
+          "std": 0.0
+        },
+        "n": 1,
+        "out_of_road": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "override_fraction": {
+          "ci95": 0.0,
+          "max": 0.8481532147742818,
+          "mean": 0.8481532147742818,
+          "min": 0.8481532147742818,
+          "n": 1,
+          "std": 0.0
+        },
+        "peak_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 9.006747603416443,
+          "mean": 9.006747603416443,
+          "min": 9.006747603416443,
+          "n": 1,
+          "std": 0.0
+        },
+        "peak_sigma": {
+          "ci95": 0.0,
+          "max": 3.780984468767013,
+          "mean": 3.780984468767013,
+          "min": 3.780984468767013,
+          "n": 1,
+          "std": 0.0
+        },
+        "pending_survival_rate": 1.0,
+        "pending_ticks": {
+          "ci95": 0.0,
+          "max": 478.0,
+          "mean": 478.0,
+          "min": 478.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "plant_peak_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 31.020939350128174,
+          "mean": 31.020939350128174,
+          "min": 31.020939350128174,
+          "n": 1,
+          "std": 0.0
+        },
+        "route_pct": {
+          "ci95": 0.0,
+          "max": 100.0,
+          "mean": 100.0,
+          "min": 100.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_calls": {
+          "ci95": 0.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_completion_tokens": {
+          "ci95": 0.0,
+          "max": 5.0,
+          "mean": 5.0,
+          "min": 5.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_fallbacks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_live_calls": {
+          "ci95": 0.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_live_fraction": 1.0,
+        "router_models": [
+          "Qwen/Qwen2.5-1.5B-Instruct"
+        ],
+        "router_prompt_tokens": {
+          "ci95": 0.0,
+          "max": 474.0,
+          "mean": 474.0,
+          "min": 474.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_tokens": {
+          "ci95": 0.0,
+          "max": 479.0,
+          "mean": 479.0,
+          "min": 479.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "safety_abort": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "safety_events": {
+          "ci95": 0.0,
+          "max": 18.0,
+          "mean": 18.0,
+          "min": 18.0,
+          "n": 1,
+          "std": 0.0
+        }
+      }
+    },
+    "two_trap": {
+      "fixed_rate_shielded": {
+        "acceleration_tracking_rmse": {
+          "ci95": 0.0,
+          "max": 2.0499464552615514,
+          "mean": 2.0499464552615514,
+          "min": 2.0499464552615514,
+          "n": 1,
+          "std": 0.0
+        },
+        "actuator_saturation_fraction": {
+          "ci95": 0.0,
+          "max": 0.276,
+          "mean": 0.276,
+          "min": 0.276,
+          "n": 1,
+          "std": 0.0
+        },
+        "avg_speed": {
+          "ci95": 0.0,
+          "max": 7.964664459228516,
+          "mean": 7.964664459228516,
+          "min": 7.964664459228516,
+          "n": 1,
+          "std": 0.0
+        },
+        "braking_infeasible_ticks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "call_attempts": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_applied": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_rejected": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_suppressed": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "crash_count": 0,
+        "crash_pct": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "crash_rate": 0.0,
+        "end_reason": {
+          "timeout": 1
+        },
+        "freeze_count": 1,
+        "freeze_pct": {
+          "ci95": 0.0,
+          "max": 100.0,
+          "mean": 100.0,
+          "min": 100.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "freeze_rate": 1.0,
+        "infeasible_ticks": {
+          "ci95": 0.0,
+          "max": 222.0,
+          "mean": 222.0,
+          "min": 222.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "max_pending_s": {
+          "ci95": 0.0,
+          "max": 7.32,
+          "mean": 7.32,
+          "min": 7.32,
+          "n": 1,
+          "std": 0.0
+        },
+        "mean_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 0.5041973442664264,
+          "mean": 0.5041973442664264,
+          "min": 0.5041973442664264,
+          "n": 1,
+          "std": 0.0
+        },
+        "min_barrier_h": {
+          "ci95": 0.0,
+          "max": -8.50433109097212,
+          "mean": -8.50433109097212,
+          "min": -8.50433109097212,
+          "n": 1,
+          "std": 0.0
+        },
+        "min_braking_h": {
+          "ci95": 0.0,
+          "max": 0.2519764033313878,
+          "mean": 0.2519764033313878,
+          "min": 0.2519764033313878,
+          "n": 1,
+          "std": 0.0
+        },
+        "n": 1,
+        "out_of_road": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "override_fraction": {
+          "ci95": 0.0,
+          "max": 0.803,
+          "mean": 0.803,
+          "min": 0.803,
+          "n": 1,
+          "std": 0.0
+        },
+        "peak_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 13.448190689086914,
+          "mean": 13.448190689086914,
+          "min": 13.448190689086914,
+          "n": 1,
+          "std": 0.0
+        },
+        "peak_sigma": {
+          "ci95": 0.0,
+          "max": 17.54861263904115,
+          "mean": 17.54861263904115,
+          "min": 17.54861263904115,
+          "n": 1,
+          "std": 0.0
+        },
+        "pending_survival_rate": 1.0,
+        "pending_ticks": {
+          "ci95": 0.0,
+          "max": 724.0,
+          "mean": 724.0,
+          "min": 724.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "plant_peak_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 190.36978483200073,
+          "mean": 190.36978483200073,
+          "min": 190.36978483200073,
+          "n": 1,
+          "std": 0.0
+        },
+        "route_pct": {
+          "ci95": 0.0,
+          "max": 85.15285371569557,
+          "mean": 85.15285371569557,
+          "min": 85.15285371569557,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_calls": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_completion_tokens": {
+          "ci95": 0.0,
+          "max": 10.0,
+          "mean": 10.0,
+          "min": 10.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_fallbacks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_live_calls": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_live_fraction": 1.0,
+        "router_models": [
+          "Qwen/Qwen2.5-1.5B-Instruct"
+        ],
+        "router_prompt_tokens": {
+          "ci95": 0.0,
+          "max": 721.0,
+          "mean": 721.0,
+          "min": 721.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_tokens": {
+          "ci95": 0.0,
+          "max": 731.0,
+          "mean": 731.0,
+          "min": 731.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "safety_abort": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "safety_events": {
+          "ci95": 0.0,
+          "max": 224.0,
+          "mean": 224.0,
+          "min": 224.0,
+          "n": 1,
+          "std": 0.0
+        }
+      },
+      "proposed": {
+        "acceleration_tracking_rmse": {
+          "ci95": 0.0,
+          "max": 2.2088143303000636,
+          "mean": 2.2088143303000636,
+          "min": 2.2088143303000636,
+          "n": 1,
+          "std": 0.0
+        },
+        "actuator_saturation_fraction": {
+          "ci95": 0.0,
+          "max": 0.276,
+          "mean": 0.276,
+          "min": 0.276,
+          "n": 1,
+          "std": 0.0
+        },
+        "avg_speed": {
+          "ci95": 0.0,
+          "max": 7.76196060180664,
+          "mean": 7.76196060180664,
+          "min": 7.76196060180664,
+          "n": 1,
+          "std": 0.0
+        },
+        "braking_infeasible_ticks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "call_attempts": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_applied": {
+          "ci95": 0.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_rejected": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "calls_suppressed": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "crash_count": 0,
+        "crash_pct": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "crash_rate": 0.0,
+        "end_reason": {
+          "timeout": 1
+        },
+        "freeze_count": 1,
+        "freeze_pct": {
+          "ci95": 0.0,
+          "max": 100.0,
+          "mean": 100.0,
+          "min": 100.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "freeze_rate": 1.0,
+        "infeasible_ticks": {
+          "ci95": 0.0,
+          "max": 246.0,
+          "mean": 246.0,
+          "min": 246.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "max_pending_s": {
+          "ci95": 0.0,
+          "max": 7.6000000000000005,
+          "mean": 7.6000000000000005,
+          "min": 7.6000000000000005,
+          "n": 1,
+          "std": 0.0
+        },
+        "mean_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 0.5042110735832996,
+          "mean": 0.5042110735832996,
+          "min": 0.5042110735832996,
+          "n": 1,
+          "std": 0.0
+        },
+        "min_barrier_h": {
+          "ci95": 0.0,
+          "max": -8.50433109097212,
+          "mean": -8.50433109097212,
+          "min": -8.50433109097212,
+          "n": 1,
+          "std": 0.0
+        },
+        "min_braking_h": {
+          "ci95": 0.0,
+          "max": 0.2519764033313878,
+          "mean": 0.2519764033313878,
+          "min": 0.2519764033313878,
+          "n": 1,
+          "std": 0.0
+        },
+        "n": 1,
+        "out_of_road": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "override_fraction": {
+          "ci95": 0.0,
+          "max": 0.803,
+          "mean": 0.803,
+          "min": 0.803,
+          "n": 1,
+          "std": 0.0
+        },
+        "peak_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 13.448059558868408,
+          "mean": 13.448059558868408,
+          "min": 13.448059558868408,
+          "n": 1,
+          "std": 0.0
+        },
+        "peak_sigma": {
+          "ci95": 0.0,
+          "max": 17.54861263904115,
+          "mean": 17.54861263904115,
+          "min": 17.54861263904115,
+          "n": 1,
+          "std": 0.0
+        },
+        "pending_survival_rate": 1.0,
+        "pending_ticks": {
+          "ci95": 0.0,
+          "max": 704.0,
+          "mean": 704.0,
+          "min": 704.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "plant_peak_lateral_jerk": {
+          "ci95": 0.0,
+          "max": 190.3429627418518,
+          "mean": 190.3429627418518,
+          "min": 190.3429627418518,
+          "n": 1,
+          "std": 0.0
+        },
+        "route_pct": {
+          "ci95": 0.0,
+          "max": 83.12581514147682,
+          "mean": 83.12581514147682,
+          "min": 83.12581514147682,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_calls": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_completion_tokens": {
+          "ci95": 0.0,
+          "max": 10.0,
+          "mean": 10.0,
+          "min": 10.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_fallbacks": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_live_calls": {
+          "ci95": 0.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 2.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_live_fraction": 1.0,
+        "router_models": [
+          "Qwen/Qwen2.5-1.5B-Instruct"
+        ],
+        "router_prompt_tokens": {
+          "ci95": 0.0,
+          "max": 759.0,
+          "mean": 759.0,
+          "min": 759.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "router_tokens": {
+          "ci95": 0.0,
+          "max": 769.0,
+          "mean": 769.0,
+          "min": 769.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "safety_abort": {
+          "ci95": 0.0,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "std": 0.0
+        },
+        "safety_events": {
+          "ci95": 0.0,
+          "max": 248.0,
+          "mean": 248.0,
+          "min": 248.0,
+          "n": 1,
+          "std": 0.0
+        }
+      }
+    }
+  },
+  "aliases": {
+    "RETURN_RIGHT": "CRUISE_RIGHT"
+  },
+  "config_sha256": "20a3b35660221fcd2c14c1f6f72abca10e98ae09e3e5322edb2a5d21e90ea80b",
+  "created_at": "2026-11-11T10:00:50.648Z",
+  "environment": {
+    "implementation": "CPython",
+    "machine": "x86_64",
+    "metadrive_source_commit": "fe54b03327b14bcfc17a9a04b60c8abbee4d7ab1",
+    "package_version": "1.0.0",
+    "packages": {
+      "accelerate": "1.15.0",
+      "gymnasium": "1.4.0",
+      "highway-env": null,
+      "matplotlib": "3.11.2",
+      "metadrive-simulator": "0.4.3",
+      "numpy": "2.5.4",
+      "panda3d": "1.10.16",
+      "pyyaml": "6.0.3",
+      "safetensors": "0.8.0",
+      "torch": "2.15.0+cpu",
+      "transformers": "4.57.6"
+    },
+    "platform": "Linux-7.3.3-1-cachyos-x86_64-with-glibc2.44",
+    "python": "3.12.13"
+  },
+  "episodes": [
+    {
+      "acceleration_tracking_rmse": 2.2088143303000636,
+      "actuator_saturation_fraction": 0.276,
+      "avg_speed": 7.76196060180664,
+      "braking_infeasible_ticks": 0,
+      "call_attempts": 2,
+      "calls": [
+        {
+          "applied": true,
+          "backend": "local_transformers",
+          "completion_tokens": 5,
+          "error": null,
+          "fallback_used": false,
+          "finish_reason": "stop",
+          "from": "CRUISE_RIGHT",
+          "latency_s": 7.602295419994334,
+          "live": true,
+          "model": "Qwen/Qwen2.5-1.5B-Instruct",
+          "prompt_hash": "feea08241fed1e87e80f673f636a90b4928116adf15ef0993ff060233a24d4ab",
+          "prompt_tokens": 363,
+          "ready_at": 7.602295419994334,
+          "reason": "deadline",
+          "rejected": false,
+          "request_id": "41e3a6-001",
+          "sigma": 1.8785843606127444,
+          "switched": true,
+          "t": 0.0,
+          "to": "OVERTAKE_LEFT",
+          "total_tokens": 368,
+          "wall_latency_ms": 7602.295419994334
+        },
+        {
+          "applied": false,
+          "backend": "local_llm",
+          "from": "CRUISE_RIGHT",
+          "reason": "deadline",
+          "sigma": 1.87863382017569,
+          "suppressed": true,
+          "t": 0.02,
+          "to": "CRUISE_RIGHT"
+        },
+        {
+          "aborted": true,
+          "applied": false,
+          "backend": "local_transformers",
+          "completion_tokens": 5,
+          "error": null,
+          "fallback_used": false,
+          "finish_reason": "stop",
+          "from": "OVERTAKE_LEFT",
+          "latency_s": 7.506647451002207,
+          "live": true,
+          "model": "Qwen/Qwen2.5-1.5B-Instruct",
+          "prompt_hash": "0e7f670aeef6bd067d9b9f14f65c197647366ce7a82383e7c1bf5baeaa8f0bf7",
+          "prompt_tokens": 396,
+          "ready_at": 21.046647451002208,
+          "reason": "deadline",
+          "rejected": false,
+          "request_id": "41e3a6-002",
+          "sigma": 0.24477773123013047,
+          "t": 13.540000000000001,
+          "to": "OVERTAKE_LEFT",
+          "total_tokens": 401,
+          "wall_latency_ms": 7506.647451002209
+        },
+        {
+          "applied": false,
+          "backend": "local_llm",
+          "from": "OVERTAKE_LEFT",
+          "reason": "deadline",
+          "sigma": 0.22431507951468063,
+          "suppressed": true,
+          "t": 13.56,
+          "to": "OVERTAKE_LEFT"
+        }
+      ],
+      "calls_applied": 1,
+      "calls_rejected": 0,
+      "calls_suppressed": 2,
+      "crash_time": null,
+      "crashed": false,
+      "end_reason": "timeout",
+      "end_time": 20.0,
+      "freeze": true,
+      "infeasible_ticks": 246,
+      "max_pending_s": 7.6000000000000005,
+      "mean_lateral_jerk": 0.5042110735832996,
+      "min_barrier_h": -8.50433109097212,
+      "min_braking_h": 0.2519764033313878,
+      "mode": "proposed",
+      "out_of_road": false,
+      "override_fraction": 0.803,
+      "params": {
+        "cut_in_gap": 26.6353737294639,
+        "cut_in_speed": 8.265416356708213,
+        "cut_in_trigger_x": 92.0,
+        "ego_vx": 20.979591152708284,
+        "lane_num": 2,
+        "lane_width": 4.0,
+        "map": "straight",
+        "physics_dt": 0.02,
+        "scenario_config": {
+          "duration": 20.0,
+          "name": "two_trap",
+          "params": {},
+          "randomize": true,
+          "route_length": null,
+          "seed": 3001,
+          "simulator": "metadrive"
+        },
+        "scenario_seed": 3001,
+        "simulator": "metadrive",
+        "spawn_x": 11.012418246820797,
+        "stalled_x": 85.88097857005965
+      },
+      "peak_lateral_jerk": 13.448059558868408,
+      "peak_sigma": 17.54861263904115,
+      "pending_survival": true,
+      "pending_ticks": 704,
+      "plant_peak_lateral_jerk": 190.3429627418518,
+      "repeat": 0,
+      "route_pct": 83.12581514147682,
+      "router_calls": 2,
+      "router_completion_tokens": 10,
+      "router_fallbacks": 0,
+      "router_live_calls": 2,
+      "router_models": [
+        "Qwen/Qwen2.5-1.5B-Instruct"
+      ],
+      "router_prompt_tokens": 759,
+      "router_tokens": 769,
+      "safety_abort": false,
+      "safety_events": 248,
+      "scenario": "two_trap",
+      "seed": 3001,
+      "vx": 8.472058296203613,
+      "x": 166.2516302829536,
+      "y": 4.051955223083496
+    },
+    {
+      "acceleration_tracking_rmse": 2.0499464552615514,
+      "actuator_saturation_fraction": 0.276,
+      "avg_speed": 7.964664459228516,
+      "braking_infeasible_ticks": 0,
+      "call_attempts": 2,
+      "calls": [
+        {
+          "applied": true,
+          "backend": "local_transformers",
+          "completion_tokens": 5,
+          "error": null,
+          "fallback_used": false,
+          "finish_reason": "stop",
+          "from": "CRUISE_RIGHT",
+          "latency_s": 7.125992917994154,
+          "live": true,
+          "model": "Qwen/Qwen2.5-1.5B-Instruct",
+          "prompt_hash": "555bb8bf75e479f09d19acf887a38be8c4431742435009f31e567bdebcd05968",
+          "prompt_tokens": 364,
+          "ready_at": 7.125992917994154,
+          "reason": "fixed_rate",
+          "rejected": false,
+          "request_id": "1929c2-001",
+          "sigma": 1.8785843606127444,
+          "switched": true,
+          "t": 0.0,
+          "to": "OVERTAKE_LEFT",
+          "total_tokens": 369,
+          "wall_latency_ms": 7125.992917994154
+        },
+        {
+          "applied": true,
+          "backend": "local_transformers",
+          "completion_tokens": 5,
+          "error": null,
+          "fallback_used": false,
+          "finish_reason": "stop",
+          "from": "OVERTAKE_LEFT",
+          "latency_s": 7.330336892999185,
+          "live": true,
+          "model": "Qwen/Qwen2.5-1.5B-Instruct",
+          "prompt_hash": "87d37e3788dc267b805526b8a0a5fd9c29a9096c173967a40b32de42ab90c42a",
+          "prompt_tokens": 357,
+          "ready_at": 17.330336892999185,
+          "reason": "fixed_rate",
+          "rejected": false,
+          "request_id": "1929c2-002",
+          "sigma": 0.29053655536626577,
+          "switched": false,
+          "t": 10.0,
+          "to": "OVERTAKE_LEFT",
+          "total_tokens": 362,
+          "wall_latency_ms": 7330.336892999185
+        }
+      ],
+      "calls_applied": 2,
+      "calls_rejected": 0,
+      "calls_suppressed": 0,
+      "crash_time": null,
+      "crashed": false,
+      "end_reason": "timeout",
+      "end_time": 20.0,
+      "freeze": true,
+      "infeasible_ticks": 222,
+      "max_pending_s": 7.32,
+      "mean_lateral_jerk": 0.5041973442664264,
+      "min_barrier_h": -8.50433109097212,
+      "min_braking_h": 0.2519764033313878,
+      "mode": "fixed_rate_shielded",
+      "out_of_road": false,
+      "override_fraction": 0.803,
+      "params": {
+        "cut_in_gap": 26.6353737294639,
+        "cut_in_speed": 8.265416356708213,
+        "cut_in_trigger_x": 92.0,
+        "ego_vx": 20.979591152708284,
+        "lane_num": 2,
+        "lane_width": 4.0,
+        "map": "straight",
+        "physics_dt": 0.02,
+        "scenario_config": {
+          "duration": 20.0,
+          "name": "two_trap",
+          "params": {},
+          "randomize": true,
+          "route_length": null,
+          "seed": 3001,
+          "simulator": "metadrive"
+        },
+        "scenario_seed": 3001,
+        "simulator": "metadrive",
+        "spawn_x": 11.012418246820797,
+        "stalled_x": 85.88097857005965
+      },
+      "peak_lateral_jerk": 13.448190689086914,
+      "peak_sigma": 17.54861263904115,
+      "pending_survival": true,
+      "pending_ticks": 724,
+      "plant_peak_lateral_jerk": 190.36978483200073,
+      "repeat": 0,
+      "route_pct": 85.15285371569557,
+      "router_calls": 2,
+      "router_completion_tokens": 10,
+      "router_fallbacks": 0,
+      "router_live_calls": 2,
+      "router_models": [
+        "Qwen/Qwen2.5-1.5B-Instruct"
+      ],
+      "router_prompt_tokens": 721,
+      "router_tokens": 731,
+      "safety_abort": false,
+      "safety_events": 224,
+      "scenario": "two_trap",
+      "seed": 3001,
+      "vx": 8.416007995605469,
+      "x": 170.3057074313911,
+      "y": 4.061264991760254
+    },
+    {
+      "acceleration_tracking_rmse": 0.0425369475997704,
+      "actuator_saturation_fraction": 0.08755129958960328,
+      "avg_speed": 15.07334363444233,
+      "braking_infeasible_ticks": 0,
+      "call_attempts": 1,
+      "calls": [
+        {
+          "applied": true,
+          "backend": "local_transformers",
+          "completion_tokens": 5,
+          "error": null,
+          "fallback_used": false,
+          "finish_reason": "stop",
+          "from": "CRUISE_RIGHT",
+          "latency_s": 9.5466183919998,
+          "live": true,
+          "model": "Qwen/Qwen2.5-1.5B-Instruct",
+          "prompt_hash": "15dbdf4dff155b8c85584b9887759b1e6ab94a15388a8af565db55db78178cdf",
+          "prompt_tokens": 474,
+          "ready_at": 9.5466183919998,
+          "reason": "deadline",
+          "rejected": false,
+          "request_id": "20caad-001",
+          "sigma": 1.9062727232145193,
+          "switched": true,
+          "t": 0.0,
+          "to": "OVERTAKE_LEFT",
+          "total_tokens": 479,
+          "wall_latency_ms": 9546.6183919998
+        },
+        {
+          "applied": false,
+          "backend": "local_llm",
+          "from": "CRUISE_RIGHT",
+          "reason": "deadline",
+          "sigma": 1.9065065320575352,
+          "suppressed": true,
+          "t": 0.02,
+          "to": "CRUISE_RIGHT"
+        }
+      ],
+      "calls_applied": 1,
+      "calls_rejected": 0,
+      "calls_suppressed": 1,
+      "crash_time": null,
+      "crashed": false,
+      "end_reason": "route_complete",
+      "end_time": 14.620000000000001,
+      "freeze": false,
+      "infeasible_ticks": 0,
+      "max_pending_s": 9.540000000000001,
+      "mean_lateral_jerk": 0.37363279929818355,
+      "min_barrier_h": -1.4201095581054695,
+      "min_braking_h": 2.617955672805072,
+      "mode": "proposed",
+      "out_of_road": false,
+      "override_fraction": 0.8481532147742818,
+      "params": {
+        "ego_vx": 20.0,
+        "lane_num": 3,
+        "lane_width": 4.0,
+        "lead_gap": 67.94253801420999,
+        "lead_speed": 13.319727435138857,
+        "left_gap_0": 49.85122321257457,
+        "left_gap_1": 81.58843432365975,
+        "left_gaps": [
+          49.85122321257457,
+          81.58843432365975
+        ],
+        "left_speed_0": 16.26541635670821,
+        "left_speed_1": 17.731974158965897,
+        "left_speeds": [
+          16.26541635670821,
+          17.731974158965897
+        ],
+        "map": "straight",
+        "merger_gap": 31.69616234446676,
+        "merger_spawn_gap": 31.69616234446676,
+        "merger_spawn_speed": 13.283170719299818,
+        "merger_speed": 13.283170719299818,
+        "merger_vy": 0.543640791983419,
+        "physics_dt": 0.02,
+        "scenario_config": {
+          "duration": 20.0,
+          "name": "merge",
+          "params": {},
+          "randomize": true,
+          "route_length": null,
+          "seed": 3001,
+          "simulator": "metadrive"
+        },
+        "scenario_seed": 3001,
+        "simulator": "metadrive"
+      },
+      "peak_lateral_jerk": 9.006747603416443,
+      "peak_sigma": 3.780984468767013,
+      "pending_survival": true,
+      "pending_ticks": 478,
+      "plant_peak_lateral_jerk": 31.020939350128174,
+      "repeat": 0,
+      "route_pct": 100.0,
+      "router_calls": 1,
+      "router_completion_tokens": 5,
+      "router_fallbacks": 0,
+      "router_live_calls": 1,
+      "router_models": [
+        "Qwen/Qwen2.5-1.5B-Instruct"
+      ],
+      "router_prompt_tokens": 474,
+      "router_tokens": 479,
+      "safety_abort": false,
+      "safety_events": 18,
+      "scenario": "merge",
+      "seed": 3001,
+      "vx": 19.377948760986328,
+      "x": 220.37228393554688,
+      "y": 4.220122337341309
+    },
+    {
+      "acceleration_tracking_rmse": 0.04261859895311688,
+      "actuator_saturation_fraction": 0.08743169398907104,
+      "avg_speed": 15.037455324266777,
+      "braking_infeasible_ticks": 0,
+      "call_attempts": 2,
+      "calls": [
+        {
+          "applied": true,
+          "backend": "local_transformers",
+          "completion_tokens": 5,
+          "error": null,
+          "fallback_used": false,
+          "finish_reason": "stop",
+          "from": "CRUISE_RIGHT",
+          "latency_s": 9.648405573003402,
+          "live": true,
+          "model": "Qwen/Qwen2.5-1.5B-Instruct",
+          "prompt_hash": "b6c77eebc46d5ce4dd62e41dfb20bbcf047628286fe2147f62245f9f3a4a12ba",
+          "prompt_tokens": 475,
+          "ready_at": 9.648405573003402,
+          "reason": "fixed_rate",
+          "rejected": false,
+          "request_id": "048f50-001",
+          "sigma": 1.9062727232145193,
+          "switched": true,
+          "t": 0.0,
+          "to": "OVERTAKE_LEFT",
+          "total_tokens": 480,
+          "wall_latency_ms": 9648.405573003402
+        },
+        {
+          "aborted": true,
+          "applied": false,
+          "backend": "local_transformers",
+          "completion_tokens": 5,
+          "error": null,
+          "fallback_used": false,
+          "finish_reason": "stop",
+          "from": "OVERTAKE_LEFT",
+          "latency_s": 10.000425362995884,
+          "live": true,
+          "model": "Qwen/Qwen2.5-1.5B-Instruct",
+          "prompt_hash": "5a039147dc9cc40387cd6874615ea0effad77f0d585ace871668d6a7ed167846",
+          "prompt_tokens": 473,
+          "ready_at": 20.120425362995885,
+          "reason": "fixed_rate",
+          "rejected": false,
+          "request_id": "048f50-002",
+          "sigma": 2.796570230980817,
+          "t": 10.120000000000001,
+          "to": "OVERTAKE_LEFT",
+          "total_tokens": 478,
+          "wall_latency_ms": 10000.425362995884
+        }
+      ],
+      "calls_applied": 1,
+      "calls_rejected": 0,
+      "calls_suppressed": 0,
+      "crash_time": null,
+      "crashed": false,
+      "end_reason": "route_complete",
+      "end_time": 14.64,
+      "freeze": false,
+      "infeasible_ticks": 0,
+      "max_pending_s": 9.64,
+      "mean_lateral_jerk": 0.37048008310749986,
+      "min_barrier_h": -1.417557334899902,
+      "min_braking_h": 2.617955672805072,
+      "mode": "fixed_rate_shielded",
+      "out_of_road": false,
+      "override_fraction": 0.8538251366120219,
+      "params": {
+        "ego_vx": 20.0,
+        "lane_num": 3,
+        "lane_width": 4.0,
+        "lead_gap": 67.94253801420999,
+        "lead_speed": 13.319727435138857,
+        "left_gap_0": 49.85122321257457,
+        "left_gap_1": 81.58843432365975,
+        "left_gaps": [
+          49.85122321257457,
+          81.58843432365975
+        ],
+        "left_speed_0": 16.26541635670821,
+        "left_speed_1": 17.731974158965897,
+        "left_speeds": [
+          16.26541635670821,
+          17.731974158965897
+        ],
+        "map": "straight",
+        "merger_gap": 31.69616234446676,
+        "merger_spawn_gap": 31.69616234446676,
+        "merger_spawn_speed": 13.283170719299818,
+        "merger_speed": 13.283170719299818,
+        "merger_vy": 0.543640791983419,
+        "physics_dt": 0.02,
+        "scenario_config": {
+          "duration": 20.0,
+          "name": "merge",
+          "params": {},
+          "randomize": true,
+          "route_length": null,
+          "seed": 3001,
+          "simulator": "metadrive"
+        },
+        "scenario_seed": 3001,
+        "simulator": "metadrive"
+      },
+      "peak_lateral_jerk": 9.008103609085083,
+      "peak_sigma": 3.78414382104596,
+      "pending_survival": true,
+      "pending_ticks": 709,
+      "plant_peak_lateral_jerk": 30.9792160987854,
+      "repeat": 0,
+      "route_pct": 100.0,
+      "router_calls": 2,
+      "router_completion_tokens": 10,
+      "router_fallbacks": 0,
+      "router_live_calls": 2,
+      "router_models": [
+        "Qwen/Qwen2.5-1.5B-Instruct"
+      ],
+      "router_prompt_tokens": 948,
+      "router_tokens": 958,
+      "safety_abort": false,
+      "safety_events": 18,
+      "scenario": "merge",
+      "seed": 3001,
+      "vx": 19.286638259887695,
+      "x": 220.14834594726562,
+      "y": 4.237188339233398
+    },
+    {
+      "acceleration_tracking_rmse": 0.00043055741982408113,
+      "actuator_saturation_fraction": 0.0,
+      "avg_speed": 12.495739316561435,
+      "braking_infeasible_ticks": 0,
+      "call_attempts": 0,
+      "calls": [],
+      "calls_applied": 0,
+      "calls_rejected": 0,
+      "calls_suppressed": 0,
+      "crash_time": null,
+      "crashed": false,
+      "end_reason": "route_complete",
+      "end_time": 17.62,
+      "freeze": false,
+      "infeasible_ticks": 0,
+      "max_pending_s": 0.0,
+      "mean_lateral_jerk": 0.008462897425157611,
+      "min_barrier_h": -2.4708462715148922,
+      "min_braking_h": 4.211434834297432,
+      "mode": "proposed",
+      "out_of_road": false,
+      "override_fraction": 0.9614074914869466,
+      "params": {
+        "lane_num": 2,
+        "lane_width": 4.0,
+        "lanes": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "map": "straight",
+        "n_vehicles": 8,
+        "physics_dt": 0.02,
+        "position_jitter": [
+          5.012418246820797,
+          3.9591823054165705,
+          3.5285871420357893,
+          2.6353737294639004,
+          -5.203750929875362,
+          2.1959224768976924,
+          -0.38584207465595544,
+          -2.150487842100547
+        ],
+        "position_jitter_bounds": [
+          -6.0,
+          6.0
+        ],
+        "positions": [
+          50.0124182468208,
+          78.95918230541658,
+          113.52858714203579,
+          147.6353737294639,
+          29.796249070124638,
+          62.19592247689769,
+          94.61415792534405,
+          127.84951215789945
+        ],
+        "requested_n_vehicles": 8,
+        "scenario_config": {
+          "duration": 20.0,
+          "name": "dense_highway",
+          "params": {},
+          "randomize": true,
+          "route_length": null,
+          "seed": 3001,
+          "simulator": "metadrive"
+        },
+        "scenario_seed": 3001,
+        "simulator": "metadrive",
+        "speed_jitter": [
+          -0.42269406012435806,
+          -0.3678828936220193,
+          -0.22374215559743482,
+          -1.4800350885814493,
+          1.3532816817985127,
+          1.0068469350698224,
+          0.6592196661198488,
+          1.394917204779627
+        ],
+        "speed_jitter_bounds": [
+          -1.5,
+          1.5
+        ],
+        "speeds": [
+          10.577305939875641,
+          12.132117106377981,
+          10.776257844402565,
+          11.019964911418551,
+          19.353281681798514,
+          11.506846935069822,
+          18.15921966611985,
+          17.394917204779627
+        ],
+        "xs": [
+          50.0124182468208,
+          78.95918230541658,
+          113.52858714203579,
+          147.6353737294639,
+          29.796249070124638,
+          62.19592247689769,
+          94.61415792534405,
+          127.84951215789945
+        ]
+      },
+      "peak_lateral_jerk": 0.6724544800817966,
+      "peak_sigma": 4.423915104000643,
+      "pending_survival": true,
+      "pending_ticks": 0,
+      "plant_peak_lateral_jerk": 0.2421341196168214,
+      "repeat": 0,
+      "route_pct": 100.0,
+      "router_calls": 0,
+      "router_completion_tokens": 0,
+      "router_fallbacks": 0,
+      "router_live_calls": 0,
+      "router_models": [],
+      "router_prompt_tokens": 0,
+      "router_tokens": 0,
+      "safety_abort": false,
+      "safety_events": 139,
+      "scenario": "dense_highway",
+      "seed": 3001,
+      "vx": 10.576866149902344,
+      "x": 220.1749267578125,
+      "y": -0.0227687768638134
+    },
+    {
+      "acceleration_tracking_rmse": 0.00043055741982408113,
+      "actuator_saturation_fraction": 0.0,
+      "avg_speed": 12.495739316561435,
+      "braking_infeasible_ticks": 0,
+      "call_attempts": 2,
+      "calls": [
+        {
+          "applied": false,
+          "backend": "local_transformers",
+          "completion_tokens": 5,
+          "error": "pending call expired before its answer",
+          "fallback_used": false,
+          "finish_reason": "stop",
+          "from": "CRUISE_RIGHT",
+          "latency_s": 12.234360339003615,
+          "live": true,
+          "model": "Qwen/Qwen2.5-1.5B-Instruct",
+          "prompt_hash": "451c8743a039c3a1f3511be3c251f343ea2830979fd487699c1f79d604bf505c",
+          "prompt_tokens": 625,
+          "ready_at": 12.234360339003615,
+          "reason": "fixed_rate",
+          "rejected": true,
+          "request_id": "961e1b-001",
+          "sigma": 1.9062727232145193,
+          "t": 0.0,
+          "to": "OVERTAKE_LEFT",
+          "total_tokens": 630,
+          "wall_latency_ms": 12234.360339003615
+        },
+        {
+          "aborted": true,
+          "applied": false,
+          "backend": "local_transformers",
+          "completion_tokens": 5,
+          "error": null,
+          "fallback_used": false,
+          "finish_reason": "stop",
+          "from": "CRUISE_RIGHT",
+          "latency_s": 10.361654114996783,
+          "live": true,
+          "model": "Qwen/Qwen2.5-1.5B-Instruct",
+          "prompt_hash": "06b8febe13864deb87232af109bb4498a00cdd71611d8b6d120d03fadd96e9b8",
+          "prompt_tokens": 597,
+          "ready_at": 22.601654114996784,
+          "reason": "fixed_rate",
+          "rejected": false,
+          "request_id": "961e1b-002",
+          "sigma": 3.999579031870096,
+          "t": 12.24,
+          "to": "OVERTAKE_LEFT",
+          "total_tokens": 602,
+          "wall_latency_ms": 10361.654114996782
+        }
+      ],
+      "calls_applied": 0,
+      "calls_rejected": 1,
+      "calls_suppressed": 0,
+      "crash_time": null,
+      "crashed": false,
+      "end_reason": "route_complete",
+      "end_time": 17.62,
+      "freeze": false,
+      "infeasible_ticks": 0,
+      "max_pending_s": 12.0,
+      "mean_lateral_jerk": 0.008462897425157611,
+      "min_barrier_h": -2.4708462715148922,
+      "min_braking_h": 4.211434834297432,
+      "mode": "fixed_rate_shielded",
+      "out_of_road": false,
+      "override_fraction": 0.9614074914869466,
+      "params": {
+        "lane_num": 2,
+        "lane_width": 4.0,
+        "lanes": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "map": "straight",
+        "n_vehicles": 8,
+        "physics_dt": 0.02,
+        "position_jitter": [
+          5.012418246820797,
+          3.9591823054165705,
+          3.5285871420357893,
+          2.6353737294639004,
+          -5.203750929875362,
+          2.1959224768976924,
+          -0.38584207465595544,
+          -2.150487842100547
+        ],
+        "position_jitter_bounds": [
+          -6.0,
+          6.0
+        ],
+        "positions": [
+          50.0124182468208,
+          78.95918230541658,
+          113.52858714203579,
+          147.6353737294639,
+          29.796249070124638,
+          62.19592247689769,
+          94.61415792534405,
+          127.84951215789945
+        ],
+        "requested_n_vehicles": 8,
+        "scenario_config": {
+          "duration": 20.0,
+          "name": "dense_highway",
+          "params": {},
+          "randomize": true,
+          "route_length": null,
+          "seed": 3001,
+          "simulator": "metadrive"
+        },
+        "scenario_seed": 3001,
+        "simulator": "metadrive",
+        "speed_jitter": [
+          -0.42269406012435806,
+          -0.3678828936220193,
+          -0.22374215559743482,
+          -1.4800350885814493,
+          1.3532816817985127,
+          1.0068469350698224,
+          0.6592196661198488,
+          1.394917204779627
+        ],
+        "speed_jitter_bounds": [
+          -1.5,
+          1.5
+        ],
+        "speeds": [
+          10.577305939875641,
+          12.132117106377981,
+          10.776257844402565,
+          11.019964911418551,
+          19.353281681798514,
+          11.506846935069822,
+          18.15921966611985,
+          17.394917204779627
+        ],
+        "xs": [
+          50.0124182468208,
+          78.95918230541658,
+          113.52858714203579,
+          147.6353737294639,
+          29.796249070124638,
+          62.19592247689769,
+          94.61415792534405,
+          127.84951215789945
+        ]
+      },
+      "peak_lateral_jerk": 0.6724544800817966,
+      "peak_sigma": 4.423915104000643,
+      "pending_survival": true,
+      "pending_ticks": 870,
+      "plant_peak_lateral_jerk": 0.2421341196168214,
+      "repeat": 0,
+      "route_pct": 100.0,
+      "router_calls": 2,
+      "router_completion_tokens": 10,
+      "router_fallbacks": 0,
+      "router_live_calls": 2,
+      "router_models": [
+        "Qwen/Qwen2.5-1.5B-Instruct"
+      ],
+      "router_prompt_tokens": 1222,
+      "router_tokens": 1232,
+      "safety_abort": false,
+      "safety_events": 139,
+      "scenario": "dense_highway",
+      "seed": 3001,
+      "vx": 10.576866149902344,
+      "x": 220.1749267578125,
+      "y": -0.0227687768638134
+    }
+  ],
+  "git": {
+    "branch": "codex/latency-aware-research",
+    "commit": "01ba8e426940ef0a07020c24c07c296c48386ec4",
+    "dirty": true,
+    "dirty_files": 3
+  },
+  "router": {
+    "allow_live": true,
+    "describe": "local_transformers(Qwen/Qwen2.5-1.5B-Instruct@989aa7980e4cf806f80c7fef2b1adb7bc71aa306, device=cpu)",
+    "health": {
+      "consecutive_failures": 0,
+      "degraded": false,
+      "failed": false,
+      "healthy": true,
+      "last_error": null,
+      "last_latency_s": 10.36139597800502,
+      "status": "healthy",
+      "total_calls": 2,
+      "total_completion_tokens": 10,
+      "total_failures": 0,
+      "total_prompt_tokens": 1222,
+      "total_tokens": 1232
+    },
+    "live_capable": true,
+    "model": "qwen2.5:0.5b",
+    "name": "local_llm",
+    "telemetry": {
+      "completion_tokens": 45,
+      "models": [
+        "Qwen/Qwen2.5-1.5B-Instruct"
+      ],
+      "prompt_tokens": 4124,
+      "router_calls": 9,
+      "router_fallbacks": 0,
+      "router_live_calls": 9,
+      "router_live_fraction": 1.0,
+      "total_tokens": 4169
+    }
+  },
+  "router_telemetry": {
+    "completion_tokens": 45,
+    "models": [
+      "Qwen/Qwen2.5-1.5B-Instruct"
+    ],
+    "prompt_tokens": 4124,
+    "router_calls": 9,
+    "router_fallbacks": 0,
+    "router_live_calls": 9,
+    "router_live_fraction": 1.0,
+    "total_tokens": 4169
+  },
+  "run_id": "exploratory-single-seed",
+  "schema_version": 1,
+  "warnings": [
+    "RETURN_RIGHT.pt is missing in /home/harsh/Projects/cs642-event-cbf-research/event-cbf-driving/checkpoints/metadrive-calibrated; using CRUISE_RIGHT weights as an explicit RETURN_RIGHT alias.",
+    "regression gate: two_trap/proposed: froze in 100% of episodes (require_no_freeze=True)"
+  ]
+}
