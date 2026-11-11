@@ -27,7 +27,10 @@ MetaDrive gives exact labels for free, so we fine-tune the 3B on rendered frames
 | `prompts.py` | — | The router prompt, shared by training and evaluation (same text as round 2 `direct`). |
 | `train_lora.py` | Modal L40S | LoRA on the language model only; the vision encoder is frozen. Loss is on the answer token only. Logs to W&B. |
 | `eval_router.py` | Modal L4 | vLLM, batch size 1, constrained letter. Reports accuracy per scene kind and median/p90 latency. |
-| `modal_app.py` | your laptop | Orchestrates the pipeline: data → train → eval. |
+| `render_bridge.py` | Modal T4 (EGL) | Draws a point-mass world state as one MetaDrive front frame (the closed loop's camera). |
+| `vlm_policy.py` | Modal L4 | The fine-tuned model behind one call: (frame, ego lane, current skill) → (letter, seconds). |
+| `loop_eval.py` | Modal L4 | First closed loop: two-trap scenario, rule vs delayed rule vs VLM. |
+| `../modal/modal_app.py` | your laptop | Orchestrates everything on Modal: data → train → eval → closed loop. See `../modal/README.md`. |
 
 ## Scene kinds
 
@@ -62,9 +65,9 @@ All datasets live on the Modal volume `vlm-router`.
 
 ```bash
 pip install modal && modal setup            # once; needs a Modal secret named "wandb" with WANDB_API_KEY
-modal run vlm-router/modal_app.py --smoke   # tiny end-to-end check
-modal run --detach vlm-router/modal_app.py  # full: render (~30 T4 containers), train (L40S), eval (2x L4)
-modal run vlm-router/modal_app.py --stage eval --run-name qwen25vl3b-lora-r16   # one stage only
+modal run modal/modal_app.py --smoke   # tiny end-to-end check
+modal run --detach modal/modal_app.py  # full: render (~30 T4 containers), train (L40S), eval (2x L4)
+modal run modal/modal_app.py --stage eval --run-name qwen25vl3b-lora-r16   # one stage only
 ```
 
 - Results are written to `vlm-router/results/<run>/`.

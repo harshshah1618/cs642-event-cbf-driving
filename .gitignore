@@ -22,3 +22,4 @@ venv/
 
 # VLM router smoke-test outputs
 vlm-router/results/smoke/
+vlm-router/results/*/closed_loop_smoke/
