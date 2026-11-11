@@ -6,7 +6,6 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-
 from event_cbf_driving.config import ScenarioConfig, load_config
 from event_cbf_driving.env.registry import make_env as real_make_env
 from event_cbf_driving.eval import runner
@@ -33,7 +32,6 @@ def _grab(adapter, writer, scenario: str) -> None:
     front = sim.engine.get_sensor("rgb_front").perceive(False, origin, *FRONT_MOUNT)
     chase = sim.engine.get_sensor("rgb_chase").perceive(False, origin, *CHASE_MOUNT)
     panel = np.concatenate([_bgr(chase), _bgr(front)], axis=0)
-    snap = adapter.snapshot.__wrapped__() if hasattr(adapter.snapshot, "__wrapped__") else None
     t = adapter._step_i * 0.02
     cv2.putText(
         panel,

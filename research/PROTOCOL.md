@@ -1,0 +1,76 @@
+# Latency-aware maneuver scheduling: prospective protocol
+
+This protocol was written before validation or held-out experiments. This is an
+empirical research investigation, not an assertion of novelty or a safety proof.
+
+## Hypothesis
+
+An observed-traffic opportunity trigger that includes planner response time can
+improve progress per planner call over reactive intervention triggers and tuned
+periodic scheduling. It may fail against a simple immediate-benefit heuristic;
+that heuristic is a required opponent. Latency-aware triggering must also be
+compared to the identical trigger with latency removed.
+
+## Isolation study
+
+Use the existing physical MetaDrive scenario adapter, frozen PPO bank, common
+filter/backup, common admission check, and identical deterministic router. Disable
+pending-distance inflation for every scheduler to isolate scheduling. Compare
+legacy shield/sigma trigger; periodic rates 0.1, 0.25, 0.5, 1, 2, 10 Hz; TTC;
+immediate-benefit; deadline; and deadline without latency. Delays: 0.05, 0.3, 1,
+2 seconds, plus 0.8 +/- 0.5 seconds jitter. Simulation latency is injected, not a
+hardware benchmark. The router seed is scenario-seed dependent and identical
+across methods. Counterfactual trajectories can lead to different call times.
+
+Validation seeds 101-108, test seeds 1001-1040, across three scenario families.
+Use validation only to select polling rates and deadline buffer (0, 0.5, 1 s).
+Selection: maximize success (no crash and >=99% route), then mean route, then
+minimize calls. Report the entire frontier as well as this selected point. Freeze
+selections to JSON before test launch; never retune on test. Test opportunity
+thresholds/conditions are fixed in source before launch. Retain every failure.
+Use a PD lane regulator as an additional controller ablation on a smaller paired
+subset; do not call it a traffic-aware driver.
+
+## External environment study
+
+Use upstream SafeMetaDriveEnv and MetaDriveEnv with seeded procedural roads,
+including curves and traffic objects. This is a reproducible environment-based
+benchmark, not a claim of an official leaderboard result or reproduction of
+historical numbers. Implement a shared traffic-aware PID/IDM fast controller and
+finite-horizon lane planner. Compare identical schedulers with matched observation
+access. Include upstream IDM and released PPO ExpertPolicy as external controller
+references. Every method receives supported simulator state; do not compare scores
+to camera-only agents. Publish exact configurations, map fingerprints, observations,
+and upstream version. Verify train/validation/test seed sets and actual map hashes.
+
+Standard/no-added-delay results and latency-stress results must be separate.
+Planner timing and scheduler timing are measured on CPU. Injected delay is reported
+separately. No meaningful theorem follows from a short model-predictive guard.
+
+## Statistics and stopping criteria
+
+Primary endpoints: success, collision episode incidence, route completion, calls,
+planning CPU time, scheduler CPU time. Secondary: filter intervention, achieved
+jerk, stalls, deadline/admission rejections. Bootstrap paired scene seeds (cluster
+by scene across delays), report 95% intervals. Frozen existing checkpoints provide
+conditional evidence, not variation across independent training runs. Any newly
+trained comparison needs multiple independent training seeds.
+
+The intended win is lower compute at matched safety/progress, or higher success
+at matched compute. A reduction in calls alone is insufficient. If immediate
+benefit or strong periodic scheduling wins, report that result and identify which
+part of the hypothesis failed. Do not weaken opponents or change held-out scenes.
+
+CARLA/SafeBench and Bench2Drive require a separately verified runtime and competent
+base agent. They are subsequent transfer targets; do not claim execution or wins
+on them unless their actual evaluators have run.
+
+## Stronger polling reference (before held-out launch)
+
+In addition to the globally selected polling rate, evaluate a polling rate selected
+separately for each scenario/environment and delay condition using validation only.
+This gives polling the same knowledge of delay regimes as the predictive scheduler.
+Native held-out test size is therefore 4,200 episodes; upstream road held-out size
+is 3,360 including the two native reference agents on standard/no-delay runs.
+The road development run before the final physical-footprint implementation is
+retained as `pre-freeze-validation.jsonl`; it is excluded from selection.

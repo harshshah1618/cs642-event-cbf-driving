@@ -38,6 +38,7 @@ from event_cbf_driving.skills.ppo import SkillPolicy
 from event_cbf_driving.stack.blend import blend_actions, sigmoid_blend_alpha
 from event_cbf_driving.stack.pending import FuturePendingCall, PendingCall
 from event_cbf_driving.stack.result import RolloutResult, RolloutTracker
+from event_cbf_driving.stack.scheduling import lane_opportunity, opportunity_due
 
 logger = get_logger(__name__)
 
@@ -245,7 +246,13 @@ class DrivingStack:
             # ---- Event trigger (proposed) or timer (baselines). -----------
             trigger_reason: Optional[str] = None
             fixed_due = False
-            if base_mode == StackMode.PROPOSED:
+            if base_mode == StackMode.PROPOSED and cfg.trigger_policy != "legacy":
+                opportunity = lane_opportunity(snap, skill, transition_s=cfg.trigger_transition_s)
+                if opportunity_due(opportunity, cfg.trigger_policy,
+                                   cfg.trigger_latency_bound_s, cfg.trigger_buffer_s,
+                                   cfg.trigger_threshold_s):
+                    trigger_reason = cfg.trigger_policy
+            elif base_mode == StackMode.PROPOSED:
                 threshold = self.skills[sigma_skill].meta.threshold * cfg.sigma_threshold_scale
                 sigma_high = bool(sigma > threshold)
                 if not sigma_high:

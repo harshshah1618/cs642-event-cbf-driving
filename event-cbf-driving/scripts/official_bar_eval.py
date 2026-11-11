@@ -11,7 +11,6 @@ import json
 from pathlib import Path
 
 import numpy as np
-
 from event_cbf_driving.config import ScenarioConfig, load_config
 from event_cbf_driving.env.types import WorldSnapshot
 from event_cbf_driving.eval import runner

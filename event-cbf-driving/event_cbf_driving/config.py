@@ -350,6 +350,11 @@ class StackConfig:
     skill_switch_guard: bool = False
     rearm_on_skill_change: bool = False
     simulate_deadline_wait: bool = False
+    trigger_policy: str = "legacy"
+    trigger_latency_bound_s: float = 0.3
+    trigger_transition_s: float = 2.0
+    trigger_buffer_s: float = 0.5
+    trigger_threshold_s: float = 3.0
 
     def validate(self, path: str = "stack") -> None:
         # StackMode covers the primary ablations; the extra entries are
@@ -388,6 +393,12 @@ class StackConfig:
         _bool(f"{path}.skill_switch_guard", self.skill_switch_guard)
         _bool(f"{path}.rearm_on_skill_change", self.rearm_on_skill_change)
         _bool(f"{path}.simulate_deadline_wait", self.simulate_deadline_wait)
+        self.trigger_policy = _choice(f"{path}.trigger_policy", self.trigger_policy,
+                                     ("legacy", "deadline", "no_latency", "ttc", "benefit"))
+        for key in ("trigger_latency_bound_s", "trigger_buffer_s"):
+            setattr(self, key, _non_negative(f"{path}.{key}", getattr(self, key)))
+        for key in ("trigger_transition_s", "trigger_threshold_s"):
+            setattr(self, key, _positive(f"{path}.{key}", getattr(self, key)))
         if self.router_async and not self.realtime:
             _fail(path, "router_async requires realtime pacing so inference deadlines use the same clock")
 
