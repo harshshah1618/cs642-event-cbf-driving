@@ -3,6 +3,7 @@
   modal run vlm-router/modal_app.py --smoke                # tiny end-to-end check (~a few minutes, cents)
   modal run --detach vlm-router/modal_app.py               # full run: data, train, eval
   modal run vlm-router/modal_app.py --stage eval           # re-run one stage (data | train | eval | all)
+  modal run vlm-router/modal_app.py --stage ood            # harder held-out test (curves, lane changes, ...)
   modal volume get vlm-router results/<run> .             # fetch results of a detached run
 
 GPUs: training on L40S (48 GB, best bf16 throughput per dollar on Modal for a 3B LoRA; no gradient
@@ -24,6 +25,7 @@ SRC = "/root/vlm_router"
 KINDS = ["clear", "left_only", "overtake", "blocked", "return", "keep_left"]
 R2_KINDS = "clear,overtake,blocked,return,keep_left"  # round-2 test set, reproduced exactly (variety 0, seed 1)
 BASE = "Qwen/Qwen2.5-VL-3B-Instruct"
+OOD_CATS = ["curve", "lanechange", "oncoming", "far", "close", "beside", "multi"]  # see gen_ood.py
 
 app = modal.App("cs642-vlm-router")
 vol = modal.Volume.from_name("vlm-router", create_if_missing=True)
@@ -33,7 +35,7 @@ wandb_secret = modal.Secret.from_name("wandb")
 
 
 def _src(img):
-    for f in ("gen_frames.py", "prompts.py", "train_lora.py", "eval_router.py"):
+    for f in ("gen_frames.py", "gen_ood.py", "prompts.py", "train_lora.py", "eval_router.py"):
         img = img.add_local_file(os.path.join(HERE, f), f"{SRC}/{f}")
     return img
 
@@ -71,6 +73,17 @@ def gen_shard(out_rel: str, kinds: str, n: int, seed: int, variety: int, prefix:
     labels = json.load(open(f"{out}/{prefix}labels.json"))
     vol.commit()
     return out_rel, labels
+
+
+@app.function(image=sim_image, volumes=VOLS, gpu="T4", cpu=2, memory=8192, timeout=3600, retries=1)
+def gen_ood_shard(cat: str, n: int, seed: int, out_rel: str):
+    out = f"/vol/data/{out_rel}"
+    cmd = ["python", f"{SRC}/gen_ood.py", "--cat", cat, "--out", out, "--n", str(n), "--seed", str(seed)]
+    p = subprocess.run(cmd, capture_output=True, text=True, env=dict(os.environ, P3D_DISPLAY="p3headlessgl"))
+    if p.returncode != 0:
+        raise RuntimeError(f"gen_ood failed for {cat}:\n{(p.stderr or p.stdout)[-3000:]}")
+    vol.commit()
+    return cat, len(json.load(open(f"{out}/labels.json")))
 
 
 @app.function(image=sim_image, volumes=VOLS, timeout=600)
@@ -137,7 +150,7 @@ def data_jobs(dataset, per_kind, shard=200):
 
 @app.function(image=sim_image, volumes=VOLS, timeout=8 * 3600)
 def pipeline(stage: str, dataset: str, run_name: str, per_kind: int, train_extra: list, limit: int,
-             skip_base: bool = False):
+             skip_base: bool = False, ood_n: int = 60, ood_set: str = "ood1"):
     """Runs on Modal (not the laptop), so a `modal run --detach` survives the laptop sleeping.
     Results land in /vol/results/<run>/ and are also returned."""
     rdir = f"/vol/results/{run_name}"
@@ -173,6 +186,26 @@ def pipeline(stage: str, dataset: str, run_name: str, per_kind: int, train_extra
                 print(f"eval {tag:9s} {name:6s} acc {summ['acc']:.3f}  median {summ['median_ms']} ms  "
                       f"p90 {summ['p90_ms']} ms  per kind {summ['per_kind']}", flush=True)
 
+    if stage == "ood":  # harder held-out frames (gen_ood.py); never used for training
+        rels = {c: f"{ood_set}/{c}" for c in OOD_CATS}
+        done = set(existing.remote(list(rels.values())))
+        jobs = [(c, ood_n, 7000 + i, rel) for i, (c, rel) in enumerate(rels.items()) if rel not in done]
+        print(f"ood: rendering {len(jobs)} categories ({'cached: ' + str(sorted(done)) if done else 'nothing cached'})",
+              flush=True)
+        for cat, n in gen_ood_shard.starmap(jobs):
+            print(f"  {cat}: {n} frames", flush=True)
+        sets = ",".join(f"{c}=/vol/data/{rel}" for c, rel in rels.items())
+        calls = {"ood_finetuned": evaluate.spawn(f"/vol/ckpt/{run_name}/merged", sets, "ood-finetuned", limit, run_name)}
+        if not skip_base:
+            calls["ood_base"] = evaluate.spawn(BASE, sets, "ood-base", limit, run_name)
+        for tag, call in calls.items():
+            res = call.get()
+            results[f"eval_{tag}"] = res
+            for name, s in res["sets"].items():
+                summ = s["summary"]
+                print(f"{tag:14s} {name:10s} acc {summ['acc']:.3f}  median {summ['median_ms']} ms  "
+                      f"per kind {summ['per_kind']}", flush=True)
+
     vol.reload()
     for k, v in results.items():
         json.dump(v, open(f"{rdir}/{k}.json", "w"), indent=1)
@@ -182,13 +215,13 @@ def pipeline(stage: str, dataset: str, run_name: str, per_kind: int, train_extra
 
 @app.local_entrypoint()
 def main(stage: str = "all", dataset: str = "v1", run_name: str = "qwen25vl3b-lora-r16", per_kind: int = 600,
-         epochs: float = 2.0, smoke: bool = False, skip_base: bool = False):
+         epochs: float = 2.0, smoke: bool = False, skip_base: bool = False, ood_n: int = 60):
     train_extra = ["--epochs", str(epochs)]
     limit = 0
     if smoke:
         dataset, run_name, per_kind, limit = "smoke", "smoke", 8, 12
         train_extra = ["--max-steps", "4", "--eval-every", "2", "--bs", "2", "--accum", "2"]
-    results = pipeline.remote(stage, dataset, run_name, per_kind, train_extra, limit, skip_base)
+    results = pipeline.remote(stage, dataset, run_name, per_kind, train_extra, limit, skip_base, ood_n)
     out = os.path.join(HERE, "results", run_name)
     os.makedirs(out, exist_ok=True)
     for k, v in results.items():
