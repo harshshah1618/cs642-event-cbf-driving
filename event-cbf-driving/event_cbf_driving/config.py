@@ -77,6 +77,7 @@ class RouterBackend(_Enum):
     OPENAI = "openai"
     OPENCODE = "opencode"
     LOCAL = "local"
+    VLM = "vlm"
 
 
 def _fail(path: str, message: str) -> None:
@@ -148,6 +149,7 @@ class ShieldConfig:
     ax_min: float = -7.5
     ax_max: float = 3.5
     enabled: bool = True
+    cbf_constraint_enabled: bool = True
     inflate: bool = True
     pending_margin: bool = True
     finite_checks: bool = True
@@ -182,6 +184,7 @@ class ShieldConfig:
         self.lookahead_s = _non_negative(f"{path}.lookahead_s", self.lookahead_s)
         self.min_gap_m = _non_negative(f"{path}.min_gap_m", self.min_gap_m)
         _bool(f"{path}.road_boundary_guard", self.road_boundary_guard)
+        _bool(f"{path}.cbf_constraint_enabled", self.cbf_constraint_enabled)
         self.boundary_gain = _positive(f"{path}.boundary_gain", self.boundary_gain)
         self.boundary_margin = _non_negative(f"{path}.boundary_margin", self.boundary_margin)
         _bool(f"{path}.braking_guard", self.braking_guard)

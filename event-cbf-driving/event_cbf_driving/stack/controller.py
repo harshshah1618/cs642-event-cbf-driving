@@ -149,7 +149,7 @@ class DrivingStack:
                         validate_response(response, pending.request)
                         # The worker measures actual inference/retry time. Keep
                         # the configured delay as a lower bound for ablations.
-                        response.ready_at = pending.submitted_t + max(
+                        response.ready_at = pending.submitted_t + pending.request.camera_capture_wall_s + max(
                             float(response.latency_s), float(response.wall_latency_s)
                         )
                         response.latency_s = response.ready_at - pending.submitted_t
@@ -343,6 +343,16 @@ class DrivingStack:
                         vlm_pending=vlm_pending,
                         deadline_s=cfg.max_pending_s,
                     )
+                    if getattr(self.router, "requires_camera", False):
+                        capture = getattr(env, "capture_router_camera", None)
+                        if not callable(capture):
+                            raise SafetyError("camera router requires an environment camera")
+                        # Panda3D capture belongs on the simulation thread;
+                        # the worker receives detached bytes only.
+                        capture_started = time.perf_counter()
+                        request.camera = capture()
+                        request.camera_capture_wall_s = time.perf_counter()-capture_started
+                        request.deadline_s = max(1e-6, cfg.max_pending_s-request.camera_capture_wall_s)
                     pending, pending_this_tick = self._submit(
                         request,
                         trigger_reason,
@@ -422,6 +432,8 @@ class DrivingStack:
                     "lateral_h": getattr(sr, "lateral_h", None), "shield_reason": sr.reason,
                     "braking_h": getattr(sr, "braking_h", None),
                     "braking_feasible": getattr(sr, "braking_feasible", True),
+                    "cbf_override": bool(getattr(sr, "cbf_overridden", False)),
+                    "braking_override": bool(getattr(sr, "braking_overridden", False)),
                     "barrier_h": float(sr.h) if math.isfinite(float(sr.h)) else None,
                     "inflation": float(sr.inflation), "monitor": str(status),
                     "router_trigger": trigger_reason,
@@ -613,7 +625,12 @@ class DrivingStack:
             "prompt_hash": "",
             "error": None,
             "request_id": request.request_id,
+            "camera_capture_wall_ms": 1000.0*request.camera_capture_wall_s,
         }
+        if request.camera_capture_wall_s >= cfg.max_pending_s:
+            record.update(rejected=True, applied=False, error="camera capture exceeded pending deadline")
+            tracker.add_call(record)
+            return None, False
         if executor is not None:
             def invoke():
                 started = time.perf_counter()
@@ -630,6 +647,8 @@ class DrivingStack:
         try:
             response = self.router.submit(request)
             validate_response(response, request)
+            response.ready_at += request.camera_capture_wall_s
+            response.latency_s += request.camera_capture_wall_s
         except RouterError as exc:
             record["rejected"] = True
             record["error"] = str(exc)

@@ -1,0 +1,7251 @@
+{
+ "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+ "tag": "ood-base",
+ "gpu": "NVIDIA L4",
+ "load_s": 120.9,
+ "sets": {
+  "curve": {
+   "summary": {
+    "n": 60,
+    "acc": 0.5,
+    "per_kind": {
+     "overtake": 0.0,
+     "return": 0.0,
+     "blocked": 1.0,
+     "clear": 1.0,
+     "keep_left": 0.0,
+     "left_only": 1.0
+    },
+    "confusion": {
+     "A": {
+      "A": 30,
+      "B": 0,
+      "C": 0
+     },
+     "B": {
+      "A": 23,
+      "B": 0,
+      "C": 0
+     },
+     "C": {
+      "A": 7,
+      "B": 0,
+      "C": 0
+     }
+    },
+    "median_ms": 122.7,
+    "p90_ms": 127.0,
+    "max_ms": 138.3,
+    "prompt_tok": 538.0
+   },
+   "rows": [
+    {
+     "file": "curve_0.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 64.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_1.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -23.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 32.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_2.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 120.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 34.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 34.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_3.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 68.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_4.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.0,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "curve_5.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.4,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "curve_6.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 24.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_7.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 120.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 16.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_8.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 119.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 49.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 18.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_9.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 40.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_10.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 44.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_11.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.2,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "curve_12.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -32.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 38.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_13.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 17.8,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 26.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_14.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -25.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_15.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 47.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_16.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 51.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_17.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 44.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 30.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_18.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 120.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 12.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_19.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 118.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 58.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_20.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 61.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 32.1,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_21.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.4,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "curve_22.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 23.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 16.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_23.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 40.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_24.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 39.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_25.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 47.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_26.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -16.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_27.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 33.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_28.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 55.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_29.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 130.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 21.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 40.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_30.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 21.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 41.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_31.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 17.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 21.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_32.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 133.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 26.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_33.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 130.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 68.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_34.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 130.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 23.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_35.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.7,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "curve_36.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 36.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 61.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_37.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.1,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "curve_38.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 64.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 9.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_39.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 120.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 35.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_40.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 119.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -30.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 37.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_41.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 35.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_42.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 28.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_43.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 120.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 69.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_44.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 29.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_45.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 16.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_46.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.2,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "curve_47.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 52.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 32.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_48.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 44.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 29.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_49.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 128.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 25.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_50.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 31.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_51.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 22.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_52.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 120.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 45.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 15.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_53.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 127.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 32.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 41.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_54.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 34.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 36.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_55.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 9.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 69.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_56.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.1,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "curve_57.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 138.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -33.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 46.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "curve_58.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 32.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "curve_59.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 120.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -25.5,
+       "lane": "RIGHT"
+      }
+     ]
+    }
+   ]
+  },
+  "lanechange": {
+   "summary": {
+    "n": 60,
+    "acc": 0.433,
+    "per_kind": {
+     "keep_left": 0.0,
+     "return": 0.0,
+     "left_only": 1.0,
+     "overtake": 0.0,
+     "clear": 1.0,
+     "blocked": 1.0
+    },
+    "confusion": {
+     "A": {
+      "A": 26,
+      "B": 0,
+      "C": 0
+     },
+     "B": {
+      "A": 20,
+      "B": 0,
+      "C": 3
+     },
+     "C": {
+      "A": 11,
+      "B": 0,
+      "C": 0
+     }
+    },
+    "median_ms": 123.3,
+    "p90_ms": 126.1,
+    "max_ms": 143.1,
+    "prompt_tok": 538.0
+   },
+   "rows": [
+    {
+     "file": "lanechange_0.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.9,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 38.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_1.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.9,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": -11.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 43.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_2.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.0,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": -23.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_3.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "C",
+     "ok": false,
+     "ms": 126.0,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 21.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_4.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 127.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 15.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_5.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 51.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_6.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.8,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "lanechange_7.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 120.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 13.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_8.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.0,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 24.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_9.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 72.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_10.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.5,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 49.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_11.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.1,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 43.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_12.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.1,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 30.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_13.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 43.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_14.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 15.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_15.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 120.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 24.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_16.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.6,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "lanechange_17.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 40.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_18.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 34.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_19.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 72.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_20.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.8,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "lanechange_21.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.3,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "lanechange_22.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 31.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_23.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 21.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 22.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_24.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.7,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "lanechange_25.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.2,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 48.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_26.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 120.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 36.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 19.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_27.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 29.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 10.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_28.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.3,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 30.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_29.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.5,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": -14.8,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 44.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_30.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.8,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": -35.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_31.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.7,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "lanechange_32.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 29.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 18.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_33.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 38.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_34.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 26.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 20.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_35.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 50.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_36.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.9,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": -8.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 56.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_37.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 19.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_38.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.4,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "lanechange_39.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.1,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": -25.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 30.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_40.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.7,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "lanechange_41.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 53.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 39.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_42.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 130.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 36.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 20.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_43.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.7,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 22.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_44.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.4,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": -31.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_45.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.7,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 43.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_46.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 62.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 28.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_47.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.0,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": -24.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_48.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.0,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "lanechange_49.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 39.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_50.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 26.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_51.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "C",
+     "ok": false,
+     "ms": 121.9,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 17.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_52.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.0,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 34.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_53.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 47.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_54.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "C",
+     "ok": false,
+     "ms": 124.3,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": 6.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_55.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.1,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": -9.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_56.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.2,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": -17.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_57.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 43.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_58.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 139.5,
+     "prompt_tok": 536,
+     "obstacles": [
+      {
+       "dx": -37.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 49.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "lanechange_59.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 143.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 36.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 22.3,
+       "lane": "LEFT"
+      }
+     ]
+    }
+   ]
+  },
+  "oncoming": {
+   "summary": {
+    "n": 60,
+    "acc": 0.633,
+    "per_kind": {
+     "left_only": 1.0,
+     "keep_left": 0.0,
+     "clear": 1.0,
+     "overtake": 0.0,
+     "blocked": 1.0,
+     "return": 0.0
+    },
+    "confusion": {
+     "A": {
+      "A": 38,
+      "B": 0,
+      "C": 0
+     },
+     "B": {
+      "A": 17,
+      "B": 0,
+      "C": 0
+     },
+     "C": {
+      "A": 5,
+      "B": 0,
+      "C": 0
+     }
+    },
+    "median_ms": 123.5,
+    "p90_ms": 126.4,
+    "max_ms": 132.6,
+    "prompt_tok": 538.0
+   },
+   "rows": [
+    {
+     "file": "oncoming_0.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 45.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_1.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 44.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_2.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.2,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "oncoming_3.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 74.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_4.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.7,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "oncoming_5.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 42.8,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 28.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_6.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -32.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 43.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_7.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.3,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "oncoming_8.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 48.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_9.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -33.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 32.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_10.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 44.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_11.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 57.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_12.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 29.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 27.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_13.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 22.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_14.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 19.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 20.1,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_15.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 48.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 10.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_16.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.7,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "oncoming_17.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 18.1,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_18.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.5,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "oncoming_19.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.8,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "oncoming_20.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.0,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "oncoming_21.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 50.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_22.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -30.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 41.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_23.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.3,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "oncoming_24.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 45.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 24.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_25.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 22.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_26.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 46.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_27.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 127.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 26.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 14.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_28.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 23.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_29.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 22.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_30.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 59.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 43.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_31.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 56.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 26.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_32.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 26.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_33.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 34.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 27.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_34.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.4,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "oncoming_35.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 39.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_36.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 31.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_37.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 20.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 38.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_38.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 14.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_39.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 26.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_40.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 47.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 15.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_41.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -16.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 47.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_42.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 16.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_43.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 16.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_44.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "oncoming_45.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 49.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_46.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 45.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_47.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 44.1,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_48.png",
+     "kind": "return",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -8.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 54.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_49.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 31.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 20.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_50.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 36.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_51.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 35.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_52.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 28.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_53.png",
+     "kind": "left_only",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 132.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 13.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_54.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_55.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.0,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "oncoming_56.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.5,
+     "prompt_tok": 538,
+     "obstacles": []
+    },
+    {
+     "file": "oncoming_57.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 36.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_58.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 33.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 24.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "oncoming_59.png",
+     "kind": "clear",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.4,
+     "prompt_tok": 538,
+     "obstacles": []
+    }
+   ]
+  },
+  "far": {
+   "summary": {
+    "n": 60,
+    "acc": 0.0,
+    "per_kind": {
+     "overtake": 0.0,
+     "keep_left": 0.0
+    },
+    "confusion": {
+     "A": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+     },
+     "B": {
+      "A": 60,
+      "B": 0,
+      "C": 0
+     },
+     "C": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+     }
+    },
+    "median_ms": 125.1,
+    "p90_ms": 130.4,
+    "max_ms": 140.4,
+    "prompt_tok": 538.0
+   },
+   "rows": [
+    {
+     "file": "far_0.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 109.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_1.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 122.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_2.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 83.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_3.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 91.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_4.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 92.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_5.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 102.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_6.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 78.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_7.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 81.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_8.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 66.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_9.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 79.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_10.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 66.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_11.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 77.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_12.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 79.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_13.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 84.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_14.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 136.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 114.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_15.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 111.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_16.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 100.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_17.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 99.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_18.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 133.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 103.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_19.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 132.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 129.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_20.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 65.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_21.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 128.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_22.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 65.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_23.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 74.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_24.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 140.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 106.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_25.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 138.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 126.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_26.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 98.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_27.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 103.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_28.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 68.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_29.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 121.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_30.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 130.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 126.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_31.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 108.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_32.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 95.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_33.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 59.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_34.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 121.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_35.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 95.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_36.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 109.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_37.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 63.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_38.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 115.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_39.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 83.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_40.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 129.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 89.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_41.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 106.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_42.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 55.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_43.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 68.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_44.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 101.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_45.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 83.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_46.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 70.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_47.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 82.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_48.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 102.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_49.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 120.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_50.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 112.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_51.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 66.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_52.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 78.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_53.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 104.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_54.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 84.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_55.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 113.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_56.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 129.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 101.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_57.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 106.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_58.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 131.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 96.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "far_59.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 89.0,
+       "lane": "RIGHT"
+      }
+     ]
+    }
+   ]
+  },
+  "close": {
+   "summary": {
+    "n": 60,
+    "acc": 0.0,
+    "per_kind": {
+     "overtake": 0.0,
+     "keep_left": 0.0
+    },
+    "confusion": {
+     "A": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+     },
+     "B": {
+      "A": 60,
+      "B": 0,
+      "C": 0
+     },
+     "C": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+     }
+    },
+    "median_ms": 124.4,
+    "p90_ms": 128.3,
+    "max_ms": 136.7,
+    "prompt_tok": 538.0
+   },
+   "rows": [
+    {
+     "file": "close_0.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_1.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 120.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_2.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 3.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_3.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 1.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_4.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 3.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_5.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_6.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 6.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_7.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 120.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 1.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_8.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 3.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_9.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 3.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_10.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 4.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_11.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_12.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_13.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 4.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_14.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_15.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_16.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 2.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_17.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 6.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_18.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 3.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_19.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 4.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_20.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 2.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_21.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_22.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_23.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 4.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_24.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_25.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_26.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 3.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_27.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 6.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_28.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_29.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 1.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_30.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_31.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 6.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_32.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 1.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_33.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_34.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 119.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_35.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 6.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_36.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_37.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_38.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 2.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_39.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 4.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_40.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_41.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 1.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_42.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_43.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_44.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 9.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_45.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 2.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_46.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 6.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_47.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 129.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_48.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 129.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_49.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 136.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_50.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 2.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_51.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 4.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_52.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 1.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_53.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 3.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_54.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_55.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_56.png",
+     "kind": "overtake",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 7.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_57.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 1.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_58.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 4.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "close_59.png",
+     "kind": "keep_left",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 120.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 4.6,
+       "lane": "RIGHT"
+      }
+     ]
+    }
+   ]
+  },
+  "beside": {
+   "summary": {
+    "n": 60,
+    "acc": 1.0,
+    "per_kind": {
+     "blocked": 1.0
+    },
+    "confusion": {
+     "A": {
+      "A": 60,
+      "B": 0,
+      "C": 0
+     },
+     "B": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+     },
+     "C": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+     }
+    },
+    "median_ms": 126.3,
+    "p90_ms": 134.5,
+    "max_ms": 144.0,
+    "prompt_tok": 538.0
+   },
+   "rows": [
+    {
+     "file": "beside_0.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 130.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 55.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -0.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_1.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 130.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 52.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -0.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_2.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 130.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 36.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -4.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_3.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 49.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 4.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_4.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 36.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 3.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_5.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 54.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -3.1,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_6.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 27.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 2.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_7.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 23.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -4.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_8.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 38.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -4.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_9.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 127.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 38.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -1.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_10.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 134.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 37.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 1.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_11.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 141.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 36.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 0.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_12.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 134.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 22.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -3.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_13.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 130.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 45.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 4.1,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_14.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 130.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 42.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -4.1,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_15.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 137.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 47.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -2.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_16.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 134.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 21.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 1.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_17.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 144.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 24.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 3.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_18.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 143.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 34.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 2.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_19.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 21.8,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 4.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_20.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 29.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 1.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_21.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 45.8,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -1.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_22.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 46.8,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -1.1,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_23.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 36.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 3.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_24.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 46.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -2.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_25.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 131.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 47.8,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 3.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_26.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 127.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 53.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -3.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_27.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 29.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -1.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_28.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 24.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 0.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_29.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 120.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 24.8,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -1.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_30.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 57.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 4.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_31.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 28.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 4.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_32.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 51.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 4.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_33.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 125.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 41.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 2.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_34.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 120.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 48.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 4.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_35.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 35.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 2.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_36.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 40.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 0.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_37.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 30.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -4.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_38.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 34.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -4.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_39.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 24.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 0.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_40.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 51.8,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 0.1,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_41.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 127.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 32.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -3.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_42.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 130.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 27.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -2.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_43.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 127.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 21.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 2.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_44.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 42.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -1.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_45.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 24.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 3.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_46.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 43.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 4.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_47.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 127.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 40.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -4.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_48.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 127.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 39.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 0.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_49.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 130.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 35.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 4.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_50.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 128.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 57.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 1.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_51.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 29.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 3.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_52.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 28.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -1.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_53.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 121.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 33.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 4.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_54.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 128.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 57.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -1.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_55.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 132.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 22.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -2.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_56.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 142.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 40.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -2.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_57.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 129.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 51.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 0.1,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_58.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 41.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -0.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "beside_59.png",
+     "kind": "blocked",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 22.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 2.5,
+       "lane": "LEFT"
+      }
+     ]
+    }
+   ]
+  },
+  "multi": {
+   "summary": {
+    "n": 60,
+    "acc": 0.45,
+    "per_kind": {
+     "multi": 0.45
+    },
+    "confusion": {
+     "A": {
+      "A": 27,
+      "B": 0,
+      "C": 0
+     },
+     "B": {
+      "A": 24,
+      "B": 0,
+      "C": 0
+     },
+     "C": {
+      "A": 9,
+      "B": 0,
+      "C": 0
+     }
+    },
+    "median_ms": 127.7,
+    "p90_ms": 137.6,
+    "max_ms": 142.7,
+    "prompt_tok": 538.0
+   },
+   "rows": [
+    {
+     "file": "multi_0.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 132.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 59.8,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 17.3,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 32.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_1.png",
+     "kind": "multi",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 130.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 27.2,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 9.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_2.png",
+     "kind": "multi",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 12.8,
+       "lane": "LEFT"
+      },
+      {
+       "dx": -15.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_3.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -29.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 20.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 15.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_4.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 67.8,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 55.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 39.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 67.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_5.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 128.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 29.4,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 50.9,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 63.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_6.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 19.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 53.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 29.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_7.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 48.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 24.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_8.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -13.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 22.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 41.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_9.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 16.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_10.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 122.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -12.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 16.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_11.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 23.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_12.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 128.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 21.5,
+       "lane": "LEFT"
+      },
+      {
+       "dx": -22.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_13.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 128.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 29.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_14.png",
+     "kind": "multi",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 131.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 49.9,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 31.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_15.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -32.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 57.0,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_16.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 121.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 42.9,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 35.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_17.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 120.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 28.1,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 56.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 47.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_18.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 69.3,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 38.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 36.1,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_19.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 130.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -22.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 26.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_20.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 48.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 46.3,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 58.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_21.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 52.1,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 33.1,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 42.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_22.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 58.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 30.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -19.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_23.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -17.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 27.2,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_24.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 26.7,
+       "lane": "LEFT"
+      },
+      {
+       "dx": -16.9,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_25.png",
+     "kind": "multi",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 11.8,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 22.5,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 40.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_26.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 127.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -21.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 52.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_27.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 136.2,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 36.5,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 11.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 43.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_28.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 131.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 68.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 32.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_29.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -13.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 63.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 53.7,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_30.png",
+     "kind": "multi",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 65.5,
+       "lane": "LEFT"
+      },
+      {
+       "dx": -10.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_31.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 126.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 40.6,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 25.2,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 37.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_32.png",
+     "kind": "multi",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 11.2,
+       "lane": "LEFT"
+      },
+      {
+       "dx": -40.0,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_33.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 127.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 55.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -22.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 38.4,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 10.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_34.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -24.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 48.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 19.5,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_35.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 128.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 33.5,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 42.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 45.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_36.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -35.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": -22.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 21.7,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 12.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_37.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 124.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 58.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 13.3,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 33.6,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_38.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 132.3,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 60.6,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 38.3,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_39.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 139.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 36.6,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 62.8,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_40.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 140.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 57.3,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 43.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_41.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 135.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 15.6,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 63.3,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_42.png",
+     "kind": "multi",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.8,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 39.0,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 25.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_43.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 123.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -27.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 50.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 32.7,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_44.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 131.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 66.0,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 29.8,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 48.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 68.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_45.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 139.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 15.0,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 11.1,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 44.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_46.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 134.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 19.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 58.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 50.4,
+       "lane": "LEFT"
+      },
+      {
+       "dx": -27.6,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_47.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 131.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 34.9,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 56.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 41.4,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_48.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 124.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 20.2,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 53.8,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_49.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 123.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 8.8,
+       "lane": "LEFT"
+      },
+      {
+       "dx": -27.3,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 30.5,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 21.1,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_50.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 122.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 66.8,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 25.7,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 52.2,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 38.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_51.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 137.4,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 56.7,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 18.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_52.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 136.0,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 55.8,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 11.4,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_53.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 142.7,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 48.9,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 60.7,
+       "lane": "LEFT"
+      },
+      {
+       "dx": -14.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 23.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_54.png",
+     "kind": "multi",
+     "want": "A",
+     "pred": "A",
+     "ok": true,
+     "ms": 141.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -17.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 39.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 41.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_55.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 128.5,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 12.8,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 15.8,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 50.1,
+       "lane": "RIGHT"
+      }
+     ]
+    },
+    {
+     "file": "multi_56.png",
+     "kind": "multi",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 126.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 28.7,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 10.5,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 46.2,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_57.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 125.1,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": -30.4,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 64.1,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 20.9,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 12.9,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_58.png",
+     "kind": "multi",
+     "want": "B",
+     "pred": "A",
+     "ok": false,
+     "ms": 140.9,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 37.6,
+       "lane": "RIGHT"
+      },
+      {
+       "dx": 8.5,
+       "lane": "LEFT"
+      }
+     ]
+    },
+    {
+     "file": "multi_59.png",
+     "kind": "multi",
+     "want": "C",
+     "pred": "A",
+     "ok": false,
+     "ms": 137.6,
+     "prompt_tok": 538,
+     "obstacles": [
+      {
+       "dx": 54.5,
+       "lane": "LEFT"
+      },
+      {
+       "dx": 24.6,
+       "lane": "LEFT"
+      },
+      {
+       "dx": -27.5,
+       "lane": "RIGHT"
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

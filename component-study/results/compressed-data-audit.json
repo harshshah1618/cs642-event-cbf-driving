@@ -1,0 +1,12 @@
+{
+  "pilot": {
+    "rows": 192,
+    "uncompressed_sha256": "6c3c89f7cd488372245acaf045f6dfe14b2abf404cb23bc3a158344e304721c7",
+    "lossless": true
+  },
+  "test": {
+    "rows": 4608,
+    "uncompressed_sha256": "fbd1cc70509b76912cc72c608e244d2bcbe7ab9be48b108481365d71320254cd",
+    "lossless": true
+  }
+}

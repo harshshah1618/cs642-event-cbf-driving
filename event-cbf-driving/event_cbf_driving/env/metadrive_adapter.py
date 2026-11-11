@@ -10,6 +10,7 @@ MetaDrive imports are lazy so the base package works without its optional extra.
 from __future__ import annotations
 
 import copy
+import io
 import math
 from dataclasses import asdict
 from typing import Any, Optional
@@ -177,6 +178,23 @@ class MetaDriveAdapter:
         self._empty_road = self.config.params.pop("empty_road", False)
         self._initial_y = self.config.params.pop("initial_y", None)
         self._initial_vy = float(self.config.params.pop("initial_vy", 0.0))
+        traffic = self.config.params.pop("initial_traffic", None)
+        self._initial_traffic = None
+        if traffic is not None:
+            from event_cbf_driving.env.base import validate_vehicle
+
+            if not isinstance(traffic, list) or len(traffic) > 32:
+                raise ConfigError("initial_traffic must be a list of at most 32 vehicles")
+            self._initial_traffic = []
+            for index, entry in enumerate(traffic):
+                if not isinstance(entry, dict):
+                    raise ConfigError("initial_traffic entries must be vehicle mappings")
+                try:
+                    state = VehicleState(**entry)
+                    validate_vehicle(state, name=f"initial_traffic[{index}]")
+                except (TypeError, ValueError) as exc:
+                    raise ConfigError(f"invalid initial traffic: {exc}") from exc
+                self._initial_traffic.append(state)
         self._events = self.config.params.pop("traffic_events", [])
         self._applied_events: list[int] = []
         if not isinstance(self._empty_road, bool):
@@ -349,7 +367,8 @@ class MetaDriveAdapter:
                 }
             )
             self._params["scenario_config"] = asdict(self._scenario_spec)
-            for state in ([] if self._empty_road else initial.others):
+            traffic = initial.others if self._initial_traffic is None else self._initial_traffic
+            for state in ([] if self._empty_road else traffic):
                 self._spawn(state, target_y=0.0 if state.y < 0 else state.y)
             self._last_info = {}
             return self.snapshot().skill_obs(), self._info()
@@ -374,6 +393,31 @@ class MetaDriveAdapter:
                 "road_bounds": [-6.0 if self.scenario == "merge" else -2.0, 6.0],
                 "heading": float(self.env.vehicle.heading_theta),
             },
+        )
+
+    def capture_router_camera(self):
+        """Capture a detached front-camera PNG for an explicit VLM request."""
+        from PIL import Image
+
+        from event_cbf_driving.router.base import CameraObservation
+
+        self._require_reset()
+        if not self._rgb_camera:
+            raise ConfigError("VLM requests require scenario.params.rgb_camera=true")
+        sensor = self.env.engine.get_sensor("rgb_front")
+        pixels = np.asarray(sensor.perceive(
+            False, self.env.vehicle.origin, (0.0, 0.8, 1.5), (0.0, -5.0, 0.0)
+        ))
+        # MetaDrive's CPU screenshot path exposes BGR channels.
+        rgb = np.ascontiguousarray(pixels[..., :3][..., ::-1], dtype=np.uint8)
+        stream = io.BytesIO()
+        Image.fromarray(rgb).save(stream, format="PNG")
+        state = self._vehicle_state(self.env.vehicle)
+        return CameraObservation(
+            image_bytes=stream.getvalue(), mime_type="image/png",
+            captured_t=self._step_i * DT,
+            lane="LEFT" if state.y >= 2.0 else "RIGHT",
+            speed_mps=float(state.vx), width=int(rgb.shape[1]), height=int(rgb.shape[0]),
         )
 
     def _info(self):

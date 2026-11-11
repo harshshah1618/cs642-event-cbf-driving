@@ -71,6 +71,8 @@ class ShieldResult:
     lateral_h: Optional[float] = None
     braking_h: Optional[float] = None
     braking_feasible: bool = True
+    cbf_overridden: bool = False
+    braking_overridden: bool = False
 
 
 class InflatedCBFShield:
@@ -162,6 +164,7 @@ class InflatedCBFShield:
         self.ax_min: float = cfg.ax_min
         self.ax_max: float = cfg.ax_max
         self.enabled: bool = cfg.enabled
+        self.cbf_constraint_enabled: bool = cfg.cbf_constraint_enabled
         self.inflate: bool = cfg.inflate
         self.pending_margin: bool = cfg.pending_margin
         self.finite_checks: bool = cfg.finite_checks
@@ -213,6 +216,10 @@ class InflatedCBFShield:
             if target is not None and not self._is_finite(target):
                 return self._invalid("invalid_skill_intent")
         result = self._longitudinal_filter(action, snap, sigma, vlm_pending)
+        result.cbf_overridden = bool(
+            self.enabled and self.cbf_constraint_enabled and result.overridden
+            and not result.emergency
+        )
         if self.enabled and self.braking_guard and not result.emergency:
             result = self._braking_filter(result, snap)
         if not self.enabled or not self.road_boundary_guard or result.emergency:
@@ -309,6 +316,7 @@ class InflatedCBFShield:
         if math.isfinite(minimum):
             old_ax = float(result.action[0])
             result.action[0] = min(old_ax, cap)
+            result.braking_overridden = old_ax - float(result.action[0]) > _OVERRIDE_EPS
             result.residual = math.hypot(result.residual, old_ax-float(result.action[0]))
             result.overridden = result.overridden or old_ax-float(result.action[0]) > _OVERRIDE_EPS
             result.braking_h = minimum
@@ -386,7 +394,10 @@ class InflatedCBFShield:
         except (TypeError, ValueError):
             return self._invalid("invalid_sigma")
 
-        infl = self.inflation(sigma_value, bool(vlm_pending), float(ego.vx))
+        infl = (
+            self.inflation(sigma_value, bool(vlm_pending), float(ego.vx))
+            if self.cbf_constraint_enabled else 0.0
+        )
 
         # --- Obstacles: validate before lateral filtering so a non-finite
         # obstacle that might be relevant is never silently skipped.
@@ -440,6 +451,22 @@ class InflatedCBFShield:
                 (float(obs.vx) - float(ego.vx)) + self.class_k * h
             ) / self.headway_s
             ax_cap = min(ax_cap, ax_safe)
+
+        if not self.cbf_constraint_enabled:
+            # Keep validation and actuator limits while removing ONLY this
+            # constraint. Braking and boundary guards still run in filter().
+            # safe=True here means this disabled stage did not flag a fault;
+            # it is not an assertion that the physical scene is safe.
+            ax = float(np.clip(ax_rl, self.ax_min, self.ax_max))
+            return ShieldResult(
+                action=np.array([ax, ay], dtype=np.float32),
+                residual=max(0.0, ax_rl-ax),
+                overridden=abs(ax-ax_rl) > _OVERRIDE_EPS,
+                inflation=0.0,
+                h=float(h_min),
+                reason="cbf_disabled",
+                obstacle_count=obstacle_count,
+            )
 
         if obstacle_count == 0:
             ax = float(np.clip(min(ax_rl, self.ax_max), self.ax_min, self.ax_max))

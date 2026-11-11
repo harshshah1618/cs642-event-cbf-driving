@@ -1,0 +1,1399 @@
+[
+  {
+    "job": {
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "ppo",
+      "cbf": true,
+      "braking": true,
+      "admission": true
+    },
+    "path": "31ee9df2f8ffaf2a74bc7f1e.json",
+    "row": {
+      "id": "31ee9df2f8ffaf2a74bc7f1e",
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "ppo",
+      "cbf": true,
+      "braking": true,
+      "admission": true,
+      "route_pct": 100.0,
+      "crashed": false,
+      "freeze": false,
+      "end_time": 13.18,
+      "end_reason": "route_complete",
+      "avg_speed": 15.199334198136974,
+      "router_calls": 25,
+      "calls_applied": 17,
+      "calls_rejected": 8,
+      "override_fraction": 0.6342943854324734,
+      "infeasible_ticks": 0,
+      "braking_infeasible_ticks": 0,
+      "acceleration_tracking_rmse": 0.1429133116811169,
+      "plant_peak_lateral_jerk": 45.68547010421753,
+      "peak_lateral_jerk": 11.923664808273315,
+      "router_live_calls": 0,
+      "router_fallbacks": 0,
+      "cbf_override_fraction": 0.0,
+      "braking_override_fraction": 0.4673748103186646,
+      "boundary_override_fraction": 0.17905918057663125,
+      "monitor_emergency_ticks": 0,
+      "monitor_changed_action_ticks": 0,
+      "admission_rejections": 8,
+      "achieved_lateral_jerk_rms": 2.715940273765757,
+      "achieved_lateral_jerk_peak": 45.68547010421753,
+      "achieved_lateral_jerk_peak_after_0_2s": 45.68547010421753,
+      "ticks": 659,
+      "success": true,
+      "initial_state_sha256": "59bbeee4bb883686e6575f5743cb37bb15fe06399e0527c879cdcffffed68c80",
+      "initial_state": {
+        "ego": {
+          "x": 0.0,
+          "y": 0.0,
+          "vx": 20.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        },
+        "others": [
+          {
+            "x": 35.51298141479492,
+            "y": 0.0,
+            "vx": 9.314229965209961,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 0,
+            "speed_limit": 0.0
+          },
+          {
+            "x": 0.6016125679016113,
+            "y": 4.0,
+            "vx": 20.0,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 1,
+            "speed_limit": 0.0
+          }
+        ],
+        "route_length": 200.0
+      },
+      "scene_config": {
+        "name": "dense_highway",
+        "route_length": 200,
+        "duration": 20,
+        "seed": 0,
+        "randomize": false,
+        "params": {
+          "initial_traffic": [
+            {
+              "x": 35.51298323858161,
+              "y": 0.0,
+              "vx": 9.314229704630852
+            },
+            {
+              "x": 0.6016124633060884,
+              "y": 4.0,
+              "vx": 20.0
+            }
+          ],
+          "traffic_events": []
+        },
+        "simulator": "metadrive"
+      },
+      "wall_s": 1.7793062529963208
+    },
+    "replay": {
+      "ok": true,
+      "ticks": 659,
+      "expected_ticks": 659,
+      "expected_x": 200.3272247314453,
+      "replayed_x": 200.3272247314453,
+      "expected_y": 0.08382851630449295,
+      "replayed_y": 0.08382851630449295,
+      "final_state_error": 0.0,
+      "expected_crashed": false,
+      "replayed_crashed": false,
+      "errors": []
+    }
+  },
+  {
+    "job": {
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "ppo",
+      "cbf": true,
+      "braking": false,
+      "admission": false
+    },
+    "path": "2fd768daf06a00622f3244c4.json",
+    "row": {
+      "id": "2fd768daf06a00622f3244c4",
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "ppo",
+      "cbf": true,
+      "braking": false,
+      "admission": false,
+      "route_pct": 100.0,
+      "crashed": false,
+      "freeze": false,
+      "end_time": 18.34,
+      "end_reason": "route_complete",
+      "avg_speed": 10.913235696607483,
+      "router_calls": 36,
+      "calls_applied": 35,
+      "calls_rejected": 0,
+      "override_fraction": 0.9574700109051254,
+      "infeasible_ticks": 53,
+      "braking_infeasible_ticks": 0,
+      "acceleration_tracking_rmse": 0.051986829271531455,
+      "plant_peak_lateral_jerk": 27.03338861465454,
+      "peak_lateral_jerk": 8.408260345458984,
+      "router_live_calls": 0,
+      "router_fallbacks": 0,
+      "cbf_override_fraction": 0.9236641221374046,
+      "braking_override_fraction": 0.0,
+      "boundary_override_fraction": 0.1624863685932388,
+      "monitor_emergency_ticks": 0,
+      "monitor_changed_action_ticks": 0,
+      "admission_rejections": 0,
+      "achieved_lateral_jerk_rms": 1.8901365720723826,
+      "achieved_lateral_jerk_peak": 27.03338861465454,
+      "achieved_lateral_jerk_peak_after_0_2s": 27.03338861465454,
+      "ticks": 917,
+      "success": true,
+      "initial_state_sha256": "59bbeee4bb883686e6575f5743cb37bb15fe06399e0527c879cdcffffed68c80",
+      "initial_state": {
+        "ego": {
+          "x": 0.0,
+          "y": 0.0,
+          "vx": 20.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        },
+        "others": [
+          {
+            "x": 35.51298141479492,
+            "y": 0.0,
+            "vx": 9.314229965209961,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 0,
+            "speed_limit": 0.0
+          },
+          {
+            "x": 0.6016125679016113,
+            "y": 4.0,
+            "vx": 20.0,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 1,
+            "speed_limit": 0.0
+          }
+        ],
+        "route_length": 200.0
+      },
+      "scene_config": {
+        "name": "dense_highway",
+        "route_length": 200,
+        "duration": 20,
+        "seed": 0,
+        "randomize": false,
+        "params": {
+          "initial_traffic": [
+            {
+              "x": 35.51298323858161,
+              "y": 0.0,
+              "vx": 9.314229704630852
+            },
+            {
+              "x": 0.6016124633060884,
+              "y": 4.0,
+              "vx": 20.0
+            }
+          ],
+          "traffic_events": []
+        },
+        "simulator": "metadrive"
+      },
+      "wall_s": 1.7951771230000304
+    },
+    "replay": {
+      "ok": true,
+      "ticks": 917,
+      "expected_ticks": 917,
+      "expected_x": 200.14874267578125,
+      "replayed_x": 200.14874267578125,
+      "expected_y": -0.06392260640859604,
+      "replayed_y": -0.06392260640859604,
+      "final_state_error": 0.0,
+      "expected_crashed": false,
+      "replayed_crashed": false,
+      "errors": []
+    }
+  },
+  {
+    "job": {
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "ppo",
+      "cbf": false,
+      "braking": true,
+      "admission": false
+    },
+    "path": "79d1b86d9bf4b47cfdbd6f8d.json",
+    "row": {
+      "id": "79d1b86d9bf4b47cfdbd6f8d",
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "ppo",
+      "cbf": false,
+      "braking": true,
+      "admission": false,
+      "route_pct": 47.666996002197266,
+      "crashed": true,
+      "freeze": false,
+      "end_time": 6.62,
+      "end_reason": "crash",
+      "avg_speed": 14.400905136615489,
+      "router_calls": 12,
+      "calls_applied": 12,
+      "calls_rejected": 0,
+      "override_fraction": 0.6042296072507553,
+      "infeasible_ticks": 120,
+      "braking_infeasible_ticks": 120,
+      "acceleration_tracking_rmse": 0.14091704394919907,
+      "plant_peak_lateral_jerk": 17.92728900909424,
+      "peak_lateral_jerk": 17.296305298805237,
+      "router_live_calls": 0,
+      "router_fallbacks": 0,
+      "cbf_override_fraction": 0.0,
+      "braking_override_fraction": 0.6042296072507553,
+      "boundary_override_fraction": 0.015105740181268883,
+      "monitor_emergency_ticks": 0,
+      "monitor_changed_action_ticks": 0,
+      "admission_rejections": 0,
+      "achieved_lateral_jerk_rms": 3.801874452099588,
+      "achieved_lateral_jerk_peak": 17.92728900909424,
+      "achieved_lateral_jerk_peak_after_0_2s": 17.92728900909424,
+      "ticks": 331,
+      "success": false,
+      "initial_state_sha256": "59bbeee4bb883686e6575f5743cb37bb15fe06399e0527c879cdcffffed68c80",
+      "initial_state": {
+        "ego": {
+          "x": 0.0,
+          "y": 0.0,
+          "vx": 20.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        },
+        "others": [
+          {
+            "x": 35.51298141479492,
+            "y": 0.0,
+            "vx": 9.314229965209961,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 0,
+            "speed_limit": 0.0
+          },
+          {
+            "x": 0.6016125679016113,
+            "y": 4.0,
+            "vx": 20.0,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 1,
+            "speed_limit": 0.0
+          }
+        ],
+        "route_length": 200.0
+      },
+      "scene_config": {
+        "name": "dense_highway",
+        "route_length": 200,
+        "duration": 20,
+        "seed": 0,
+        "randomize": false,
+        "params": {
+          "initial_traffic": [
+            {
+              "x": 35.51298323858161,
+              "y": 0.0,
+              "vx": 9.314229704630852
+            },
+            {
+              "x": 0.6016124633060884,
+              "y": 4.0,
+              "vx": 20.0
+            }
+          ],
+          "traffic_events": []
+        },
+        "simulator": "metadrive"
+      },
+      "wall_s": 0.9853053910046583
+    },
+    "replay": {
+      "ok": true,
+      "ticks": 331,
+      "expected_ticks": 331,
+      "expected_x": 95.33399200439453,
+      "replayed_x": 95.33399200439453,
+      "expected_y": 2.4842350482940674,
+      "replayed_y": 2.4842350482940674,
+      "final_state_error": 0.0,
+      "expected_crashed": true,
+      "replayed_crashed": true,
+      "errors": []
+    }
+  },
+  {
+    "job": {
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "ppo",
+      "cbf": false,
+      "braking": false,
+      "admission": true
+    },
+    "path": "ff332b8aff0ed5a5f615be8e.json",
+    "row": {
+      "id": "ff332b8aff0ed5a5f615be8e",
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "ppo",
+      "cbf": false,
+      "braking": false,
+      "admission": true,
+      "route_pct": 28.274816513061523,
+      "crashed": true,
+      "freeze": false,
+      "end_time": 2.7800000000000002,
+      "end_reason": "crash",
+      "avg_speed": 20.341594613713326,
+      "router_calls": 5,
+      "calls_applied": 0,
+      "calls_rejected": 5,
+      "override_fraction": 0.0,
+      "infeasible_ticks": 0,
+      "braking_infeasible_ticks": 0,
+      "acceleration_tracking_rmse": 0.0006986925254515666,
+      "plant_peak_lateral_jerk": 0.2421341196168214,
+      "peak_lateral_jerk": 0.6724544800817966,
+      "router_live_calls": 0,
+      "router_fallbacks": 0,
+      "cbf_override_fraction": 0.0,
+      "braking_override_fraction": 0.0,
+      "boundary_override_fraction": 0.0,
+      "monitor_emergency_ticks": 0,
+      "monitor_changed_action_ticks": 0,
+      "admission_rejections": 5,
+      "achieved_lateral_jerk_rms": 0.023940934969111594,
+      "achieved_lateral_jerk_peak": 0.2421341196168214,
+      "achieved_lateral_jerk_peak_after_0_2s": 0.027792993932962418,
+      "ticks": 139,
+      "success": false,
+      "initial_state_sha256": "59bbeee4bb883686e6575f5743cb37bb15fe06399e0527c879cdcffffed68c80",
+      "initial_state": {
+        "ego": {
+          "x": 0.0,
+          "y": 0.0,
+          "vx": 20.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        },
+        "others": [
+          {
+            "x": 35.51298141479492,
+            "y": 0.0,
+            "vx": 9.314229965209961,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 0,
+            "speed_limit": 0.0
+          },
+          {
+            "x": 0.6016125679016113,
+            "y": 4.0,
+            "vx": 20.0,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 1,
+            "speed_limit": 0.0
+          }
+        ],
+        "route_length": 200.0
+      },
+      "scene_config": {
+        "name": "dense_highway",
+        "route_length": 200,
+        "duration": 20,
+        "seed": 0,
+        "randomize": false,
+        "params": {
+          "initial_traffic": [
+            {
+              "x": 35.51298323858161,
+              "y": 0.0,
+              "vx": 9.314229704630852
+            },
+            {
+              "x": 0.6016124633060884,
+              "y": 4.0,
+              "vx": 20.0
+            }
+          ],
+          "traffic_events": []
+        },
+        "simulator": "metadrive"
+      },
+      "wall_s": 0.516204279003432
+    },
+    "replay": {
+      "ok": true,
+      "ticks": 139,
+      "expected_ticks": 139,
+      "expected_x": 56.54963302612305,
+      "replayed_x": 56.54963302612305,
+      "expected_y": -0.00654714135453105,
+      "replayed_y": -0.00654714135453105,
+      "final_state_error": 0.0,
+      "expected_crashed": true,
+      "replayed_crashed": true,
+      "errors": []
+    }
+  },
+  {
+    "job": {
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "ppo",
+      "cbf": false,
+      "braking": false,
+      "admission": false
+    },
+    "path": "9ebf02db1c47f3ca60c22e6c.json",
+    "row": {
+      "id": "9ebf02db1c47f3ca60c22e6c",
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "ppo",
+      "cbf": false,
+      "braking": false,
+      "admission": false,
+      "route_pct": 27.745769500732422,
+      "crashed": true,
+      "freeze": false,
+      "end_time": 2.66,
+      "end_reason": "crash",
+      "avg_speed": 20.86148082761836,
+      "router_calls": 5,
+      "calls_applied": 4,
+      "calls_rejected": 0,
+      "override_fraction": 0.0,
+      "infeasible_ticks": 0,
+      "braking_infeasible_ticks": 0,
+      "acceleration_tracking_rmse": 0.041331360726878014,
+      "plant_peak_lateral_jerk": 4.286498297005892,
+      "peak_lateral_jerk": 5.5205658078193665,
+      "router_live_calls": 0,
+      "router_fallbacks": 0,
+      "cbf_override_fraction": 0.0,
+      "braking_override_fraction": 0.0,
+      "boundary_override_fraction": 0.0,
+      "monitor_emergency_ticks": 0,
+      "monitor_changed_action_ticks": 0,
+      "admission_rejections": 0,
+      "achieved_lateral_jerk_rms": 0.9549792190820889,
+      "achieved_lateral_jerk_peak": 4.286498297005892,
+      "achieved_lateral_jerk_peak_after_0_2s": 4.286498297005892,
+      "ticks": 133,
+      "success": false,
+      "initial_state_sha256": "59bbeee4bb883686e6575f5743cb37bb15fe06399e0527c879cdcffffed68c80",
+      "initial_state": {
+        "ego": {
+          "x": 0.0,
+          "y": 0.0,
+          "vx": 20.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        },
+        "others": [
+          {
+            "x": 35.51298141479492,
+            "y": 0.0,
+            "vx": 9.314229965209961,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 0,
+            "speed_limit": 0.0
+          },
+          {
+            "x": 0.6016125679016113,
+            "y": 4.0,
+            "vx": 20.0,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 1,
+            "speed_limit": 0.0
+          }
+        ],
+        "route_length": 200.0
+      },
+      "scene_config": {
+        "name": "dense_highway",
+        "route_length": 200,
+        "duration": 20,
+        "seed": 0,
+        "randomize": false,
+        "params": {
+          "initial_traffic": [
+            {
+              "x": 35.51298323858161,
+              "y": 0.0,
+              "vx": 9.314229704630852
+            },
+            {
+              "x": 0.6016124633060884,
+              "y": 4.0,
+              "vx": 20.0
+            }
+          ],
+          "traffic_events": []
+        },
+        "simulator": "metadrive"
+      },
+      "wall_s": 0.4731353009992745
+    },
+    "replay": {
+      "ok": true,
+      "ticks": 133,
+      "expected_ticks": 133,
+      "expected_x": 55.491539001464844,
+      "replayed_x": 55.491539001464844,
+      "expected_y": 1.2678534984588623,
+      "replayed_y": 1.2678534984588623,
+      "final_state_error": 0.0,
+      "expected_crashed": true,
+      "replayed_crashed": true,
+      "errors": []
+    }
+  },
+  {
+    "job": {
+      "scene": "lead_brakes",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "copy_current",
+      "controller": "ppo",
+      "cbf": true,
+      "braking": true,
+      "admission": true
+    },
+    "path": "106d867a18b9163a78e625e5.json",
+    "row": {
+      "id": "106d867a18b9163a78e625e5",
+      "scene": "lead_brakes",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "copy_current",
+      "controller": "ppo",
+      "cbf": true,
+      "braking": true,
+      "admission": true,
+      "route_pct": 43.25849151611328,
+      "crashed": false,
+      "freeze": true,
+      "end_time": 20.0,
+      "end_reason": "timeout",
+      "avg_speed": 4.325849151611328,
+      "router_calls": 40,
+      "calls_applied": 39,
+      "calls_rejected": 0,
+      "override_fraction": 0.917,
+      "infeasible_ticks": 0,
+      "braking_infeasible_ticks": 0,
+      "acceleration_tracking_rmse": 0.05819998912647601,
+      "plant_peak_lateral_jerk": 7.929950952529907,
+      "peak_lateral_jerk": 0.6724544800817966,
+      "router_live_calls": 0,
+      "router_fallbacks": 0,
+      "cbf_override_fraction": 0.796,
+      "braking_override_fraction": 0.867,
+      "boundary_override_fraction": 0.0,
+      "monitor_emergency_ticks": 0,
+      "monitor_changed_action_ticks": 0,
+      "admission_rejections": 0,
+      "achieved_lateral_jerk_rms": 0.6356395910879381,
+      "achieved_lateral_jerk_peak": 7.929950952529907,
+      "achieved_lateral_jerk_peak_after_0_2s": 7.929950952529907,
+      "ticks": 1000,
+      "success": false,
+      "initial_state_sha256": "66617ab173d239463357d621f7772c4460a610d74e76caafff44c4e034f25880",
+      "initial_state": {
+        "ego": {
+          "x": 0.0,
+          "y": 0.0,
+          "vx": 20.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        },
+        "others": [
+          {
+            "x": 32.51298141479492,
+            "y": 0.0,
+            "vx": 20.0,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 0,
+            "speed_limit": 0.0
+          }
+        ],
+        "route_length": 200.0
+      },
+      "scene_config": {
+        "name": "dense_highway",
+        "route_length": 200,
+        "duration": 20,
+        "seed": 0,
+        "randomize": false,
+        "params": {
+          "initial_traffic": [
+            {
+              "x": 32.51298323858161,
+              "y": 0.0,
+              "vx": 20.0
+            }
+          ],
+          "traffic_events": [
+            {
+              "at": 0.9752306272841136,
+              "vehicle_index": 0,
+              "target_speed": 0.0
+            }
+          ]
+        },
+        "simulator": "metadrive"
+      },
+      "wall_s": 2.027263588999631
+    },
+    "replay": {
+      "ok": true,
+      "ticks": 1000,
+      "expected_ticks": 1000,
+      "expected_x": 86.51698303222656,
+      "replayed_x": 86.51698303222656,
+      "expected_y": 0.1470472365617752,
+      "replayed_y": 0.1470472365617752,
+      "final_state_error": 0.0,
+      "expected_crashed": false,
+      "replayed_crashed": false,
+      "errors": []
+    }
+  },
+  {
+    "job": {
+      "scene": "lead_brakes",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "copy_current",
+      "controller": "ppo",
+      "cbf": true,
+      "braking": false,
+      "admission": false
+    },
+    "path": "2f4847ce90432b0a3d7b7e3b.json",
+    "row": {
+      "id": "2f4847ce90432b0a3d7b7e3b",
+      "scene": "lead_brakes",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "copy_current",
+      "controller": "ppo",
+      "cbf": true,
+      "braking": false,
+      "admission": false,
+      "route_pct": 43.90594482421875,
+      "crashed": true,
+      "freeze": false,
+      "end_time": 4.84,
+      "end_reason": "crash",
+      "avg_speed": 18.142952406701962,
+      "router_calls": 9,
+      "calls_applied": 9,
+      "calls_rejected": 0,
+      "override_fraction": 0.3925619834710744,
+      "infeasible_ticks": 81,
+      "braking_infeasible_ticks": 0,
+      "acceleration_tracking_rmse": 0.0014741242906757387,
+      "plant_peak_lateral_jerk": 0.2421341196168214,
+      "peak_lateral_jerk": 0.6724544800817966,
+      "router_live_calls": 0,
+      "router_fallbacks": 0,
+      "cbf_override_fraction": 0.3925619834710744,
+      "braking_override_fraction": 0.0,
+      "boundary_override_fraction": 0.0,
+      "monitor_emergency_ticks": 0,
+      "monitor_changed_action_ticks": 0,
+      "admission_rejections": 0,
+      "achieved_lateral_jerk_rms": 0.04815695383337209,
+      "achieved_lateral_jerk_peak": 0.2421341196168214,
+      "achieved_lateral_jerk_peak_after_0_2s": 0.09724022675072774,
+      "ticks": 242,
+      "success": false,
+      "initial_state_sha256": "66617ab173d239463357d621f7772c4460a610d74e76caafff44c4e034f25880",
+      "initial_state": {
+        "ego": {
+          "x": 0.0,
+          "y": 0.0,
+          "vx": 20.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        },
+        "others": [
+          {
+            "x": 32.51298141479492,
+            "y": 0.0,
+            "vx": 20.0,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 0,
+            "speed_limit": 0.0
+          }
+        ],
+        "route_length": 200.0
+      },
+      "scene_config": {
+        "name": "dense_highway",
+        "route_length": 200,
+        "duration": 20,
+        "seed": 0,
+        "randomize": false,
+        "params": {
+          "initial_traffic": [
+            {
+              "x": 32.51298323858161,
+              "y": 0.0,
+              "vx": 20.0
+            }
+          ],
+          "traffic_events": [
+            {
+              "at": 0.9752306272841136,
+              "vehicle_index": 0,
+              "target_speed": 0.0
+            }
+          ]
+        },
+        "simulator": "metadrive"
+      },
+      "wall_s": 0.760576337997918
+    },
+    "replay": {
+      "ok": true,
+      "ticks": 242,
+      "expected_ticks": 242,
+      "expected_x": 87.8118896484375,
+      "replayed_x": 87.8118896484375,
+      "expected_y": -0.029525425285100937,
+      "replayed_y": -0.029525425285100937,
+      "final_state_error": 0.0,
+      "expected_crashed": true,
+      "replayed_crashed": true,
+      "errors": []
+    }
+  },
+  {
+    "job": {
+      "scene": "lead_brakes",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "copy_current",
+      "controller": "ppo",
+      "cbf": false,
+      "braking": true,
+      "admission": false
+    },
+    "path": "e4afbebf90c9602e87c31d9a.json",
+    "row": {
+      "id": "e4afbebf90c9602e87c31d9a",
+      "scene": "lead_brakes",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "copy_current",
+      "controller": "ppo",
+      "cbf": false,
+      "braking": true,
+      "admission": false,
+      "route_pct": 43.25855255126953,
+      "crashed": false,
+      "freeze": true,
+      "end_time": 20.0,
+      "end_reason": "timeout",
+      "avg_speed": 4.325855255126953,
+      "router_calls": 40,
+      "calls_applied": 39,
+      "calls_rejected": 0,
+      "override_fraction": 0.917,
+      "infeasible_ticks": 0,
+      "braking_infeasible_ticks": 0,
+      "acceleration_tracking_rmse": 0.059940852250339856,
+      "plant_peak_lateral_jerk": 7.950440049171448,
+      "peak_lateral_jerk": 0.6724544800817966,
+      "router_live_calls": 0,
+      "router_fallbacks": 0,
+      "cbf_override_fraction": 0.0,
+      "braking_override_fraction": 0.917,
+      "boundary_override_fraction": 0.0,
+      "monitor_emergency_ticks": 0,
+      "monitor_changed_action_ticks": 0,
+      "admission_rejections": 0,
+      "achieved_lateral_jerk_rms": 0.65469133407206,
+      "achieved_lateral_jerk_peak": 7.950440049171448,
+      "achieved_lateral_jerk_peak_after_0_2s": 7.950440049171448,
+      "ticks": 1000,
+      "success": false,
+      "initial_state_sha256": "66617ab173d239463357d621f7772c4460a610d74e76caafff44c4e034f25880",
+      "initial_state": {
+        "ego": {
+          "x": 0.0,
+          "y": 0.0,
+          "vx": 20.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        },
+        "others": [
+          {
+            "x": 32.51298141479492,
+            "y": 0.0,
+            "vx": 20.0,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 0,
+            "speed_limit": 0.0
+          }
+        ],
+        "route_length": 200.0
+      },
+      "scene_config": {
+        "name": "dense_highway",
+        "route_length": 200,
+        "duration": 20,
+        "seed": 0,
+        "randomize": false,
+        "params": {
+          "initial_traffic": [
+            {
+              "x": 32.51298323858161,
+              "y": 0.0,
+              "vx": 20.0
+            }
+          ],
+          "traffic_events": [
+            {
+              "at": 0.9752306272841136,
+              "vehicle_index": 0,
+              "target_speed": 0.0
+            }
+          ]
+        },
+        "simulator": "metadrive"
+      },
+      "wall_s": 2.221122690010816
+    },
+    "replay": {
+      "ok": true,
+      "ticks": 1000,
+      "expected_ticks": 1000,
+      "expected_x": 86.51710510253906,
+      "replayed_x": 86.51710510253906,
+      "expected_y": 0.13259293138980865,
+      "replayed_y": 0.13259293138980865,
+      "final_state_error": 0.0,
+      "expected_crashed": false,
+      "replayed_crashed": false,
+      "errors": []
+    }
+  },
+  {
+    "job": {
+      "scene": "lead_brakes",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "copy_current",
+      "controller": "ppo",
+      "cbf": false,
+      "braking": false,
+      "admission": false
+    },
+    "path": "e157192e16bd52e8f8362f31.json",
+    "row": {
+      "id": "e157192e16bd52e8f8362f31",
+      "scene": "lead_brakes",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "copy_current",
+      "controller": "ppo",
+      "cbf": false,
+      "braking": false,
+      "admission": false,
+      "route_pct": 43.058197021484375,
+      "crashed": true,
+      "freeze": false,
+      "end_time": 4.2,
+      "end_reason": "crash",
+      "avg_speed": 20.503903343563987,
+      "router_calls": 8,
+      "calls_applied": 8,
+      "calls_rejected": 0,
+      "override_fraction": 0.0,
+      "infeasible_ticks": 0,
+      "braking_infeasible_ticks": 0,
+      "acceleration_tracking_rmse": 0.0005724935323718153,
+      "plant_peak_lateral_jerk": 0.2421341196168214,
+      "peak_lateral_jerk": 0.6724544800817966,
+      "router_live_calls": 0,
+      "router_fallbacks": 0,
+      "cbf_override_fraction": 0.0,
+      "braking_override_fraction": 0.0,
+      "boundary_override_fraction": 0.0,
+      "monitor_emergency_ticks": 0,
+      "monitor_changed_action_ticks": 0,
+      "admission_rejections": 0,
+      "achieved_lateral_jerk_rms": 0.0195665983722815,
+      "achieved_lateral_jerk_peak": 0.2421341196168214,
+      "achieved_lateral_jerk_peak_after_0_2s": 0.027792993932962418,
+      "ticks": 210,
+      "success": false,
+      "initial_state_sha256": "66617ab173d239463357d621f7772c4460a610d74e76caafff44c4e034f25880",
+      "initial_state": {
+        "ego": {
+          "x": 0.0,
+          "y": 0.0,
+          "vx": 20.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        },
+        "others": [
+          {
+            "x": 32.51298141479492,
+            "y": 0.0,
+            "vx": 20.0,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 0,
+            "speed_limit": 0.0
+          }
+        ],
+        "route_length": 200.0
+      },
+      "scene_config": {
+        "name": "dense_highway",
+        "route_length": 200,
+        "duration": 20,
+        "seed": 0,
+        "randomize": false,
+        "params": {
+          "initial_traffic": [
+            {
+              "x": 32.51298323858161,
+              "y": 0.0,
+              "vx": 20.0
+            }
+          ],
+          "traffic_events": [
+            {
+              "at": 0.9752306272841136,
+              "vehicle_index": 0,
+              "target_speed": 0.0
+            }
+          ]
+        },
+        "simulator": "metadrive"
+      },
+      "wall_s": 0.5403591330104973
+    },
+    "replay": {
+      "ok": true,
+      "ticks": 210,
+      "expected_ticks": 210,
+      "expected_x": 86.11639404296875,
+      "replayed_x": 86.11639404296875,
+      "expected_y": -0.002363225445151329,
+      "replayed_y": -0.002363225445151329,
+      "final_state_error": 0.0,
+      "expected_crashed": true,
+      "replayed_crashed": true,
+      "errors": []
+    }
+  },
+  {
+    "job": {
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "pd",
+      "cbf": true,
+      "braking": true,
+      "admission": true
+    },
+    "path": "737cb672b63867053d7f9f4c.json",
+    "row": {
+      "id": "737cb672b63867053d7f9f4c",
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "pd",
+      "cbf": true,
+      "braking": true,
+      "admission": true,
+      "route_pct": 100.0,
+      "crashed": false,
+      "freeze": false,
+      "end_time": 12.94,
+      "end_reason": "route_complete",
+      "avg_speed": 15.458545950133429,
+      "router_calls": 25,
+      "calls_applied": 16,
+      "calls_rejected": 9,
+      "override_fraction": 0.45131375579598143,
+      "infeasible_ticks": 0,
+      "braking_infeasible_ticks": 0,
+      "acceleration_tracking_rmse": 0.27218067217436964,
+      "plant_peak_lateral_jerk": 43.98643970489502,
+      "peak_lateral_jerk": 26.24002695083618,
+      "router_live_calls": 0,
+      "router_fallbacks": 0,
+      "cbf_override_fraction": 0.0,
+      "braking_override_fraction": 0.45131375579598143,
+      "boundary_override_fraction": 0.0,
+      "monitor_emergency_ticks": 0,
+      "monitor_changed_action_ticks": 0,
+      "admission_rejections": 9,
+      "achieved_lateral_jerk_rms": 4.492049945294875,
+      "achieved_lateral_jerk_peak": 43.98643970489502,
+      "achieved_lateral_jerk_peak_after_0_2s": 43.98643970489502,
+      "ticks": 647,
+      "success": true,
+      "initial_state_sha256": "59bbeee4bb883686e6575f5743cb37bb15fe06399e0527c879cdcffffed68c80",
+      "initial_state": {
+        "ego": {
+          "x": 0.0,
+          "y": 0.0,
+          "vx": 20.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        },
+        "others": [
+          {
+            "x": 35.51298141479492,
+            "y": 0.0,
+            "vx": 9.314229965209961,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 0,
+            "speed_limit": 0.0
+          },
+          {
+            "x": 0.6016125679016113,
+            "y": 4.0,
+            "vx": 20.0,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 1,
+            "speed_limit": 0.0
+          }
+        ],
+        "route_length": 200.0
+      },
+      "scene_config": {
+        "name": "dense_highway",
+        "route_length": 200,
+        "duration": 20,
+        "seed": 0,
+        "randomize": false,
+        "params": {
+          "initial_traffic": [
+            {
+              "x": 35.51298323858161,
+              "y": 0.0,
+              "vx": 9.314229704630852
+            },
+            {
+              "x": 0.6016124633060884,
+              "y": 4.0,
+              "vx": 20.0
+            }
+          ],
+          "traffic_events": []
+        },
+        "simulator": "metadrive"
+      },
+      "wall_s": 1.4895417259976966
+    },
+    "replay": {
+      "ok": true,
+      "ticks": 647,
+      "expected_ticks": 647,
+      "expected_x": 200.03358459472656,
+      "replayed_x": 200.03358459472656,
+      "expected_y": 0.6655721068382263,
+      "replayed_y": 0.6655721068382263,
+      "final_state_error": 0.0,
+      "expected_crashed": false,
+      "replayed_crashed": false,
+      "errors": []
+    }
+  },
+  {
+    "job": {
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "pd",
+      "cbf": false,
+      "braking": false,
+      "admission": false
+    },
+    "path": "50c093c0290eaa531e4a7115.json",
+    "row": {
+      "id": "50c093c0290eaa531e4a7115",
+      "scene": "side_occupied",
+      "seed": 5001,
+      "latency_s": 0.125,
+      "router": "front_blind_rule",
+      "controller": "pd",
+      "cbf": false,
+      "braking": false,
+      "admission": false,
+      "route_pct": 21.59248161315918,
+      "crashed": true,
+      "freeze": false,
+      "end_time": 2.18,
+      "end_reason": "crash",
+      "avg_speed": 19.80961615886163,
+      "router_calls": 4,
+      "calls_applied": 3,
+      "calls_rejected": 0,
+      "override_fraction": 0.0,
+      "infeasible_ticks": 0,
+      "braking_infeasible_ticks": 0,
+      "acceleration_tracking_rmse": 0.2157120150571199,
+      "plant_peak_lateral_jerk": 19.739102572202682,
+      "peak_lateral_jerk": 26.33744478225708,
+      "router_live_calls": 0,
+      "router_fallbacks": 0,
+      "cbf_override_fraction": 0.0,
+      "braking_override_fraction": 0.0,
+      "boundary_override_fraction": 0.0,
+      "monitor_emergency_ticks": 0,
+      "monitor_changed_action_ticks": 0,
+      "admission_rejections": 0,
+      "achieved_lateral_jerk_rms": 6.045912228022943,
+      "achieved_lateral_jerk_peak": 19.739102572202682,
+      "achieved_lateral_jerk_peak_after_0_2s": 19.739102572202682,
+      "ticks": 109,
+      "success": false,
+      "initial_state_sha256": "59bbeee4bb883686e6575f5743cb37bb15fe06399e0527c879cdcffffed68c80",
+      "initial_state": {
+        "ego": {
+          "x": 0.0,
+          "y": 0.0,
+          "vx": 20.0,
+          "vy": 0.0,
+          "ax": 0.0,
+          "ay": 0.0,
+          "length": 4.515,
+          "width": 1.852,
+          "lane_id": 0,
+          "speed_limit": 0.0
+        },
+        "others": [
+          {
+            "x": 35.51298141479492,
+            "y": 0.0,
+            "vx": 9.314229965209961,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 0,
+            "speed_limit": 0.0
+          },
+          {
+            "x": 0.6016125679016113,
+            "y": 4.0,
+            "vx": 20.0,
+            "vy": 0.0,
+            "ax": 0.0,
+            "ay": 0.0,
+            "length": 4.515,
+            "width": 1.852,
+            "lane_id": 1,
+            "speed_limit": 0.0
+          }
+        ],
+        "route_length": 200.0
+      },
+      "scene_config": {
+        "name": "dense_highway",
+        "route_length": 200,
+        "duration": 20,
+        "seed": 0,
+        "randomize": false,
+        "params": {
+          "initial_traffic": [
+            {
+              "x": 35.51298323858161,
+              "y": 0.0,
+              "vx": 9.314229704630852
+            },
+            {
+              "x": 0.6016124633060884,
+              "y": 4.0,
+              "vx": 20.0
+            }
+          ],
+          "traffic_events": []
+        },
+        "simulator": "metadrive"
+      },
+      "wall_s": 0.5095560649933759
+    },
+    "replay": {
+      "ok": true,
+      "ticks": 109,
+      "expected_ticks": 109,
+      "expected_x": 43.18496322631836,
+      "replayed_x": 43.18496322631836,
+      "expected_y": 1.9466240406036377,
+      "replayed_y": 1.9466240406036377,
+      "final_state_error": 0.0,
+      "expected_crashed": true,
+      "replayed_crashed": true,
+      "errors": []
+    }
+  }
+]

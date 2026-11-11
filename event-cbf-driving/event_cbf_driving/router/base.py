@@ -61,6 +61,19 @@ def normalise_usage(value: Any) -> Dict[str, int]:
     return usage
 
 
+@dataclass(frozen=True)
+class CameraObservation:
+    """Detached camera evidence; no neighboring-object simulator state."""
+
+    image_bytes: bytes
+    mime_type: str
+    captured_t: float
+    lane: str
+    speed_mps: float
+    width: int
+    height: int
+
+
 @dataclass
 class RouterRequest:
     t: float
@@ -73,6 +86,8 @@ class RouterRequest:
     shield_h: Optional[float] = None
     vlm_pending: bool = False
     deadline_s: Optional[float] = None
+    camera: Optional[CameraObservation] = None
+    camera_capture_wall_s: float = 0.0
 
 
 @dataclass
@@ -150,6 +165,10 @@ class RouterResponse:
     model: str = ""
     usage: Dict[str, int] = field(default_factory=dict)
     finish_reason: Optional[str] = None
+    image_hash: str = ""
+    image_captured_t: Optional[float] = None
+    image_age_s: Optional[float] = None
+    request_attempts: int = 0
 
 
 def response_record_fields(resp: RouterResponse) -> Dict[str, Any]:
@@ -170,6 +189,10 @@ def response_record_fields(resp: RouterResponse) -> Dict[str, Any]:
         "total_tokens": int(usage.get("total_tokens", 0)),
         "finish_reason": resp.finish_reason,
         "error": resp.error,
+        "image_hash": resp.image_hash,
+        "image_captured_t": resp.image_captured_t,
+        "image_age_s": resp.image_age_s,
+        "request_attempts": resp.request_attempts,
     }
 
 
@@ -327,6 +350,7 @@ class RouterBackend(ABC):
 RouterHealthSnapshot = RouterHealth
 
 __all__ = [
+    "CameraObservation",
     "SKILL_NAMES",
     "RouterBackend",
     "RouterHealth",

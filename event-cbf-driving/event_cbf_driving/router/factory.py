@@ -92,13 +92,17 @@ def create_router(config: RouterConfig, **overrides) -> RouterBackend:
         backend == "local"
         and (constructor_overrides.get("load_model") is False or cfg.local_backend == "none")
     )
-    if backend in ("openai", "local", "opencode") and not allow_live and not offline_local:
+    if backend in ("openai", "local", "opencode", "vlm") and not allow_live and not offline_local:
         raise ConfigError(
             f"router.backend={backend!r} is a live backend but live calls are disabled. "
             "Set router.allow_live=true in the profile (or pass --allow-live) to opt in, "
             "or use backend='dryrun' for offline evaluation."
         )
 
+    if backend == "vlm":
+        from event_cbf_driving.router.vlm import VLMRouter
+
+        return VLMRouter(config=cfg, **constructor_overrides)
     if backend == "scripted":
         return ScriptedRouter(latency_s=cfg.latency_s, latency_jitter_s=cfg.latency_jitter_s,
                               seed=cfg.seed, latency_schedule_s=cfg.latency_schedule_s, **constructor_overrides)
