@@ -31,6 +31,7 @@ class RoadView:
     current: int
     lanes: tuple[LaneView, ...]
     settled: bool = True
+    speed_reference: float = 11.11
 
 
 def switch_admissible(
@@ -64,6 +65,11 @@ def road_request_due(
     threshold: float = 3.0,
 ) -> bool:
     current = view.lanes[view.current]
+    latency = 0.0 if policy == "no_latency" else latency
+    # The maneuver planner chooses speed as well as lane. A cleared blocker
+    # invalidates an old low-speed/stop plan even when there is only one lane.
+    if view.speed_reference < lane_speed(current, desired) - 0.8:
+        return True
     if not current.route_valid and current.remaining < max(
         25, view.speed * (latency + transition + 1)
     ):
@@ -90,7 +96,7 @@ def road_request_due(
     for lane in choices:
         if lane.rear_speed > view.speed:
             expiry = min(expiry, max(0, lane.rear_gap - 7) / (lane.rear_speed - view.speed))
-    required = (0.0 if policy == "no_latency" else latency) + transition + buffer
+    required = latency + transition + buffer
     return min(t_front, expiry) <= required
 
 
@@ -158,6 +164,7 @@ class RoadController:
             self.target_lane = refs[idx]
         self.reference_lanes = refs
         objects = self.vehicle.lidar.get_surrounding_objects(self.vehicle)
+        self.surrounding_objects = objects
         next_lanes = self.vehicle.navigation.next_ref_lanes
         self.front_objects = []
         views = []
@@ -216,6 +223,7 @@ class RoadController:
             index,
             tuple(views),
             abs(lateral) < 0.6 and abs(heading_error) < 0.12,
+            self.speed_reference,
         )
 
     def accept(self, lane, speed, view):
@@ -229,7 +237,12 @@ class RoadController:
         target = self.reference_lanes.index(self.target_lane)
         # Steering follows the committed maneuver. Braking checks both the
         # occupied and intended lane during transition, using fresh observations.
-        self.policy.target_speed = max(0.1, self.speed_reference * 3.6)
+        longitudinal, lateral = self.target_lane.local_coordinates(self.vehicle.position)
+        h0 = self.target_lane.heading_theta_at(longitudinal)
+        h1 = self.target_lane.heading_theta_at(min(self.target_lane.length, longitudinal + 5))
+        curvature = abs(math.atan2(math.sin(h1 - h0), math.cos(h1 - h0))) / 5
+        turn_speed = math.sqrt(2.5 / max(curvature, 1e-6))
+        self.policy.target_speed = max(0.1, min(self.speed_reference, turn_speed) * 3.6)
         choices = [target]
         physical = min(
             range(len(self.reference_lanes)),
@@ -242,6 +255,47 @@ class RoadController:
             for i in choices
         ]
         throttle = min(accelerations)
+        # A front/rear lane abstraction misses crossing traffic and objects on
+        # the next road segment. Use a short world-coordinate footprint forecast
+        # as a common fresh-state brake backup for every scheduler. It assumes
+        # constant obstacle velocity; no invariance guarantee is implied.
+        for future in np.linspace(0.1, 1.5, 8):
+            distance = longitudinal + view.speed * future
+            heading = self.target_lane.heading_theta_at(distance)
+            tangent = np.array([math.cos(heading), math.sin(heading)])
+            normal = np.array([-tangent[1], tangent[0]])
+            ego_position = np.asarray(
+                self.target_lane.position(distance, lateral * max(0.0, 1 - future / 2))
+            )
+            for other in self.surrounding_objects:
+                velocity = np.asarray(getattr(other, "velocity", [0.0, 0.0]))
+                relative = np.asarray(other.position) + future * velocity - ego_position
+                yaw = float(getattr(other, "heading_theta", heading)) - heading
+                length = float(getattr(other, "LENGTH", 4.5))
+                width = float(getattr(other, "WIDTH", 2.0))
+                along = (
+                    0.5
+                    * (
+                        self.vehicle.LENGTH
+                        + length * abs(math.cos(yaw))
+                        + width * abs(math.sin(yaw))
+                    )
+                    + 1.0
+                )
+                across = (
+                    0.5
+                    * (
+                        self.vehicle.WIDTH
+                        + length * abs(math.sin(yaw))
+                        + width * abs(math.cos(yaw))
+                    )
+                    + 0.15
+                )
+                if (
+                    abs(float(relative @ tangent)) < along
+                    and abs(float(relative @ normal)) < across
+                ):
+                    throttle = min(throttle, -1.0)
         steer = self.policy.steering_control(self.target_lane)
         return np.clip([steer, throttle], -1, 1).tolist()
 

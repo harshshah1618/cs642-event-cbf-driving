@@ -17,6 +17,8 @@ from event_cbf_driving.eval.runner import load_skill_bank, run_episode
 from event_cbf_driving.router.scripted import ScriptedRouter
 from event_cbf_driving.skills.ppo import SkillMeta
 
+from research_freeze import verify
+
 ROOT = Path(__file__).resolve().parents[1]
 DELAYS = {
     "fast": (0.05, 0.0),
@@ -72,13 +74,16 @@ def execute(job):
     cfg.stack.max_pending_s = latency + jitter + 1
     cfg.stack.trigger_latency_bound_s = latency + jitter
     cfg.stack.trigger_buffer_s = 0.5
-    if job.method in ("periodic", "periodic_conditioned"):
+    if job.method in ("periodic", "periodic_conditioned", "periodic_gated"):
         mode = "fixed_rate_shielded"
         cfg.stack.fixed_rate_hz = job.value
+        cfg.stack.polling_usefulness_gate = job.method == "periodic_gated"
     else:
         mode = "proposed"
-        cfg.stack.trigger_policy = job.method
-        if job.method == "deadline":
+        cfg.stack.trigger_policy = (
+            "no_latency" if job.method == "no_latency_matched" else job.method
+        )
+        if job.method in ("deadline", "no_latency_matched"):
             cfg.stack.trigger_buffer_s = job.value
     bank = (
         BANK
@@ -132,13 +137,14 @@ def main():
     candidates += [("periodic", hz) for hz in (0.1, 0.25, 0.5, 1, 2, 10)]
     candidates += [("deadline", b) for b in (0, 0.5, 1)]
     if args.stage in ("test", "pd"):
-        selected = json.loads((args.output / "selection.json").read_text())
+        selected = verify("isolation", args.output)
         candidates = [
             ("legacy", 0),
             ("ttc", 0),
             ("benefit", 0),
-            ("no_latency", 0),
+            ("no_latency_matched", selected["deadline"]),
             ("periodic", selected["periodic"]),
+            ("periodic_gated", 10.0),
             ("deadline", selected["deadline"]),
         ]
     seeds = {
@@ -156,19 +162,45 @@ def main():
         for method, value in candidates
     ]
     if args.stage in ("test", "pd"):
-        validation = [json.loads(line) for line in (args.output / "validation.jsonl").read_text().splitlines()]
+        validation = [
+            json.loads(line) for line in (args.output / "validation.jsonl").read_text().splitlines()
+        ]
         for scenario in ("two_trap", "merge", "dense_highway"):
             for delay in delays:
                 scores = []
                 for rate in (0.1, 0.25, 0.5, 1, 2, 10):
-                    group = [r for r in validation if r["scenario"] == scenario and r["delay"] == delay
-                             and r["method"] == "periodic" and r["value"] == rate]
-                    scores.append(((sum(r["success"] for r in group),
-                                    np.mean([r["route_pct"] for r in group]),
-                                    -np.mean([r["router_calls"] for r in group])), rate))
+                    group = [
+                        r
+                        for r in validation
+                        if r["scenario"] == scenario
+                        and r["delay"] == delay
+                        and r["method"] == "periodic"
+                        and r["value"] == rate
+                    ]
+                    scores.append(
+                        (
+                            (
+                                sum(r["success"] for r in group),
+                                np.mean([r["route_pct"] for r in group]),
+                                -np.mean([r["router_calls"] for r in group]),
+                            ),
+                            rate,
+                        )
+                    )
                 rate = max(scores)[1]
-                jobs.extend(Job(scenario, seed, delay, "periodic_conditioned", rate,
-                                "pd" if args.stage == "pd" else "ppo") for seed in seeds)
+                if rate != selected["conditioned_periodic"][scenario + "|" + delay]:
+                    raise ValueError("conditioned polling selection changed after freeze")
+                jobs.extend(
+                    Job(
+                        scenario,
+                        seed,
+                        delay,
+                        "periodic_conditioned",
+                        rate,
+                        "pd" if args.stage == "pd" else "ppo",
+                    )
+                    for seed in seeds
+                )
     target = args.output / f"{args.stage}.jsonl"
     completed = (
         {json.loads(line)["id"] for line in target.read_text().splitlines()}

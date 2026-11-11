@@ -71,6 +71,19 @@ def test_observation_detects_cut_in_before_discrete_lane_label_changes():
     controller = RoadController.__new__(RoadController)
     controller.vehicle = vehicle
     controller.target_lane = lanes[0]
+    controller.speed_reference = 11.11
     view = controller.observe()
     assert view.lanes[0].front_gap == 20.5
     assert controller.front_objects[0] is other
+
+
+def test_single_lane_stop_plan_is_invalidated_when_blocker_clears():
+    stopped = RoadView(8, 0, (LaneView(0, 8, 0),))
+    assert plan_maneuver(stopped) == (0, 0.0)
+    cleared = RoadView(0, 0, (LaneView(0),), speed_reference=0.0)
+    for policy in ("deadline", "no_latency", "benefit", "ttc"):
+        assert road_request_due(cleared, policy, 1.0)
+    assert plan_maneuver(cleared)[1] > 10
+    mid_transition = RoadView(0, 0, (LaneView(0),), settled=False, speed_reference=0)
+    for policy in ("deadline", "no_latency", "benefit", "ttc"):
+        assert road_request_due(mid_transition, policy, 1.0)

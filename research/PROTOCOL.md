@@ -74,3 +74,38 @@ Native held-out test size is therefore 4,200 episodes; upstream road held-out si
 is 3,360 including the two native reference agents on standard/no-delay runs.
 The road development run before the final physical-footprint implementation is
 retained as `pre-freeze-validation.jsonl`; it is excluded from selection.
+
+## Polling clock phase robustness (before held-out launch)
+
+A periodic clock starting at time zero can align with scripted obstacle events.
+Add a separate, disjoint phase study. Phase fraction is drawn uniformly once per
+scene seed and shared across polling rates; phase seconds = fraction/rate. Tune
+rates on seeds 111-114 (three scenarios, nominal/long/jitter delay, 216 episodes).
+Freeze those rates before testing seeds 1101-1140 (2,520 episodes). Keep the native
+zero-phase-selected deadline buffer; do not retune it on phase results. Both global
+and scenario/delay-conditioned polling choices use phase-validation only. Report
+this separately from the original zero-phase test. It tests sensitivity to timing,
+not an established new algorithm. Neither study can establish rare-event safety.
+
+## Independent audit corrections and final controls (before any held-out launch)
+
+Astra independently identified an unmatched latency ablation, capped road polling,
+missing speed-plan-obsolescence recovery, and phase/timing interpretation limits.
+The final test uses `no_latency_matched`: identical selected deadline buffer,
+zero latency in every trigger branch. Road event schedulers share speed-plan
+obsolescence recovery, including a stopped vehicle mid-transition. Nominal 10Hz
+road polling is no longer capped at2Hz. Pre-freeze road variants remain excluded.
+Add a fixed10Hz periodic+usefulness-gate opponent in all held-out suites. Its
+shorter query cooldown makes it a strong comparator, not a pure deadline ablation.
+Deadline vs matched-no-latency remains the isolated latency ablation. Freeze both
+global and full condition-specific polling mappings and source/checkpoint hashes.
+Road timing distinguishes process CPU and elapsed section time and includes total
+observation/controller CPU; injected wait is not actual CPU computation.
+
+Final held-out counts: native4800, upstream roads3760 (including160 external-agent
+references), initial-offset robustness2880. Validation counts1560/1152/216. PD
+controller ablation1200 if executed. Phase is a random initial timer offset; the
+existing rolling interval resets on submission, not an absolute wall-clock grid.
+Road safe/generalization share geometry for a seed, so pair/bootstrap seed jointly
+across both environments and delays. A measured call-count win does not establish
+end-to-end compute savings; frozen checkpoints do not measure training variance.

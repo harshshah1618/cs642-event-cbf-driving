@@ -355,6 +355,8 @@ class StackConfig:
     trigger_transition_s: float = 2.0
     trigger_buffer_s: float = 0.5
     trigger_threshold_s: float = 3.0
+    polling_phase_s: float = 0.0
+    polling_usefulness_gate: bool = False
 
     def validate(self, path: str = "stack") -> None:
         # StackMode covers the primary ablations; the extra entries are
@@ -397,6 +399,8 @@ class StackConfig:
                                      ("legacy", "deadline", "no_latency", "ttc", "benefit"))
         for key in ("trigger_latency_bound_s", "trigger_buffer_s"):
             setattr(self, key, _non_negative(f"{path}.{key}", getattr(self, key)))
+        self.polling_phase_s = _non_negative(f"{path}.polling_phase_s", self.polling_phase_s)
+        _bool(f"{path}.polling_usefulness_gate", self.polling_usefulness_gate)
         for key in ("trigger_transition_s", "trigger_threshold_s"):
             setattr(self, key, _positive(f"{path}.{key}", getattr(self, key)))
         if self.router_async and not self.realtime:

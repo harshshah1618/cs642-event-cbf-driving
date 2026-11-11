@@ -22,6 +22,8 @@ from event_cbf_driving.stack.road_planning import (
     road_request_due,
 )
 
+from research_freeze import verify
+
 ROOT = Path(__file__).resolve().parents[1]
 DELAYS = {
     "standard": (0.0, 0.0),
@@ -85,6 +87,9 @@ def execute(job):
     delay, jitter = DELAYS[job.delay]
     calls = rejected = changes = expired = 0
     planner_cpu = scheduler_cpu = 0.0
+    planner_process = scheduler_process = control_process = 0.0
+    controller_elapsed = 0.0
+    obsolete_speed_ticks = 0
     collision = False
     first_collision = None
     safety_cost = 0.0
@@ -97,6 +102,7 @@ def execute(job):
     try:
         env.reset(seed=job.seed)
         fingerprint = map_fingerprint(env)
+        resolved_config = json.loads(json.dumps(dict(env.config), default=str))
         if job.method in ("idm", "expert"):
             reference = (
                 IDMPolicy(env.vehicle, job.seed)
@@ -113,10 +119,19 @@ def execute(job):
             t = tick * dt
             if reference is not None:
                 started = time.perf_counter()
+                cpu_started = time.process_time()
                 action = np.clip(reference.act(), -1, 1).tolist()
                 planner_cpu += time.perf_counter() - started
+                planner_process += time.process_time() - cpu_started
             else:
+                control_started = time.perf_counter()
+                control_cpu_started = time.process_time()
                 view = controller.observe()
+                obsolete_speed_ticks += int(
+                    view.speed_reference < 10.0
+                    and view.lanes[view.current].front_gap > 50
+                    and view.settled
+                )
                 road = tuple(controller.target_lane.index[:2])
                 if pending is not None and t + 1e-9 >= pending[0]:
                     _, old_road, lane, speed = pending
@@ -132,8 +147,13 @@ def execute(job):
                     pending = None
                     view = controller.observe()
                 started = time.perf_counter()
-                if job.method in ("periodic", "periodic_conditioned"):
+                cpu_started = time.process_time()
+                if job.method in ("periodic", "periodic_conditioned", "periodic_gated"):
                     due = t - last_call >= 1 / job.value - 1e-9
+                    if due and job.method == "periodic_gated":
+                        due = road_request_due(view, "benefit", delay + jitter)
+                        if not due:
+                            last_call = t
                 elif job.method == "shield":
                     due = intervention_streak >= 5 and t - last_call >= 1
                 elif job.method == "never":
@@ -141,15 +161,24 @@ def execute(job):
                 else:
                     due = road_request_due(
                         view,
-                        job.method,
+                        "no_latency" if job.method == "no_latency_matched" else job.method,
                         delay + jitter,
-                        buffer=job.value if job.method == "deadline" else 0.5,
+                        buffer=job.value
+                        if job.method in ("deadline", "no_latency_matched")
+                        else 0.5,
                     )
                 scheduler_cpu += time.perf_counter() - started
-                if due and pending is None and t - last_call >= 0.5:
+                scheduler_process += time.process_time() - cpu_started
+                rate_clear = (
+                    job.method in ("periodic", "periodic_conditioned", "periodic_gated")
+                    or t - last_call >= 0.5
+                )
+                if due and pending is None and rate_clear:
                     started = time.perf_counter()
+                    cpu_started = time.process_time()
                     lane, speed = plan_maneuver(view)
                     planner_cpu += time.perf_counter() - started
+                    planner_process += time.process_time() - cpu_started
                     calls += 1
                     last_call = t
                     latency = max(0, delay + rng.uniform(-jitter, jitter))
@@ -162,6 +191,8 @@ def execute(job):
                             rejected += 1
                         pending = None
                 action = controller.action(view)
+                controller_elapsed += time.perf_counter() - control_started
+                control_process += time.process_time() - control_cpu_started
                 intervention_streak = intervention_streak + 1 if action[1] < 0 else 0
             _obs, reward, term, trunc, info = env.step(action)
             contact = any(
@@ -212,8 +243,13 @@ def execute(job):
             "calls_rejected": rejected,
             "road_expiries": expired,
             "lane_changes": changes,
-            "planner_cpu_s": planner_cpu,
-            "scheduler_cpu_s": scheduler_cpu,
+            "planner_elapsed_s": planner_cpu,
+            "scheduler_elapsed_s": scheduler_cpu,
+            "planner_process_s": planner_process,
+            "scheduler_process_s": scheduler_process,
+            "control_process_s": control_process,
+            "control_elapsed_s": controller_elapsed,
+            "obsolete_speed_ticks": obsolete_speed_ticks,
             "peak_motion_jerk": peak_jerk,
             "steps": tick + 1,
             "end_time": (tick + 1) * dt,
@@ -222,6 +258,7 @@ def execute(job):
             "wall_s": time.perf_counter() - wall_start,
             "dt": dt,
             "config": config,
+            "resolved_config": resolved_config,
             "observation": "common surrounding-object sensor and road navigation state",
         }
     finally:
@@ -252,14 +289,15 @@ def main():
             ("deadline", 0.5),
         ]
     if args.stage == "test":
-        selection = json.loads((args.output / "selection.json").read_text())
+        selection = verify("roads", args.output)
         candidates = [
             ("never", 0),
             ("shield", 0),
             ("ttc", 0),
             ("benefit", 0),
-            ("no_latency", 0),
+            ("no_latency_matched", selection["deadline"]),
             ("periodic", selection["periodic"]),
+            ("periodic_gated", 10.0),
             ("deadline", selection["deadline"]),
         ]
     seeds = {"pilot": range(201, 203), "validation": range(201, 209), "test": range(2001, 2041)}[
@@ -274,18 +312,37 @@ def main():
         for method, value in candidates
     ]
     if args.stage == "test":
-        validation = [json.loads(line) for line in (args.output / "validation.jsonl").read_text().splitlines()]
+        validation = [
+            json.loads(line) for line in (args.output / "validation.jsonl").read_text().splitlines()
+        ]
         for environment in ("generalization", "safe"):
             for delay in delays:
                 scores = []
                 for rate in (0.1, 0.25, 0.5, 1, 2, 10):
-                    group = [r for r in validation if r["environment"] == environment
-                             and r["delay"] == delay and r["method"] == "periodic" and r["value"] == rate]
-                    scores.append(((sum(r["success"] for r in group),
-                                    np.mean([r["route_pct"] for r in group]),
-                                    -np.mean([r["router_calls"] for r in group])), rate))
+                    group = [
+                        r
+                        for r in validation
+                        if r["environment"] == environment
+                        and r["delay"] == delay
+                        and r["method"] == "periodic"
+                        and r["value"] == rate
+                    ]
+                    scores.append(
+                        (
+                            (
+                                sum(r["success"] for r in group),
+                                np.mean([r["route_pct"] for r in group]),
+                                -np.mean([r["router_calls"] for r in group]),
+                            ),
+                            rate,
+                        )
+                    )
                 rate = max(scores)[1]
-                jobs.extend(Job(environment, seed, delay, "periodic_conditioned", rate) for seed in seeds)
+                if rate != selection["conditioned_periodic"][environment + "|" + delay]:
+                    raise ValueError("conditioned polling selection changed after freeze")
+                jobs.extend(
+                    Job(environment, seed, delay, "periodic_conditioned", rate) for seed in seeds
+                )
     if args.stage != "pilot":
         jobs += [
             Job(env, seed, "standard", method)

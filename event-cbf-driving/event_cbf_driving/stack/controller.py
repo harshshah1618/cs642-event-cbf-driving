@@ -125,7 +125,8 @@ class DrivingStack:
         since_call = 10_000
         sigma_latch: Dict[str, bool] = {name: False for name in self.skills}
         latch_reason: Optional[str] = None
-        last_rate_t = -1e18
+        rate = cfg.always_on_hz if base_mode == StackMode.ALWAYS_ON else cfg.fixed_rate_hz
+        last_rate_t = cfg.polling_phase_s - 1.0 / rate
         crashed = False
         crash_time: Optional[float] = None
         end_reason = "timeout"
@@ -309,6 +310,12 @@ class DrivingStack:
             elif base_mode == StackMode.ALWAYS_ON:
                 fixed_due = t - last_rate_t >= (1.0 / cfg.always_on_hz) - 1e-12
                 trigger_reason = "always_on" if fixed_due else None
+
+            if (cfg.polling_usefulness_gate and trigger_reason is not None
+                    and base_mode in (StackMode.FIXED_VLM, StackMode.ALWAYS_ON)):
+                if not lane_opportunity(snap, skill, transition_s=cfg.trigger_transition_s).useful:
+                    trigger_reason = None
+                    last_rate_t = t
 
             can_call = pending is None and not blending
             can_call = can_call and t + 1e-12 >= simulated_busy_until
