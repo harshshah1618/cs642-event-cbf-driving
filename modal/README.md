@@ -10,6 +10,8 @@ All GPU work for the VLM router runs on [Modal](https://modal.com): rendering fr
 
 The merged model (~7 GB) is too big for git. Rebuild it from the adapter with `--stage merge` (below).
 
+The bf16 adapter was checked on 2026-11-11. After a merge it scores 1.00 on both in-distribution test sets (300 frames plus the 50 round-2 frames), the same as the original fp32 adapter. See `vlm-router/results/qwen25vl3b-lora-r16-bf16/`.
+
 ## Set up on your own Modal account
 
 ```bash
