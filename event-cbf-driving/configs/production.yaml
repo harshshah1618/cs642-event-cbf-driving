@@ -1,0 +1,40 @@
+# Production profile.
+#
+# This profile keeps the measured research behavior available in
+# configs/default.yaml, but enables the defensible runtime choices:
+#   - fail-closed shield on non-finite state, with emergency braking
+#   - footprint + short-horizon lateral prediction so lane changes see the
+#     target lane, not just the current lane corridor
+#   - bounded router retries and explicit fallback accounting
+#   - five seeds per scenario, all baselines and ablations
+extends: default.yaml
+
+name: event-cbf-production
+
+router:
+  max_retries: 2
+  backoff_s: 0.25
+  allow_fallback: true
+  fail_on_fallback: false
+  max_consecutive_failures: 5
+
+shield:
+  lateral_mode: footprint
+  lateral_margin: 0.35
+  lookahead_s: 0.6
+  finite_checks: true
+  fail_closed: true
+  pending_margin: true
+
+stack:
+  pending_margin: true
+  pending_margin_on_all_calls: true
+  max_pending_s: 2.0
+  shield_hold_ticks: 10
+  abort_on_emergency: true
+
+eval:
+  seeds: [0, 1, 2, 3, 4]
+  fail_on_regression: true
+  min_route_pct: 70.0
+  figures: true

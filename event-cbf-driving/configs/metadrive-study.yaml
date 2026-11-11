@@ -1,0 +1,15 @@
+extends: metadrive.yaml
+name: event-cbf-metadrive-study
+checkpoint_dir: checkpoints/metadrive-calibrated
+shield:
+  braking_guard: true
+  intent_corridor: true
+  braking_decel: 6.0
+  braking_clearance: 2.0
+  braking_response_s: 0.15
+stack:
+  sigma_threshold_scale: 1.0
+  rearm_on_skill_change: true
+eval:
+  seeds: [0, 1, 2, 3, 4]
+  out_dir: runs/metadrive-study

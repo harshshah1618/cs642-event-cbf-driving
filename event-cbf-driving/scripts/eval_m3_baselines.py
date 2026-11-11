@@ -30,7 +30,6 @@ from event_cbf_driving.skills.ppo import load_skill
 from event_cbf_driving.stack.baselines import BaselineMode, M3BaselineStack
 from event_cbf_driving.stack.controller import DrivingStack, StackConfig, StackMode
 
-
 MEDIA = Path(__file__).resolve().parents[2] / "media" / "full-stack"
 DOCS = Path(__file__).resolve().parents[1]
 

@@ -24,18 +24,34 @@
 
 ## Milestone status
 
+The five follow-up deliverables are complete: actual local-model comparison,
+investigation and reduction of safety failures, frozen-weight uncertainty
+calibration, broader physical traffic/delay stress, and a measured report/demo.
+See [FINAL_REPORT.md](FINAL_REPORT.md) for current evidence and negative findings.
+
 - **M1** — package, PPO skills, scripted router on interrupt API, CBF, eval (done).
-- **M2** — real LLM router contract (`openai` / `local` / dry-run mock HTTP), retuned interrupts, re-measured (done; see RESULTS.md **M2 router**).
+- **M2** — live router implementations and bounded background inference are
+  available. Slow/expired response contracts are tested. Canonical physical
+  nominal evaluations use scripted decisions. An additional 18-episode pinned
+  Qwen2.5-1.5B pilot makes 62 actual calls with no fallback; it establishes no
+  advantage over a delay-replayed rule control.
+- **MetaDrive** — optional physical backend, randomized scenario parameters,
+  shared frozen-policy transfer, road-edge constraints, fresh-gap maneuver
+  admission, matched shielded polling comparisons, replay and interaction
+  plots, calibration, stopping backup and intended-corridor recovery. See
+  `METADRIVE.md` for commands and `FINAL_REPORT.md` for current evidence.
 
 ## Next steps toward CoDrivingLLM / CoLMDriver
 
 1. **CoDrivingLLM** — replace dry-run / scripted teacher with CoDrivingLLM’s high-level speech/act interface; keep the interrupt gate and 300 ms (or measured) latency model.
-2. **Larger local model** — Qwen2.5-0.5B loads on CPU but is weak as a closed-loop policy; try 1.5B+ or a fine-tuned skill classifier.
+2. **Stronger decision model** — the completed 1.5B CPU pilot establishes no benefit; a larger model or fine-tuned classifier needs a new controlled study.
 3. **CoLMDriver** — swap Tier-2 PPO skills for CoLMDriver’s language-conditioned low-level policies; keep the inflated CBF and blend on skill/language switch.
 4. **CARLA** — implement `CarlaAdapterStub` transforms; reuse `DrivingStack.run` unchanged.
-5. **Real VLM latency** — log wall-clock router RTT and set `vlm_delay_s` from percentiles instead of a fixed 0.30 s.
+5. **Camera/VLM latency** — actual text-model timing is now measured; adding perception requires a separate camera/VLM experiment.
 6. **Advantage-gated blend** — `stack/blend.py` already exposes `advantage_gate`; wire critic advantages from both skills into the crossfade (demo currently uses the sigmoid schedule).
 
 ## Success metrics (gauntlet)
 
-Proposed should dominate the three baselines jointly on: crash, freeze, route completion, peak lateral jerk, and router-call efficiency (calls only when needed). See [`RESULTS.md`](RESULTS.md) for the latest measured numbers.
+Compare crash, freeze, route completion, peak lateral jerk and router-call
+efficiency without assuming universal dominance. See [FINAL_REPORT.md](FINAL_REPORT.md)
+for the physical study and [RESULTS.md](RESULTS.md) for native results.

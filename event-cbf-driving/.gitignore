@@ -1,0 +1,13 @@
+# Generated evaluation artifacts
+runs/
+outputs/
+
+# Tool caches not covered by the repository-level .gitignore
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Reused local environment (never part of a source snapshot)
+.venv

@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: event-cbf-driving
+
+jobs:
+  metadrive:
+    name: MetaDrive physics and three-layer integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: event-cbf-driving/pyproject.toml
+      - name: Install headless runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgl1 libegl1 libglib2.0-0
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+          python -m pip install -e ".[dev,metadrive]"
+          python -m metadrive.pull_asset
+      - name: Real physics, replay and background-router contracts
+        run: python -m pytest -q tests/test_metadrive.py tests/test_layer_interactions.py tests/test_study.py
+      - name: Randomized physical regression gate
+        run: |
+          python -m event_cbf_driving.cli eval --profile metadrive-study \
+            --modes proposed --seeds 0 1 2 --no-figures \
+            --run-id "metadrive-ci-${GITHUB_RUN_ID}"
+      - name: Upload physical evaluation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: metadrive-evaluation
+          path: event-cbf-driving/runs/metadrive-study
+          if-no-files-found: ignore
+  test:
+    name: tests + offline evaluation
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: event-cbf-driving/pyproject.toml
+
+      - name: Install CPU torch first
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+
+      - name: Install package + dev tools
+        run: python -m pip install -e ".[dev]"
+
+      - name: Lint
+        run: python -m ruff check event_cbf_driving tests scripts
+
+      - name: Typecheck
+        run: python -m mypy event_cbf_driving
+
+      - name: Tests with coverage
+        run: |
+          python -m pytest -q --cov=event_cbf_driving --cov-report=term-missing --cov-fail-under=60
+
+      - name: Checkpoint validation
+        run: python -m event_cbf_driving.cli verify --profile ci
+
+      - name: Doctor
+        run: python -m event_cbf_driving.cli doctor --json
+
+      - name: Offline CI evaluation
+        run: |
+          python -m event_cbf_driving.cli eval --profile ci --router scripted \
+            --out-dir runs/ci --run-id "ci-${GITHUB_RUN_ID}"
+
+      - name: Upload evaluation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-evaluation
+          path: event-cbf-driving/runs/ci
+          if-no-files-found: ignore

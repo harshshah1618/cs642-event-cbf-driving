@@ -9,8 +9,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from scripts.train_skills import main as train_main
 from scripts.eval_stack import main as eval_main
+from scripts.train_skills import main as train_main
 
 
 def main():

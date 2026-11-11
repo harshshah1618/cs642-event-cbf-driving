@@ -14,7 +14,6 @@ import numpy as np
 from event_cbf_driving.env.skill_lane import LANE_Y
 from event_cbf_driving.stack.controller import RolloutResult
 
-
 SHORT = {
     "unshielded_skill": "Unshielded",
     "static_cbf": "Static CBF",
@@ -54,7 +53,7 @@ def plot_m3_scenario_bars(
         axes,
         [route, calls, jerks],
         ["Route completion %", "Router calls", "Peak lateral jerk"],
-        ["%", "count", "m/s³"],
+        ["%", "count", "m/s³"], strict=False,
     ):
         ax.bar(labels, vals, color=colors)
         ax.set_title(ttl, fontsize=10)
@@ -88,7 +87,7 @@ def plot_m3_gauntlet_rollouts(
         "fasionad_wakeup": "FASIONAD-style (σ→nudge)",
         "cert_replan": "CERT-Replan-style (barrier replan)",
     }
-    for ax, r in zip(axes, results):
+    for ax, r in zip(axes, results, strict=False):
         ax.plot(r.xs, r.ys, color=COLORS.get(r.mode, "#1d4e89"), linewidth=1.8)
         ax.axhline(LANE_Y[0], color="#888", ls="--", lw=0.8)
         ax.axhline(LANE_Y[1], color="#888", ls="--", lw=0.8)

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 import matplotlib
 
@@ -45,7 +45,7 @@ def plot_gauntlet_rollouts(results: List[RolloutResult], out_path: Path, stalled
         "fixed_rate_vlm": "Fixed-rate VLM + hard switch",
         "proposed": "Proposed (event + inflated + blend)",
     }
-    for ax, r in zip(axes, results):
+    for ax, r in zip(axes, results, strict=False):
         ax.plot(r.xs, r.ys, color="#1d4e89", linewidth=1.8)
         ax.axhline(LANE_Y[0], color="#888", ls="--", lw=0.8)
         ax.axhline(LANE_Y[1], color="#888", ls="--", lw=0.8)
@@ -88,7 +88,7 @@ def plot_ablation_bars(results: List[RolloutResult], out_path: Path):
         axes,
         [route, calls, jerks],
         ["Route completion %", "Router calls", "Peak lateral jerk"],
-        ["%", "count", "m/s³"],
+        ["%", "count", "m/s³"], strict=False,
     ):
         ax.bar(labels, vals, color=colors[: len(labels)])
         ax.set_title(title, fontsize=10)
