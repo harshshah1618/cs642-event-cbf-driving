@@ -19,3 +19,6 @@ venv/
 *.blg
 *.out
 *.synctex.gz
+
+# VLM router smoke-test outputs
+vlm-router/results/smoke/
