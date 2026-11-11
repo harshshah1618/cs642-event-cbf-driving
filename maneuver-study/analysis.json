@@ -1,0 +1,815 @@
+{
+  "development": {
+    "episodes": 252,
+    "condition_combinations": 36,
+    "unique_initial_physical_states_including_actuator_geometry": 6,
+    "lock_sha256": "77f416f0fe4fe5e468e43f12207f0ec5d24fe5166288f36d8f483d366af0db5c",
+    "summary": {
+      "baseline:8": {
+        "n": 36,
+        "success": 12,
+        "crashes": 0,
+        "freezes": 24,
+        "mean_route_pct": 58.59682831499312,
+        "mean_end_time": 42.97
+      },
+      "fixed_latched:2": {
+        "n": 36,
+        "success": 20,
+        "crashes": 0,
+        "freezes": 16,
+        "mean_route_pct": 72.42081556055281,
+        "mean_end_time": 35.36333333333333
+      },
+      "fixed_latched:4": {
+        "n": 36,
+        "success": 28,
+        "crashes": 0,
+        "freezes": 8,
+        "mean_route_pct": 86.21733513143327,
+        "mean_end_time": 27.533333333333335
+      },
+      "fixed_latched:8": {
+        "n": 36,
+        "success": 36,
+        "crashes": 0,
+        "freezes": 0,
+        "mean_route_pct": 100.0,
+        "mean_end_time": 19.546666666666667
+      },
+      "fixed_latched:12": {
+        "n": 36,
+        "success": 36,
+        "crashes": 0,
+        "freezes": 0,
+        "mean_route_pct": 100.0,
+        "mean_end_time": 19.343333333333334
+      },
+      "fixed_latched:20": {
+        "n": 36,
+        "success": 36,
+        "crashes": 0,
+        "freezes": 0,
+        "mean_route_pct": 100.0,
+        "mean_end_time": 19.477777777777778
+      },
+      "geometric_latched:8": {
+        "n": 36,
+        "success": 36,
+        "crashes": 0,
+        "freezes": 0,
+        "mean_route_pct": 100.0,
+        "mean_end_time": 19.52722222222222
+      }
+    }
+  },
+  "heldout": {
+    "episodes": 192,
+    "condition_combinations": 48,
+    "unique_initial_physical_states_including_actuator_geometry": 6,
+    "lock_sha256": "7038d2d0007a836d4c4675082c2b4221c457ec8eeb97f789c5ed9c47684c34a0",
+    "summary": {
+      "baseline:8": {
+        "n": 48,
+        "success": 12,
+        "crashes": 0,
+        "freezes": 36,
+        "mean_route_pct": 53.4213632841905,
+        "mean_end_time": 47.18
+      },
+      "fixed_latched:8": {
+        "n": 48,
+        "success": 48,
+        "crashes": 0,
+        "freezes": 0,
+        "mean_route_pct": 100.0,
+        "mean_end_time": 23.034583333333334
+      },
+      "geometric_latched:8": {
+        "n": 48,
+        "success": 48,
+        "crashes": 0,
+        "freezes": 0,
+        "mean_route_pct": 100.0,
+        "mean_end_time": 23.071250000000003
+      },
+      "static:8": {
+        "n": 48,
+        "success": 12,
+        "crashes": 0,
+        "freezes": 36,
+        "mean_route_pct": 49.68675032258034,
+        "mean_end_time": 47.25625
+      }
+    },
+    "subgroups": {
+      "ppo:0.125s": {
+        "baseline:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 9.08
+        },
+        "fixed_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 9.08
+        },
+        "geometric_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 9.073333333333332
+        },
+        "static:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 9.39
+        }
+      },
+      "ppo:6s": {
+        "baseline:8": {
+          "n": 6,
+          "success": 0,
+          "crashes": 0,
+          "freezes": 6,
+          "mean_route_pct": 37.90051301320394,
+          "mean_end_time": 60.0
+        },
+        "fixed_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 15.713333333333333
+        },
+        "geometric_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 15.770000000000001
+        },
+        "static:8": {
+          "n": 6,
+          "success": 0,
+          "crashes": 0,
+          "freezes": 6,
+          "mean_route_pct": 32.91557550430298,
+          "mean_end_time": 60.0
+        }
+      },
+      "ppo:18s": {
+        "baseline:8": {
+          "n": 6,
+          "success": 0,
+          "crashes": 0,
+          "freezes": 6,
+          "mean_route_pct": 37.89762258529663,
+          "mean_end_time": 60.0
+        },
+        "fixed_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 27.71666666666667
+        },
+        "geometric_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 27.77
+        },
+        "static:8": {
+          "n": 6,
+          "success": 0,
+          "crashes": 0,
+          "freezes": 6,
+          "mean_route_pct": 32.91557550430298,
+          "mean_end_time": 60.0
+        }
+      },
+      "ppo:30s": {
+        "baseline:8": {
+          "n": 6,
+          "success": 0,
+          "crashes": 0,
+          "freezes": 6,
+          "mean_route_pct": 37.895308335622154,
+          "mean_end_time": 60.0
+        },
+        "fixed_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 39.71333333333333
+        },
+        "geometric_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 39.77
+        },
+        "static:8": {
+          "n": 6,
+          "success": 0,
+          "crashes": 0,
+          "freezes": 6,
+          "mean_route_pct": 32.91557550430298,
+          "mean_end_time": 60.0
+        }
+      },
+      "pd:0.125s": {
+        "baseline:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 8.36
+        },
+        "fixed_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 8.36
+        },
+        "geometric_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 8.36
+        },
+        "static:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 8.66
+        }
+      },
+      "pd:6s": {
+        "baseline:8": {
+          "n": 6,
+          "success": 0,
+          "crashes": 0,
+          "freezes": 6,
+          "mean_route_pct": 37.898160219192505,
+          "mean_end_time": 60.0
+        },
+        "fixed_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 15.896666666666667
+        },
+        "geometric_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 15.94
+        },
+        "static:8": {
+          "n": 6,
+          "success": 0,
+          "crashes": 0,
+          "freezes": 6,
+          "mean_route_pct": 32.911937634150185,
+          "mean_end_time": 60.0
+        }
+      },
+      "pd:18s": {
+        "baseline:8": {
+          "n": 6,
+          "success": 0,
+          "crashes": 0,
+          "freezes": 6,
+          "mean_route_pct": 37.88984020551046,
+          "mean_end_time": 60.0
+        },
+        "fixed_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 27.896666666666665
+        },
+        "geometric_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 27.94333333333333
+        },
+        "static:8": {
+          "n": 6,
+          "success": 0,
+          "crashes": 0,
+          "freezes": 6,
+          "mean_route_pct": 32.91599710782369,
+          "mean_end_time": 60.0
+        }
+      },
+      "pd:30s": {
+        "baseline:8": {
+          "n": 6,
+          "success": 0,
+          "crashes": 0,
+          "freezes": 6,
+          "mean_route_pct": 37.88946191469828,
+          "mean_end_time": 60.0
+        },
+        "fixed_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 39.9
+        },
+        "geometric_latched:8": {
+          "n": 6,
+          "success": 6,
+          "crashes": 0,
+          "freezes": 0,
+          "mean_route_pct": 100.0,
+          "mean_end_time": 39.943333333333335
+        },
+        "static:8": {
+          "n": 6,
+          "success": 0,
+          "crashes": 0,
+          "freezes": 6,
+          "mean_route_pct": 32.91934132575989,
+          "mean_end_time": 60.0
+        }
+      }
+    },
+    "paired_comparisons": {
+      "fixed_success_baseline_failure": 36,
+      "fixed_failure_baseline_success": 0,
+      "geometry_success_fixed_failure": 0,
+      "geometry_failure_fixed_success": 0
+    }
+  },
+  "mechanism": [
+    {
+      "mode": "baseline",
+      "success": false,
+      "route_pct": 23.842639923095703,
+      "before_intent": {
+        "t": 17.98,
+        "skill": "CRUISE_RIGHT",
+        "sigma": 17.550483109785276,
+        "blend_alpha": 1.0,
+        "requested_action": [
+          3.5,
+          0.009650370106101036
+        ],
+        "shield_action": [
+          -0.03163707256317139,
+          0.009650370106101036
+        ],
+        "applied_action": [
+          -0.03163707256317139,
+          0.009650370106101036
+        ],
+        "shield_override": true,
+        "shield_feasible": true,
+        "lateral_override": false,
+        "lateral_h": 0.8869949293199351,
+        "shield_reason": "braking_envelope_violated",
+        "braking_h": -0.0005945454152497403,
+        "braking_feasible": true,
+        "cbf_override": true,
+        "braking_override": true,
+        "barrier_h": 0.8760679386446683,
+        "inflation": 0.0,
+        "monitor": "degraded",
+        "router_trigger": "fixed_rate",
+        "router_pending": true,
+        "request_id": "eb1810-001",
+        "plant": {
+          "command": [
+            0.11930177147589793,
+            -0.06335623673144844
+          ],
+          "saturated": false,
+          "measured_ax": 0.36137064453214407,
+          "requested_acceleration": [
+            -0.03163707256317139,
+            0.009650370106101036
+          ],
+          "achieved_acceleration": [
+            -0.3613711684010923,
+            -0.04027906252304092
+          ],
+          "out_of_road": false,
+          "upstream_on_lane": true,
+          "traffic_events_applied": []
+        },
+        "ego": [
+          38.119998931884766,
+          0.17625562846660614,
+          0.0035927952267229557,
+          0.00036237805034033954
+        ],
+        "obstacles": [
+          [
+            45.00001907348633,
+            2.6352224846704075e-09,
+            -1.1655227183382522e-07,
+            2.5342210108192376e-08
+          ]
+        ]
+      },
+      "at_intent": {
+        "t": 18.0,
+        "skill": "OVERTAKE_LEFT",
+        "sigma": 17.55066296274144,
+        "blend_alpha": 0.0066928509242848554,
+        "requested_action": [
+          3.492541790008545,
+          0.026999764144420624
+        ],
+        "shield_action": [
+          0.00028002262115478516,
+          0.026999764144420624
+        ],
+        "applied_action": [
+          0.00028002262115478516,
+          0.026999764144420624
+        ],
+        "shield_override": true,
+        "shield_feasible": true,
+        "lateral_override": false,
+        "lateral_h": 0.8869880743782297,
+        "shield_reason": "ok",
+        "braking_h": 1.7928798267341506e-05,
+        "braking_feasible": true,
+        "cbf_override": true,
+        "braking_override": true,
+        "barrier_h": 0.884090608273182,
+        "inflation": 0.0,
+        "monitor": "ok",
+        "router_trigger": "fixed_rate",
+        "router_pending": false,
+        "request_id": null,
+        "plant": {
+          "command": [
+            0.25281587437637765,
+            -0.06068621272105585
+          ],
+          "saturated": false,
+          "measured_ax": -0.3613711684010923,
+          "requested_acceleration": [
+            0.00028002262115478516,
+            0.026999764144420624
+          ],
+          "achieved_acceleration": [
+            0.36052120849490166,
+            0.04630241892300546
+          ],
+          "out_of_road": false,
+          "upstream_on_lane": true,
+          "traffic_events_applied": []
+        },
+        "ego": [
+          38.11992645263672,
+          0.1762467622756958,
+          -0.00363462814129889,
+          -0.00044320320012047887
+        ],
+        "obstacles": [
+          [
+            45.00001907348633,
+            2.658213427153555e-09,
+            -9.411986923169025e-08,
+            3.524228731066614e-08
+          ]
+        ]
+      },
+      "reserve_events": []
+    },
+    {
+      "mode": "fixed_latched",
+      "success": true,
+      "route_pct": 100.0,
+      "before_intent": {
+        "t": 17.98,
+        "skill": "CRUISE_RIGHT",
+        "sigma": 17.548324874311284,
+        "blend_alpha": 1.0,
+        "requested_action": [
+          3.5,
+          0.056455641984939575
+        ],
+        "shield_action": [
+          -7.5,
+          0.056455641984939575
+        ],
+        "applied_action": [
+          -7.5,
+          0.056455641984939575
+        ],
+        "shield_override": true,
+        "shield_feasible": false,
+        "lateral_override": false,
+        "lateral_h": 0.8638958692983176,
+        "shield_reason": "braking_infeasible",
+        "braking_h": -0.039442442259156156,
+        "braking_feasible": false,
+        "cbf_override": false,
+        "braking_override": true,
+        "barrier_h": 8.83672136961319,
+        "inflation": 0.0,
+        "monitor": "degraded",
+        "router_trigger": "fixed_rate",
+        "router_pending": true,
+        "request_id": "cc81c5-001",
+        "plant": {
+          "command": [
+            1.0,
+            -0.4610812595683367
+          ],
+          "saturated": true,
+          "measured_ax": 0.3545802552253008,
+          "requested_acceleration": [
+            -7.5,
+            0.056455641984939575
+          ],
+          "achieved_acceleration": [
+            -0.35458519123494625,
+            -0.06821710558142513
+          ],
+          "out_of_road": false,
+          "upstream_on_lane": true,
+          "traffic_events_applied": []
+        },
+        "ego": [
+          30.158767700195312,
+          0.06044406443834305,
+          0.0041180686093866825,
+          0.0008029722375795245
+        ],
+        "obstacles": [
+          [
+            45.00001907348633,
+            2.6352224846704075e-09,
+            -1.1655227183382522e-07,
+            2.5342210108192376e-08
+          ]
+        ]
+      },
+      "at_intent": {
+        "t": 18.0,
+        "skill": "OVERTAKE_LEFT",
+        "sigma": 17.548540697858684,
+        "blend_alpha": 0.0066928509242848554,
+        "requested_action": [
+          3.4925284385681152,
+          0.0735677182674408
+        ],
+        "shield_action": [
+          3.4925284385681152,
+          0.0735677182674408
+        ],
+        "applied_action": [
+          3.4925284385681152,
+          0.0735677182674408
+        ],
+        "shield_override": false,
+        "shield_feasible": true,
+        "lateral_override": false,
+        "lateral_h": 0.8638913919538191,
+        "shield_reason": "ok",
+        "braking_h": 7.9612377163959245,
+        "braking_feasible": true,
+        "cbf_override": false,
+        "braking_override": false,
+        "barrier_h": 8.844583303652254,
+        "inflation": 0.0,
+        "monitor": "ok",
+        "router_trigger": "fixed_rate",
+        "router_pending": false,
+        "request_id": null,
+        "plant": {
+          "command": [
+            -1.0,
+            0.9021322520481746
+          ],
+          "saturated": true,
+          "measured_ax": -0.35458519123494625,
+          "requested_acceleration": [
+            3.4925284385681152,
+            0.0735677182674408
+          ],
+          "achieved_acceleration": [
+            2.4658102774992585,
+            -0.17157875408884138
+          ],
+          "out_of_road": false,
+          "upstream_on_lane": true,
+          "traffic_events_applied": []
+        },
+        "ego": [
+          30.158706665039062,
+          0.060432836413383484,
+          -0.0029736352153122425,
+          -0.0005613698740489781
+        ],
+        "obstacles": [
+          [
+            45.00001907348633,
+            2.658213427153555e-09,
+            -9.411986923169025e-08,
+            3.524228731066614e-08
+          ]
+        ]
+      },
+      "reserve_events": [
+        {
+          "t": 0.0,
+          "event": "arm",
+          "reserve": 8.0,
+          "target": 0.0
+        },
+        {
+          "t": 18.0,
+          "event": "release_on_changed_admitted_target",
+          "target": 4.0,
+          "reserve": 8.0
+        }
+      ]
+    },
+    {
+      "mode": "static",
+      "success": false,
+      "route_pct": 18.862123489379883,
+      "before_intent": {
+        "t": 17.98,
+        "skill": "CRUISE_RIGHT",
+        "sigma": 17.548324874311284,
+        "blend_alpha": 1.0,
+        "requested_action": [
+          3.5,
+          0.056455641984939575
+        ],
+        "shield_action": [
+          -7.5,
+          0.056455641984939575
+        ],
+        "applied_action": [
+          -7.5,
+          0.056455641984939575
+        ],
+        "shield_override": true,
+        "shield_feasible": false,
+        "lateral_override": false,
+        "lateral_h": 0.8638958692983176,
+        "shield_reason": "braking_infeasible",
+        "braking_h": -0.039442442259156156,
+        "braking_feasible": false,
+        "cbf_override": false,
+        "braking_override": true,
+        "barrier_h": 8.83672136961319,
+        "inflation": 0.0,
+        "monitor": "degraded",
+        "router_trigger": "fixed_rate",
+        "router_pending": true,
+        "request_id": "c836c4-001",
+        "plant": {
+          "command": [
+            1.0,
+            -0.4610812595683367
+          ],
+          "saturated": true,
+          "measured_ax": 0.3545802552253008,
+          "requested_acceleration": [
+            -7.5,
+            0.056455641984939575
+          ],
+          "achieved_acceleration": [
+            -0.35458519123494625,
+            -0.06821710558142513
+          ],
+          "out_of_road": false,
+          "upstream_on_lane": true,
+          "traffic_events_applied": []
+        },
+        "ego": [
+          30.158767700195312,
+          0.06044406443834305,
+          0.0041180686093866825,
+          0.0008029722375795245
+        ],
+        "obstacles": [
+          [
+            45.00001907348633,
+            2.6352224846704075e-09,
+            -1.1655227183382522e-07,
+            2.5342210108192376e-08
+          ]
+        ]
+      },
+      "at_intent": {
+        "t": 18.0,
+        "skill": "OVERTAKE_LEFT",
+        "sigma": 17.548540697858684,
+        "blend_alpha": 0.0066928509242848554,
+        "requested_action": [
+          3.4925284385681152,
+          0.0735677182674408
+        ],
+        "shield_action": [
+          -7.5,
+          0.0735677182674408
+        ],
+        "applied_action": [
+          -7.5,
+          0.0735677182674408
+        ],
+        "shield_override": true,
+        "shield_feasible": false,
+        "lateral_override": false,
+        "lateral_h": 0.8638913919538191,
+        "shield_reason": "braking_infeasible",
+        "braking_h": -0.03876228360407552,
+        "braking_feasible": false,
+        "cbf_override": false,
+        "braking_override": true,
+        "barrier_h": 8.844583303652254,
+        "inflation": 0.0,
+        "monitor": "degraded",
+        "router_trigger": "fixed_rate",
+        "router_pending": false,
+        "request_id": null,
+        "plant": {
+          "command": [
+            1.0,
+            -0.4610812595683367
+          ],
+          "saturated": true,
+          "measured_ax": -0.35458519123494625,
+          "requested_acceleration": [
+            -7.5,
+            0.0735677182674408
+          ],
+          "achieved_acceleration": [
+            0.3545802552253008,
+            0.06821591523475945
+          ],
+          "out_of_road": false,
+          "upstream_on_lane": true,
+          "traffic_events_applied": []
+        },
+        "ego": [
+          30.158706665039062,
+          0.060432836413383484,
+          -0.0029736352153122425,
+          -0.0005613698740489781
+        ],
+        "obstacles": [
+          [
+            45.00001907348633,
+            2.658213427153555e-09,
+            -9.411986923169025e-08,
+            3.524228731066614e-08
+          ]
+        ]
+      },
+      "reserve_events": []
+    }
+  ]
+}

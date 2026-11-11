@@ -1,0 +1,8 @@
+{
+  "snapshot": "50bcbde",
+  "package_files_verified_identical": 119,
+  "different": [],
+  "excluded": [
+    "event-cbf-driving/.gitignore: research-snapshot helper absent in original checkout"
+  ]
+}

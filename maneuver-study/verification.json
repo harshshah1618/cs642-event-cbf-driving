@@ -1,0 +1,36 @@
+{
+  "controlled_development_episodes": 252,
+  "controlled_heldout_episodes": 192,
+  "heldout_conditions": 48,
+  "heldout_unique_physical_initial_states": 6,
+  "paired_initial_states_equal": true,
+  "fixed8_successes": 48,
+  "baseline_successes": 12,
+  "static8_successes": 12,
+  "geometry_successes": 48,
+  "all_heldout_collisions": 0,
+  "actual_model_physical_episodes": 2,
+  "actual_model_predictions_in_pair": 5,
+  "actual_model_pair_initial_states_equal": true,
+  "actual_model_pair_fallbacks": 0,
+  "actual_model_pair_successes": {
+    "baseline": false,
+    "fixed_latched": true
+  },
+  "image_text_actual_forwards": 24,
+  "images_with_letter_flip": 8,
+  "images_with_lane_target_flip": 6,
+  "executed_image_source_hashes_archived_and_verified": 57,
+  "full_pytest": {
+    "passed": 342
+  },
+  "targeted_helper_and_new_tests": {
+    "passed": 18
+  },
+  "ruff": "all checks passed",
+  "mypy_package_files_passed": 53,
+  "raw_run_files_preserved": 74,
+  "original_package_files_verified_unchanged": 119,
+  "cloud_jobs": 0,
+  "novel_algorithm_established": false
+}
