@@ -1,0 +1,144 @@
+{
+ "args": {
+  "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "data": "/vol/data/v1",
+  "out": "/vol/ckpt/qwen25vl3b-lora-r16",
+  "epochs": 2.0,
+  "max_steps": 0,
+  "bs": 4,
+  "accum": 4,
+  "lr": 0.0002,
+  "rank": 16,
+  "warmup": 20,
+  "eval_every": 50,
+  "grad_ckpt": 0,
+  "wandb": 1,
+  "run_name": "qwen25vl3b-lora-r16",
+  "seed": 0
+ },
+ "final": {
+  "step": 450,
+  "val/acc": 0.9958333333333333,
+  "val/sec": 19.416211128234863,
+  "val_kind/clear": 1.0,
+  "val_kind/left_only": 0.975,
+  "val_kind/overtake": 1.0,
+  "val_kind/blocked": 1.0,
+  "val_kind/return": 1.0,
+  "val_kind/keep_left": 1.0
+ },
+ "history": [
+  {
+   "step": 0,
+   "val/acc": 0.5,
+   "val/sec": 22.577036380767822,
+   "val_kind/clear": 1.0,
+   "val_kind/left_only": 1.0,
+   "val_kind/overtake": 0.0,
+   "val_kind/blocked": 1.0,
+   "val_kind/return": 0.0,
+   "val_kind/keep_left": 0.0
+  },
+  {
+   "step": 50,
+   "val/acc": 0.6666666666666666,
+   "val/sec": 19.890178203582764,
+   "val_kind/clear": 1.0,
+   "val_kind/left_only": 1.0,
+   "val_kind/overtake": 0.0,
+   "val_kind/blocked": 1.0,
+   "val_kind/return": 0.0,
+   "val_kind/keep_left": 1.0
+  },
+  {
+   "step": 100,
+   "val/acc": 0.9416666666666667,
+   "val/sec": 19.874633312225342,
+   "val_kind/clear": 1.0,
+   "val_kind/left_only": 0.95,
+   "val_kind/overtake": 0.925,
+   "val_kind/blocked": 1.0,
+   "val_kind/return": 1.0,
+   "val_kind/keep_left": 0.775
+  },
+  {
+   "step": 150,
+   "val/acc": 0.9875,
+   "val/sec": 20.132720708847046,
+   "val_kind/clear": 1.0,
+   "val_kind/left_only": 0.975,
+   "val_kind/overtake": 0.95,
+   "val_kind/blocked": 1.0,
+   "val_kind/return": 1.0,
+   "val_kind/keep_left": 1.0
+  },
+  {
+   "step": 200,
+   "val/acc": 0.975,
+   "val/sec": 20.332751512527466,
+   "val_kind/clear": 1.0,
+   "val_kind/left_only": 0.95,
+   "val_kind/overtake": 1.0,
+   "val_kind/blocked": 1.0,
+   "val_kind/return": 0.9,
+   "val_kind/keep_left": 1.0
+  },
+  {
+   "step": 250,
+   "val/acc": 0.9916666666666667,
+   "val/sec": 19.93856906890869,
+   "val_kind/clear": 1.0,
+   "val_kind/left_only": 1.0,
+   "val_kind/overtake": 1.0,
+   "val_kind/blocked": 1.0,
+   "val_kind/return": 0.95,
+   "val_kind/keep_left": 1.0
+  },
+  {
+   "step": 300,
+   "val/acc": 0.9958333333333333,
+   "val/sec": 19.598052740097046,
+   "val_kind/clear": 1.0,
+   "val_kind/left_only": 0.975,
+   "val_kind/overtake": 1.0,
+   "val_kind/blocked": 1.0,
+   "val_kind/return": 1.0,
+   "val_kind/keep_left": 1.0
+  },
+  {
+   "step": 350,
+   "val/acc": 0.9958333333333333,
+   "val/sec": 20.07763957977295,
+   "val_kind/clear": 1.0,
+   "val_kind/left_only": 0.975,
+   "val_kind/overtake": 1.0,
+   "val_kind/blocked": 1.0,
+   "val_kind/return": 1.0,
+   "val_kind/keep_left": 1.0
+  },
+  {
+   "step": 400,
+   "val/acc": 0.9958333333333333,
+   "val/sec": 19.867365837097168,
+   "val_kind/clear": 1.0,
+   "val_kind/left_only": 0.975,
+   "val_kind/overtake": 1.0,
+   "val_kind/blocked": 1.0,
+   "val_kind/return": 1.0,
+   "val_kind/keep_left": 1.0
+  },
+  {
+   "step": 450,
+   "val/acc": 0.9958333333333333,
+   "val/sec": 19.416211128234863,
+   "val_kind/clear": 1.0,
+   "val_kind/left_only": 0.975,
+   "val_kind/overtake": 1.0,
+   "val_kind/blocked": 1.0,
+   "val_kind/return": 1.0,
+   "val_kind/keep_left": 1.0
+  }
+ ],
+ "train_minutes": 18.1,
+ "gpu": "NVIDIA L40S"
+}
