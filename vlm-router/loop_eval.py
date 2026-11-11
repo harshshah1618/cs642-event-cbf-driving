@@ -83,7 +83,7 @@ def plot(results, out):
     fig.savefig(out, dpi=130)
 
 
-def run(policy, renderer, seeds, out_dir, ckpt_dir):
+def run(policy, renderer, seeds, out_dir, ckpt_dir, meta=None):
     out_dir = Path(out_dir)
     (out_dir / "frames").mkdir(parents=True, exist_ok=True)
     skills = load_skills(ckpt_dir)
@@ -124,6 +124,8 @@ def run(policy, renderer, seeds, out_dir, ckpt_dir):
     results = {k: results[k] for k in ("rule_instant", "rule_delayed", "vlm")}
     for k, v in results.items():
         print(f"{k:13s} {json.dumps(v['summary'])}", flush=True)
-    json.dump(results, open(out_dir / "closed_loop.json", "w"), indent=1)
     plot(results, out_dir / "trajectories.png")
+    results["meta"] = meta or {}
+    print("meta", json.dumps(results["meta"]), flush=True)
+    json.dump(results, open(out_dir / "closed_loop.json", "w"), indent=1)
     return results

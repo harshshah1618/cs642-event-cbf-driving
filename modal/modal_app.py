@@ -42,6 +42,9 @@ hf = modal.Volume.from_name("vlm-router-hf", create_if_missing=True)
 VOLS = {"/vol": vol, "/hf": hf}
 # W&B is optional: set CS642_NO_WANDB=1 if your Modal workspace has no secret named "wandb" (then pass
 # train_extra "--wandb 0" for training).
+# Inference GPU: L4 first (all reported latencies so far are on L4); if Modal has no L4 free, fall back in order.
+# Each result records the GPU it actually ran on.
+INFER_GPUS = ["L4", "A10G", "A100-40GB"]
 SECRETS = [] if os.environ.get("CS642_NO_WANDB") == "1" else [modal.Secret.from_name("wandb")]
 
 
@@ -131,7 +134,7 @@ def train(dataset: str, run_name: str, extra: list):
     return summary
 
 
-@app.function(image=vllm_image, volumes=VOLS, gpu="L4", cpu=4, memory=16384, secrets=SECRETS, timeout=3600)
+@app.function(image=vllm_image, volumes=VOLS, gpu=INFER_GPUS, cpu=4, memory=16384, secrets=SECRETS, timeout=3600)
 def evaluate(model: str, sets: str, tag: str, limit: int = 0, wandb_run: str = ""):
     vol.reload()
     out = "/tmp/res.json"
@@ -171,7 +174,7 @@ class Renderer:
         return self.bridge.render_png(scene)
 
 
-@app.function(image=loop_image, volumes=VOLS, gpu="L4", cpu=4, memory=16384, timeout=3600)
+@app.function(image=loop_image, volumes=VOLS, gpu=INFER_GPUS, cpu=4, memory=16384, timeout=3600)
 def closed_loop(run_name: str, seeds: list, tag: str):
     """VLM in this container (same L4 + vLLM setup as the evals); frames come from the Renderer on a T4."""
     vol.reload()
@@ -184,7 +187,10 @@ def closed_loop(run_name: str, seeds: list, tag: str):
     policy = VLLMPolicy(f"/vol/ckpt/{run_name}/merged")
     renderer = Renderer()
     out = f"/vol/results/{run_name}/closed_loop_{tag}"
-    res = loop_eval.run(policy, lambda scene: renderer.render.remote(scene), seeds, out, f"{ECD}/checkpoints")
+    import torch  # CUDA is already up inside vLLM (in-process engine), so this does not change the start method
+
+    meta = dict(gpu=torch.cuda.get_device_name(0), model=f"/vol/ckpt/{run_name}/merged", seeds=seeds)
+    res = loop_eval.run(policy, lambda scene: renderer.render.remote(scene), seeds, out, f"{ECD}/checkpoints", meta)
     vol.commit()
     return res, open(f"{out}/trajectories.png", "rb").read()
 

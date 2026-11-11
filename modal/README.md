@@ -37,6 +37,8 @@ modal run modal/modal_app.py --stage eval --skip-base
 modal run modal/modal_app.py --stage ood --skip-base
 ```
 
+Add `--detach` (`modal run --detach modal/modal_app.py ...`) to anything longer than a few minutes. Without it, Modal stops the app as soon as your laptop's connection drops, for example when the laptop sleeps or the Wi-Fi changes. With `--detach` the run keeps going, and the results are on the volume even if the local copy step never runs.
+
 Results land in `vlm-router/results/<run>/` locally and in `/vol/results/<run>/` on the volume. The closed loop also saves every frame the VLM saw to `/vol/results/<run>/closed_loop_<tag>/frames/`. Fetch them with `modal volume get vlm-router results/<run>/closed_loop_<tag>/frames .`.
 
 ## How the closed loop works
