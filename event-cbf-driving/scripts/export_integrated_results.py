@@ -50,7 +50,7 @@ def main():
         "id",
     )
     with (STUDY / "results/per-episode.csv").open("w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=extra + fields)
+        writer = csv.DictWriter(f, fieldnames=extra + fields, lineterminator="\n")
         writer.writeheader()
         for stage, group in (("controlled", rows), ("actual_subset", live)):
             for r in group:
@@ -87,7 +87,7 @@ def main():
             )
         )
     with (STUDY / "results/all-conditions.csv").open("w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=list(data[0]))
+        writer = csv.DictWriter(f, fieldnames=list(data[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(data)
     text = [

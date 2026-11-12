@@ -20,3 +20,5 @@ venv/
 *.out
 *.synctex.gz
 .vlm-deps/
+/.vlm-deps
+/tmp/
