@@ -1,0 +1,22 @@
+{
+  "evaluation_python": "3.12.13",
+  "platform": "Linux-7.3.3-1-cachyos-x86_64-with-glibc2.44",
+  "packages": {
+    "torch": "2.15.0+cpu",
+    "numpy": "2.5.4",
+    "transformers": "4.57.6",
+    "accelerate": "1.15.0",
+    "safetensors": "0.8.0",
+    "huggingface-hub": "0.36.2",
+    "metadrive-simulator": "0.4.3",
+    "Pillow": "13.0.0",
+    "matplotlib": "3.11.2",
+    "pytest": "9.2.0",
+    "ruff": "0.17.3",
+    "mypy": "2.4.1"
+  },
+  "task_local_peft": "0.17.1",
+  "report_python": "3.12.14 4.4.9",
+  "base_revision": "66285546d2b821cf421d4f5eb2576359d3770cd3",
+  "teammate_adapter_sha256": "e0b999e98601d58bf8a180d1296d4d075fd40058dec5f55e05fb71ae8ea803ab"
+}

@@ -1,0 +1,5800 @@
+{
+  "audit": {
+    "rows": 1440,
+    "unique_job_ids": 1440,
+    "paired_initial_states_exact": true,
+    "scene_seed_groups": 24,
+    "unique_initial_state_values": 16,
+    "all_trace_hashes_verified": true,
+    "all_source_hashes_verified": true,
+    "source_lock_sha256": "b533186dead4df77f40b916a6341e00bfa2ecca4d578b7026d1998e3d3f0aad5"
+  },
+  "all": {
+    "barrier_replan_local": {
+      "n": 96,
+      "success": 96,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 96,
+      "pending_crashes": 0,
+      "cut_ins_observed": 32,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "route_complete": 96
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 0.0,
+      "mean_local_replans": 2.6666666666666665,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 13.9275,
+      "mean_achieved_jerk_rms": 6.021590656245994,
+      "mean_achieved_jerk_peak": 117.81870804649468,
+      "mean_achieved_jerk_peak_after_0_2s": 117.81870804649468,
+      "mean_override_fraction": 0.6048244202973073,
+      "mean_braking_infeasible_ticks": 2.125,
+      "mean_calls_applied": 2.6666666666666665,
+      "mean_calls_rejected": 0.0
+    },
+    "critic_margin": {
+      "n": 96,
+      "success": 96,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 96,
+      "pending_crashes": 0,
+      "cut_ins_observed": 32,
+      "cut_ins_first_seen_pending": 24,
+      "end_reasons": {
+        "route_complete": 96
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 2.3562499999999997,
+      "mean_end_time": 16.659791666666667,
+      "mean_achieved_jerk_rms": 4.842640850610344,
+      "mean_achieved_jerk_peak": 101.4638378539227,
+      "mean_achieved_jerk_peak_after_0_2s": 101.41100236069178,
+      "mean_override_fraction": 0.6580435940476682,
+      "mean_braking_infeasible_ticks": 5.322916666666667,
+      "mean_calls_applied": 0.9791666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "final_integrated": {
+      "n": 96,
+      "success": 96,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 96,
+      "pending_crashes": 0,
+      "cut_ins_observed": 32,
+      "cut_ins_first_seen_pending": 24,
+      "end_reasons": {
+        "route_complete": 96
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 2.2729166666666667,
+      "mean_end_time": 16.403958333333335,
+      "mean_achieved_jerk_rms": 4.79615671547939,
+      "mean_achieved_jerk_peak": 92.32958126252318,
+      "mean_achieved_jerk_peak_after_0_2s": 92.2734428725865,
+      "mean_override_fraction": 0.6575052971398173,
+      "mean_braking_infeasible_ticks": 114.61458333333333,
+      "mean_calls_applied": 0.9791666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "gated_poll": {
+      "n": 96,
+      "success": 96,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 96,
+      "pending_crashes": 0,
+      "cut_ins_observed": 32,
+      "cut_ins_first_seen_pending": 4,
+      "end_reasons": {
+        "route_complete": 96
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 2.284166666666667,
+      "mean_end_time": 16.360833333333336,
+      "mean_achieved_jerk_rms": 4.578132321021828,
+      "mean_achieved_jerk_peak": 87.45774574284344,
+      "mean_achieved_jerk_peak_after_0_2s": 87.39947546321976,
+      "mean_override_fraction": 0.6527146654498698,
+      "mean_braking_infeasible_ticks": 115.97916666666667,
+      "mean_calls_applied": 0.9791666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "high_rate_poll": {
+      "n": 96,
+      "success": 96,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 96,
+      "pending_crashes": 0,
+      "cut_ins_observed": 32,
+      "cut_ins_first_seen_pending": 22,
+      "end_reasons": {
+        "route_complete": 96
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 57.28125,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 2.284166666666667,
+      "mean_end_time": 16.967708333333334,
+      "mean_achieved_jerk_rms": 4.773823281703262,
+      "mean_achieved_jerk_peak": 89.70759530257055,
+      "mean_achieved_jerk_peak_after_0_2s": 89.69070027281607,
+      "mean_override_fraction": 0.6739702413575781,
+      "mean_braking_infeasible_ticks": 119.07291666666667,
+      "mean_calls_applied": 54.895833333333336,
+      "mean_calls_rejected": 1.5833333333333333
+    },
+    "immediate_benefit": {
+      "n": 96,
+      "success": 96,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 96,
+      "pending_crashes": 0,
+      "cut_ins_observed": 32,
+      "cut_ins_first_seen_pending": 24,
+      "end_reasons": {
+        "route_complete": 96
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 2.2729166666666667,
+      "mean_end_time": 16.309375,
+      "mean_achieved_jerk_rms": 4.477576370873899,
+      "mean_achieved_jerk_peak": 84.97068058128814,
+      "mean_achieved_jerk_peak_after_0_2s": 84.91454219135146,
+      "mean_override_fraction": 0.6508757901989277,
+      "mean_braking_infeasible_ticks": 115.72916666666667,
+      "mean_calls_applied": 0.9791666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "matched_timer_hard": {
+      "n": 96,
+      "success": 96,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 96,
+      "pending_crashes": 0,
+      "cut_ins_observed": 32,
+      "cut_ins_first_seen_pending": 17,
+      "end_reasons": {
+        "route_complete": 96
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 10.78125,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 2.39875,
+      "mean_end_time": 17.231875000000002,
+      "mean_achieved_jerk_rms": 8.110214121047102,
+      "mean_achieved_jerk_peak": 150.39383864253372,
+      "mean_achieved_jerk_peak_after_0_2s": 150.3789349468813,
+      "mean_override_fraction": 0.6718150111823437,
+      "mean_braking_infeasible_ticks": 128.36458333333334,
+      "mean_calls_applied": 9.979166666666666,
+      "mean_calls_rejected": 0.2916666666666667
+    },
+    "no_blend": {
+      "n": 96,
+      "success": 96,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 96,
+      "pending_crashes": 0,
+      "cut_ins_observed": 32,
+      "cut_ins_first_seen_pending": 24,
+      "end_reasons": {
+        "route_complete": 96
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 2.2908333333333335,
+      "mean_end_time": 16.236875,
+      "mean_achieved_jerk_rms": 5.606697344293984,
+      "mean_achieved_jerk_peak": 105.60470711349505,
+      "mean_achieved_jerk_peak_after_0_2s": 105.54856872355838,
+      "mean_override_fraction": 0.6475562519522323,
+      "mean_braking_infeasible_ticks": 116.28125,
+      "mean_calls_applied": 0.9791666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "no_reserve": {
+      "n": 96,
+      "success": 80,
+      "crashes": 0,
+      "terminal_stalls": 16,
+      "legacy_freezes": 16,
+      "route_complete": 80,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 18,
+      "end_reasons": {
+        "route_complete": 80,
+        "timeout": 16
+      },
+      "mean_route_pct": 88.57578770319621,
+      "mean_expensive_calls": 1.0,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 9.050416666666667,
+      "mean_end_time": 21.088958333333334,
+      "mean_achieved_jerk_rms": 5.041955138423405,
+      "mean_achieved_jerk_peak": 59.74066690214386,
+      "mean_achieved_jerk_peak_after_0_2s": 59.681748522658985,
+      "mean_override_fraction": 0.6933803012481685,
+      "mean_braking_infeasible_ticks": 341.9895833333333,
+      "mean_calls_applied": 0.9791666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "original_proposal": {
+      "n": 96,
+      "success": 96,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 96,
+      "pending_crashes": 0,
+      "cut_ins_observed": 32,
+      "cut_ins_first_seen_pending": 8,
+      "end_reasons": {
+        "route_complete": 96
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 2.7916666666666665,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 2.5729166666666665,
+      "mean_end_time": 19.63,
+      "mean_achieved_jerk_rms": 7.041829183435074,
+      "mean_achieved_jerk_peak": 136.46314196648746,
+      "mean_achieved_jerk_peak_after_0_2s": 136.46144994709175,
+      "mean_override_fraction": 0.6527663130697349,
+      "mean_braking_infeasible_ticks": 0.5104166666666666,
+      "mean_calls_applied": 2.6145833333333335,
+      "mean_calls_rejected": 0.010416666666666666
+    },
+    "speed_delay_margin": {
+      "n": 96,
+      "success": 96,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 96,
+      "pending_crashes": 0,
+      "cut_ins_observed": 32,
+      "cut_ins_first_seen_pending": 24,
+      "end_reasons": {
+        "route_complete": 96
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.1041666666666667,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.13208333333333333,
+      "mean_end_time": 17.398958333333336,
+      "mean_achieved_jerk_rms": 3.548607883907323,
+      "mean_achieved_jerk_peak": 70.54150555632077,
+      "mean_achieved_jerk_peak_after_0_2s": 70.4871191434601,
+      "mean_override_fraction": 0.6566223448850858,
+      "mean_braking_infeasible_ticks": 6.739583333333333,
+      "mean_calls_applied": 1.0833333333333333,
+      "mean_calls_rejected": 0.0
+    },
+    "static_cbf": {
+      "n": 96,
+      "success": 32,
+      "crashes": 16,
+      "terminal_stalls": 48,
+      "legacy_freezes": 48,
+      "route_complete": 32,
+      "pending_crashes": 0,
+      "cut_ins_observed": 0,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "timeout": 48,
+        "crash": 16,
+        "route_complete": 32
+      },
+      "mean_route_pct": 54.853333950042725,
+      "mean_expensive_calls": 0.0,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 27.73166666666667,
+      "mean_end_time": 35.641666666666666,
+      "mean_achieved_jerk_rms": 3.1031321263331075,
+      "mean_achieved_jerk_peak": 8.579464677798873,
+      "mean_achieved_jerk_peak_after_0_2s": 8.510570574647621,
+      "mean_override_fraction": 0.8704070366643363,
+      "mean_braking_infeasible_ticks": 0.0,
+      "mean_calls_applied": 0.0,
+      "mean_calls_rejected": 0.0
+    },
+    "timer_hard_unshielded": {
+      "n": 96,
+      "success": 14,
+      "crashes": 82,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 14,
+      "pending_crashes": 52,
+      "cut_ins_observed": 11,
+      "cut_ins_first_seen_pending": 3,
+      "end_reasons": {
+        "crash": 82,
+        "route_complete": 14
+      },
+      "mean_route_pct": 46.83556501070658,
+      "mean_expensive_calls": 3.7395833333333335,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 4.439583333333334,
+      "mean_achieved_jerk_rms": 5.051158226262012,
+      "mean_achieved_jerk_peak": 58.83650587179545,
+      "mean_achieved_jerk_peak_after_0_2s": 58.78474074393125,
+      "mean_override_fraction": 0.0,
+      "mean_braking_infeasible_ticks": 0.0,
+      "mean_calls_applied": 3.1770833333333335,
+      "mean_calls_rejected": 0.0
+    },
+    "uncertainty_wakeup": {
+      "n": 96,
+      "success": 96,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 96,
+      "pending_crashes": 0,
+      "cut_ins_observed": 32,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "route_complete": 96
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 0.6666666666666666,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 3.1050000000000004,
+      "mean_end_time": 20.534791666666667,
+      "mean_achieved_jerk_rms": 5.338567420963849,
+      "mean_achieved_jerk_peak": 120.20591942321819,
+      "mean_achieved_jerk_peak_after_0_2s": 120.13340514386073,
+      "mean_override_fraction": 0.7830389026343916,
+      "mean_braking_infeasible_ticks": 159.66666666666666,
+      "mean_calls_applied": 0.6666666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "unshielded_rl": {
+      "n": 96,
+      "success": 0,
+      "crashes": 96,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 0,
+      "pending_crashes": 0,
+      "cut_ins_observed": 0,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "crash": 96
+      },
+      "mean_route_pct": 36.32423257827759,
+      "mean_expensive_calls": 0.0,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 3.5075000000000003,
+      "mean_achieved_jerk_rms": 0.02095709113228135,
+      "mean_achieved_jerk_peak": 0.23223570678965189,
+      "mean_achieved_jerk_peak_after_0_2s": 0.025175195332849398,
+      "mean_override_fraction": 0.0,
+      "mean_braking_infeasible_ticks": 0.0,
+      "mean_calls_applied": 0.0,
+      "mean_calls_rejected": 0.0
+    }
+  },
+  "nominal": {
+    "barrier_replan_local": {
+      "n": 72,
+      "success": 72,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 72,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "route_complete": 72
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 0.0,
+      "mean_local_replans": 2.6666666666666665,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 13.9275,
+      "mean_achieved_jerk_rms": 6.021590656245994,
+      "mean_achieved_jerk_peak": 117.81870804649468,
+      "mean_achieved_jerk_peak_after_0_2s": 117.81870804649468,
+      "mean_override_fraction": 0.6048244202973073,
+      "mean_braking_infeasible_ticks": 2.125,
+      "mean_calls_applied": 2.6666666666666665,
+      "mean_calls_rejected": 0.0
+    },
+    "critic_margin": {
+      "n": 72,
+      "success": 72,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 72,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 18,
+      "end_reasons": {
+        "route_complete": 72
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 13.257777777777777,
+      "mean_achieved_jerk_rms": 4.7066688877575205,
+      "mean_achieved_jerk_peak": 92.22790647779928,
+      "mean_achieved_jerk_peak_after_0_2s": 92.17682296164438,
+      "mean_override_fraction": 0.5965476467214856,
+      "mean_braking_infeasible_ticks": 5.722222222222222,
+      "mean_calls_applied": 1.0833333333333333,
+      "mean_calls_rejected": 0.0
+    },
+    "final_integrated": {
+      "n": 72,
+      "success": 72,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 72,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 18,
+      "end_reasons": {
+        "route_complete": 72
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 13.053055555555554,
+      "mean_achieved_jerk_rms": 3.9678580326862507,
+      "mean_achieved_jerk_peak": 75.73847190441383,
+      "mean_achieved_jerk_peak_after_0_2s": 75.68408549155316,
+      "mean_override_fraction": 0.5968747884774418,
+      "mean_braking_infeasible_ticks": 6.513888888888889,
+      "mean_calls_applied": 1.0833333333333333,
+      "mean_calls_rejected": 0.0
+    },
+    "gated_poll": {
+      "n": 72,
+      "success": 72,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 72,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 3,
+      "end_reasons": {
+        "route_complete": 72
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 12.979999999999999,
+      "mean_achieved_jerk_rms": 3.6785321673215776,
+      "mean_achieved_jerk_peak": 69.24832899029651,
+      "mean_achieved_jerk_peak_after_0_2s": 69.19394257743585,
+      "mean_override_fraction": 0.5906487456375025,
+      "mean_braking_infeasible_ticks": 7.527777777777778,
+      "mean_calls_applied": 1.0833333333333333,
+      "mean_calls_rejected": 0.0
+    },
+    "high_rate_poll": {
+      "n": 72,
+      "success": 72,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 72,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 14,
+      "end_reasons": {
+        "route_complete": 72
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 75.81944444444444,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 13.728611111111112,
+      "mean_achieved_jerk_rms": 3.9393659110525525,
+      "mean_achieved_jerk_peak": 72.24809016204543,
+      "mean_achieved_jerk_peak_after_0_2s": 72.24809016204543,
+      "mean_override_fraction": 0.6167520897220659,
+      "mean_braking_infeasible_ticks": 11.652777777777779,
+      "mean_calls_applied": 72.97222222222223,
+      "mean_calls_rejected": 2.111111111111111
+    },
+    "immediate_benefit": {
+      "n": 72,
+      "success": 72,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 72,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 18,
+      "end_reasons": {
+        "route_complete": 72
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 12.926944444444445,
+      "mean_achieved_jerk_rms": 3.5430842398789304,
+      "mean_achieved_jerk_peak": 65.92660432943376,
+      "mean_achieved_jerk_peak_after_0_2s": 65.87221791657309,
+      "mean_override_fraction": 0.588035445889589,
+      "mean_braking_infeasible_ticks": 8.0,
+      "mean_calls_applied": 1.0833333333333333,
+      "mean_calls_rejected": 0.0
+    },
+    "matched_timer_hard": {
+      "n": 72,
+      "success": 72,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 72,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 9,
+      "end_reasons": {
+        "route_complete": 72
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 13.819444444444445,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 13.949444444444445,
+      "mean_achieved_jerk_rms": 8.39213811421904,
+      "mean_achieved_jerk_peak": 152.98292309226883,
+      "mean_achieved_jerk_peak_after_0_2s": 152.98292309226883,
+      "mean_override_fraction": 0.6153462347972456,
+      "mean_braking_infeasible_ticks": 14.805555555555555,
+      "mean_calls_applied": 13.083333333333334,
+      "mean_calls_rejected": 0.3888888888888889
+    },
+    "no_blend": {
+      "n": 72,
+      "success": 72,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 72,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 18,
+      "end_reasons": {
+        "route_complete": 72
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 12.816666666666666,
+      "mean_achieved_jerk_rms": 5.066618687609336,
+      "mean_achieved_jerk_peak": 93.24554549190604,
+      "mean_achieved_jerk_peak_after_0_2s": 93.19115907904536,
+      "mean_override_fraction": 0.5840009804445953,
+      "mean_braking_infeasible_ticks": 8.75,
+      "mean_calls_applied": 1.0833333333333333,
+      "mean_calls_rejected": 0.0
+    },
+    "no_reserve": {
+      "n": 72,
+      "success": 72,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 72,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 18,
+      "end_reasons": {
+        "route_complete": 72
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 13.066944444444443,
+      "mean_achieved_jerk_rms": 3.9676045804141435,
+      "mean_achieved_jerk_peak": 76.28354931512149,
+      "mean_achieved_jerk_peak_after_0_2s": 76.22916290226082,
+      "mean_override_fraction": 0.5968029923394833,
+      "mean_braking_infeasible_ticks": 2.6527777777777777,
+      "mean_calls_applied": 1.0833333333333333,
+      "mean_calls_rejected": 0.0
+    },
+    "original_proposal": {
+      "n": 72,
+      "success": 72,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 72,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "route_complete": 72
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 3.0555555555555554,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 14.61527777777778,
+      "mean_achieved_jerk_rms": 7.408712170429088,
+      "mean_achieved_jerk_peak": 146.34778884202308,
+      "mean_achieved_jerk_peak_after_0_2s": 146.34553281616212,
+      "mean_override_fraction": 0.610164131547218,
+      "mean_braking_infeasible_ticks": 0.6805555555555556,
+      "mean_calls_applied": 3.0416666666666665,
+      "mean_calls_rejected": 0.013888888888888888
+    },
+    "speed_delay_margin": {
+      "n": 72,
+      "success": 72,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 72,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 18,
+      "end_reasons": {
+        "route_complete": 72
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 13.049166666666666,
+      "mean_achieved_jerk_rms": 3.962345605219589,
+      "mean_achieved_jerk_peak": 75.39283947052253,
+      "mean_achieved_jerk_peak_after_0_2s": 75.33845305766187,
+      "mean_override_fraction": 0.5961036542922891,
+      "mean_braking_infeasible_ticks": 6.611111111111111,
+      "mean_calls_applied": 1.0833333333333333,
+      "mean_calls_rejected": 0.0
+    },
+    "static_cbf": {
+      "n": 72,
+      "success": 24,
+      "crashes": 12,
+      "terminal_stalls": 36,
+      "legacy_freezes": 36,
+      "route_complete": 24,
+      "pending_crashes": 0,
+      "cut_ins_observed": 0,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "timeout": 36,
+        "crash": 12,
+        "route_complete": 24
+      },
+      "mean_route_pct": 54.853333950042725,
+      "mean_expensive_calls": 0.0,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 27.73166666666667,
+      "mean_end_time": 35.641666666666666,
+      "mean_achieved_jerk_rms": 3.103132126333108,
+      "mean_achieved_jerk_peak": 8.579464677798873,
+      "mean_achieved_jerk_peak_after_0_2s": 8.510570574647621,
+      "mean_override_fraction": 0.8704070366643363,
+      "mean_braking_infeasible_ticks": 0.0,
+      "mean_calls_applied": 0.0,
+      "mean_calls_rejected": 0.0
+    },
+    "timer_hard_unshielded": {
+      "n": 72,
+      "success": 14,
+      "crashes": 58,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 14,
+      "pending_crashes": 28,
+      "cut_ins_observed": 11,
+      "cut_ins_first_seen_pending": 3,
+      "end_reasons": {
+        "crash": 58,
+        "route_complete": 14
+      },
+      "mean_route_pct": 50.339342488182915,
+      "mean_expensive_calls": 4.652777777777778,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 4.750277777777779,
+      "mean_achieved_jerk_rms": 6.727891937971923,
+      "mean_achieved_jerk_peak": 78.37126259346405,
+      "mean_achieved_jerk_peak_after_0_2s": 78.37126259346405,
+      "mean_override_fraction": 0.0,
+      "mean_braking_infeasible_ticks": 0.0,
+      "mean_calls_applied": 4.236111111111111,
+      "mean_calls_rejected": 0.0
+    },
+    "uncertainty_wakeup": {
+      "n": 72,
+      "success": 72,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 72,
+      "pending_crashes": 0,
+      "cut_ins_observed": 24,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "route_complete": 72
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 0.6666666666666666,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.18944444444444444,
+      "mean_end_time": 17.576944444444443,
+      "mean_achieved_jerk_rms": 4.957550529950698,
+      "mean_achieved_jerk_peak": 119.49937879560619,
+      "mean_achieved_jerk_peak_after_0_2s": 119.42686451624871,
+      "mean_override_fraction": 0.7554986956847971,
+      "mean_braking_infeasible_ticks": 12.88888888888889,
+      "mean_calls_applied": 0.6666666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "unshielded_rl": {
+      "n": 72,
+      "success": 0,
+      "crashes": 72,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 0,
+      "pending_crashes": 0,
+      "cut_ins_observed": 0,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "crash": 72
+      },
+      "mean_route_pct": 36.32423257827759,
+      "mean_expensive_calls": 0.0,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 3.5075000000000003,
+      "mean_achieved_jerk_rms": 0.020957091132281353,
+      "mean_achieved_jerk_peak": 0.23223570678965189,
+      "mean_achieved_jerk_peak_after_0_2s": 0.025175195332849398,
+      "mean_override_fraction": 0.0,
+      "mean_braking_infeasible_ticks": 0.0,
+      "mean_calls_applied": 0.0,
+      "mean_calls_rejected": 0.0
+    }
+  },
+  "stress": {
+    "barrier_replan_local": {
+      "n": 24,
+      "success": 24,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 24,
+      "pending_crashes": 0,
+      "cut_ins_observed": 8,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "route_complete": 24
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 0.0,
+      "mean_local_replans": 2.6666666666666665,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 13.9275,
+      "mean_achieved_jerk_rms": 6.021590656245993,
+      "mean_achieved_jerk_peak": 117.81870804649468,
+      "mean_achieved_jerk_peak_after_0_2s": 117.81870804649468,
+      "mean_override_fraction": 0.6048244202973071,
+      "mean_braking_infeasible_ticks": 2.125,
+      "mean_calls_applied": 2.6666666666666665,
+      "mean_calls_rejected": 0.0
+    },
+    "critic_margin": {
+      "n": 24,
+      "success": 24,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 24,
+      "pending_crashes": 0,
+      "cut_ins_observed": 8,
+      "cut_ins_first_seen_pending": 6,
+      "end_reasons": {
+        "route_complete": 24
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 9.424999999999999,
+      "mean_end_time": 26.86583333333333,
+      "mean_achieved_jerk_rms": 5.250556739168812,
+      "mean_achieved_jerk_peak": 129.17163198229295,
+      "mean_achieved_jerk_peak_after_0_2s": 129.113540557834,
+      "mean_override_fraction": 0.8425314360262165,
+      "mean_braking_infeasible_ticks": 4.125,
+      "mean_calls_applied": 0.6666666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "final_integrated": {
+      "n": 24,
+      "success": 24,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 24,
+      "pending_crashes": 0,
+      "cut_ins_observed": 8,
+      "cut_ins_first_seen_pending": 6,
+      "end_reasons": {
+        "route_complete": 24
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 9.091666666666667,
+      "mean_end_time": 26.456666666666667,
+      "mean_achieved_jerk_rms": 7.281052763858805,
+      "mean_achieved_jerk_peak": 142.10290933685124,
+      "mean_achieved_jerk_peak_after_0_2s": 142.04151501568654,
+      "mean_override_fraction": 0.8393968231269439,
+      "mean_braking_infeasible_ticks": 438.9166666666667,
+      "mean_calls_applied": 0.6666666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "gated_poll": {
+      "n": 24,
+      "success": 24,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 24,
+      "pending_crashes": 0,
+      "cut_ins_observed": 8,
+      "cut_ins_first_seen_pending": 1,
+      "end_reasons": {
+        "route_complete": 24
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 9.136666666666668,
+      "mean_end_time": 26.50333333333333,
+      "mean_achieved_jerk_rms": 7.276932782122581,
+      "mean_achieved_jerk_peak": 142.08599600048424,
+      "mean_achieved_jerk_peak_after_0_2s": 142.01607412057152,
+      "mean_override_fraction": 0.8389124248869718,
+      "mean_braking_infeasible_ticks": 441.3333333333333,
+      "mean_calls_applied": 0.6666666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "high_rate_poll": {
+      "n": 24,
+      "success": 24,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 24,
+      "pending_crashes": 0,
+      "cut_ins_observed": 8,
+      "cut_ins_first_seen_pending": 8,
+      "end_reasons": {
+        "route_complete": 24
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.6666666666666667,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 9.136666666666668,
+      "mean_end_time": 26.685000000000002,
+      "mean_achieved_jerk_rms": 7.277195393655387,
+      "mean_achieved_jerk_peak": 142.08611072414593,
+      "mean_achieved_jerk_peak_after_0_2s": 142.01853060512803,
+      "mean_override_fraction": 0.8456246962641149,
+      "mean_braking_infeasible_ticks": 441.3333333333333,
+      "mean_calls_applied": 0.6666666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "immediate_benefit": {
+      "n": 24,
+      "success": 24,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 24,
+      "pending_crashes": 0,
+      "cut_ins_observed": 8,
+      "cut_ins_first_seen_pending": 6,
+      "end_reasons": {
+        "route_complete": 24
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 9.091666666666667,
+      "mean_end_time": 26.456666666666667,
+      "mean_achieved_jerk_rms": 7.281052763858805,
+      "mean_achieved_jerk_peak": 142.10290933685124,
+      "mean_achieved_jerk_peak_after_0_2s": 142.04151501568654,
+      "mean_override_fraction": 0.8393968231269439,
+      "mean_braking_infeasible_ticks": 438.9166666666667,
+      "mean_calls_applied": 0.6666666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "matched_timer_hard": {
+      "n": 24,
+      "success": 24,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 24,
+      "pending_crashes": 0,
+      "cut_ins_observed": 8,
+      "cut_ins_first_seen_pending": 8,
+      "end_reasons": {
+        "route_complete": 24
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.6666666666666667,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 9.595,
+      "mean_end_time": 27.079166666666666,
+      "mean_achieved_jerk_rms": 7.264442141531281,
+      "mean_achieved_jerk_peak": 142.6265852933284,
+      "mean_achieved_jerk_peak_after_0_2s": 142.56697051071873,
+      "mean_override_fraction": 0.8412213403376381,
+      "mean_braking_infeasible_ticks": 469.0416666666667,
+      "mean_calls_applied": 0.6666666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "no_blend": {
+      "n": 24,
+      "success": 24,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 24,
+      "pending_crashes": 0,
+      "cut_ins_observed": 8,
+      "cut_ins_first_seen_pending": 6,
+      "end_reasons": {
+        "route_complete": 24
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.0833333333333333,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 9.163333333333334,
+      "mean_end_time": 26.497500000000002,
+      "mean_achieved_jerk_rms": 7.226933314347928,
+      "mean_achieved_jerk_peak": 142.68219197826207,
+      "mean_achieved_jerk_peak_after_0_2s": 142.62079765709737,
+      "mean_override_fraction": 0.8382220664751436,
+      "mean_braking_infeasible_ticks": 438.875,
+      "mean_calls_applied": 0.6666666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "no_reserve": {
+      "n": 24,
+      "success": 8,
+      "crashes": 0,
+      "terminal_stalls": 16,
+      "legacy_freezes": 16,
+      "route_complete": 8,
+      "pending_crashes": 0,
+      "cut_ins_observed": 0,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "timeout": 16,
+        "route_complete": 8
+      },
+      "mean_route_pct": 54.30315081278483,
+      "mean_expensive_calls": 0.75,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 36.20166666666667,
+      "mean_end_time": 45.155,
+      "mean_achieved_jerk_rms": 8.26500681245119,
+      "mean_achieved_jerk_peak": 10.112019663210958,
+      "mean_achieved_jerk_peak_after_0_2s": 10.03950538385349,
+      "mean_override_fraction": 0.983112227974224,
+      "mean_braking_infeasible_ticks": 1360.0,
+      "mean_calls_applied": 0.6666666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "original_proposal": {
+      "n": 24,
+      "success": 24,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 24,
+      "pending_crashes": 0,
+      "cut_ins_observed": 8,
+      "cut_ins_first_seen_pending": 8,
+      "end_reasons": {
+        "route_complete": 24
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 2.0,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 10.291666666666666,
+      "mean_end_time": 34.674166666666665,
+      "mean_achieved_jerk_rms": 5.941180222453032,
+      "mean_achieved_jerk_peak": 106.80920133988063,
+      "mean_achieved_jerk_peak_after_0_2s": 106.80920133988063,
+      "mean_override_fraction": 0.7805728576372859,
+      "mean_braking_infeasible_ticks": 0.0,
+      "mean_calls_applied": 1.3333333333333333,
+      "mean_calls_rejected": 0.0
+    },
+    "speed_delay_margin": {
+      "n": 24,
+      "success": 24,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 24,
+      "pending_crashes": 0,
+      "cut_ins_observed": 8,
+      "cut_ins_first_seen_pending": 6,
+      "end_reasons": {
+        "route_complete": 24
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 1.1666666666666667,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.5283333333333333,
+      "mean_end_time": 30.448333333333334,
+      "mean_achieved_jerk_rms": 2.3073947199705267,
+      "mean_achieved_jerk_peak": 55.9875038137155,
+      "mean_achieved_jerk_peak_after_0_2s": 55.933117400854826,
+      "mean_override_fraction": 0.8381784166634759,
+      "mean_braking_infeasible_ticks": 7.125,
+      "mean_calls_applied": 1.0833333333333333,
+      "mean_calls_rejected": 0.0
+    },
+    "static_cbf": {
+      "n": 24,
+      "success": 8,
+      "crashes": 4,
+      "terminal_stalls": 12,
+      "legacy_freezes": 12,
+      "route_complete": 8,
+      "pending_crashes": 0,
+      "cut_ins_observed": 0,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "timeout": 12,
+        "crash": 4,
+        "route_complete": 8
+      },
+      "mean_route_pct": 54.853333950042725,
+      "mean_expensive_calls": 0.0,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 27.731666666666666,
+      "mean_end_time": 35.64166666666667,
+      "mean_achieved_jerk_rms": 3.103132126333108,
+      "mean_achieved_jerk_peak": 8.579464677798873,
+      "mean_achieved_jerk_peak_after_0_2s": 8.510570574647621,
+      "mean_override_fraction": 0.8704070366643363,
+      "mean_braking_infeasible_ticks": 0.0,
+      "mean_calls_applied": 0.0,
+      "mean_calls_rejected": 0.0
+    },
+    "timer_hard_unshielded": {
+      "n": 24,
+      "success": 0,
+      "crashes": 24,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 0,
+      "pending_crashes": 24,
+      "cut_ins_observed": 0,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "crash": 24
+      },
+      "mean_route_pct": 36.32423257827759,
+      "mean_expensive_calls": 1.0,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 3.5075000000000003,
+      "mean_achieved_jerk_rms": 0.020957091132281353,
+      "mean_achieved_jerk_peak": 0.23223570678965189,
+      "mean_achieved_jerk_peak_after_0_2s": 0.025175195332849398,
+      "mean_override_fraction": 0.0,
+      "mean_braking_infeasible_ticks": 0.0,
+      "mean_calls_applied": 0.0,
+      "mean_calls_rejected": 0.0
+    },
+    "uncertainty_wakeup": {
+      "n": 24,
+      "success": 24,
+      "crashes": 0,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 24,
+      "pending_crashes": 0,
+      "cut_ins_observed": 8,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "route_complete": 24
+      },
+      "mean_route_pct": 100.0,
+      "mean_expensive_calls": 0.6666666666666666,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 11.851666666666668,
+      "mean_end_time": 29.40833333333333,
+      "mean_achieved_jerk_rms": 6.481618094003303,
+      "mean_achieved_jerk_peak": 122.32554130605422,
+      "mean_achieved_jerk_peak_after_0_2s": 122.25302702669676,
+      "mean_override_fraction": 0.865659523483175,
+      "mean_braking_infeasible_ticks": 600.0,
+      "mean_calls_applied": 0.6666666666666666,
+      "mean_calls_rejected": 0.0
+    },
+    "unshielded_rl": {
+      "n": 24,
+      "success": 0,
+      "crashes": 24,
+      "terminal_stalls": 0,
+      "legacy_freezes": 0,
+      "route_complete": 0,
+      "pending_crashes": 0,
+      "cut_ins_observed": 0,
+      "cut_ins_first_seen_pending": 0,
+      "end_reasons": {
+        "crash": 24
+      },
+      "mean_route_pct": 36.32423257827759,
+      "mean_expensive_calls": 0.0,
+      "mean_local_replans": 0.0,
+      "mean_stopped_s": 0.0,
+      "mean_end_time": 3.5075000000000003,
+      "mean_achieved_jerk_rms": 0.020957091132281353,
+      "mean_achieved_jerk_peak": 0.23223570678965189,
+      "mean_achieved_jerk_peak_after_0_2s": 0.025175195332849398,
+      "mean_override_fraction": 0.0,
+      "mean_braking_infeasible_ticks": 0.0,
+      "mean_calls_applied": 0.0,
+      "mean_calls_rejected": 0.0
+    }
+  },
+  "by_delay": {
+    "0.0": {
+      "barrier_replan_local": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 2.6666666666666665,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.9275,
+        "mean_achieved_jerk_rms": 6.021590656245993,
+        "mean_achieved_jerk_peak": 117.81870804649468,
+        "mean_achieved_jerk_peak_after_0_2s": 117.81870804649468,
+        "mean_override_fraction": 0.6048244202973071,
+        "mean_braking_infeasible_ticks": 2.125,
+        "mean_calls_applied": 2.6666666666666665,
+        "mean_calls_rejected": 0.0
+      },
+      "critic_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.985,
+        "mean_achieved_jerk_rms": 3.8421860690490184,
+        "mean_achieved_jerk_peak": 69.91237318288768,
+        "mean_achieved_jerk_peak_after_0_2s": 69.86128966673277,
+        "mean_override_fraction": 0.5831867498274148,
+        "mean_braking_infeasible_ticks": 3.5416666666666665,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "final_integrated": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.806666666666667,
+        "mean_achieved_jerk_rms": 3.139531756998316,
+        "mean_achieved_jerk_peak": 56.31146247954651,
+        "mean_achieved_jerk_peak_after_0_2s": 56.25707606668584,
+        "mean_override_fraction": 0.5839138854405059,
+        "mean_braking_infeasible_ticks": 4.375,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "gated_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 1,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.644166666666665,
+        "mean_achieved_jerk_rms": 2.604367498073378,
+        "mean_achieved_jerk_peak": 43.82710194477113,
+        "mean_achieved_jerk_peak_after_0_2s": 43.77271553191046,
+        "mean_override_fraction": 0.5720726877320249,
+        "mean_braking_infeasible_ticks": 6.833333333333333,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "high_rate_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 2,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 125.04166666666667,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.4225,
+        "mean_achieved_jerk_rms": 2.853110924182807,
+        "mean_achieved_jerk_peak": 46.70834944893917,
+        "mean_achieved_jerk_peak_after_0_2s": 46.70834944893917,
+        "mean_override_fraction": 0.6009729068005817,
+        "mean_braking_infeasible_ticks": 11.166666666666666,
+        "mean_calls_applied": 120.91666666666667,
+        "mean_calls_rejected": 3.9166666666666665
+      },
+      "immediate_benefit": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.594166666666666,
+        "mean_achieved_jerk_rms": 2.446785643548983,
+        "mean_achieved_jerk_peak": 40.49977722994905,
+        "mean_achieved_jerk_peak_after_0_2s": 40.44539081708839,
+        "mean_override_fraction": 0.5686490090368013,
+        "mean_braking_infeasible_ticks": 7.375,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "matched_timer_hard": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 13.583333333333334,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.6725,
+        "mean_achieved_jerk_rms": 6.876144720771272,
+        "mean_achieved_jerk_peak": 126.16725825258375,
+        "mean_achieved_jerk_peak_after_0_2s": 126.16725825258375,
+        "mean_override_fraction": 0.6031163593034066,
+        "mean_braking_infeasible_ticks": 11.541666666666666,
+        "mean_calls_applied": 13.0,
+        "mean_calls_rejected": 0.5833333333333334
+      },
+      "no_blend": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.594999999999999,
+        "mean_achieved_jerk_rms": 3.823078920558025,
+        "mean_achieved_jerk_peak": 66.26216527365614,
+        "mean_achieved_jerk_peak_after_0_2s": 66.20777886079547,
+        "mean_override_fraction": 0.5700530923323691,
+        "mean_braking_infeasible_ticks": 6.375,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "no_reserve": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.806666666666667,
+        "mean_achieved_jerk_rms": 3.1406085071473058,
+        "mean_achieved_jerk_peak": 56.33797078189673,
+        "mean_achieved_jerk_peak_after_0_2s": 56.283584369036056,
+        "mean_override_fraction": 0.5839132763902495,
+        "mean_braking_infeasible_ticks": 4.083333333333333,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "original_proposal": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 3.0833333333333335,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 14.135,
+        "mean_achieved_jerk_rms": 7.5691217420967405,
+        "mean_achieved_jerk_peak": 153.37597530257577,
+        "mean_achieved_jerk_peak_after_0_2s": 153.37597530257577,
+        "mean_override_fraction": 0.6023875487717884,
+        "mean_braking_infeasible_ticks": 1.0,
+        "mean_calls_applied": 3.0833333333333335,
+        "mean_calls_rejected": 0.0
+      },
+      "speed_delay_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.806666666666667,
+        "mean_achieved_jerk_rms": 3.139531756998316,
+        "mean_achieved_jerk_peak": 56.31146247954651,
+        "mean_achieved_jerk_peak_after_0_2s": 56.25707606668584,
+        "mean_override_fraction": 0.5839138854405059,
+        "mean_braking_infeasible_ticks": 4.375,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "static_cbf": {
+        "n": 24,
+        "success": 8,
+        "crashes": 4,
+        "terminal_stalls": 12,
+        "legacy_freezes": 12,
+        "route_complete": 8,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "timeout": 12,
+          "crash": 4,
+          "route_complete": 8
+        },
+        "mean_route_pct": 54.853333950042725,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 27.731666666666666,
+        "mean_end_time": 35.64166666666667,
+        "mean_achieved_jerk_rms": 3.103132126333108,
+        "mean_achieved_jerk_peak": 8.579464677798873,
+        "mean_achieved_jerk_peak_after_0_2s": 8.510570574647621,
+        "mean_override_fraction": 0.8704070366643363,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      },
+      "timer_hard_unshielded": {
+        "n": 24,
+        "success": 7,
+        "crashes": 17,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 7,
+        "pending_crashes": 0,
+        "cut_ins_observed": 5,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "crash": 17,
+          "route_complete": 7
+        },
+        "mean_route_pct": 56.51803398132324,
+        "mean_expensive_calls": 5.25,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 5.333333333333333,
+        "mean_achieved_jerk_rms": 7.169297776437887,
+        "mean_achieved_jerk_peak": 81.49491945156721,
+        "mean_achieved_jerk_peak_after_0_2s": 81.49491945156721,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 5.25,
+        "mean_calls_rejected": 0.0
+      },
+      "uncertainty_wakeup": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.6666666666666666,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.01,
+        "mean_end_time": 17.281666666666666,
+        "mean_achieved_jerk_rms": 4.8076940155500845,
+        "mean_achieved_jerk_peak": 118.07048989188236,
+        "mean_achieved_jerk_peak_after_0_2s": 117.9979756125249,
+        "mean_override_fraction": 0.7576358745435137,
+        "mean_braking_infeasible_ticks": 0.6666666666666666,
+        "mean_calls_applied": 0.6666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "unshielded_rl": {
+        "n": 24,
+        "success": 0,
+        "crashes": 24,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 0,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "crash": 24
+        },
+        "mean_route_pct": 36.32423257827759,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 3.5075000000000003,
+        "mean_achieved_jerk_rms": 0.020957091132281353,
+        "mean_achieved_jerk_peak": 0.23223570678965189,
+        "mean_achieved_jerk_peak_after_0_2s": 0.025175195332849398,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      }
+    },
+    "0.125": {
+      "barrier_replan_local": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 2.6666666666666665,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.9275,
+        "mean_achieved_jerk_rms": 6.021590656245993,
+        "mean_achieved_jerk_peak": 117.81870804649468,
+        "mean_achieved_jerk_peak_after_0_2s": 117.81870804649468,
+        "mean_override_fraction": 0.6048244202973071,
+        "mean_braking_infeasible_ticks": 2.125,
+        "mean_calls_applied": 2.6666666666666665,
+        "mean_calls_rejected": 0.0
+      },
+      "critic_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.044166666666667,
+        "mean_achieved_jerk_rms": 4.103795855636759,
+        "mean_achieved_jerk_peak": 75.85960118982864,
+        "mean_achieved_jerk_peak_after_0_2s": 75.80851767367373,
+        "mean_override_fraction": 0.587598464111371,
+        "mean_braking_infeasible_ticks": 5.0,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "final_integrated": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.860833333333332,
+        "mean_achieved_jerk_rms": 3.3108362267158973,
+        "mean_achieved_jerk_peak": 60.25483199967615,
+        "mean_achieved_jerk_peak_after_0_2s": 60.200445586815476,
+        "mean_override_fraction": 0.5883312708058807,
+        "mean_braking_infeasible_ticks": 5.75,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "gated_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 1,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.74,
+        "mean_achieved_jerk_rms": 2.901917798544377,
+        "mean_achieved_jerk_peak": 50.3537233331978,
+        "mean_achieved_jerk_peak_after_0_2s": 50.29933692033713,
+        "mean_override_fraction": 0.5797333295205315,
+        "mean_braking_infeasible_ticks": 6.916666666666667,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "high_rate_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 88.75,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.498333333333333,
+        "mean_achieved_jerk_rms": 3.1501191077605313,
+        "mean_achieved_jerk_peak": 53.40833372126023,
+        "mean_achieved_jerk_peak_after_0_2s": 53.40833372126023,
+        "mean_override_fraction": 0.6064594400150408,
+        "mean_braking_infeasible_ticks": 11.125,
+        "mean_calls_applied": 85.33333333333333,
+        "mean_calls_rejected": 2.4166666666666665
+      },
+      "immediate_benefit": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.695,
+        "mean_achieved_jerk_rms": 2.7292609617432664,
+        "mean_achieved_jerk_peak": 46.6309145243334,
+        "mean_achieved_jerk_peak_after_0_2s": 46.576528111472726,
+        "mean_override_fraction": 0.5770781194460269,
+        "mean_braking_infeasible_ticks": 7.208333333333333,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "matched_timer_hard": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 1,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 13.583333333333334,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.752500000000003,
+        "mean_achieved_jerk_rms": 8.154722682116578,
+        "mean_achieved_jerk_peak": 154.16685295349453,
+        "mean_achieved_jerk_peak_after_0_2s": 154.16685295349453,
+        "mean_override_fraction": 0.6086527245093963,
+        "mean_braking_infeasible_ticks": 12.791666666666666,
+        "mean_calls_applied": 12.958333333333334,
+        "mean_calls_rejected": 0.5833333333333334
+      },
+      "no_blend": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.638333333333335,
+        "mean_achieved_jerk_rms": 4.10812721696117,
+        "mean_achieved_jerk_peak": 73.10324491603144,
+        "mean_achieved_jerk_peak_after_0_2s": 73.04885850317078,
+        "mean_override_fraction": 0.5743896988929131,
+        "mean_braking_infeasible_ticks": 7.208333333333333,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "no_reserve": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.86,
+        "mean_achieved_jerk_rms": 3.320432139644851,
+        "mean_achieved_jerk_peak": 60.4626697289253,
+        "mean_achieved_jerk_peak_after_0_2s": 60.408283316064626,
+        "mean_override_fraction": 0.5870245128474937,
+        "mean_braking_infeasible_ticks": 3.875,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "original_proposal": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 3.0416666666666665,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 14.280000000000001,
+        "mean_achieved_jerk_rms": 7.618829176540114,
+        "mean_achieved_jerk_peak": 159.29292218061164,
+        "mean_achieved_jerk_peak_after_0_2s": 159.29292218061164,
+        "mean_override_fraction": 0.6074921655408217,
+        "mean_braking_infeasible_ticks": 0.9583333333333334,
+        "mean_calls_applied": 3.0416666666666665,
+        "mean_calls_rejected": 0.0
+      },
+      "speed_delay_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.860833333333332,
+        "mean_achieved_jerk_rms": 3.3108362267158973,
+        "mean_achieved_jerk_peak": 60.25483199967615,
+        "mean_achieved_jerk_peak_after_0_2s": 60.200445586815476,
+        "mean_override_fraction": 0.5883312708058807,
+        "mean_braking_infeasible_ticks": 5.75,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "static_cbf": {
+        "n": 24,
+        "success": 8,
+        "crashes": 4,
+        "terminal_stalls": 12,
+        "legacy_freezes": 12,
+        "route_complete": 8,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "timeout": 12,
+          "crash": 4,
+          "route_complete": 8
+        },
+        "mean_route_pct": 54.853333950042725,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 27.731666666666666,
+        "mean_end_time": 35.64166666666667,
+        "mean_achieved_jerk_rms": 3.103132126333108,
+        "mean_achieved_jerk_peak": 8.579464677798873,
+        "mean_achieved_jerk_peak_after_0_2s": 8.510570574647621,
+        "mean_override_fraction": 0.8704070366643363,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      },
+      "timer_hard_unshielded": {
+        "n": 24,
+        "success": 6,
+        "crashes": 18,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 6,
+        "pending_crashes": 5,
+        "cut_ins_observed": 5,
+        "cut_ins_first_seen_pending": 2,
+        "end_reasons": {
+          "crash": 18,
+          "route_complete": 6
+        },
+        "mean_route_pct": 55.12378184000651,
+        "mean_expensive_calls": 5.083333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 5.195,
+        "mean_achieved_jerk_rms": 6.747840336692195,
+        "mean_achieved_jerk_peak": 79.41604156864439,
+        "mean_achieved_jerk_peak_after_0_2s": 79.41604156864439,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 4.833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "uncertainty_wakeup": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.6666666666666666,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.04,
+        "mean_end_time": 17.371666666666666,
+        "mean_achieved_jerk_rms": 4.824166131759445,
+        "mean_achieved_jerk_peak": 118.18701697241825,
+        "mean_achieved_jerk_peak_after_0_2s": 118.11450269306079,
+        "mean_override_fraction": 0.7597560255610546,
+        "mean_braking_infeasible_ticks": 4.666666666666667,
+        "mean_calls_applied": 0.6666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "unshielded_rl": {
+        "n": 24,
+        "success": 0,
+        "crashes": 24,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 0,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "crash": 24
+        },
+        "mean_route_pct": 36.32423257827759,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 3.5075000000000003,
+        "mean_achieved_jerk_rms": 0.020957091132281353,
+        "mean_achieved_jerk_peak": 0.23223570678965189,
+        "mean_achieved_jerk_peak_after_0_2s": 0.025175195332849398,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      }
+    },
+    "1.0": {
+      "barrier_replan_local": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 2.6666666666666665,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.9275,
+        "mean_achieved_jerk_rms": 6.021590656245993,
+        "mean_achieved_jerk_peak": 117.81870804649468,
+        "mean_achieved_jerk_peak_after_0_2s": 117.81870804649468,
+        "mean_override_fraction": 0.6048244202973071,
+        "mean_braking_infeasible_ticks": 2.125,
+        "mean_calls_applied": 2.6666666666666665,
+        "mean_calls_rejected": 0.0
+      },
+      "critic_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.744166666666667,
+        "mean_achieved_jerk_rms": 6.174024738586787,
+        "mean_achieved_jerk_peak": 130.9117450606815,
+        "mean_achieved_jerk_peak_after_0_2s": 130.8606615445266,
+        "mean_override_fraction": 0.6188577262256711,
+        "mean_braking_infeasible_ticks": 8.625,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "final_integrated": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.491666666666667,
+        "mean_achieved_jerk_rms": 5.453206114344542,
+        "mean_achieved_jerk_peak": 110.64912123401882,
+        "mean_achieved_jerk_peak_after_0_2s": 110.59473482115816,
+        "mean_override_fraction": 0.6183792091859389,
+        "mean_braking_infeasible_ticks": 9.416666666666666,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "gated_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 1,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.555833333333332,
+        "mean_achieved_jerk_rms": 5.529311205346976,
+        "mean_achieved_jerk_peak": 113.5641616929206,
+        "mean_achieved_jerk_peak_after_0_2s": 113.50977528005994,
+        "mean_override_fraction": 0.6201402196599511,
+        "mean_braking_infeasible_ticks": 8.833333333333334,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "high_rate_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 13.666666666666666,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 14.265,
+        "mean_achieved_jerk_rms": 5.814867701214319,
+        "mean_achieved_jerk_peak": 116.62758731593688,
+        "mean_achieved_jerk_peak_after_0_2s": 116.62758731593688,
+        "mean_override_fraction": 0.6428239223505752,
+        "mean_braking_infeasible_ticks": 12.666666666666666,
+        "mean_calls_applied": 12.666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "immediate_benefit": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.491666666666667,
+        "mean_achieved_jerk_rms": 5.453206114344542,
+        "mean_achieved_jerk_peak": 110.64912123401882,
+        "mean_achieved_jerk_peak_after_0_2s": 110.59473482115816,
+        "mean_override_fraction": 0.6183792091859389,
+        "mean_braking_infeasible_ticks": 9.416666666666666,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "matched_timer_hard": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 8,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 14.291666666666666,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 14.423333333333332,
+        "mean_achieved_jerk_rms": 10.145546939769268,
+        "mean_achieved_jerk_peak": 178.61465807072818,
+        "mean_achieved_jerk_peak_after_0_2s": 178.61465807072818,
+        "mean_override_fraction": 0.6342696205789338,
+        "mean_braking_infeasible_ticks": 20.083333333333332,
+        "mean_calls_applied": 13.291666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "no_blend": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.216666666666667,
+        "mean_achieved_jerk_rms": 7.268649925308812,
+        "mean_achieved_jerk_peak": 140.37122628603052,
+        "mean_achieved_jerk_peak_after_0_2s": 140.31683987316987,
+        "mean_override_fraction": 0.6075601501085036,
+        "mean_braking_infeasible_ticks": 12.666666666666666,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "no_reserve": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.534166666666666,
+        "mean_achieved_jerk_rms": 5.441773094450274,
+        "mean_achieved_jerk_peak": 112.05000743454245,
+        "mean_achieved_jerk_peak_after_0_2s": 111.99562102168177,
+        "mean_override_fraction": 0.619471187780707,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "original_proposal": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 3.0416666666666665,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 15.430833333333334,
+        "mean_achieved_jerk_rms": 7.03818559265041,
+        "mean_achieved_jerk_peak": 126.37446904288178,
+        "mean_achieved_jerk_peak_after_0_2s": 126.36770096529897,
+        "mean_override_fraction": 0.6206126803290436,
+        "mean_braking_infeasible_ticks": 0.08333333333333333,
+        "mean_calls_applied": 3.0,
+        "mean_calls_rejected": 0.041666666666666664
+      },
+      "speed_delay_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.479999999999999,
+        "mean_achieved_jerk_rms": 5.436668831944554,
+        "mean_achieved_jerk_peak": 109.61222393234493,
+        "mean_achieved_jerk_peak_after_0_2s": 109.55783751948427,
+        "mean_override_fraction": 0.6160658066304806,
+        "mean_braking_infeasible_ticks": 9.708333333333334,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "static_cbf": {
+        "n": 24,
+        "success": 8,
+        "crashes": 4,
+        "terminal_stalls": 12,
+        "legacy_freezes": 12,
+        "route_complete": 8,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "timeout": 12,
+          "crash": 4,
+          "route_complete": 8
+        },
+        "mean_route_pct": 54.853333950042725,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 27.731666666666666,
+        "mean_end_time": 35.64166666666667,
+        "mean_achieved_jerk_rms": 3.103132126333108,
+        "mean_achieved_jerk_peak": 8.579464677798873,
+        "mean_achieved_jerk_peak_after_0_2s": 8.510570574647621,
+        "mean_override_fraction": 0.8704070366643363,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      },
+      "timer_hard_unshielded": {
+        "n": 24,
+        "success": 1,
+        "crashes": 23,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 1,
+        "pending_crashes": 23,
+        "cut_ins_observed": 1,
+        "cut_ins_first_seen_pending": 1,
+        "end_reasons": {
+          "crash": 23,
+          "route_complete": 1
+        },
+        "mean_route_pct": 39.376211643218994,
+        "mean_expensive_calls": 3.625,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 3.7225,
+        "mean_achieved_jerk_rms": 6.266537700785688,
+        "mean_achieved_jerk_peak": 74.20282676018057,
+        "mean_achieved_jerk_peak_after_0_2s": 74.20282676018057,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 2.625,
+        "mean_calls_rejected": 0.0
+      },
+      "uncertainty_wakeup": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.6666666666666666,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.5183333333333334,
+        "mean_end_time": 18.0775,
+        "mean_achieved_jerk_rms": 5.240791442542563,
+        "mean_achieved_jerk_peak": 122.24062952251795,
+        "mean_achieved_jerk_peak_after_0_2s": 122.16811524316047,
+        "mean_override_fraction": 0.7491041869498231,
+        "mean_braking_infeasible_ticks": 33.333333333333336,
+        "mean_calls_applied": 0.6666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "unshielded_rl": {
+        "n": 24,
+        "success": 0,
+        "crashes": 24,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 0,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "crash": 24
+        },
+        "mean_route_pct": 36.32423257827759,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 3.5075000000000003,
+        "mean_achieved_jerk_rms": 0.020957091132281353,
+        "mean_achieved_jerk_peak": 0.23223570678965189,
+        "mean_achieved_jerk_peak_after_0_2s": 0.025175195332849398,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      }
+    },
+    "18.0": {
+      "barrier_replan_local": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 2.6666666666666665,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.9275,
+        "mean_achieved_jerk_rms": 6.021590656245993,
+        "mean_achieved_jerk_peak": 117.81870804649468,
+        "mean_achieved_jerk_peak_after_0_2s": 117.81870804649468,
+        "mean_override_fraction": 0.6048244202973071,
+        "mean_braking_infeasible_ticks": 2.125,
+        "mean_calls_applied": 2.6666666666666665,
+        "mean_calls_rejected": 0.0
+      },
+      "critic_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 9.424999999999999,
+        "mean_end_time": 26.86583333333333,
+        "mean_achieved_jerk_rms": 5.250556739168812,
+        "mean_achieved_jerk_peak": 129.17163198229295,
+        "mean_achieved_jerk_peak_after_0_2s": 129.113540557834,
+        "mean_override_fraction": 0.8425314360262165,
+        "mean_braking_infeasible_ticks": 4.125,
+        "mean_calls_applied": 0.6666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "final_integrated": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 9.091666666666667,
+        "mean_end_time": 26.456666666666667,
+        "mean_achieved_jerk_rms": 7.281052763858805,
+        "mean_achieved_jerk_peak": 142.10290933685124,
+        "mean_achieved_jerk_peak_after_0_2s": 142.04151501568654,
+        "mean_override_fraction": 0.8393968231269439,
+        "mean_braking_infeasible_ticks": 438.9166666666667,
+        "mean_calls_applied": 0.6666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "gated_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 1,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 9.136666666666668,
+        "mean_end_time": 26.50333333333333,
+        "mean_achieved_jerk_rms": 7.276932782122581,
+        "mean_achieved_jerk_peak": 142.08599600048424,
+        "mean_achieved_jerk_peak_after_0_2s": 142.01607412057152,
+        "mean_override_fraction": 0.8389124248869718,
+        "mean_braking_infeasible_ticks": 441.3333333333333,
+        "mean_calls_applied": 0.6666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "high_rate_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 8,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.6666666666666667,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 9.136666666666668,
+        "mean_end_time": 26.685000000000002,
+        "mean_achieved_jerk_rms": 7.277195393655387,
+        "mean_achieved_jerk_peak": 142.08611072414593,
+        "mean_achieved_jerk_peak_after_0_2s": 142.01853060512803,
+        "mean_override_fraction": 0.8456246962641149,
+        "mean_braking_infeasible_ticks": 441.3333333333333,
+        "mean_calls_applied": 0.6666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "immediate_benefit": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 9.091666666666667,
+        "mean_end_time": 26.456666666666667,
+        "mean_achieved_jerk_rms": 7.281052763858805,
+        "mean_achieved_jerk_peak": 142.10290933685124,
+        "mean_achieved_jerk_peak_after_0_2s": 142.04151501568654,
+        "mean_override_fraction": 0.8393968231269439,
+        "mean_braking_infeasible_ticks": 438.9166666666667,
+        "mean_calls_applied": 0.6666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "matched_timer_hard": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 8,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.6666666666666667,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 9.595,
+        "mean_end_time": 27.079166666666666,
+        "mean_achieved_jerk_rms": 7.264442141531281,
+        "mean_achieved_jerk_peak": 142.6265852933284,
+        "mean_achieved_jerk_peak_after_0_2s": 142.56697051071873,
+        "mean_override_fraction": 0.8412213403376381,
+        "mean_braking_infeasible_ticks": 469.0416666666667,
+        "mean_calls_applied": 0.6666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "no_blend": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0833333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 9.163333333333334,
+        "mean_end_time": 26.497500000000002,
+        "mean_achieved_jerk_rms": 7.226933314347928,
+        "mean_achieved_jerk_peak": 142.68219197826207,
+        "mean_achieved_jerk_peak_after_0_2s": 142.62079765709737,
+        "mean_override_fraction": 0.8382220664751436,
+        "mean_braking_infeasible_ticks": 438.875,
+        "mean_calls_applied": 0.6666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "no_reserve": {
+        "n": 24,
+        "success": 8,
+        "crashes": 0,
+        "terminal_stalls": 16,
+        "legacy_freezes": 16,
+        "route_complete": 8,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "timeout": 16,
+          "route_complete": 8
+        },
+        "mean_route_pct": 54.30315081278483,
+        "mean_expensive_calls": 0.75,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 36.20166666666667,
+        "mean_end_time": 45.155,
+        "mean_achieved_jerk_rms": 8.26500681245119,
+        "mean_achieved_jerk_peak": 10.112019663210958,
+        "mean_achieved_jerk_peak_after_0_2s": 10.03950538385349,
+        "mean_override_fraction": 0.983112227974224,
+        "mean_braking_infeasible_ticks": 1360.0,
+        "mean_calls_applied": 0.6666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "original_proposal": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 8,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 2.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 10.291666666666666,
+        "mean_end_time": 34.674166666666665,
+        "mean_achieved_jerk_rms": 5.941180222453032,
+        "mean_achieved_jerk_peak": 106.80920133988063,
+        "mean_achieved_jerk_peak_after_0_2s": 106.80920133988063,
+        "mean_override_fraction": 0.7805728576372859,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 1.3333333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "speed_delay_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 6,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.1666666666666667,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.5283333333333333,
+        "mean_end_time": 30.448333333333334,
+        "mean_achieved_jerk_rms": 2.3073947199705267,
+        "mean_achieved_jerk_peak": 55.9875038137155,
+        "mean_achieved_jerk_peak_after_0_2s": 55.933117400854826,
+        "mean_override_fraction": 0.8381784166634759,
+        "mean_braking_infeasible_ticks": 7.125,
+        "mean_calls_applied": 1.0833333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "static_cbf": {
+        "n": 24,
+        "success": 8,
+        "crashes": 4,
+        "terminal_stalls": 12,
+        "legacy_freezes": 12,
+        "route_complete": 8,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "timeout": 12,
+          "crash": 4,
+          "route_complete": 8
+        },
+        "mean_route_pct": 54.853333950042725,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 27.731666666666666,
+        "mean_end_time": 35.64166666666667,
+        "mean_achieved_jerk_rms": 3.103132126333108,
+        "mean_achieved_jerk_peak": 8.579464677798873,
+        "mean_achieved_jerk_peak_after_0_2s": 8.510570574647621,
+        "mean_override_fraction": 0.8704070366643363,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      },
+      "timer_hard_unshielded": {
+        "n": 24,
+        "success": 0,
+        "crashes": 24,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 0,
+        "pending_crashes": 24,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "crash": 24
+        },
+        "mean_route_pct": 36.32423257827759,
+        "mean_expensive_calls": 1.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 3.5075000000000003,
+        "mean_achieved_jerk_rms": 0.020957091132281353,
+        "mean_achieved_jerk_peak": 0.23223570678965189,
+        "mean_achieved_jerk_peak_after_0_2s": 0.025175195332849398,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      },
+      "uncertainty_wakeup": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 8,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.6666666666666666,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 11.851666666666668,
+        "mean_end_time": 29.40833333333333,
+        "mean_achieved_jerk_rms": 6.481618094003303,
+        "mean_achieved_jerk_peak": 122.32554130605422,
+        "mean_achieved_jerk_peak_after_0_2s": 122.25302702669676,
+        "mean_override_fraction": 0.865659523483175,
+        "mean_braking_infeasible_ticks": 600.0,
+        "mean_calls_applied": 0.6666666666666666,
+        "mean_calls_rejected": 0.0
+      },
+      "unshielded_rl": {
+        "n": 24,
+        "success": 0,
+        "crashes": 24,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 0,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "crash": 24
+        },
+        "mean_route_pct": 36.32423257827759,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 3.5075000000000003,
+        "mean_achieved_jerk_rms": 0.020957091132281353,
+        "mean_achieved_jerk_peak": 0.23223570678965189,
+        "mean_achieved_jerk_peak_after_0_2s": 0.025175195332849398,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      }
+    }
+  },
+  "by_scene": {
+    "cut_in": {
+      "barrier_replan_local": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 24,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 4.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.995,
+        "mean_achieved_jerk_rms": 8.656104291448624,
+        "mean_achieved_jerk_peak": 174.19807612895966,
+        "mean_achieved_jerk_peak_after_0_2s": 174.19807612895966,
+        "mean_override_fraction": 0.5335082182285829,
+        "mean_braking_infeasible_ticks": 4.375,
+        "mean_calls_applied": 4.0,
+        "mean_calls_rejected": 0.0
+      },
+      "critic_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 24,
+        "cut_ins_first_seen_pending": 18,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 2.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 13.055833333333334,
+        "mean_achieved_jerk_rms": 7.133695892010504,
+        "mean_achieved_jerk_peak": 137.49166081349054,
+        "mean_achieved_jerk_peak_after_0_2s": 137.49166081349054,
+        "mean_override_fraction": 0.5232510600308422,
+        "mean_braking_infeasible_ticks": 15.291666666666666,
+        "mean_calls_applied": 2.0,
+        "mean_calls_rejected": 0.0
+      },
+      "final_integrated": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 24,
+        "cut_ins_first_seen_pending": 18,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 2.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.714166666666666,
+        "mean_achieved_jerk_rms": 5.964469305061499,
+        "mean_achieved_jerk_peak": 112.75750895341237,
+        "mean_achieved_jerk_peak_after_0_2s": 112.75750895341237,
+        "mean_override_fraction": 0.5258969248195113,
+        "mean_braking_infeasible_ticks": 17.666666666666668,
+        "mean_calls_applied": 2.0,
+        "mean_calls_rejected": 0.0
+      },
+      "gated_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 24,
+        "cut_ins_first_seen_pending": 3,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 2.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.6275,
+        "mean_achieved_jerk_rms": 5.629230234307141,
+        "mean_achieved_jerk_peak": 104.11718239386876,
+        "mean_achieved_jerk_peak_after_0_2s": 104.11718239386876,
+        "mean_override_fraction": 0.5188119604893328,
+        "mean_braking_infeasible_ticks": 21.083333333333332,
+        "mean_calls_applied": 2.0,
+        "mean_calls_rejected": 0.0
+      },
+      "high_rate_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 24,
+        "cut_ins_first_seen_pending": 14,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 64.25,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.226666666666668,
+        "mean_achieved_jerk_rms": 5.630629978357146,
+        "mean_achieved_jerk_peak": 103.91689836978912,
+        "mean_achieved_jerk_peak_after_0_2s": 103.91689836978912,
+        "mean_override_fraction": 0.4822048281097937,
+        "mean_braking_infeasible_ticks": 14.375,
+        "mean_calls_applied": 60.375,
+        "mean_calls_rejected": 3.1666666666666665
+      },
+      "immediate_benefit": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 24,
+        "cut_ins_first_seen_pending": 18,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 2.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.54416666666667,
+        "mean_achieved_jerk_rms": 5.454305804370525,
+        "mean_achieved_jerk_peak": 99.57364449898402,
+        "mean_achieved_jerk_peak_after_0_2s": 99.57364449898402,
+        "mean_override_fraction": 0.5151953489410023,
+        "mean_braking_infeasible_ticks": 22.541666666666668,
+        "mean_calls_applied": 2.0,
+        "mean_calls_rejected": 0.0
+      },
+      "matched_timer_hard": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 24,
+        "cut_ins_first_seen_pending": 9,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 12.333333333333334,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.518333333333333,
+        "mean_achieved_jerk_rms": 10.109202261823894,
+        "mean_achieved_jerk_peak": 168.79929307227334,
+        "mean_achieved_jerk_peak_after_0_2s": 168.79929307227334,
+        "mean_override_fraction": 0.4908898710305604,
+        "mean_braking_infeasible_ticks": 14.541666666666666,
+        "mean_calls_applied": 11.416666666666666,
+        "mean_calls_rejected": 0.5833333333333334
+      },
+      "no_blend": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 24,
+        "cut_ins_first_seen_pending": 18,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 2.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.331666666666669,
+        "mean_achieved_jerk_rms": 9.147315384710488,
+        "mean_achieved_jerk_peak": 171.6477742108206,
+        "mean_achieved_jerk_peak_after_0_2s": 171.6477742108206,
+        "mean_override_fraction": 0.5040694338163589,
+        "mean_braking_infeasible_ticks": 24.375,
+        "mean_calls_applied": 2.0,
+        "mean_calls_rejected": 0.0
+      },
+      "no_reserve": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 24,
+        "cut_ins_first_seen_pending": 18,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 2.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.735000000000001,
+        "mean_achieved_jerk_rms": 5.969790713041519,
+        "mean_achieved_jerk_peak": 113.6278361082077,
+        "mean_achieved_jerk_peak_after_0_2s": 113.6278361082077,
+        "mean_override_fraction": 0.5333559678451764,
+        "mean_braking_infeasible_ticks": 7.958333333333333,
+        "mean_calls_applied": 2.0,
+        "mean_calls_rejected": 0.0
+      },
+      "original_proposal": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 24,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 5.125,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 14.387500000000001,
+        "mean_achieved_jerk_rms": 10.688932861128285,
+        "mean_achieved_jerk_peak": 215.86112678050995,
+        "mean_achieved_jerk_peak_after_0_2s": 215.86112678050995,
+        "mean_override_fraction": 0.5412299158488827,
+        "mean_braking_infeasible_ticks": 0.9583333333333334,
+        "mean_calls_applied": 5.125,
+        "mean_calls_rejected": 0.0
+      },
+      "speed_delay_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 24,
+        "cut_ins_first_seen_pending": 18,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 2.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.709166666666667,
+        "mean_achieved_jerk_rms": 5.956315335127641,
+        "mean_achieved_jerk_peak": 112.23906030257542,
+        "mean_achieved_jerk_peak_after_0_2s": 112.23906030257542,
+        "mean_override_fraction": 0.5249611209625239,
+        "mean_braking_infeasible_ticks": 17.958333333333332,
+        "mean_calls_applied": 2.0,
+        "mean_calls_rejected": 0.0
+      },
+      "static_cbf": {
+        "n": 24,
+        "success": 0,
+        "crashes": 6,
+        "terminal_stalls": 18,
+        "legacy_freezes": 18,
+        "route_complete": 0,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "timeout": 18,
+          "crash": 6
+        },
+        "mean_route_pct": 32.28000092506409,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 41.597500000000004,
+        "mean_end_time": 46.04749999999999,
+        "mean_achieved_jerk_rms": 4.645368925400998,
+        "mean_achieved_jerk_peak": 12.748129956889898,
+        "mean_achieved_jerk_peak_after_0_2s": 12.731580645777285,
+        "mean_override_fraction": 0.8963817586795674,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      },
+      "timer_hard_unshielded": {
+        "n": 24,
+        "success": 3,
+        "crashes": 21,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 3,
+        "pending_crashes": 9,
+        "cut_ins_observed": 11,
+        "cut_ins_first_seen_pending": 3,
+        "end_reasons": {
+          "crash": 21,
+          "route_complete": 3
+        },
+        "mean_route_pct": 49.73667732874552,
+        "mean_expensive_calls": 4.458333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 4.660833333333334,
+        "mean_achieved_jerk_rms": 4.642547355965044,
+        "mean_achieved_jerk_peak": 55.7402881509006,
+        "mean_achieved_jerk_peak_after_0_2s": 55.7402881509006,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 4.083333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "uncertainty_wakeup": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 24,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.2841666666666667,
+        "mean_end_time": 20.599999999999998,
+        "mean_achieved_jerk_rms": 7.038629307734264,
+        "mean_achieved_jerk_peak": 179.12800113360086,
+        "mean_achieved_jerk_peak_after_0_2s": 179.12800113360086,
+        "mean_override_fraction": 0.8321576698547476,
+        "mean_braking_infeasible_ticks": 19.333333333333332,
+        "mean_calls_applied": 1.0,
+        "mean_calls_rejected": 0.0
+      },
+      "unshielded_rl": {
+        "n": 24,
+        "success": 0,
+        "crashes": 24,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 0,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "crash": 24
+        },
+        "mean_route_pct": 32.500176668167114,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 3.1174999999999997,
+        "mean_achieved_jerk_rms": 0.02172492043249286,
+        "mean_achieved_jerk_peak": 0.22728650037606712,
+        "mean_achieved_jerk_peak_after_0_2s": 0.02386629603279289,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      }
+    },
+    "dense": {
+      "barrier_replan_local": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 2.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 16.974999999999998,
+        "mean_achieved_jerk_rms": 0.6472122484506322,
+        "mean_achieved_jerk_peak": 5.059971881564707,
+        "mean_achieved_jerk_peak_after_0_2s": 5.059971881564707,
+        "mean_override_fraction": 0.9771771370636446,
+        "mean_braking_infeasible_ticks": 1.0,
+        "mean_calls_applied": 2.0,
+        "mean_calls_rejected": 0.0
+      },
+      "critic_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.25,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 15.227500000000001,
+        "mean_achieved_jerk_rms": 0.19673312026724785,
+        "mean_achieved_jerk_peak": 1.7003978064167313,
+        "mean_achieved_jerk_peak_after_0_2s": 1.5471472579520196,
+        "mean_override_fraction": 0.9741692290245734,
+        "mean_braking_infeasible_ticks": 0.4166666666666667,
+        "mean_calls_applied": 0.25,
+        "mean_calls_rejected": 0.0
+      },
+      "final_integrated": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.25,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 15.145000000000001,
+        "mean_achieved_jerk_rms": 0.19517294214200506,
+        "mean_achieved_jerk_peak": 1.7003978064167313,
+        "mean_achieved_jerk_peak_after_0_2s": 1.53723856783472,
+        "mean_override_fraction": 0.9740288103879543,
+        "mean_braking_infeasible_ticks": 0.4166666666666667,
+        "mean_calls_applied": 0.25,
+        "mean_calls_rejected": 0.0
+      },
+      "gated_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.25,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 15.145000000000001,
+        "mean_achieved_jerk_rms": 0.17685053015381433,
+        "mean_achieved_jerk_peak": 1.457992851404318,
+        "mean_achieved_jerk_peak_after_0_2s": 1.2948336128223066,
+        "mean_override_fraction": 0.9741963938765469,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.25,
+        "mean_calls_rejected": 0.0
+      },
+      "high_rate_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 103.375,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 17.4975,
+        "mean_achieved_jerk_rms": 0.8266642410399839,
+        "mean_achieved_jerk_peak": 10.6575603907307,
+        "mean_achieved_jerk_peak_after_0_2s": 10.6575603907307,
+        "mean_override_fraction": 0.9587445719166432,
+        "mean_braking_infeasible_ticks": 19.083333333333332,
+        "mean_calls_applied": 102.58333333333333,
+        "mean_calls_rejected": 0.0
+      },
+      "immediate_benefit": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.25,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 15.145000000000001,
+        "mean_achieved_jerk_rms": 0.17656077130609857,
+        "mean_achieved_jerk_peak": 1.5061011678578022,
+        "mean_achieved_jerk_peak_after_0_2s": 1.342941929275791,
+        "mean_override_fraction": 0.9745223529697431,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.25,
+        "mean_calls_rejected": 0.0
+      },
+      "matched_timer_hard": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 17.375,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 17.506666666666664,
+        "mean_achieved_jerk_rms": 5.483141170195992,
+        "mean_achieved_jerk_peak": 136.68370850306624,
+        "mean_achieved_jerk_peak_after_0_2s": 136.68370850306624,
+        "mean_override_fraction": 0.9340846200947893,
+        "mean_braking_infeasible_ticks": 23.666666666666668,
+        "mean_calls_applied": 17.0,
+        "mean_calls_rejected": 0.0
+      },
+      "no_blend": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.25,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 15.145000000000001,
+        "mean_achieved_jerk_rms": 0.8372259479986169,
+        "mean_achieved_jerk_peak": 21.570076799738064,
+        "mean_achieved_jerk_peak_after_0_2s": 21.406917561156053,
+        "mean_override_fraction": 0.9740834910528712,
+        "mean_braking_infeasible_ticks": 0.4166666666666667,
+        "mean_calls_applied": 0.25,
+        "mean_calls_rejected": 0.0
+      },
+      "no_reserve": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.25,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 15.145000000000001,
+        "mean_achieved_jerk_rms": 0.1930448843810423,
+        "mean_achieved_jerk_peak": 1.5949757289490663,
+        "mean_achieved_jerk_peak_after_0_2s": 1.431816490367055,
+        "mean_override_fraction": 0.9735871152760093,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.25,
+        "mean_calls_rejected": 0.0
+      },
+      "original_proposal": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.9583333333333333,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 16.799166666666668,
+        "mean_achieved_jerk_rms": 0.7323801826845994,
+        "mean_achieved_jerk_peak": 7.321112965049299,
+        "mean_achieved_jerk_peak_after_0_2s": 7.31434488746648,
+        "mean_override_fraction": 0.9698747555712922,
+        "mean_braking_infeasible_ticks": 1.0833333333333333,
+        "mean_calls_applied": 1.9166666666666667,
+        "mean_calls_rejected": 0.041666666666666664
+      },
+      "speed_delay_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.25,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 15.145000000000001,
+        "mean_achieved_jerk_rms": 0.19517294214200506,
+        "mean_achieved_jerk_peak": 1.7003978064167313,
+        "mean_achieved_jerk_peak_after_0_2s": 1.53723856783472,
+        "mean_override_fraction": 0.9740288103879543,
+        "mean_braking_infeasible_ticks": 0.4166666666666667,
+        "mean_calls_applied": 0.25,
+        "mean_calls_rejected": 0.0
+      },
+      "static_cbf": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 14.83,
+        "mean_achieved_jerk_rms": 0.018658528197326503,
+        "mean_achieved_jerk_peak": 0.2421341196168214,
+        "mean_achieved_jerk_peak_after_0_2s": 0.06855043238829239,
+        "mean_override_fraction": 0.8184575926338743,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      },
+      "timer_hard_unshielded": {
+        "n": 24,
+        "success": 0,
+        "crashes": 24,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 0,
+        "pending_crashes": 11,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "crash": 24
+        },
+        "mean_route_pct": 39.126314322153725,
+        "mean_expensive_calls": 3.7083333333333335,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 3.7091666666666665,
+        "mean_achieved_jerk_rms": 11.243074420883389,
+        "mean_achieved_jerk_peak": 123.63321147859097,
+        "mean_achieved_jerk_peak_after_0_2s": 123.63321147859097,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 3.25,
+        "mean_calls_rejected": 0.0
+      },
+      "uncertainty_wakeup": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 15.464999999999998,
+        "mean_achieved_jerk_rms": 0.011815429542711144,
+        "mean_achieved_jerk_peak": 0.2421341196168214,
+        "mean_achieved_jerk_peak_after_0_2s": 0.024591281544417143,
+        "mean_override_fraction": 0.9739200172560052,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      },
+      "unshielded_rl": {
+        "n": 24,
+        "success": 0,
+        "crashes": 24,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 0,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "crash": 24
+        },
+        "mean_route_pct": 43.972344398498535,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 4.2875000000000005,
+        "mean_achieved_jerk_rms": 0.019421432531858334,
+        "mean_achieved_jerk_peak": 0.2421341196168214,
+        "mean_achieved_jerk_peak_after_0_2s": 0.027792993932962418,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      }
+    },
+    "stall_ahead": {
+      "barrier_replan_local": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 2.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 11.8125,
+        "mean_achieved_jerk_rms": 8.761455428838724,
+        "mean_achieved_jerk_peak": 174.19807612895966,
+        "mean_achieved_jerk_peak_after_0_2s": 174.19807612895966,
+        "mean_override_fraction": 0.30378790559969404,
+        "mean_braking_infeasible_ticks": 1.0,
+        "mean_calls_applied": 2.0,
+        "mean_calls_rejected": 0.0
+      },
+      "critic_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 11.49,
+        "mean_achieved_jerk_rms": 6.7895776509948105,
+        "mean_achieved_jerk_peak": 137.49166081349054,
+        "mean_achieved_jerk_peak_after_0_2s": 137.49166081349054,
+        "mean_override_fraction": 0.2922226511090413,
+        "mean_braking_infeasible_ticks": 1.4583333333333333,
+        "mean_calls_applied": 1.0,
+        "mean_calls_rejected": 0.0
+      },
+      "final_integrated": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 11.300000000000002,
+        "mean_achieved_jerk_rms": 5.74393185085525,
+        "mean_achieved_jerk_peak": 112.75750895341237,
+        "mean_achieved_jerk_peak_after_0_2s": 112.75750895341237,
+        "mean_override_fraction": 0.29069863022485976,
+        "mean_braking_infeasible_ticks": 1.4583333333333333,
+        "mean_calls_applied": 1.0,
+        "mean_calls_rejected": 0.0
+      },
+      "gated_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 11.167499999999999,
+        "mean_achieved_jerk_rms": 5.2295157375037755,
+        "mean_achieved_jerk_peak": 102.16981172561646,
+        "mean_achieved_jerk_peak_after_0_2s": 102.16981172561646,
+        "mean_override_fraction": 0.27893788254662777,
+        "mean_braking_infeasible_ticks": 1.5,
+        "mean_calls_applied": 1.0,
+        "mean_calls_rejected": 0.0
+      },
+      "high_rate_poll": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 59.833333333333336,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 11.461666666666668,
+        "mean_achieved_jerk_rms": 5.360803513760527,
+        "mean_achieved_jerk_peak": 102.16981172561646,
+        "mean_achieved_jerk_peak_after_0_2s": 102.16981172561646,
+        "mean_override_fraction": 0.4093068691397607,
+        "mean_braking_infeasible_ticks": 1.5,
+        "mean_calls_applied": 55.958333333333336,
+        "mean_calls_rejected": 3.1666666666666665
+      },
+      "immediate_benefit": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 11.091666666666667,
+        "mean_achieved_jerk_rms": 4.998386143960166,
+        "mean_achieved_jerk_peak": 96.70006732145946,
+        "mean_achieved_jerk_peak_after_0_2s": 96.70006732145946,
+        "mean_override_fraction": 0.2743886357580216,
+        "mean_braking_infeasible_ticks": 1.4583333333333333,
+        "mean_calls_applied": 1.0,
+        "mean_calls_rejected": 0.0
+      },
+      "matched_timer_hard": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 11.75,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 11.823333333333332,
+        "mean_achieved_jerk_rms": 9.584070910637235,
+        "mean_achieved_jerk_peak": 153.4657677014669,
+        "mean_achieved_jerk_peak_after_0_2s": 153.4657677014669,
+        "mean_override_fraction": 0.42106421326638693,
+        "mean_braking_infeasible_ticks": 6.208333333333333,
+        "mean_calls_applied": 10.833333333333334,
+        "mean_calls_rejected": 0.5833333333333334
+      },
+      "no_blend": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 10.973333333333334,
+        "mean_achieved_jerk_rms": 5.2153147301189025,
+        "mean_achieved_jerk_peak": 86.51878546515945,
+        "mean_achieved_jerk_peak_after_0_2s": 86.51878546515945,
+        "mean_override_fraction": 0.2738500164645556,
+        "mean_braking_infeasible_ticks": 1.4583333333333333,
+        "mean_calls_applied": 1.0,
+        "mean_calls_rejected": 0.0
+      },
+      "no_reserve": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 11.320833333333333,
+        "mean_achieved_jerk_rms": 5.739978143819871,
+        "mean_achieved_jerk_peak": 113.6278361082077,
+        "mean_achieved_jerk_peak_after_0_2s": 113.6278361082077,
+        "mean_override_fraction": 0.28346589389726445,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 1.0,
+        "mean_calls_rejected": 0.0
+      },
+      "original_proposal": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 2.0833333333333335,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 12.659166666666666,
+        "mean_achieved_jerk_rms": 10.804823467474383,
+        "mean_achieved_jerk_peak": 215.86112678050995,
+        "mean_achieved_jerk_peak_after_0_2s": 215.86112678050995,
+        "mean_override_fraction": 0.31938772322147885,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 2.0833333333333335,
+        "mean_calls_rejected": 0.0
+      },
+      "speed_delay_margin": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 11.293333333333335,
+        "mean_achieved_jerk_rms": 5.735548538389121,
+        "mean_achieved_jerk_peak": 112.23906030257542,
+        "mean_achieved_jerk_peak_after_0_2s": 112.23906030257542,
+        "mean_override_fraction": 0.28932103152638894,
+        "mean_braking_infeasible_ticks": 1.4583333333333333,
+        "mean_calls_applied": 1.0,
+        "mean_calls_rejected": 0.0
+      },
+      "static_cbf": {
+        "n": 24,
+        "success": 0,
+        "crashes": 6,
+        "terminal_stalls": 18,
+        "legacy_freezes": 18,
+        "route_complete": 0,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "timeout": 18,
+          "crash": 6
+        },
+        "mean_route_pct": 32.28000092506409,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 41.597500000000004,
+        "mean_end_time": 46.04749999999999,
+        "mean_achieved_jerk_rms": 4.645368925400998,
+        "mean_achieved_jerk_peak": 12.748129956889898,
+        "mean_achieved_jerk_peak_after_0_2s": 12.731580645777285,
+        "mean_override_fraction": 0.8963817586795674,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      },
+      "timer_hard_unshielded": {
+        "n": 24,
+        "success": 11,
+        "crashes": 13,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 11,
+        "pending_crashes": 8,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "crash": 13,
+          "route_complete": 11
+        },
+        "mean_route_pct": 62.1550358136495,
+        "mean_expensive_calls": 5.791666666666667,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 5.880833333333334,
+        "mean_achieved_jerk_rms": 4.2980540370673355,
+        "mean_achieved_jerk_peak": 55.7402881509006,
+        "mean_achieved_jerk_peak_after_0_2s": 55.7402881509006,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 5.375,
+        "mean_calls_rejected": 0.0
+      },
+      "uncertainty_wakeup": {
+        "n": 24,
+        "success": 24,
+        "crashes": 0,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 24,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "route_complete": 24
+        },
+        "mean_route_pct": 100.0,
+        "mean_expensive_calls": 1.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.2841666666666667,
+        "mean_end_time": 16.665833333333335,
+        "mean_achieved_jerk_rms": 7.8222068525751185,
+        "mean_achieved_jerk_peak": 179.12800113360086,
+        "mean_achieved_jerk_peak_after_0_2s": 179.12800113360086,
+        "mean_override_fraction": 0.46041839994363837,
+        "mean_braking_infeasible_ticks": 19.333333333333332,
+        "mean_calls_applied": 1.0,
+        "mean_calls_rejected": 0.0
+      },
+      "unshielded_rl": {
+        "n": 24,
+        "success": 0,
+        "crashes": 24,
+        "terminal_stalls": 0,
+        "legacy_freezes": 0,
+        "route_complete": 0,
+        "pending_crashes": 0,
+        "cut_ins_observed": 0,
+        "cut_ins_first_seen_pending": 0,
+        "end_reasons": {
+          "crash": 24
+        },
+        "mean_route_pct": 32.500176668167114,
+        "mean_expensive_calls": 0.0,
+        "mean_local_replans": 0.0,
+        "mean_stopped_s": 0.0,
+        "mean_end_time": 3.1174999999999997,
+        "mean_achieved_jerk_rms": 0.02172492043249286,
+        "mean_achieved_jerk_peak": 0.22728650037606712,
+        "mean_achieved_jerk_peak_after_0_2s": 0.02386629603279289,
+        "mean_override_fraction": 0.0,
+        "mean_braking_infeasible_ticks": 0.0,
+        "mean_calls_applied": 0.0,
+        "mean_calls_rejected": 0.0
+      }
+    }
+  },
+  "contrasts": {
+    "nominal": {
+      "unshielded_rl": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 1.0,
+          "descriptive_seed_bootstrap_95pct": [
+            1.0,
+            1.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": -1.0,
+          "descriptive_seed_bootstrap_95pct": [
+            -1.0,
+            -1.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 63.67576742172241,
+          "descriptive_seed_bootstrap_95pct": [
+            61.16932573318482,
+            66.06151070594788
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 1.0833333333333333,
+          "descriptive_seed_bootstrap_95pct": [
+            1.0,
+            1.2083333333333333
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 3.9469009415539693,
+          "descriptive_seed_bootstrap_95pct": [
+            3.421656132082839,
+            4.4865393667476265
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 75.50623619762418,
+          "descriptive_seed_bootstrap_95pct": [
+            63.59139729657828,
+            87.79301494080805
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 75.65891029622031,
+          "descriptive_seed_bootstrap_95pct": [
+            63.713824120794825,
+            87.96141834490199
+          ]
+        }
+      },
+      "static_cbf": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.6666666666666666,
+          "descriptive_seed_bootstrap_95pct": [
+            0.6666666666666666,
+            0.6666666666666666
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": -0.16666666666666666,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.3333333333333333,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": -0.5,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.6666666666666666,
+            -0.3333333333333333
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 45.146666049957275,
+          "descriptive_seed_bootstrap_95pct": [
+            43.177932834625246,
+            46.97845697402954
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 1.0833333333333333,
+          "descriptive_seed_bootstrap_95pct": [
+            1.0,
+            1.2083333333333333
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 0.8647259063531435,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.2743571074815079,
+            2.283622512596869
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 67.15900722661496,
+          "descriptive_seed_bootstrap_95pct": [
+            54.037421844744436,
+            81.34357872727884
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 67.17351491690553,
+          "descriptive_seed_bootstrap_95pct": [
+            54.023692475008524,
+            81.38849485489017
+          ]
+        }
+      },
+      "timer_hard_unshielded": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.8055555555555556,
+          "descriptive_seed_bootstrap_95pct": [
+            0.6944444444444444,
+            0.9166666666666666
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": -0.8055555555555556,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.9166666666666666,
+            -0.6944444444444444
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 49.660657511817085,
+          "descriptive_seed_bootstrap_95pct": [
+            40.32531340916952,
+            60.24607700771756
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": -3.5694444444444446,
+          "descriptive_seed_bootstrap_95pct": [
+            -4.625,
+            -2.4722222222222223
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": -2.7600339052856717,
+          "descriptive_seed_bootstrap_95pct": [
+            -3.4265338936305048,
+            -2.1114443019771776
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": -2.6327906890502266,
+          "descriptive_seed_bootstrap_95pct": [
+            -16.71997080696504,
+            12.41383029933887
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": -2.6871771019108968,
+          "descriptive_seed_bootstrap_95pct": [
+            -16.792195697235,
+            12.360269631573013
+          ]
+        }
+      },
+      "uncertainty_wakeup": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.4166666666666667,
+          "descriptive_seed_bootstrap_95pct": [
+            0.3333333333333333,
+            0.5416666666666666
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": -0.9896924972644467,
+          "descriptive_seed_bootstrap_95pct": [
+            -1.5177531963391988,
+            -0.4518082365218853
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": -43.76090689119236,
+          "descriptive_seed_bootstrap_95pct": [
+            -55.697349499142646,
+            -31.46340997980386
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": -43.742779024695565,
+          "descriptive_seed_bootstrap_95pct": [
+            -55.69138191357423,
+            -31.427909730862467
+          ]
+        }
+      },
+      "barrier_replan_local": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 1.0833333333333333,
+          "descriptive_seed_bootstrap_95pct": [
+            1.0,
+            1.2083333333333333
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": -2.053732623559742,
+          "descriptive_seed_bootstrap_95pct": [
+            -2.6873648582229546,
+            -1.3027365836728295
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": -42.08023614208085,
+          "descriptive_seed_bootstrap_95pct": [
+            -56.31200590667302,
+            -25.117858953712535
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": -42.134622554941515,
+          "descriptive_seed_bootstrap_95pct": [
+            -56.37491099251848,
+            -25.163314486336375
+          ]
+        }
+      },
+      "original_proposal": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": -1.9722222222222223,
+          "descriptive_seed_bootstrap_95pct": [
+            -2.0694444444444446,
+            -1.8611111111111112
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": -3.440854137742837,
+          "descriptive_seed_bootstrap_95pct": [
+            -3.990604130828597,
+            -2.8729225757539627
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": -70.60931693760924,
+          "descriptive_seed_bootstrap_95pct": [
+            -82.93246412197024,
+            -56.59657386786421
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": -70.66144732460897,
+          "descriptive_seed_bootstrap_95pct": [
+            -83.00386555169501,
+            -56.630842494390286
+          ]
+        }
+      },
+      "matched_timer_hard": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": -12.73611111111111,
+          "descriptive_seed_bootstrap_95pct": [
+            -13.055555555555555,
+            -12.416666666666666
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": -4.424280081532789,
+          "descriptive_seed_bootstrap_95pct": [
+            -5.8005683346558286,
+            -3.0836338772232166
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": -77.24445118785499,
+          "descriptive_seed_bootstrap_95pct": [
+            -105.9793765408459,
+            -49.10098609697242
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": -77.29883760071567,
+          "descriptive_seed_bootstrap_95pct": [
+            -106.04192187181778,
+            -49.14726932555722
+          ]
+        }
+      },
+      "high_rate_poll": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": -74.73611111111111,
+          "descriptive_seed_bootstrap_95pct": [
+            -76.125,
+            -73.31944444444444
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 0.02849212163369856,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.18524021385147377,
+            0.2286192954055125
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 3.4903817423684007,
+          "descriptive_seed_bootstrap_95pct": [
+            -2.582231741447079,
+            9.505037493201801
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 3.43599532950773,
+          "descriptive_seed_bootstrap_95pct": [
+            -2.6458368249425095,
+            9.440922731300816
+          ]
+        }
+      },
+      "gated_poll": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 0.28932586536467375,
+          "descriptive_seed_bootstrap_95pct": [
+            0.046261141024073735,
+            0.5364273431658879
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 6.490142914117314,
+          "descriptive_seed_bootstrap_95pct": [
+            0.2400060158025657,
+            12.837357046211967
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 6.490142914117314,
+          "descriptive_seed_bootstrap_95pct": [
+            0.2400060158025657,
+            12.837357046211967
+          ]
+        }
+      },
+      "immediate_benefit": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 0.4247737928073211,
+          "descriptive_seed_bootstrap_95pct": [
+            0.1829293129547574,
+            0.6678159861390713
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 9.811867574980068,
+          "descriptive_seed_bootstrap_95pct": [
+            4.145805306001825,
+            15.661493714611016
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 9.811867574980068,
+          "descriptive_seed_bootstrap_95pct": [
+            4.145805306001825,
+            15.661493714611016
+          ]
+        }
+      },
+      "no_reserve": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 0.00025345227210748746,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.060944582266220605,
+            0.061985673454455444
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": -0.5450774107076641,
+          "descriptive_seed_bootstrap_95pct": [
+            -1.5071829248982895,
+            0.369347091893562
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": -0.5450774107076641,
+          "descriptive_seed_bootstrap_95pct": [
+            -1.5071829248982895,
+            0.369347091893562
+          ]
+        }
+      },
+      "no_blend": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": -1.0987606549230846,
+          "descriptive_seed_bootstrap_95pct": [
+            -1.3496693084027476,
+            -0.8694151806276128
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": -17.50707358749221,
+          "descriptive_seed_bootstrap_95pct": [
+            -24.385621032302474,
+            -11.012620355460164
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": -17.50707358749221,
+          "descriptive_seed_bootstrap_95pct": [
+            -24.385621032302474,
+            -11.012620355460164
+          ]
+        }
+      },
+      "speed_delay_margin": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 0.005512427466662053,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.017330545835041036,
+            0.03006377033729366
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 0.3456324338912964,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.01097718874613444,
+            0.8082009024090226
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 0.3456324338912964,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.01097718874613444,
+            0.8082009024090226
+          ]
+        }
+      },
+      "critic_margin": {
+        "pairs": 72,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": -0.7388108550712702,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.8505508480461922,
+            -0.6283301607111262
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": -16.489434573385452,
+          "descriptive_seed_bootstrap_95pct": [
+            -19.078511330816482,
+            -14.264707763989767
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": -16.492737470091217,
+          "descriptive_seed_bootstrap_95pct": [
+            -19.08347169066676,
+            -14.271175178388757
+          ]
+        }
+      }
+    },
+    "stress": {
+      "unshielded_rl": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 1.0,
+          "descriptive_seed_bootstrap_95pct": [
+            1.0,
+            1.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": -1.0,
+          "descriptive_seed_bootstrap_95pct": [
+            -1.0,
+            -1.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 63.67576742172241,
+          "descriptive_seed_bootstrap_95pct": [
+            61.16932573318482,
+            66.06151070594788
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 1.0833333333333333,
+          "descriptive_seed_bootstrap_95pct": [
+            1.0,
+            1.2083333333333333
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 7.260095672726524,
+          "descriptive_seed_bootstrap_95pct": [
+            7.2343813438956,
+            7.2823453200015384
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 141.8706736300616,
+          "descriptive_seed_bootstrap_95pct": [
+            141.75097938649134,
+            141.9803889158023
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 142.0163398203537,
+          "descriptive_seed_bootstrap_95pct": [
+            141.932954441927,
+            142.07476653003445
+          ]
+        }
+      },
+      "static_cbf": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.6666666666666666,
+          "descriptive_seed_bootstrap_95pct": [
+            0.6666666666666666,
+            0.6666666666666666
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": -0.16666666666666666,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.3333333333333333,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": -0.5,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.6666666666666666,
+            -0.3333333333333333
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 45.146666049957275,
+          "descriptive_seed_bootstrap_95pct": [
+            43.177932834625246,
+            46.97845697402954
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 1.0833333333333333,
+          "descriptive_seed_bootstrap_95pct": [
+            1.0,
+            1.2083333333333333
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 4.177920637525698,
+          "descriptive_seed_bootstrap_95pct": [
+            3.214425940016028,
+            5.35038080313348
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 133.5234446590524,
+          "descriptive_seed_bootstrap_95pct": [
+            131.21423101983964,
+            136.3074549576595
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 133.53094444103894,
+          "descriptive_seed_bootstrap_95pct": [
+            131.20641127621485,
+            136.3385065597432
+          ]
+        }
+      },
+      "timer_hard_unshielded": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 1.0,
+          "descriptive_seed_bootstrap_95pct": [
+            1.0,
+            1.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": -1.0,
+          "descriptive_seed_bootstrap_95pct": [
+            -1.0,
+            -1.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 63.67576742172241,
+          "descriptive_seed_bootstrap_95pct": [
+            61.16932573318482,
+            66.06151070594788
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.08333333333333333,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.20833333333333334
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 7.260095672726524,
+          "descriptive_seed_bootstrap_95pct": [
+            7.2343813438956,
+            7.2823453200015384
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 141.8706736300616,
+          "descriptive_seed_bootstrap_95pct": [
+            141.75097938649134,
+            141.9803889158023
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 142.0163398203537,
+          "descriptive_seed_bootstrap_95pct": [
+            141.932954441927,
+            142.07476653003445
+          ]
+        }
+      },
+      "uncertainty_wakeup": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.4166666666666667,
+          "descriptive_seed_bootstrap_95pct": [
+            0.3333333333333333,
+            0.5416666666666666
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 0.799434669855502,
+          "descriptive_seed_bootstrap_95pct": [
+            0.7093788813343878,
+            0.8850337143280068
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 19.77736803079703,
+          "descriptive_seed_bootstrap_95pct": [
+            19.701546400331914,
+            19.84230459614385
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 19.7884879889898,
+          "descriptive_seed_bootstrap_95pct": [
+            19.711544712966617,
+            19.860110793767188
+          ]
+        }
+      },
+      "barrier_replan_local": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 1.0833333333333333,
+          "descriptive_seed_bootstrap_95pct": [
+            1.0,
+            1.2083333333333333
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 1.2594621076128123,
+          "descriptive_seed_bootstrap_95pct": [
+            0.8302323361912718,
+            1.64954382957952
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 24.284201290356577,
+          "descriptive_seed_bootstrap_95pct": [
+            14.39988396668923,
+            33.19025408018206
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 24.22280696919188,
+          "descriptive_seed_bootstrap_95pct": [
+            14.336565485185323,
+            33.12426864188941
+          ]
+        }
+      },
+      "original_proposal": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": -0.9166666666666666,
+          "descriptive_seed_bootstrap_95pct": [
+            -1.0,
+            -0.7916666666666666
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 1.3398725414057733,
+          "descriptive_seed_bootstrap_95pct": [
+            1.2262955499034223,
+            1.4752042376511287
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 35.293707996970625,
+          "descriptive_seed_bootstrap_95pct": [
+            28.057869282444397,
+            43.09199828639976
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 35.232313675805926,
+          "descriptive_seed_bootstrap_95pct": [
+            28.00428519549314,
+            43.04569149098825
+          ]
+        }
+      },
+      "matched_timer_hard": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": -0.5833333333333334,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.6666666666666666,
+            -0.4583333333333333
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 0.01661062232752353,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.00023777221711278446,
+            0.03133354750709778
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": -0.5236759564771395,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.5937887150745761,
+            -0.44970835248629265
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": -0.5254554950321714,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.5889285002922406,
+            -0.45807820485303336
+          ]
+        }
+      },
+      "high_rate_poll": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": -0.5833333333333334,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.6666666666666666,
+            -0.4583333333333333
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 0.003857370203418055,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.0020166011373068064,
+            0.013253226161219872
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 0.016798612705315463,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.02548274399790292,
+            0.08650476350643051
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 0.02298441055851678,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.01578664523549378,
+            0.09040013537742198
+          ]
+        }
+      },
+      "gated_poll": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 0.004119981736225029,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.0017341046598866813,
+            0.01343934106336441
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 0.0169133363669971,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.02548274399790292,
+            0.08684893449147542
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 0.02544089511502534,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.010370907451336583,
+            0.09055962436832488
+          ]
+        }
+      },
+      "immediate_benefit": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "no_reserve": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.6666666666666666,
+          "descriptive_seed_bootstrap_95pct": [
+            0.6666666666666666,
+            0.6666666666666666
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": -0.6666666666666666,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.6666666666666666,
+            -0.6666666666666666
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 45.69684918721517,
+          "descriptive_seed_bootstrap_95pct": [
+            43.773579597473145,
+            47.53785355885824
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.3333333333333333,
+          "descriptive_seed_bootstrap_95pct": [
+            0.3333333333333333,
+            0.3333333333333333
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": -0.9839540485923841,
+          "descriptive_seed_bootstrap_95pct": [
+            -1.0055966010669746,
+            -0.9582313047652161
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 131.99088967364028,
+          "descriptive_seed_bootstrap_95pct": [
+            131.91818295126723,
+            132.03743888880126
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 132.00200963183306,
+          "descriptive_seed_bootstrap_95pct": [
+            131.93175984876385,
+            132.0475270767929
+          ]
+        }
+      },
+      "no_blend": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 0.05411944951087818,
+          "descriptive_seed_bootstrap_95pct": [
+            0.035243846846329294,
+            0.06708775824931144
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": -0.5792826414108276,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.6285067647695541,
+            -0.5373340100049973
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": -0.5792826414108276,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.6285067647695541,
+            -0.5373340100049973
+          ]
+        }
+      },
+      "speed_delay_margin": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": -0.08333333333333333,
+          "descriptive_seed_bootstrap_95pct": [
+            -0.20833333333333334,
+            0.0
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 4.973658043888278,
+          "descriptive_seed_bootstrap_95pct": [
+            4.19492963178972,
+            5.5860901333467154
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 86.11540552313575,
+          "descriptive_seed_bootstrap_95pct": [
+            52.32041091827947,
+            112.56333058311914
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 86.10839761483173,
+          "descriptive_seed_bootstrap_95pct": [
+            52.30639510167141,
+            112.5629171874607
+          ]
+        }
+      },
+      "critic_margin": {
+        "pairs": 24,
+        "joint_success_only": false,
+        "seed_clusters": 8,
+        "success": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "crashed": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "terminal_stall": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "route_pct": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "expensive_calls": {
+          "final_minus_opponent": 0.0,
+          "descriptive_seed_bootstrap_95pct": [
+            0.0,
+            0.0
+          ]
+        },
+        "achieved_jerk_rms": {
+          "final_minus_opponent": 2.030496024689993,
+          "descriptive_seed_bootstrap_95pct": [
+            1.9988282270978013,
+            2.062488045496396
+          ]
+        },
+        "achieved_jerk_peak": {
+          "final_minus_opponent": 12.93127735455831,
+          "descriptive_seed_bootstrap_95pct": [
+            12.70542542139689,
+            13.211350267132124
+          ]
+        },
+        "achieved_jerk_peak_after_0_2s": {
+          "final_minus_opponent": 12.927974457852542,
+          "descriptive_seed_bootstrap_95pct": [
+            12.701302766799927,
+            13.209914917145701
+          ]
+        }
+      }
+    }
+  },
+  "joint_success_comfort": {
+    "nominal": {
+      "pairs": 72,
+      "joint_success_only": true,
+      "seed_clusters": 8,
+      "success": {
+        "final_minus_opponent": 0.0,
+        "descriptive_seed_bootstrap_95pct": [
+          0.0,
+          0.0
+        ]
+      },
+      "crashed": {
+        "final_minus_opponent": 0.0,
+        "descriptive_seed_bootstrap_95pct": [
+          0.0,
+          0.0
+        ]
+      },
+      "terminal_stall": {
+        "final_minus_opponent": 0.0,
+        "descriptive_seed_bootstrap_95pct": [
+          0.0,
+          0.0
+        ]
+      },
+      "route_pct": {
+        "final_minus_opponent": 0.0,
+        "descriptive_seed_bootstrap_95pct": [
+          0.0,
+          0.0
+        ]
+      },
+      "expensive_calls": {
+        "final_minus_opponent": 0.0,
+        "descriptive_seed_bootstrap_95pct": [
+          0.0,
+          0.0
+        ]
+      },
+      "achieved_jerk_rms": {
+        "final_minus_opponent": -1.0987606549230846,
+        "descriptive_seed_bootstrap_95pct": [
+          -1.3496693084027476,
+          -0.8694151806276128
+        ]
+      },
+      "achieved_jerk_peak": {
+        "final_minus_opponent": -17.50707358749221,
+        "descriptive_seed_bootstrap_95pct": [
+          -24.385621032302474,
+          -11.012620355460164
+        ]
+      },
+      "achieved_jerk_peak_after_0_2s": {
+        "final_minus_opponent": -17.50707358749221,
+        "descriptive_seed_bootstrap_95pct": [
+          -24.385621032302474,
+          -11.012620355460164
+        ]
+      }
+    },
+    "stress": {
+      "pairs": 24,
+      "joint_success_only": true,
+      "seed_clusters": 8,
+      "success": {
+        "final_minus_opponent": 0.0,
+        "descriptive_seed_bootstrap_95pct": [
+          0.0,
+          0.0
+        ]
+      },
+      "crashed": {
+        "final_minus_opponent": 0.0,
+        "descriptive_seed_bootstrap_95pct": [
+          0.0,
+          0.0
+        ]
+      },
+      "terminal_stall": {
+        "final_minus_opponent": 0.0,
+        "descriptive_seed_bootstrap_95pct": [
+          0.0,
+          0.0
+        ]
+      },
+      "route_pct": {
+        "final_minus_opponent": 0.0,
+        "descriptive_seed_bootstrap_95pct": [
+          0.0,
+          0.0
+        ]
+      },
+      "expensive_calls": {
+        "final_minus_opponent": 0.0,
+        "descriptive_seed_bootstrap_95pct": [
+          0.0,
+          0.0
+        ]
+      },
+      "achieved_jerk_rms": {
+        "final_minus_opponent": 0.05411944951087818,
+        "descriptive_seed_bootstrap_95pct": [
+          0.035243846846329294,
+          0.06708775824931144
+        ]
+      },
+      "achieved_jerk_peak": {
+        "final_minus_opponent": -0.5792826414108276,
+        "descriptive_seed_bootstrap_95pct": [
+          -0.6285067647695541,
+          -0.5373340100049973
+        ]
+      },
+      "achieved_jerk_peak_after_0_2s": {
+        "final_minus_opponent": -0.5792826414108276,
+        "descriptive_seed_bootstrap_95pct": [
+          -0.6285067647695541,
+          -0.5373340100049973
+        ]
+      }
+    }
+  }
+}

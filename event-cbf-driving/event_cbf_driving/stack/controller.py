@@ -149,8 +149,10 @@ class DrivingStack:
                         validate_response(response, pending.request)
                         # The worker measures actual inference/retry time. Keep
                         # the configured delay as a lower bound for ablations.
-                        response.ready_at = pending.submitted_t + pending.request.camera_capture_wall_s + max(
-                            float(response.latency_s), float(response.wall_latency_s)
+                        response.ready_at = (
+                            pending.submitted_t
+                            + pending.request.camera_capture_wall_s
+                            + max(float(response.latency_s), float(response.wall_latency_s))
                         )
                         response.latency_s = response.ready_at - pending.submitted_t
                         pending.response = response
@@ -176,13 +178,19 @@ class DrivingStack:
                     latch_reason = pending.request.reason
                     pending = None
                 elif pending.is_ready(t):
-                    if (cfg.skill_switch_guard and pending.response is not None
-                            and pending.response.skill != skill
-                            and not self._switch_clear(pending.response.skill, snap)):
+                    if (
+                        cfg.skill_switch_guard
+                        and pending.response is not None
+                        and pending.response.skill != skill
+                        and not self._switch_clear(pending.response.skill, snap)
+                    ):
                         # Re-check fresh geometry at delivery, never just the
                         # older snapshot seen by the slow decision layer.
-                        pending.record.update(rejected=True, applied=False,
-                                              error="skill switch blocked by fresh target-lane gap")
+                        pending.record.update(
+                            rejected=True,
+                            applied=False,
+                            error="skill switch blocked by fresh target-lane gap",
+                        )
                         tracker.calls_rejected += 1
                         latch_reason = pending.request.reason
                         pending = None
@@ -194,10 +202,18 @@ class DrivingStack:
                         if new_skill is not None:
                             old_skill = skill
                             skill = self._switch_skill(skill, new_skill, cfg, base_mode)
-                            if cfg.hard_switch or (not matched_polling and base_mode in (
-                                StackMode.FIXED_VLM,
-                                StackMode.ALWAYS_ON,
-                            )) or not cfg.use_blend:
+                            if (
+                                cfg.hard_switch
+                                or (
+                                    not matched_polling
+                                    and base_mode
+                                    in (
+                                        StackMode.FIXED_VLM,
+                                        StackMode.ALWAYS_ON,
+                                    )
+                                )
+                                or not cfg.use_blend
+                            ):
                                 blending, blend_from, blend_tick = False, None, 0
                             else:
                                 blending, blend_from, blend_tick = True, old_skill, 0
@@ -247,15 +263,23 @@ class DrivingStack:
             # ---- Event trigger (proposed) or timer (baselines). -----------
             trigger_reason: Optional[str] = None
             fixed_due = False
-            if base_mode == StackMode.PROPOSED and cfg.trigger_policy != "legacy":
+            if base_mode == StackMode.PROPOSED and cfg.trigger_policy not in (
+                "legacy",
+                "uncertainty",
+                "barrier",
+            ):
                 opportunity = lane_opportunity(snap, skill, transition_s=cfg.trigger_transition_s)
-                if opportunity_due(opportunity, cfg.trigger_policy,
-                                   cfg.trigger_latency_bound_s, cfg.trigger_buffer_s,
-                                   cfg.trigger_threshold_s):
+                if opportunity_due(
+                    opportunity,
+                    cfg.trigger_policy,
+                    cfg.trigger_latency_bound_s,
+                    cfg.trigger_buffer_s,
+                    cfg.trigger_threshold_s,
+                ):
                     trigger_reason = cfg.trigger_policy
             elif base_mode == StackMode.PROPOSED:
                 threshold = self.skills[sigma_skill].meta.threshold * cfg.sigma_threshold_scale
-                sigma_high = bool(sigma > threshold)
+                sigma_high = bool(sigma > threshold) and cfg.trigger_policy != "barrier"
                 if not sigma_high:
                     sigma_latch[sigma_skill] = False
 
@@ -285,7 +309,7 @@ class DrivingStack:
                     if latch_reason in ("shield", "shield+sigma"):
                         latch_reason = None
 
-                if shield_rise:
+                if shield_rise and cfg.trigger_policy != "uncertainty":
                     trigger_reason = "shield+sigma" if sigma_high else "shield"
                     # Fire at most once per override episode; a new episode
                     # requires the full clear window above.
@@ -311,8 +335,11 @@ class DrivingStack:
                 fixed_due = t - last_rate_t >= (1.0 / cfg.always_on_hz) - 1e-12
                 trigger_reason = "always_on" if fixed_due else None
 
-            if (cfg.polling_usefulness_gate and trigger_reason is not None
-                    and base_mode in (StackMode.FIXED_VLM, StackMode.ALWAYS_ON)):
+            if (
+                cfg.polling_usefulness_gate
+                and trigger_reason is not None
+                and base_mode in (StackMode.FIXED_VLM, StackMode.ALWAYS_ON)
+            ):
                 if not lane_opportunity(snap, skill, transition_s=cfg.trigger_transition_s).useful:
                     trigger_reason = None
                     last_rate_t = t
@@ -351,8 +378,10 @@ class DrivingStack:
                         # the worker receives detached bytes only.
                         capture_started = time.perf_counter()
                         request.camera = capture()
-                        request.camera_capture_wall_s = time.perf_counter()-capture_started
-                        request.deadline_s = max(1e-6, cfg.max_pending_s-request.camera_capture_wall_s)
+                        request.camera_capture_wall_s = time.perf_counter() - capture_started
+                        request.deadline_s = max(
+                            1e-6, cfg.max_pending_s - request.camera_capture_wall_s
+                        )
                     pending, pending_this_tick = self._submit(
                         request,
                         trigger_reason,
@@ -379,7 +408,9 @@ class DrivingStack:
                         sr = shield.filter(
                             a_rl,
                             snap,
-                            sigma=sigma if base_mode == StackMode.PROPOSED or matched_polling else 0.0,
+                            sigma=sigma
+                            if base_mode == StackMode.PROPOSED or matched_polling
+                            else 0.0,
                             vlm_pending=True,
                         )
                 else:
@@ -423,26 +454,35 @@ class DrivingStack:
             )
             _obs, _reward, term, trunc, info = env.step(action)
             if cfg.record_interactions:
-                tracker.interactions.append({
-                    "t": t, "skill": skill, "sigma": float(sigma),
-                    "blend_alpha": float(blend_alpha), "requested_action": a_rl.tolist(),
-                    "shield_action": sr.action.tolist(), "applied_action": action.tolist(),
-                    "shield_override": bool(sr.overridden), "shield_feasible": bool(sr.feasible),
-                    "lateral_override": bool(getattr(sr, "lateral_overridden", False)),
-                    "lateral_h": getattr(sr, "lateral_h", None), "shield_reason": sr.reason,
-                    "braking_h": getattr(sr, "braking_h", None),
-                    "braking_feasible": getattr(sr, "braking_feasible", True),
-                    "cbf_override": bool(getattr(sr, "cbf_overridden", False)),
-                    "braking_override": bool(getattr(sr, "braking_overridden", False)),
-                    "barrier_h": float(sr.h) if math.isfinite(float(sr.h)) else None,
-                    "inflation": float(sr.inflation), "monitor": str(status),
-                    "router_trigger": trigger_reason,
-                    "router_pending": pending is not None or pending_this_tick,
-                    "request_id": pending.request_id if pending is not None else None,
-                    "plant": copy.deepcopy(info.get("plant", {})),
-                    "ego": snap.ego.as_array().tolist(),
-                    "obstacles": [other.as_array().tolist() for other in snap.others],
-                })
+                tracker.interactions.append(
+                    {
+                        "t": t,
+                        "skill": skill,
+                        "sigma": float(sigma),
+                        "blend_alpha": float(blend_alpha),
+                        "requested_action": a_rl.tolist(),
+                        "shield_action": sr.action.tolist(),
+                        "applied_action": action.tolist(),
+                        "shield_override": bool(sr.overridden),
+                        "shield_feasible": bool(sr.feasible),
+                        "lateral_override": bool(getattr(sr, "lateral_overridden", False)),
+                        "lateral_h": getattr(sr, "lateral_h", None),
+                        "shield_reason": sr.reason,
+                        "braking_h": getattr(sr, "braking_h", None),
+                        "braking_feasible": getattr(sr, "braking_feasible", True),
+                        "cbf_override": bool(getattr(sr, "cbf_overridden", False)),
+                        "braking_override": bool(getattr(sr, "braking_overridden", False)),
+                        "barrier_h": float(sr.h) if math.isfinite(float(sr.h)) else None,
+                        "inflation": float(sr.inflation),
+                        "monitor": str(status),
+                        "router_trigger": trigger_reason,
+                        "router_pending": pending is not None or pending_this_tick,
+                        "request_id": pending.request_id if pending is not None else None,
+                        "plant": copy.deepcopy(info.get("plant", {})),
+                        "ego": snap.ego.as_array().tolist(),
+                        "obstacles": [other.as_array().tolist() for other in snap.others],
+                    }
+                )
             snap2 = info.get("snapshot") or env.snapshot()
             since_call += 1
 
@@ -477,7 +517,9 @@ class DrivingStack:
             try:
                 response = call.future.result()
                 validate_response(response, call.request)
-                response.ready_at = call.submitted_t + max(response.latency_s, response.wall_latency_s)
+                response.ready_at = call.submitted_t + max(
+                    response.latency_s, response.wall_latency_s
+                )
                 response.latency_s = response.ready_at - call.submitted_t
                 fields = response_record_fields(response)
                 if call.record.get("error"):
@@ -552,8 +594,8 @@ class DrivingStack:
             shield.enabled = True
             shield.inflate = True
             shield.pending_margin = bool(cfg.pending_margin)
-            cfg.hard_switch = False
-            cfg.use_blend = True
+            # Matched polling changes scheduling/protection only. Respect the
+            # caller's explicit switching/blending choice for fair ablations.
 
     def _skill_action(self, name: str, snap: WorldSnapshot):
         if name not in self.skills:
@@ -625,24 +667,32 @@ class DrivingStack:
             "prompt_hash": "",
             "error": None,
             "request_id": request.request_id,
-            "camera_capture_wall_ms": 1000.0*request.camera_capture_wall_s,
+            "camera_capture_wall_ms": 1000.0 * request.camera_capture_wall_s,
         }
         if request.camera_capture_wall_s >= cfg.max_pending_s:
-            record.update(rejected=True, applied=False, error="camera capture exceeded pending deadline")
+            record.update(
+                rejected=True, applied=False, error="camera capture exceeded pending deadline"
+            )
             tracker.add_call(record)
             return None, False
         if executor is not None:
+
             def invoke():
                 started = time.perf_counter()
                 response = self.router.submit(copy.deepcopy(request))
-                response.wall_latency_s = max(float(response.wall_latency_s), time.perf_counter() - started)
+                response.wall_latency_s = max(
+                    float(response.wall_latency_s), time.perf_counter() - started
+                )
                 return response
 
             future = executor.submit(invoke)
             tracker.add_call(record)
             return FuturePendingCall(
-                request=request, future=future, submitted_t=t,
-                deadline_t=t + cfg.max_pending_s, record=record,
+                request=request,
+                future=future,
+                submitted_t=t,
+                deadline_t=t + cfg.max_pending_s,
+                record=record,
             ), True
         try:
             response = self.router.submit(request)

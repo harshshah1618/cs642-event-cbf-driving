@@ -1,0 +1,51 @@
+{
+  "sigma_scale": 1,
+  "rule": "fewest crashes, most successes, highest mean route, fewest calls; development only",
+  "development": [
+    {
+      "scale": 0.2,
+      "n": 12,
+      "success": 12,
+      "crashes": 0,
+      "calls": 29,
+      "mean_route": 100.0
+    },
+    {
+      "scale": 0.5,
+      "n": 12,
+      "success": 12,
+      "crashes": 0,
+      "calls": 15,
+      "mean_route": 100.0
+    },
+    {
+      "scale": 1,
+      "n": 12,
+      "success": 12,
+      "crashes": 0,
+      "calls": 8,
+      "mean_route": 100.0
+    }
+  ],
+  "reserve_m": 8.0,
+  "reserve_source": "selected in prior maneuver development, commit6090300",
+  "final_scheduler": "deadline",
+  "original_formula_tested_separately": true,
+  "test_seeds": [
+    9001,
+    9002,
+    9003,
+    9004,
+    9005,
+    9006,
+    9007,
+    9008
+  ],
+  "controlled_delays_s": [
+    0,
+    0.125,
+    1,
+    18
+  ],
+  "frozen_before_any_heldout_run": true
+}

@@ -191,10 +191,14 @@ class ShieldConfig:
         _bool(f"{path}.intent_corridor", self.intent_corridor)
         self.braking_decel = _positive(f"{path}.braking_decel", self.braking_decel)
         self.braking_clearance = _non_negative(f"{path}.braking_clearance", self.braking_clearance)
-        self.braking_response_s = _non_negative(f"{path}.braking_response_s", self.braking_response_s)
+        self.braking_response_s = _non_negative(
+            f"{path}.braking_response_s", self.braking_response_s
+        )
         if self.braking_decel > abs(self.ax_min):
             _fail(path, "braking_decel must fit inside the actuator deceleration limit")
-        self.lateral_mode = _choice(f"{path}.lateral_mode", self.lateral_mode, ("lane", "footprint"))
+        self.lateral_mode = _choice(
+            f"{path}.lateral_mode", self.lateral_mode, ("lane", "footprint")
+        )
         if self.ax_min >= self.ax_max:
             _fail(f"{path}.ax_min", "must be strictly less than ax_max")
         if self.emergency_decel > self.ax_min:
@@ -253,10 +257,14 @@ class RouterConfig:
         self.latency_jitter_s = _non_negative(f"{path}.latency_jitter_s", self.latency_jitter_s)
         if not isinstance(self.latency_schedule_s, list) or len(self.latency_schedule_s) > 10000:
             _fail(path, "latency_schedule_s must be a list of at most 10000 delays")
-        self.latency_schedule_s = [_non_negative(f"{path}.latency_schedule_s", v) for v in self.latency_schedule_s]
+        self.latency_schedule_s = [
+            _non_negative(f"{path}.latency_schedule_s", v) for v in self.latency_schedule_s
+        ]
         if self.latency_schedule_s and self.latency_jitter_s:
             _fail(path, "choose either a recorded delay schedule or jitter")
-        self.local_dtype = _choice(f"{path}.local_dtype", self.local_dtype, ("float32", "bfloat16", "float16"))
+        self.local_dtype = _choice(
+            f"{path}.local_dtype", self.local_dtype, ("float32", "bfloat16", "float16")
+        )
         self.backend = _choice(
             f"{path}.backend",
             self.backend,
@@ -270,9 +278,7 @@ class RouterConfig:
             self.local_backend,
             ("auto", "ollama", "transformers", "none"),
         )
-        self.opencode_provider = _non_empty(
-            f"{path}.opencode_provider", self.opencode_provider
-        )
+        self.opencode_provider = _non_empty(f"{path}.opencode_provider", self.opencode_provider)
         self.opencode_password_env = _non_empty(
             f"{path}.opencode_password_env", self.opencode_password_env
         )
@@ -283,9 +289,7 @@ class RouterConfig:
                 f"{path}.opencode_state_file", self.opencode_state_file
             )
         if self.opencode_variant is not None:
-            self.opencode_variant = _non_empty(
-                f"{path}.opencode_variant", self.opencode_variant
-            )
+            self.opencode_variant = _non_empty(f"{path}.opencode_variant", self.opencode_variant)
         self.latency_s = _non_negative(f"{path}.latency_s", self.latency_s)
         self.timeout_s = _positive(f"{path}.timeout_s", self.timeout_s)
         self.max_retries = int(_non_negative(f"{path}.max_retries", self.max_retries))
@@ -382,24 +386,23 @@ class StackConfig:
         )
         self.freeze_speed = _non_negative(f"{path}.freeze_speed", self.freeze_speed)
         self.freeze_window_s = _positive(f"{path}.freeze_window_s", self.freeze_window_s)
-        self.route_success_pct = _non_negative(
-            f"{path}.route_success_pct", self.route_success_pct
-        )
+        self.route_success_pct = _non_negative(f"{path}.route_success_pct", self.route_success_pct)
         self.max_pending_s = _positive(f"{path}.max_pending_s", self.max_pending_s)
         if self.route_success_pct > 100.0:
             _fail(f"{path}.route_success_pct", "must be <= 100")
         if self.router_latency_s is not None:
-            self.router_latency_s = _non_negative(
-                f"{path}.router_latency_s", self.router_latency_s
-            )
+            self.router_latency_s = _non_negative(f"{path}.router_latency_s", self.router_latency_s)
         _bool(f"{path}.record_interactions", self.record_interactions)
         _bool(f"{path}.router_async", self.router_async)
         _bool(f"{path}.realtime", self.realtime)
         _bool(f"{path}.skill_switch_guard", self.skill_switch_guard)
         _bool(f"{path}.rearm_on_skill_change", self.rearm_on_skill_change)
         _bool(f"{path}.simulate_deadline_wait", self.simulate_deadline_wait)
-        self.trigger_policy = _choice(f"{path}.trigger_policy", self.trigger_policy,
-                                     ("legacy", "deadline", "no_latency", "ttc", "benefit"))
+        self.trigger_policy = _choice(
+            f"{path}.trigger_policy",
+            self.trigger_policy,
+            ("legacy", "deadline", "no_latency", "ttc", "benefit", "uncertainty", "barrier"),
+        )
         for key in ("trigger_latency_bound_s", "trigger_buffer_s"):
             setattr(self, key, _non_negative(f"{path}.{key}", getattr(self, key)))
         self.polling_phase_s = _non_negative(f"{path}.polling_phase_s", self.polling_phase_s)
@@ -407,7 +410,10 @@ class StackConfig:
         for key in ("trigger_transition_s", "trigger_threshold_s"):
             setattr(self, key, _positive(f"{path}.{key}", getattr(self, key)))
         if self.router_async and not self.realtime:
-            _fail(path, "router_async requires realtime pacing so inference deadlines use the same clock")
+            _fail(
+                path,
+                "router_async requires realtime pacing so inference deadlines use the same clock",
+            )
 
 
 @dataclass
@@ -469,9 +475,7 @@ class EvalConfig:
 class TrainConfig:
     # Only these two are distinct policies. RETURN_RIGHT is a documented
     # deployment alias of CRUISE_RIGHT unless a distinct checkpoint is trained.
-    skills: List[str] = field(
-        default_factory=lambda: ["CRUISE_RIGHT", "OVERTAKE_LEFT"]
-    )
+    skills: List[str] = field(default_factory=lambda: ["CRUISE_RIGHT", "OVERTAKE_LEFT"])
     updates: int = 160
     min_updates: int = 40
     n_envs: int = 16
@@ -607,9 +611,7 @@ def _read_mapping(path: Path) -> Dict[str, Any]:
     return dict(data)
 
 
-def _read_config_chain(
-    path: Path, seen: Optional[set[Path]] = None
-) -> Dict[str, Any]:
+def _read_config_chain(path: Path, seen: Optional[set[Path]] = None) -> Dict[str, Any]:
     """Read a config and resolve ``extends`` recursively, child wins."""
 
     config_path = Path(path).expanduser().resolve()
@@ -626,7 +628,9 @@ def _read_config_chain(
     return data
 
 
-def load_config(path: Union[str, Path, None] = None, *, overrides: Optional[Iterable[str]] = None) -> ProjectConfig:
+def load_config(
+    path: Union[str, Path, None] = None, *, overrides: Optional[Iterable[str]] = None
+) -> ProjectConfig:
     """Load and validate a config file, optionally applying dotted overrides.
 
     ``extends: ../base.yaml`` is resolved recursively relative to each file,
