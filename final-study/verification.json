@@ -26,5 +26,12 @@
   "csv_episode_rows": 1476,
   "csv_condition_rows": 180,
   "cloud_jobs": 0,
-  "repository_pushes": 0
+  "repository_pushes": 0,
+  "archive_restoration": {
+    "tested_source_commit": "d1314813c9357bcd167a46a61b878dc6833e2602",
+    "restored_full_tests_passed": 369,
+    "controlled_and_actual_statistics_byte_identical": true,
+    "full_checkpoint_tree_included": true,
+    "note": "Final subsequent change adds this verification metadata only; evaluated code and data unchanged."
+  }
 }
