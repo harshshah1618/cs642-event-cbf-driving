@@ -34,7 +34,7 @@ from event_cbf_driving.router.base import (
     validate_response,
 )
 from event_cbf_driving.shield.cbf import InflatedCBFShield
-from event_cbf_driving.skills.ppo import SkillPolicy
+from event_cbf_driving.skills.policy import SkillPolicy
 from event_cbf_driving.stack.pending import PendingCall
 from event_cbf_driving.stack.result import RolloutResult, RolloutTracker
 

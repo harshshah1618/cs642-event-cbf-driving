@@ -15,8 +15,8 @@ from event_cbf_driving.config import ScenarioConfig, ShieldConfig
 from event_cbf_driving.env.registry import make_env
 from event_cbf_driving.io_utils import atomic_write_json
 from event_cbf_driving.shield.cbf import InflatedCBFShield
+from event_cbf_driving.skills.checkpoints import save_skill, state_dict_fingerprint
 from event_cbf_driving.skills.loader import load_skill_bank
-from event_cbf_driving.skills.ppo import save_skill, state_dict_fingerprint
 
 
 def collect(policy, seeds):

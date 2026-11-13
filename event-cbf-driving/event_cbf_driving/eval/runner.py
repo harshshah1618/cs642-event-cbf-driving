@@ -38,7 +38,9 @@ from event_cbf_driving.provenance import (
 )
 from event_cbf_driving.router.factory import create_router
 from event_cbf_driving.shield.cbf import InflatedCBFShield
-from event_cbf_driving.skills.ppo import ActorCritic, SkillMeta, SkillPolicy, load_skill
+from event_cbf_driving.skills.checkpoints import load_skill
+from event_cbf_driving.skills.model import ActorCritic
+from event_cbf_driving.skills.policy import SkillMeta, SkillPolicy
 from event_cbf_driving.stack.baselines import M3BaselineStack
 from event_cbf_driving.stack.controller import DrivingStack, RolloutResult
 

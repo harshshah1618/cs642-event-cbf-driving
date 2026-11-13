@@ -41,6 +41,9 @@ in [event-cbf-driving/FINAL_REPORT.md](event-cbf-driving/FINAL_REPORT.md).
 
 ## Quick start
 
+For a readable explanation of the PPO code and the new CleanRL-based training
+command, start with [the lane-driver guide](event-cbf-driving/event_cbf_driving/skills/README.md).
+
 ```bash
 cd event-cbf-driving
 python -m venv .venv

@@ -26,15 +26,11 @@ from event_cbf_driving.config import SKILL_NAMES, TrainConfig
 from event_cbf_driving.env.skill_lane import LANE_Y
 from event_cbf_driving.io_utils import atomic_write_json, utc_now
 from event_cbf_driving.provenance import environment_info, git_info
+from event_cbf_driving.skills.checkpoints import load_skill, save_skill
+from event_cbf_driving.skills.diagnostics import calibrate_threshold, evaluate_skill
+from event_cbf_driving.skills.legacy_ppo import PPOTrainer
 from event_cbf_driving.skills.loader import load_skill_bank, validate_checkpoint_dir
-from event_cbf_driving.skills.ppo import (
-    PPOTrainer,
-    SkillMeta,
-    calibrate_threshold,
-    evaluate_skill,
-    load_skill,
-    save_skill,
-)
+from event_cbf_driving.skills.policy import SkillMeta
 
 logger = logging.getLogger(__name__)
 

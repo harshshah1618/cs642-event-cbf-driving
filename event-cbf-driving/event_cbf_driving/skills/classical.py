@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 
 from event_cbf_driving.config import SKILL_NAMES
-from event_cbf_driving.skills.ppo import SkillMeta
+from event_cbf_driving.skills.policy import SkillMeta
 
 
 class PDLanePolicy:

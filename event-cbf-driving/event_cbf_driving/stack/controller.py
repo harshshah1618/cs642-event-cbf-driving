@@ -34,7 +34,7 @@ from event_cbf_driving.router.base import (
 )
 from event_cbf_driving.shield.cbf import InflatedCBFShield
 from event_cbf_driving.shield.monitor import SafetyMonitor, SafetyStatus
-from event_cbf_driving.skills.ppo import SkillPolicy
+from event_cbf_driving.skills.policy import SkillPolicy
 from event_cbf_driving.stack.blend import blend_actions, sigmoid_blend_alpha
 from event_cbf_driving.stack.pending import FuturePendingCall, PendingCall
 from event_cbf_driving.stack.result import RolloutResult, RolloutTracker
@@ -86,6 +86,14 @@ class DrivingStack:
         cfg = copy.deepcopy(self.config)
         mode_name = str(cfg.mode)
         base_mode = self._resolve_mode(mode_name)
+        if base_mode == StackMode.PROPOSED and cfg.trigger_policy in ("legacy", "uncertainty"):
+            if any(
+                not getattr(policy, "supports_uncertainty", True) for policy in self.skills.values()
+            ):
+                raise SafetyError(
+                    "This trigger needs dual-critic disagreement. For single-critic PPO, "
+                    "choose a traffic-based trigger such as 'deadline', 'benefit', or 'barrier'."
+                )
         matched_polling = mode_name in ("fixed_rate_shielded", "always_on_shielded")
         shield = copy.deepcopy(self.shield)
         self._configure_mode(shield, base_mode, cfg, variant=mode_name)

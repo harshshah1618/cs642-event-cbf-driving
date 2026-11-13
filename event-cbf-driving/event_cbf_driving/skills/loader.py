@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, Mapping, Optional, Sequence
 
 from event_cbf_driving.io_utils import utc_now
-from event_cbf_driving.skills.ppo import (
+from event_cbf_driving.skills.checkpoints import (
     find_duplicate_fingerprints,
     inspect_checkpoint,
     load_skill,
@@ -241,9 +241,7 @@ def validate_checkpoint_dir(
     if result["errors"]:
         problems.extend(result["errors"])
     for mismatch in result["fingerprint_mismatches"]:
-        problems.append(
-            f"fingerprint mismatch for {mismatch['skill']} at {mismatch['path']}"
-        )
+        problems.append(f"fingerprint mismatch for {mismatch['skill']} at {mismatch['path']}")
     for duplicate in result["duplicates"]:
         problems.append(
             "duplicate state_dict fingerprint across distinct skills: "

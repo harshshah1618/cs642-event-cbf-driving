@@ -1,3 +1,13 @@
+from .checkpoints import (
+    build_checkpoint_provenance,
+    find_duplicate_fingerprints,
+    inspect_checkpoint,
+    load_skill,
+    save_skill,
+    state_dict_fingerprint,
+)
+from .diagnostics import calibrate_threshold
+from .legacy_ppo import PPOTrainer
 from .loader import (
     DEFAULT_ALIASES,
     REQUIRED_SKILLS,
@@ -5,19 +15,8 @@ from .loader import (
     load_skill_bank,
     validate_checkpoint_dir,
 )
-from .ppo import (
-    ActorCritic,
-    PPOTrainer,
-    SkillMeta,
-    SkillPolicy,
-    build_checkpoint_provenance,
-    calibrate_threshold,
-    find_duplicate_fingerprints,
-    inspect_checkpoint,
-    load_skill,
-    save_skill,
-    state_dict_fingerprint,
-)
+from .model import ActorCritic
+from .policy import SkillMeta, SkillPolicy
 
 __all__ = [
     "ActorCritic",

@@ -16,7 +16,7 @@ from event_cbf_driving.eval.figures import plot_ablation_bars, plot_gauntlet_rol
 from event_cbf_driving.eval.metrics import ablation_table, result_to_row
 from event_cbf_driving.router.factory import make_router
 from event_cbf_driving.shield.cbf import InflatedCBFShield
-from event_cbf_driving.skills.ppo import load_skill
+from event_cbf_driving.skills.checkpoints import load_skill
 from event_cbf_driving.stack.controller import DrivingStack, StackConfig, StackMode
 
 MEDIA = Path(__file__).resolve().parents[2] / "media" / "full-stack"

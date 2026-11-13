@@ -83,4 +83,3 @@ ignore_missing_imports = true
 check_untyped_defs = true
 no_implicit_optional = true
 warn_redundant_casts = true
-exclude = ["event_cbf_driving/skills/ppo.py"]

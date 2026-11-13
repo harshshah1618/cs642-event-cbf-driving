@@ -155,7 +155,7 @@ effective config is embedded in the run manifest.
 | --- | --- |
 | `event-cbf eval` | Multi-mode, multi-scenario, multi-seed evaluation; writes `manifest.json`, `results.json`, `report.md`, figures, and optional episode traces. |
 | `event-cbf router-check` | Send one synthetic interrupt and report live/fallback status, model, latency, token usage, and health. |
-| `event-cbf train` | Train distinct PPO lane skills with dual-critic uncertainty calibration. |
+| `event-cbf train` | Reproduce the recorded dual-critic lane-skill training and uncertainty calibration. |
 | `event-cbf verify` | Validate checkpoint fingerprints, duplicates, and learned diagnostics without training. |
 | `event-cbf replay` | Strictly validate an episode artifact and replay its recorded action log. |
 | `event-cbf doctor` | Check Python, dependencies, config, router construction, and checkpoint health. |
@@ -218,7 +218,7 @@ event_cbf_driving/
   runtime.py      episode schema, atomic recording, open-loop replay
   cli.py          eval / router-check / train / verify / replay / doctor
   env/            two_trap, merge, dense_highway, highway adapter, CARLA stub
-  skills/         dual-critic PPO, checkpoint I/O, alias validation
+  skills/         focused training, network, driver and checkpoint modules; see skills/README.md
   router/         scripted, OpenAI-compatible, local transformers/Ollama, dry-run
   shield/         inflated CBF and SafetyMonitor gate
   stack/          proposed controller, baselines, blending, result schema

@@ -15,7 +15,7 @@ import numpy as np
 from event_cbf_driving.config import ScenarioConfig, load_config
 from event_cbf_driving.eval.runner import load_skill_bank, run_episode
 from event_cbf_driving.router.scripted import ScriptedRouter
-from event_cbf_driving.skills.ppo import SkillMeta
+from event_cbf_driving.skills.policy import SkillMeta
 
 from research_freeze import verify
 
