@@ -11,8 +11,7 @@ from driving.config import StackConfig
 from driving.controller import DrivingStack
 from driving.env_two_trap import TwoTrapGauntletEnv
 from driving.errors import ArtifactError, SafetyError
-from driving.legacy_network import encode, env_action_np
-from driving.network import CleanRLAgent
+from driving.network import CleanRLAgent, encode, env_action_np
 from driving.planner import ScriptedRouter
 from driving.policy import SkillMeta, SkillPolicy
 from driving.train import train

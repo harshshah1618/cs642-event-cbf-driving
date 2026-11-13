@@ -13,7 +13,7 @@ from driving.config import RouterConfig
 from driving.env_types import VehicleState, WorldSnapshot
 from driving.errors import RouterError
 from driving.router_base import CameraObservation, RouterRequest, response_record_fields
-from driving.router_http import TransportError, TransportResponse
+from driving.transport import TransportError, TransportResponse
 
 PNG = base64.b64decode(
     "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII="
@@ -103,8 +103,6 @@ def router(results=None, duration=0.125, **kwargs):
         timeout_s=1.0,
         max_retries=2,
         backoff_s=0.1,
-        allow_fallback=True,
-        fail_on_fallback=False,
     )
     config = replace(config, **kwargs)
     return VLMRouter(config, transport=transport, clock=clock, sleep=clock.sleep), transport, clock
@@ -271,7 +269,7 @@ def test_malformed_response_is_terminal(reply):
 
 def test_factory_live_gate_and_camera_requirement():
     from driving.errors import ConfigError
-    from driving.router_factory import create_router
+    from driving.planner import create_router
 
     config = RouterConfig(backend="vlm", model="test-vlm", base_url="http://localhost:8000/v1")
     with pytest.raises(ConfigError, match="live calls are disabled"):

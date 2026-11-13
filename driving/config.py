@@ -1,8 +1,7 @@
 """Typed, validated configuration for the whole stack.
 
-Configuration is intentionally boring: dataclasses, explicit validation, YAML
-loading, and dotted overrides. There is no hidden global state, and every
-field that influences a run is serialized into the run manifest.
+Dataclasses with explicit validation and YAML inheritance.
+
 """
 
 from __future__ import annotations
@@ -16,7 +15,6 @@ from pathlib import Path
 from typing import (
     Any,
     Dict,
-    Iterable,
     List,
     Mapping,
     Optional,
@@ -40,8 +38,6 @@ EVAL_MODES = (
     "static_cbf",
     "fixed_rate_vlm",
     "always_on_vlm",
-    "fasionad_wakeup",
-    "cert_replan",
     "proposed",
     "proposed_no_margin",
     "proposed_no_blend",
@@ -63,21 +59,6 @@ class StackMode(_Enum):
     FIXED_VLM = "fixed_rate_vlm"
     ALWAYS_ON = "always_on_vlm"
     PROPOSED = "proposed"
-
-
-class BaselineMode(_Enum):
-    FASIONAD = "fasionad_wakeup"
-    CERT = "cert_replan"
-
-
-class RouterBackend(_Enum):
-    AUTO = "auto"
-    SCRIPTED = "scripted"
-    DRYRUN = "dryrun"
-    OPENAI = "openai"
-    OPENCODE = "opencode"
-    LOCAL = "local"
-    VLM = "vlm"
 
 
 def _fail(path: str, message: str) -> None:
@@ -119,12 +100,6 @@ def _bool(path: str, value: Any) -> bool:
     if not isinstance(value, bool):
         _fail(path, f"expected a boolean, got {value!r}")
     return value
-
-
-def _non_empty(path: str, value: Any) -> str:
-    if not isinstance(value, str) or not value.strip():
-        _fail(path, f"expected a non-empty string, got {value!r}")
-    return value.strip()
 
 
 @dataclass
@@ -212,10 +187,6 @@ class ShieldConfig:
 @dataclass
 class RouterConfig:
     backend: str = "scripted"
-    # Live calls are opt-in.  ``openai`` and ``local`` are live backends and
-    # the factory refuses to build them unless this is true (or the CLI's
-    # explicit ``--allow-live`` flag is set).  ``scripted`` and ``dryrun`` are
-    # always available for offline, reproducible evaluation.
     allow_live: bool = False
     latency_s: float = 0.30
     latency_jitter_s: float = 0.0
@@ -223,89 +194,32 @@ class RouterConfig:
     timeout_s: float = 30.0
     max_retries: int = 2
     backoff_s: float = 0.25
-    allow_fallback: bool = True
-    fail_on_fallback: bool = False
-    model: str = "gpt-4o-mini"
-    base_url: str = "https://api.openai.com/v1"
+    max_consecutive_failures: int = 5
+    model: str = "camera-router"
+    base_url: str = "http://localhost:8000/v1"
     api_key_env: str = "OPENAI_API_KEY"
     api_key_env_fallback: str = "EVENT_CBF_API_KEY"
     seed: int = 0
-    temperature: float = 0.0
-    max_tokens: int = 8
-    max_consecutive_failures: int = 5
-    local_model: str = "Qwen/Qwen2.5-0.5B-Instruct"
-    local_revision: Optional[str] = None
-    local_device: str = "cpu"
-    local_dtype: str = "float32"
-    # auto | ollama | transformers | none.  ``auto`` probes Ollama first and
-    # then loads transformers, matching the historical local-router behavior.
-    local_backend: str = "auto"
-    trust_remote_code: bool = False
-    ollama_url: str = "http://127.0.0.1:11434"
-    ollama_model: str = "qwen2.5:0.5b"
-    # OpenCode-hosted models use the local OpenCode server's stateless
-    # generation API.  Connection details are discovered from the service
-    # state file written by `opencode serve`; no credential is stored here.
-    opencode_url: Optional[str] = None
-    opencode_state_file: Optional[str] = "~/.local/state/opencode/service.json"
-    opencode_provider: str = "opencode"
-    opencode_variant: Optional[str] = None
-    opencode_password_env: str = "OPENCODE_SERVER_PASSWORD"
-    cache: bool = False
 
     def validate(self, path: str = "router") -> None:
+        self.backend = _choice(f"{path}.backend", self.backend, ("scripted", "vlm"))
+        self.allow_live = _bool(f"{path}.allow_live", self.allow_live)
+        self.latency_s = _non_negative(f"{path}.latency_s", self.latency_s)
         self.latency_jitter_s = _non_negative(f"{path}.latency_jitter_s", self.latency_jitter_s)
         if not isinstance(self.latency_schedule_s, list) or len(self.latency_schedule_s) > 10000:
-            _fail(path, "latency_schedule_s must be a list of at most 10000 delays")
+            _fail(path, "latency_schedule_s must be a bounded list")
         self.latency_schedule_s = [
             _non_negative(f"{path}.latency_schedule_s", v) for v in self.latency_schedule_s
         ]
         if self.latency_schedule_s and self.latency_jitter_s:
-            _fail(path, "choose either a recorded delay schedule or jitter")
-        self.local_dtype = _choice(
-            f"{path}.local_dtype", self.local_dtype, ("float32", "bfloat16", "float16")
-        )
-        self.backend = _choice(
-            f"{path}.backend",
-            self.backend,
-            tuple(b.value for b in RouterBackend),
-        )
-        if self.backend == "opencode":
-            self.model = _non_empty(f"{path}.model", self.model)
-        self.allow_live = _bool(f"{path}.allow_live", self.allow_live)
-        self.local_backend = _choice(
-            f"{path}.local_backend",
-            self.local_backend,
-            ("auto", "ollama", "transformers", "none"),
-        )
-        self.opencode_provider = _non_empty(f"{path}.opencode_provider", self.opencode_provider)
-        self.opencode_password_env = _non_empty(
-            f"{path}.opencode_password_env", self.opencode_password_env
-        )
-        if self.opencode_url is not None:
-            self.opencode_url = _non_empty(f"{path}.opencode_url", self.opencode_url)
-        if self.opencode_state_file is not None:
-            self.opencode_state_file = _non_empty(
-                f"{path}.opencode_state_file", self.opencode_state_file
-            )
-        if self.opencode_variant is not None:
-            self.opencode_variant = _non_empty(f"{path}.opencode_variant", self.opencode_variant)
-        self.latency_s = _non_negative(f"{path}.latency_s", self.latency_s)
+            _fail(path, "recorded latency schedules cannot also use random jitter")
+        self.seed = int(_finite(f"{path}.seed", self.seed))
         self.timeout_s = _positive(f"{path}.timeout_s", self.timeout_s)
         self.max_retries = int(_non_negative(f"{path}.max_retries", self.max_retries))
         self.backoff_s = _non_negative(f"{path}.backoff_s", self.backoff_s)
         self.max_consecutive_failures = int(
-            _non_negative(f"{path}.max_consecutive_failures", self.max_consecutive_failures)
+            _positive(f"{path}.max_consecutive_failures", self.max_consecutive_failures)
         )
-        self.temperature = _non_negative(f"{path}.temperature", self.temperature)
-        self.max_tokens = int(_positive(f"{path}.max_tokens", self.max_tokens))
-        self.seed = int(_finite(f"{path}.seed", self.seed))
-        if self.max_consecutive_failures < 1:
-            _fail(f"{path}.max_consecutive_failures", "must be >= 1")
-        if self.backend == "openai" and self.latency_s == 0.0:
-            # A live backend still takes wall-clock time; the simulated delay
-            # is a lower bound on how long the controller is locked.
-            pass
 
 
 @dataclass
@@ -418,93 +332,22 @@ class StackConfig:
 
 @dataclass
 class EvalConfig:
-    scenarios: List[ScenarioConfig] = field(
-        default_factory=lambda: [
-            ScenarioConfig("two_trap", seed=0),
-            ScenarioConfig("merge", seed=0),
-            ScenarioConfig("dense_highway", seed=0),
-        ]
-    )
-    modes: List[str] = field(default_factory=lambda: list(EVAL_MODES))
-    seeds: List[int] = field(default_factory=lambda: [0, 1, 2, 3, 4])
-    repeats: int = 1
+    scenarios: List[ScenarioConfig] = field(default_factory=lambda: [ScenarioConfig("two_trap")])
+    modes: List[str] = field(default_factory=lambda: ["proposed"])
+    seeds: List[int] = field(default_factory=lambda: [0])
     out_dir: str = "runs"
-    run_id: Optional[str] = None
-    figures: bool = True
-    update_docs: bool = False
-    fail_on_regression: bool = True
-    # Absolute route floor for the proposed stack. 60% is deliberately below
-    # the measured two-trap result (80.6%) but above a stalled/frozen run.
-    min_route_pct: float = 60.0
-    record_episodes: bool = False
-    workers: int = 1
-    tags: List[str] = field(default_factory=list)
 
     def validate(self, path: str = "eval") -> None:
-        if not self.scenarios:
-            _fail(f"{path}.scenarios", "at least one scenario is required")
-        for i, scenario in enumerate(self.scenarios):
-            if isinstance(scenario, Mapping):
-                scenario = ScenarioConfig(**dict(scenario))
-                self.scenarios[i] = scenario
-            if not isinstance(scenario, ScenarioConfig):
-                _fail(f"{path}.scenarios[{i}]", "must be a ScenarioConfig mapping")
-            scenario.validate(f"{path}.scenarios[{i}]")
-        if not self.modes:
-            _fail(f"{path}.modes", "at least one mode is required")
-        unknown = [m for m in self.modes if m not in EVAL_MODES]
-        if unknown:
-            _fail(f"{path}.modes", f"unknown modes {unknown}; choose from {list(EVAL_MODES)}")
-        if not self.seeds:
-            _fail(f"{path}.seeds", "at least one seed is required")
-        self.seeds = [int(_finite(f"{path}.seeds[{i}]", s)) for i, s in enumerate(self.seeds)]
-        self.repeats = int(_positive(f"{path}.repeats", self.repeats))
-        self.min_route_pct = _non_negative(f"{path}.min_route_pct", self.min_route_pct)
-        if self.min_route_pct > 100.0:
-            _fail(f"{path}.min_route_pct", "must be <= 100")
-        self.workers = int(_positive(f"{path}.workers", self.workers))
-        if self.workers != 1:
-            raise ConfigError(
-                f"{path}.workers: parallel evaluation is not supported yet; keep it at 1 "
-                "for deterministic simulator state"
-            )
-        self.out_dir = str(self.out_dir)
-
-
-@dataclass
-class TrainConfig:
-    # Only these two are distinct policies. RETURN_RIGHT is a documented
-    # deployment alias of CRUISE_RIGHT unless a distinct checkpoint is trained.
-    skills: List[str] = field(default_factory=lambda: ["CRUISE_RIGHT", "OVERTAKE_LEFT"])
-    updates: int = 160
-    min_updates: int = 40
-    n_envs: int = 16
-    seeds: List[int] = field(default_factory=lambda: [0, 1, 2])
-    out_dir: str = "runs/trained-checkpoints"
-    seed: int = 0
-    device: str = "cpu"
-    deterministic: bool = True
-    min_learned_skills: int = 2
-
-    def validate(self, path: str = "train") -> None:
-        if not self.skills:
-            _fail(f"{path}.skills", "at least one skill is required")
-        unknown = [s for s in self.skills if s not in SKILL_NAMES]
-        if unknown:
-            _fail(f"{path}.skills", f"unknown skills {unknown}")
-        self.updates = int(_positive(f"{path}.updates", self.updates))
-        self.min_updates = int(_non_negative(f"{path}.min_updates", self.min_updates))
-        if self.min_updates > self.updates:
-            _fail(f"{path}.min_updates", "must be <= updates")
-        self.n_envs = int(_positive(f"{path}.n_envs", self.n_envs))
-        if not self.seeds:
-            _fail(f"{path}.seeds", "at least one seed is required")
-        self.seeds = [int(_finite(f"{path}.seeds[{i}]", s)) for i, s in enumerate(self.seeds)]
-        self.seed = int(_finite(f"{path}.seed", self.seed))
-        self.device = _choice(f"{path}.device", self.device, ("cpu", "cuda", "mps", "auto"))
-        self.min_learned_skills = int(
-            _non_negative(f"{path}.min_learned_skills", self.min_learned_skills)
-        )
+        self.scenarios = [
+            s if isinstance(s, ScenarioConfig) else _construct(ScenarioConfig, s, path)
+            for s in self.scenarios
+        ]
+        if not self.scenarios or not self.modes or not self.seeds:
+            _fail(path, "scenarios, modes and seeds must be nonempty")
+        for scenario in self.scenarios:
+            scenario.validate(path)
+        self.modes = [_choice(f"{path}.modes", str(m), EVAL_MODES) for m in self.modes]
+        self.seeds = [int(_finite(f"{path}.seeds", s)) for s in self.seeds]
 
 
 @dataclass
@@ -513,12 +356,10 @@ class ProjectConfig:
     seed: int = 0
     checkpoint_dir: str = "models/native"
     log_level: str = "INFO"
-    json_logs: bool = False
     router: RouterConfig = field(default_factory=RouterConfig)
     shield: ShieldConfig = field(default_factory=ShieldConfig)
     stack: StackConfig = field(default_factory=StackConfig)
     eval: EvalConfig = field(default_factory=EvalConfig)
-    train: TrainConfig = field(default_factory=TrainConfig)
 
     def validate(self) -> "ProjectConfig":
         if not isinstance(self.name, str) or not self.name.strip():
@@ -531,16 +372,12 @@ class ProjectConfig:
         self.shield.validate("shield")
         self.stack.validate("stack")
         self.eval.validate("eval")
-        self.train.validate("train")
         if not self.checkpoint_dir:
             _fail("checkpoint_dir", "must be a non-empty path")
         return self
 
     def to_dict(self) -> Dict[str, Any]:
         return _to_plain(asdict(self))
-
-    def copy(self) -> "ProjectConfig":
-        return copy.deepcopy(self)
 
 
 def _to_plain(value: Any) -> Any:
@@ -571,7 +408,6 @@ def _construct(cls: Type[T], data: Mapping[str, Any], path: str) -> T:
             ("shield", ShieldConfig),
             ("stack", StackConfig),
             ("eval", EvalConfig),
-            ("train", TrainConfig),
         ):
             if nested in kwargs and isinstance(kwargs[nested], Mapping):
                 kwargs[nested] = _construct(nested_cls, kwargs[nested], f"{path}.{nested}")
@@ -628,10 +464,8 @@ def _read_config_chain(path: Path, seen: Optional[set[Path]] = None) -> Dict[str
     return data
 
 
-def load_config(
-    path: Union[str, Path, None] = None, *, overrides: Optional[Iterable[str]] = None
-) -> ProjectConfig:
-    """Load and validate a config file, optionally applying dotted overrides.
+def load_config(path: Union[str, Path, None] = None) -> ProjectConfig:
+    """Load and validate a config file.
 
     ``extends: ../base.yaml`` is resolved recursively relative to each file,
     with the child mapping taking precedence.
@@ -642,73 +476,4 @@ def load_config(
         data = _read_config_chain(Path(path))
 
     config = _construct(ProjectConfig, data, "config")
-    if overrides:
-        apply_overrides(config, overrides)
-    return config.validate()
-
-
-def apply_overrides(config: ProjectConfig, overrides: Iterable[str]) -> ProjectConfig:
-    for item in overrides:
-        if "=" not in item:
-            raise ConfigError(f"override {item!r} must have the form key.path=value")
-        dotted, raw = item.split("=", 1)
-        dotted = dotted.strip()
-        if not dotted:
-            raise ConfigError(f"override {item!r} has an empty key")
-        try:
-            value = yaml.safe_load(raw)
-        except Exception as exc:
-            raise ConfigError(f"cannot parse override value for {dotted}: {exc}") from exc
-        parts = dotted.split(".")
-        target: Any = config
-        for part in parts[:-1]:
-            if not hasattr(target, part):
-                raise ConfigError(f"override {dotted!r}: no field {part!r}")
-            target = getattr(target, part)
-        leaf = parts[-1]
-        if not hasattr(target, leaf):
-            raise ConfigError(f"override {dotted!r}: no field {leaf!r}")
-        current = getattr(target, leaf)
-        if isinstance(current, bool) and not isinstance(value, bool):
-            raise ConfigError(f"override {dotted!r}: expected a boolean, got {value!r}")
-        setattr(target, leaf, value)
-    return config.validate()
-
-
-def save_config(config: ProjectConfig, path: Union[str, Path]) -> None:
-    from driving.io_utils import atomic_write_text
-
-    text = yaml.safe_dump(config.to_dict(), sort_keys=False)
-    atomic_write_text(Path(path), text)
-
-
-def default_config() -> ProjectConfig:
-    return ProjectConfig().validate()
-
-
-def production_config() -> ProjectConfig:
-    """A safer profile than the research defaults.
-
-    The research defaults are preserved for reproducing published numbers.
-    The production profile enables fail-closed checks and footprint-aware
-    obstacle selection, and uses bounded router retries with explicit
-    fallback accounting.
-    """
-
-    config = default_config()
-    config.name = "event-cbf-production"
-    config.shield.lateral_mode = "footprint"
-    config.shield.lateral_margin = 0.35
-    config.shield.lookahead_s = 0.6
-    config.shield.finite_checks = True
-    config.shield.fail_closed = True
-    config.router.max_retries = 2
-    config.router.backoff_s = 0.25
-    config.router.allow_fallback = True
-    config.router.fail_on_fallback = False
-    config.stack.pending_margin = True
-    config.stack.pending_margin_on_all_calls = True
-    config.stack.shield_hold_ticks = 10
-    config.stack.abort_on_emergency = True
-    config.eval.seeds = [0, 1, 2, 3, 4]
     return config.validate()

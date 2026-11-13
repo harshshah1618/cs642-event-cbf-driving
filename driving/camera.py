@@ -28,7 +28,7 @@ from driving.router_base import (
     normalise_usage,
     validate_response,
 )
-from driving.router_http import (
+from driving.transport import (
     MAX_RESPONSE_BYTES,
     Transport,
     TransportError,

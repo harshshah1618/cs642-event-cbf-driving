@@ -16,8 +16,7 @@ import torch
 
 from driving.errors import ArtifactError, ValidationError
 from driving.io_utils import atomic_write_bytes, atomic_write_json, read_json, utc_now
-from driving.legacy_network import DEVICE, ActorCritic
-from driving.network import CleanRLAgent
+from driving.network import DEVICE, ActorCritic, CleanRLAgent
 from driving.policy import SkillMeta, SkillPolicy
 from driving.provenance import environment_info, git_info
 
@@ -34,8 +33,7 @@ _PROVENANCE_REQUIRED = (
     "state_dict_sha256",
     "agent",
 )
-# Preserve the warning channel used by existing clients.
-logger = logging.getLogger("ppo_compat")
+logger = logging.getLogger(__name__)
 
 
 def _load_torch_checkpoint(path: Path, *, map_location: Any) -> Any:
@@ -252,7 +250,7 @@ def build_checkpoint_provenance(
         "history_len": len(history_list),
         "final_return": history_list[-1] if history_list else None,
         "state_dict_sha256": fingerprint,
-        "agent": agent or caller or "ppo_compat.save_skill",
+        "agent": agent or caller or "driving.checkpoints.save_skill",
         "meta_name": meta.name,
     }
     if seed is not None:

@@ -13,7 +13,8 @@ import pytest
 from driving.config import ShieldConfig
 from driving.env_types import VehicleState, WorldSnapshot
 from driving.errors import ConfigError
-from driving.safety_exports import InflatedCBFShield, SafetyMonitor, SafetyStatus, ShieldResult
+from driving.safety import InflatedCBFShield, ShieldResult
+from driving.safety_monitor import SafetyMonitor, SafetyStatus
 
 
 def _snap(ego=None, others=None):
@@ -48,12 +49,7 @@ def _legacy_filter(
     """Literal copy of the pre-hardening filter, for regression comparison."""
 
     ax_rl, ay = float(action[0]), float(action[1])
-    lat = (
-        eta_latency
-        * (1.0 if vlm_pending else 0.0)
-        * max(snap.ego.vx, 0.0)
-        * vlm_delay_s
-    )
+    lat = eta_latency * (1.0 if vlm_pending else 0.0) * max(snap.ego.vx, 0.0) * vlm_delay_s
     sig = min(gamma_sigma * max(sigma, 0.0), 10.0)
     infl = sig + lat
     ax_cap = ax_max
@@ -139,9 +135,7 @@ def test_lane_vs_footprint_obstacle_selection():
         others=[VehicleState(x=40.0, y=2.0, vx=20.0, vy=0.0, width=2.0)],
     )
 
-    lane = InflatedCBFShield(
-        config=ShieldConfig(lateral_mode="lane", lane_half_width=1.85)
-    )
+    lane = InflatedCBFShield(config=ShieldConfig(lateral_mode="lane", lane_half_width=1.85))
     lane_result = lane.filter(_action(), snap)
     assert lane_result.obstacle_count == 0
     assert math.isinf(lane_result.h)
@@ -154,9 +148,7 @@ def test_lane_vs_footprint_obstacle_selection():
     # (2.0 + 2.0)/2 + 0.35 = 2.35 > 2.0 -> lateral overlap.
     assert footprint_result.obstacle_count == 1
     assert math.isfinite(footprint_result.h)
-    assert footprint_result.h == pytest.approx(
-        40.0 - 6.0 - 1.1 * (20.0 - 20.0)
-    )
+    assert footprint_result.h == pytest.approx(40.0 - 6.0 - 1.1 * (20.0 - 20.0))
 
 
 def test_lookahead_includes_target_lane_obstacle_during_lane_change():
@@ -166,14 +158,10 @@ def test_lookahead_includes_target_lane_obstacle_during_lane_change():
         others=[VehicleState(x=50.0, y=2.5, vx=20.0, vy=0.0)],
     )
 
-    no_lookahead = InflatedCBFShield(
-        config=ShieldConfig(lateral_mode="lane", lookahead_s=0.0)
-    )
+    no_lookahead = InflatedCBFShield(config=ShieldConfig(lateral_mode="lane", lookahead_s=0.0))
     assert no_lookahead.filter(_action(), snap).obstacle_count == 0
 
-    lookahead = InflatedCBFShield(
-        config=ShieldConfig(lateral_mode="lane", lookahead_s=0.6)
-    )
+    lookahead = InflatedCBFShield(config=ShieldConfig(lateral_mode="lane", lookahead_s=0.6))
     # Predicted y = 0 + clamp(2.0)*0.6 = 1.2; |2.5 - 1.2| = 1.3 < 1.85.
     result = lookahead.filter(_action(), snap)
     assert result.obstacle_count == 1
@@ -200,9 +188,7 @@ def test_invalid_action_shape_fails_closed():
     shield = InflatedCBFShield()
     snap = _snap(others=[VehicleState(x=50.0, y=0.0, vx=10.0)])
     _assert_fail_closed(shield.filter(np.array([1.0]), snap), "invalid_action")
-    _assert_fail_closed(
-        shield.filter(np.array([[1.0, 0.0]]), snap), "invalid_action"
-    )
+    _assert_fail_closed(shield.filter(np.array([[1.0, 0.0]]), snap), "invalid_action")
 
 
 def test_nan_sigma_fails_closed():
@@ -226,9 +212,7 @@ def test_nan_ego_fails_closed():
 
 def test_nan_obstacle_fails_closed():
     shield = InflatedCBFShield()
-    snap = _snap(
-        others=[VehicleState(x=50.0, y=0.0, vx=float("nan"), vy=0.0)]
-    )
+    snap = _snap(others=[VehicleState(x=50.0, y=0.0, vx=float("nan"), vy=0.0)])
     result = shield.filter(_action(), snap)
     _assert_fail_closed(result, "invalid_obstacle")
 
@@ -266,15 +250,9 @@ def test_min_gap_marks_uncovered_barrier_violation_unsafe():
 
 
 def test_pending_margin_false_removes_latency_term():
-    pending = InflatedCBFShield(
-        config=ShieldConfig(pending_margin=True, sigma_cap=10.0)
-    )
-    no_margin = InflatedCBFShield(
-        config=ShieldConfig(pending_margin=False, sigma_cap=10.0)
-    )
-    assert pending.inflation(0.0, True, 20.0) == pytest.approx(
-        1.0 * 20.0 * 0.30
-    )
+    pending = InflatedCBFShield(config=ShieldConfig(pending_margin=True, sigma_cap=10.0))
+    no_margin = InflatedCBFShield(config=ShieldConfig(pending_margin=False, sigma_cap=10.0))
+    assert pending.inflation(0.0, True, 20.0) == pytest.approx(1.0 * 20.0 * 0.30)
     assert no_margin.inflation(0.0, True, 20.0) == pytest.approx(0.0)
 
     snap = _snap(others=[VehicleState(x=50.0, y=0.0, vx=20.0)])
@@ -393,9 +371,7 @@ def test_monitor_does_not_latch_on_valid_infeasibility_by_default():
 
 
 def test_monitor_opt_in_violation_latch_and_reset():
-    monitor = SafetyMonitor(
-        violation_threshold=3, max_invalid_ticks=10, latch_on_violation=True
-    )
+    monitor = SafetyMonitor(violation_threshold=3, max_invalid_ticks=10, latch_on_violation=True)
     safe = _safe_result()
     unsafe = _unsafe_result()
 

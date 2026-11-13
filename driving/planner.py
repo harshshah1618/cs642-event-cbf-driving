@@ -1,21 +1,18 @@
 """Scripted interrupt router: deterministic lane-threat rule.
 
-This backend is the always-available safety net.  It shares the router
-contract with the LLM backends but never performs I/O and never mutates the
-snapshot it is given.
+This reference shares the camera router contract, performs no I/O, and leaves
+its input snapshot unchanged.
 """
-
-from __future__ import annotations
 
 import math
 import random
 import time
 
 from driving.config import SKILL_NAMES
-from driving.env_lane import LANE_Y
+from driving.env_types import LANE_Y
 from driving.errors import RouterError
+from driving.io_utils import stable_hash
 from driving.router_base import RouterBackend, RouterRequest, RouterResponse, validate_response
-from driving.router_prompt import prompt_hash
 
 
 class ScriptedRouter(RouterBackend):
@@ -116,9 +113,18 @@ class ScriptedRouter(RouterBackend):
 
         wall = time.perf_counter() - started
         raw = f"scripted:{req.current_skill}->{skill} reason={req.reason}"
-        delay = max(0.0, self.latency_s + self._rng.uniform(-self.latency_jitter_s, self.latency_jitter_s)) if self.latency_jitter_s else self.latency_s
+        delay = (
+            max(
+                0.0,
+                self.latency_s + self._rng.uniform(-self.latency_jitter_s, self.latency_jitter_s),
+            )
+            if self.latency_jitter_s
+            else self.latency_s
+        )
         if self.latency_schedule_s:
-            delay = self.latency_schedule_s[min(self._delay_index, len(self.latency_schedule_s)-1)]
+            delay = self.latency_schedule_s[
+                min(self._delay_index, len(self.latency_schedule_s) - 1)
+            ]
             self._delay_index += 1
         resp = RouterResponse(
             skill=skill,
@@ -131,7 +137,7 @@ class ScriptedRouter(RouterBackend):
             wall_latency_s=wall,
             fallback_used=False,
             error=None,
-            prompt_hash=prompt_hash(raw),
+            prompt_hash=stable_hash(raw),
             live=False,
             model="scripted",
             usage={},
@@ -154,4 +160,27 @@ class ScriptedRouter(RouterBackend):
         self._delay_index = 0
 
 
-__all__ = ["ScriptedRouter"]
+__all__ = ["ScriptedRouter", "create_router"]
+
+
+def create_router(config, **overrides):
+    """The maintained choices: a controlled rule or the actual camera router."""
+    from driving.errors import ConfigError
+
+    config.validate()
+    allow_live = overrides.pop("allow_live", False) or config.allow_live
+    if config.backend == "scripted":
+        return ScriptedRouter(
+            latency_s=config.latency_s,
+            latency_jitter_s=config.latency_jitter_s,
+            latency_schedule_s=config.latency_schedule_s,
+            seed=config.seed,
+            **overrides,
+        )
+    if not allow_live:
+        raise ConfigError(
+            "Camera inference is live but live calls are disabled; set allow_live=true"
+        )
+    from driving.camera import VLMRouter
+
+    return VLMRouter(config, **overrides)

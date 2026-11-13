@@ -22,7 +22,7 @@ from driving import DT
 from driving.config import ScenarioConfig, load_config
 from driving.controller import DrivingStack
 from driving.env_registry import make_env
-from driving.evaluation_runner import load_skill_bank
+from driving.evaluation import load_skill_bank
 from driving.maneuver_reserve import ManeuverReserveShield
 from driving.planner import ScriptedRouter
 

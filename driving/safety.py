@@ -33,9 +33,8 @@ import numpy as np
 from driving.config import ShieldConfig
 from driving.env_types import WorldSnapshot
 from driving.errors import SafetyError
-from driving.logging_utils import get_logger, log_event
 
-logger = get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 # Predicted lateral motion is linear in vy; clamp the estimate so a noisy
 # velocity cannot sweep the predicted interval across the entire road.
@@ -217,7 +216,9 @@ class InflatedCBFShield:
                 return self._invalid("invalid_skill_intent")
         result = self._longitudinal_filter(action, snap, sigma, vlm_pending)
         result.cbf_overridden = bool(
-            self.enabled and self.cbf_constraint_enabled and result.overridden
+            self.enabled
+            and self.cbf_constraint_enabled
+            and result.overridden
             and not result.emergency
         )
         if self.enabled and self.braking_guard and not result.emergency:
@@ -227,28 +228,34 @@ class InflatedCBFShield:
         try:
             bounds = np.asarray(snap.info["road_bounds"], dtype=float)
             heading = float(snap.info["heading"])
-            if bounds.shape != (2,) or not np.all(np.isfinite(bounds)) or not math.isfinite(heading):
+            if (
+                bounds.shape != (2,)
+                or not np.all(np.isfinite(bounds))
+                or not math.isfinite(heading)
+            ):
                 return self._invalid("invalid_road_bounds")
             ego = snap.ego
-            extent = 0.5 * (ego.width * abs(math.cos(heading))
-                            + ego.length * abs(math.sin(heading))) + self.boundary_margin
+            extent = (
+                0.5 * (ego.width * abs(math.cos(heading)) + ego.length * abs(math.sin(heading)))
+                + self.boundary_margin
+            )
             lower, upper = float(bounds[0]) + extent, float(bounds[1]) - extent
             if lower >= upper:
                 return self._invalid("invalid_road_bounds")
             k = self.boundary_gain
             # Relative-degree-two boundary conditions: h''+2*k*h'+k²*h >= 0.
-            lo = -2 * k * ego.vy - k*k*(ego.y-lower)
-            hi = -2 * k * ego.vy + k*k*(upper-ego.y)
+            lo = -2 * k * ego.vy - k * k * (ego.y - lower)
+            hi = -2 * k * ego.vy + k * k * (upper - ego.y)
             feasible = lo <= hi and lo <= 5.0 and hi >= -5.0
             old_ay = float(result.action[1])
             if feasible:
                 ay = float(np.clip(old_ay, max(-5.0, lo), min(5.0, hi)))
             else:
-                ay = 5.0 if ego.y < (lower+upper)/2 else -5.0
-            result.lateral_h = min(ego.y-lower, upper-ego.y)
-            result.lateral_overridden = abs(ay-old_ay) > _OVERRIDE_EPS
+                ay = 5.0 if ego.y < (lower + upper) / 2 else -5.0
+            result.lateral_h = min(ego.y - lower, upper - ego.y)
+            result.lateral_overridden = abs(ay - old_ay) > _OVERRIDE_EPS
             result.action[1] = ay
-            result.residual = math.hypot(result.residual, ay-old_ay)
+            result.residual = math.hypot(result.residual, ay - old_ay)
             result.overridden = result.overridden or result.lateral_overridden
             result.feasible = result.feasible and feasible
             result.safe = result.safe and feasible and result.lateral_h >= 0
@@ -271,8 +278,11 @@ class InflatedCBFShield:
         from driving import DT
 
         ego = snap.ego
-        if any(not self._is_finite(getattr(v, field, None)) or getattr(v, field) <= 0
-               for v in [ego, *snap.others] for field in ("length", "width")):
+        if any(
+            not self._is_finite(getattr(v, field, None)) or getattr(v, field) <= 0
+            for v in [ego, *snap.others]
+            for field in ("length", "width")
+        ):
             return self._invalid("invalid_braking_footprint")
         b = self.braking_decel
         interval = self._snapshot_lateral_interval(snap)
@@ -287,18 +297,24 @@ class InflatedCBFShield:
             ve, vo = max(ego.vx, 0.0), max(obs.vx, 0.0)
 
             def barrier(distance, ev, ov):
-                return distance - max(0.0, (ev*ev - ov*ov)/(2*b)) - self.braking_response_s*ev
+                return (
+                    distance
+                    - max(0.0, (ev * ev - ov * ov) / (2 * b))
+                    - self.braking_response_s * ev
+                )
 
             h = barrier(gap, ve, vo)
             minimum = min(minimum, h)
-            target = (1.0 - self.class_k*DT)*h
-            obstacle_dt = min(DT, vo/b)
-            obstacle_dx = vo*obstacle_dt - 0.5*b*obstacle_dt**2
+            target = (1.0 - self.class_k * DT) * h
+            obstacle_dt = min(DT, vo / b)
+            obstacle_dx = vo * obstacle_dt - 0.5 * b * obstacle_dt**2
 
             def allowed(ax, ve=ve, vo=vo, gap=gap, obstacle_dx=obstacle_dx, target=target):
-                ego_dt = min(DT, ve/abs(ax)) if ax < 0 else DT
-                ego_dx = ve*ego_dt + 0.5*ax*ego_dt**2
-                next_h = barrier(gap + obstacle_dx - ego_dx, max(0.0, ve+ax*DT), max(0.0, vo-b*DT))
+                ego_dt = min(DT, ve / abs(ax)) if ax < 0 else DT
+                ego_dx = ve * ego_dt + 0.5 * ax * ego_dt**2
+                next_h = barrier(
+                    gap + obstacle_dx - ego_dx, max(0.0, ve + ax * DT), max(0.0, vo - b * DT)
+                )
                 return next_h >= target - 1e-9
 
             if not allowed(self.ax_min):
@@ -307,7 +323,7 @@ class InflatedCBFShield:
             elif not allowed(self.ax_max):
                 low, high = self.ax_min, self.ax_max
                 for _ in range(24):
-                    middle = 0.5*(low+high)
+                    middle = 0.5 * (low + high)
                     if allowed(middle):
                         low = middle
                     else:
@@ -317,8 +333,10 @@ class InflatedCBFShield:
             old_ax = float(result.action[0])
             result.action[0] = min(old_ax, cap)
             result.braking_overridden = old_ax - float(result.action[0]) > _OVERRIDE_EPS
-            result.residual = math.hypot(result.residual, old_ax-float(result.action[0]))
-            result.overridden = result.overridden or old_ax-float(result.action[0]) > _OVERRIDE_EPS
+            result.residual = math.hypot(result.residual, old_ax - float(result.action[0]))
+            result.overridden = (
+                result.overridden or old_ax - float(result.action[0]) > _OVERRIDE_EPS
+            )
             result.braking_h = minimum
             result.braking_feasible = feasible
             result.feasible = result.feasible and feasible
@@ -337,13 +355,18 @@ class InflatedCBFShield:
                 raise SafetyError("non-finite skill intent")
             half_width = snap.ego.width / 2 + self.lateral_margin
             if interval is None:
-                interval = (snap.ego.y-half_width, snap.ego.y+half_width)
-            interval = (min(interval[0], float(target)-half_width),
-                        max(interval[1], float(target)+half_width))
+                interval = (snap.ego.y - half_width, snap.ego.y + half_width)
+            interval = (
+                min(interval[0], float(target) - half_width),
+                max(interval[1], float(target) + half_width),
+            )
         return interval
 
     def _longitudinal_filter(
-        self, action: np.ndarray, snap: WorldSnapshot, sigma: float = 0.0,
+        self,
+        action: np.ndarray,
+        snap: WorldSnapshot,
+        sigma: float = 0.0,
         vlm_pending: bool = False,
     ) -> ShieldResult:
         """Apply the CBF and return a fail-closed, observable result."""
@@ -396,7 +419,8 @@ class InflatedCBFShield:
 
         infl = (
             self.inflation(sigma_value, bool(vlm_pending), float(ego.vx))
-            if self.cbf_constraint_enabled else 0.0
+            if self.cbf_constraint_enabled
+            else 0.0
         )
 
         # --- Obstacles: validate before lateral filtering so a non-finite
@@ -447,9 +471,7 @@ class InflatedCBFShield:
 
             # hdot = (v_obs - vx) - headway*ax (zero obstacle acceleration)
             # Require hdot + class_k*h >= 0, solve for the ax upper bound.
-            ax_safe = (
-                (float(obs.vx) - float(ego.vx)) + self.class_k * h
-            ) / self.headway_s
+            ax_safe = ((float(obs.vx) - float(ego.vx)) + self.class_k * h) / self.headway_s
             ax_cap = min(ax_cap, ax_safe)
 
         if not self.cbf_constraint_enabled:
@@ -460,8 +482,8 @@ class InflatedCBFShield:
             ax = float(np.clip(ax_rl, self.ax_min, self.ax_max))
             return ShieldResult(
                 action=np.array([ax, ay], dtype=np.float32),
-                residual=max(0.0, ax_rl-ax),
-                overridden=abs(ax-ax_rl) > _OVERRIDE_EPS,
+                residual=max(0.0, ax_rl - ax),
+                overridden=abs(ax - ax_rl) > _OVERRIDE_EPS,
                 inflation=0.0,
                 h=float(h_min),
                 reason="cbf_disabled",
@@ -506,14 +528,7 @@ class InflatedCBFShield:
             reason = "infeasible"
             # Expected for aggressive baselines that saturate at ax_min; keep
             # this at debug level so a long episode does not spam the console.
-            log_event(
-                logger,
-                "shield.infeasible",
-                logging.DEBUG,
-                h=h_min,
-                ax_cap=ax_cap,
-                ax_min=self.ax_min,
-            )
+            logger.debug("shield.infeasible h=%s ax_cap=%s ax_min=%s", h_min, ax_cap, self.ax_min)
         elif h_min < -_H_EPS:
             safe = False
             reason = "barrier_violated"
@@ -568,9 +583,7 @@ class InflatedCBFShield:
         y1 = y0 + vy * self.lookahead_s
         return (min(y0, y1), max(y0, y1))
 
-    def _laterally_relevant(
-        self, ego: Any, obs: Any, ego_interval: Tuple[float, float]
-    ) -> bool:
+    def _laterally_relevant(self, ego: Any, obs: Any, ego_interval: Tuple[float, float]) -> bool:
         """Lane-corridor (legacy) or footprint-aware lateral overlap test."""
 
         low, high = ego_interval
@@ -581,9 +594,7 @@ class InflatedCBFShield:
             distance = min(abs(oy - low), abs(oy - high))
 
         if self.lateral_mode == "footprint":
-            threshold = (
-                0.5 * (float(ego.width) + float(obs.width)) + self.lateral_margin
-            )
+            threshold = 0.5 * (float(ego.width) + float(obs.width)) + self.lateral_margin
         else:
             threshold = self.lane_half_width
         return distance < threshold
@@ -597,7 +608,7 @@ class InflatedCBFShield:
     def _invalid(self, reason: str, obstacle_count: int = 0) -> ShieldResult:
         if not self.fail_closed:
             raise SafetyError(f"shield failed validation: {reason}")
-        log_event(logger, "shield.fail_closed", logging.WARNING, reason=reason)
+        logger.warning("shield.fail_closed reason=%s", reason)
         return ShieldResult(
             action=self._emergency_action(),
             residual=0.0,

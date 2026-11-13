@@ -8,29 +8,12 @@ from typing import Any, List
 import numpy as np
 import pytest
 from driving.config import SCENARIO_NAMES, ScenarioConfig
-from driving.env_lane import LANE_Y
-from driving.environments import (
-    AX_HIGH,
-    AY_LOW,
-    CarlaAdapterStub,
-    DenseHighwayEnv,
-    DrivingEnv,
-    HighwayEnvAdapter,
-    MockCarlaAdapter,
-    SkillLaneEnv,
-    TwoTrapGauntletEnv,
-    VehicleState,
-    WorldSnapshot,
-    accel_to_highway_action,
-    list_scenarios,
-    make_env,
-    scenario_defaults,
-    validate_action,
-    validate_snapshot,
-    validate_vehicle,
-)
+from driving.env_base import DrivingEnv, validate_action, validate_snapshot, validate_vehicle
+from driving.env_dense import DenseHighwayEnv
+from driving.env_registry import list_scenarios, make_env, scenario_defaults
+from driving.env_two_trap import TwoTrapGauntletEnv
+from driving.env_types import LANE_Y, VehicleState, WorldSnapshot
 from driving.errors import ConfigError, ValidationError
-from gymnasium import spaces
 
 
 def _factory(name: str):
@@ -41,7 +24,6 @@ ENV_FACTORIES = [
     pytest.param(_factory("two_trap"), id="two_trap"),
     pytest.param(_factory("merge"), id="merge"),
     pytest.param(_factory("dense_highway"), id="dense_highway"),
-    pytest.param(lambda: SkillLaneEnv(randomize=False), id="skill_lane"),
 ]
 
 
@@ -246,9 +228,7 @@ def test_default_merge_and_dense_are_unchanged():
     assert info["params"]["lead_speed"] == pytest.approx(12.0)
     assert [o.x for o in snap.others] == pytest.approx([55.0, 40.0, 70.0, 30.0])
     assert [o.vx for o in snap.others] == pytest.approx([12.0, 18.0, 17.0, 14.0])
-    assert [o.y for o in snap.others] == pytest.approx(
-        [LANE_Y[0], LANE_Y[1], LANE_Y[1], -3.5]
-    )
+    assert [o.y for o in snap.others] == pytest.approx([LANE_Y[0], LANE_Y[1], LANE_Y[1], -3.5])
 
     dense = make_env("dense_highway")
     _, info = dense.reset(seed=0)
@@ -314,15 +294,6 @@ def test_crash_termination_and_route_metrics():
         assert info["route_pct"] == pytest.approx(100.0)
         assert reward == pytest.approx(1.0)
 
-    skill = SkillLaneEnv(episode_seconds=0.06, randomize=False)
-    skill.reset(seed=0)
-    truncated = False
-    for _ in range(3):
-        _, _, terminated, truncated, info = skill.step(np.array([0.0, 0.0]))
-        assert terminated is False
-    assert truncated is True
-    assert math.isfinite(info["route_pct"])
-
 
 def test_dense_n_vehicles_is_explicit_and_capped_with_warning():
     with pytest.warns(UserWarning, match="capping"):
@@ -342,134 +313,3 @@ def test_dense_n_vehicles_is_explicit_and_capped_with_warning():
     assert empty.snapshot().others == []
     with pytest.raises(ValidationError):
         DenseHighwayEnv(n_vehicles=-1)
-
-
-def test_skill_lane_uses_constructor_target_speed():
-    env = SkillLaneEnv(target_lane=1, target_speed=15.0, randomize=False)
-    _, info = env.reset(seed=0)
-    assert env.snapshot().ego.y == pytest.approx(LANE_Y[1])
-    assert env.snapshot().ego.vx == pytest.approx(15.0)
-    assert info["params"]["target_speed"] == pytest.approx(15.0)
-
-    random_env = SkillLaneEnv(target_lane=0, target_speed=15.0, randomize=True)
-    _, info = random_env.reset(seed=3)
-    assert info["params"]["target_speed"] == pytest.approx(15.0)
-    # Cruising samples are centred on the constructor target.
-    assert 7.0 <= info["params"]["vx"] <= 17.0
-    _, _, _, _, step_info = random_env.step(np.array([0.0, 0.0]))
-    assert step_info["scenario"] == "skill_lane"
-    assert "snapshot" in step_info
-
-
-def test_highway_scaling_uses_asymmetric_bounds_and_mapping_order():
-    high = accel_to_highway_action(AX_HIGH, AY_LOW)
-    assert high == pytest.approx([1.0, -1.0])
-    low = accel_to_highway_action(-6.0, 5.0)
-    assert low == pytest.approx([-1.0, 1.0])
-    zero = accel_to_highway_action(0.0, 0.0)
-    assert zero == pytest.approx([0.0, 0.0])
-    # Positive ax reaches full scale at AX_HIGH, not at the old symmetric 6.0.
-    assert accel_to_highway_action(AX_HIGH, 0.0)[0] == pytest.approx(1.0)
-    assert accel_to_highway_action(AX_HIGH / 2.0, 0.0)[0] == pytest.approx(0.5)
-    assert accel_to_highway_action(-3.0, 0.0)[0] == pytest.approx(-0.5)
-
-
-class _FakeVehicle:
-    LENGTH = 5.0
-    WIDTH = 2.0
-
-    def __init__(self, x, y, speed, lane):
-        self.position = np.array([x, y], dtype=float)
-        self.speed = float(speed)
-        self.heading = 0.0
-        self.lane_index = ("a", "b", lane)
-
-
-class _FakeRoad:
-    def __init__(self, vehicles):
-        self.vehicles = vehicles
-
-
-class _FakeHighwayEnv:
-    def __init__(self):
-        self.ego = _FakeVehicle(10.0, 0.0, 20.0, 0)
-        self.other = _FakeVehicle(40.0, 4.0, 15.0, 1)
-        self.road = _FakeRoad([self.ego, self.other])
-        self.unwrapped = self
-        self.vehicle = self.ego
-        self.time = 0.0
-        self.last_action = None
-        self.action_space = spaces.Box(-1.0, 1.0, shape=(2,), dtype=np.float32)
-        self.observation_space = spaces.Box(-np.inf, np.inf, shape=(3,), dtype=np.float32)
-        self.closed = False
-
-    def reset(self, *, seed=None, options=None):
-        self.time = 0.0
-        return np.zeros(3, dtype=np.float32), {"crashed": False}
-
-    def step(self, action):
-        self.last_action = np.asarray(action, dtype=np.float32).copy()
-        self.time += 0.02
-        self.ego.position = self.ego.position + np.array([0.4, 0.0])
-        return np.zeros(3, dtype=np.float32), 1.0, False, False, {"crashed": False}
-
-    def close(self):
-        self.closed = True
-
-
-def test_highway_adapter_contract_and_snapshot_from_road():
-    native = _FakeHighwayEnv()
-    cfg = ScenarioConfig(name="merge", route_length=123.0, duration=10.0)
-    adapter = HighwayEnvAdapter(native, cfg)
-    assert isinstance(adapter, DrivingEnv)
-    assert adapter.route_length == pytest.approx(123.0)
-
-    obs, info = adapter.reset(seed=0)
-    assert obs.shape == (3,)
-    for key in ("scenario", "params", "snapshot", "crashed", "route_pct"):
-        assert key in info
-    snap = adapter.snapshot()
-    assert snap.ego.x == pytest.approx(10.0)
-    assert len(snap.others) == 1
-    assert snap.others[0].x == pytest.approx(40.0)
-    assert snap.others[0].y == pytest.approx(4.0)
-    assert snap.route_length == pytest.approx(123.0)
-
-    out = adapter.step(np.array([AX_HIGH, AY_LOW], dtype=np.float32))
-    assert len(out) == 5
-    assert native.last_action == pytest.approx([1.0, -1.0])
-    obs2, reward, terminated, truncated, info2 = out
-    assert info2["snapshot"].ego.x == pytest.approx(10.4)
-    assert info2["scenario"] == "merge"
-    assert info2["crashed"] is False
-    adapter.close()
-    assert native.closed is True
-
-
-def test_mock_carla_adapter_round_trip_and_real_stub_does_not_fake_carla():
-    assert CarlaAdapterStub.IS_REAL_CARLA is False
-    assert CarlaAdapterStub.REQUIRES_SERVER is True
-    assert CarlaAdapterStub.REQUIRES_CARLA_PYTHON_API is True
-    assert MockCarlaAdapter.IS_REAL_CARLA is False
-    assert MockCarlaAdapter.IS_MOCK is True
-    assert MockCarlaAdapter.REQUIRES_SERVER is False
-
-    stub = CarlaAdapterStub()
-    with pytest.raises(NotImplementedError, match="connect"):
-        stub.reset(seed=0)
-    with pytest.raises(NotImplementedError, match="connect"):
-        stub.step(np.array([0.0, 0.0]))
-
-    native = make_env("two_trap")
-    mock = MockCarlaAdapter(native)
-    obs, info = mock.reset(seed=0)
-    assert info["scenario"] == "two_trap"
-    assert isinstance(info["snapshot"], WorldSnapshot)
-    out = mock.step(np.array([0.0, 0.0], dtype=np.float32))
-    assert len(out) == 5
-    assert validate_snapshot(mock.snapshot()) is not None
-    # Snapshot detachment still holds through the adapter.
-    snap = mock.snapshot()
-    snap.ego.x = 1e9
-    assert mock.snapshot().ego.x != pytest.approx(1e9)
-    mock.close()

@@ -169,3 +169,7 @@ def integrate_point_mass(
         lane_id=state.lane_id,
         speed_limit=state.speed_limit,
     )
+
+
+LANE_Y = {0: 0.0, 1: 4.0}
+TARGET_SPEED = 20.0

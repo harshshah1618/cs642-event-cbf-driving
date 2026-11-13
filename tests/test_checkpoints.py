@@ -12,18 +12,18 @@ from dataclasses import asdict
 
 import pytest
 import torch
-from driving.errors import ArtifactError, ValidationError
-from driving.io_utils import read_json, strict_json_dumps
-from driving.model_loader import load_skill_bank, validate_checkpoint_dir
-from driving.ppo_compat import (
-    ActorCritic,
-    SkillMeta,
+from driving.checkpoints import (
     _load_torch_checkpoint,
     inspect_checkpoint,
     load_skill,
     save_skill,
     state_dict_fingerprint,
 )
+from driving.errors import ArtifactError, ValidationError
+from driving.io_utils import read_json, strict_json_dumps
+from driving.model_loader import load_skill_bank, validate_checkpoint_dir
+from driving.network import ActorCritic
+from driving.policy import SkillMeta
 
 
 def _meta(name: str = "CRUISE_RIGHT", lane: int = 0, y_target: float = 0.0) -> SkillMeta:
@@ -84,7 +84,7 @@ def test_checkpoint_loader_prefers_restricted_deserialization(monkeypatch, tmp_p
         calls.append(weights_only)
         return {"state_dict": {}}
 
-    monkeypatch.setattr("driving.ppo_compat.torch.load", fake_load)
+    monkeypatch.setattr("driving.checkpoints.torch.load", fake_load)
 
     payload = _load_torch_checkpoint(tmp_path / "safe.pt", map_location="cpu")
 
@@ -101,7 +101,7 @@ def test_checkpoint_loader_warns_before_legacy_fallback(monkeypatch, caplog, tmp
             raise RuntimeError("unsupported global")
         return {"state_dict": {}}
 
-    monkeypatch.setattr("driving.ppo_compat.torch.load", fake_load)
+    monkeypatch.setattr("driving.checkpoints.torch.load", fake_load)
 
     with caplog.at_level(logging.WARNING):
         payload = _load_torch_checkpoint(tmp_path / "legacy.pt", map_location="cpu")
@@ -157,7 +157,7 @@ def test_legacy_checkpoint_warns_non_strict_and_fails_strict(tmp_path, caplog):
     path = tmp_path / "CRUISE_RIGHT.pt"
     _write_legacy(path, _net(seed=0), _meta())
 
-    with caplog.at_level(logging.WARNING, logger="ppo_compat"):
+    with caplog.at_level(logging.WARNING, logger="driving.checkpoints"):
         policy = load_skill(path)
     assert policy.checkpoint_info["legacy"] is True
     assert any("legacy checkpoint" in record.getMessage() for record in caplog.records)
@@ -236,9 +236,10 @@ def test_load_skill_bank_prefers_real_return_right(tmp_path):
 
     assert "alias_of" not in bank["RETURN_RIGHT"].checkpoint_info
     assert bank["RETURN_RIGHT"].checkpoint_info["fingerprint"] == return_info["fingerprint"]
-    assert bank["RETURN_RIGHT"].checkpoint_info["fingerprint"] != bank[
-        "CRUISE_RIGHT"
-    ].checkpoint_info["fingerprint"]
+    assert (
+        bank["RETURN_RIGHT"].checkpoint_info["fingerprint"]
+        != bank["CRUISE_RIGHT"].checkpoint_info["fingerprint"]
+    )
     assert bank.metadata["aliases"] == {}
 
 

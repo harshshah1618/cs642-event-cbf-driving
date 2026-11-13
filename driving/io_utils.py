@@ -10,14 +10,12 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
-import re
-import secrets
 import tempfile
-from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Iterable, Mapping, Optional, Union
+from typing import Any, Mapping, Optional, Union
 
 from driving.errors import ArtifactError
 
@@ -97,7 +95,9 @@ def atomic_write_text(path: PathLike, text: str, *, encoding: str = "utf-8") -> 
 def atomic_write_bytes(path: PathLike, data: bytes) -> Path:
     target = Path(path)
     target.parent.mkdir(parents=True, exist_ok=True)
-    fd, tmp_name = tempfile.mkstemp(prefix=f".{target.name}.", suffix=".tmp", dir=str(target.parent))
+    fd, tmp_name = tempfile.mkstemp(
+        prefix=f".{target.name}.", suffix=".tmp", dir=str(target.parent)
+    )
     try:
         with os.fdopen(fd, "wb") as handle:
             handle.write(data)
@@ -119,7 +119,9 @@ def atomic_write_json(
     indent: Optional[int] = 2,
     sort_keys: bool = True,
 ) -> Path:
-    return atomic_write_text(path, strict_json_dumps(obj, indent=indent, sort_keys=sort_keys) + "\n")
+    return atomic_write_text(
+        path, strict_json_dumps(obj, indent=indent, sort_keys=sort_keys) + "\n"
+    )
 
 
 def read_json(path: PathLike) -> Any:
@@ -132,46 +134,6 @@ def read_json(path: PathLike) -> Any:
         raise ArtifactError(f"invalid JSON in {target}: {exc}") from exc
 
 
-def append_jsonl(path: PathLike, records: Iterable[Mapping[str, Any]]) -> Path:
-    target = Path(path)
-    target.parent.mkdir(parents=True, exist_ok=True)
-    try:
-        with target.open("a", encoding="utf-8") as handle:
-            for record in records:
-                handle.write(strict_json_dumps(record, indent=None) + "\n")
-    except OSError as exc:
-        raise ArtifactError(f"cannot append {target}: {exc}") from exc
-    return target
-
-
-def read_jsonl(path: PathLike) -> list[Dict[str, Any]]:
-    target = Path(path)
-    try:
-        lines = target.read_text(encoding="utf-8").splitlines()
-    except OSError as exc:
-        raise ArtifactError(f"cannot read {target}: {exc}") from exc
-    out: list[Dict[str, Any]] = []
-    for i, line in enumerate(lines, start=1):
-        if not line.strip():
-            continue
-        try:
-            value = strict_json_loads(line)
-        except ValueError as exc:
-            raise ArtifactError(f"invalid JSONL in {target}:{i}: {exc}") from exc
-        if not isinstance(value, dict):
-            raise ArtifactError(f"{target}:{i}: expected an object")
-        out.append(value)
-    return out
-
-
-def sha256_file(path: PathLike) -> str:
-    digest = hashlib.sha256()
-    with Path(path).open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
@@ -182,72 +144,24 @@ def stable_hash(obj: Any) -> str:
     return sha256_bytes(strict_json_dumps(obj, indent=None, sort_keys=True).encode("utf-8"))
 
 
-def slugify(value: str) -> str:
-    slug = re.sub(r"[^a-zA-Z0-9_.-]+", "-", value.strip()).strip("-")
-    return slug or "run"
+def json_safe(value: Any) -> Any:
+    """Recursively convert a value to something ``strict_json_dumps`` accepts."""
 
-
-def new_run_id(prefix: str = "run") -> str:
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    return f"{slugify(prefix)}-{stamp}-{secrets.token_hex(3)}"
-
-
-@dataclass
-class RunDirectory:
-    """A self-contained artifact directory for one experiment.
-
-    Layout::
-
-        <root>/<run_id>/
-            manifest.json
-            results.json
-            report.md
-            logs/run.log
-            figures/
-            episodes/
-    """
-
-    root: Path
-    run_id: str
-
-    @classmethod
-    def create(cls, root: PathLike = "runs", run_id: Optional[str] = None) -> "RunDirectory":
-        run_id = run_id or new_run_id()
-        base = Path(root) / run_id
-        try:
-            for sub in ("logs", "figures", "episodes"):
-                (base / sub).mkdir(parents=True, exist_ok=True)
-        except OSError as exc:
-            raise ArtifactError(f"cannot create run directory {base}: {exc}") from exc
-        return cls(root=base, run_id=run_id)
-
-    @property
-    def manifest_path(self) -> Path:
-        return self.root / "manifest.json"
-
-    @property
-    def results_path(self) -> Path:
-        return self.root / "results.json"
-
-    @property
-    def report_path(self) -> Path:
-        return self.root / "report.md"
-
-    @property
-    def log_path(self) -> Path:
-        return self.root / "logs" / "run.log"
-
-    def write_manifest(self, manifest: Mapping[str, Any]) -> Path:
-        return atomic_write_json(self.manifest_path, dict(manifest))
-
-    def write_results(self, results: Mapping[str, Any]) -> Path:
-        return atomic_write_json(self.results_path, dict(results))
-
-    def write_report(self, markdown: str) -> Path:
-        return atomic_write_text(self.report_path, markdown)
-
-    def figure_path(self, name: str) -> Path:
-        return self.root / "figures" / name
-
-    def episode_path(self, name: str) -> Path:
-        return self.root / "episodes" / name
+    if value is None or isinstance(value, (str, bool)):
+        return value
+    if isinstance(value, Mapping):
+        return {str(key): json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [json_safe(item) for item in value]
+    if isinstance(value, int):
+        return int(value)
+    if isinstance(value, float):
+        return value if math.isfinite(value) else None
+    # Enums, numpy scalars, and similar objects.
+    if hasattr(value, "value") and hasattr(value, "name"):
+        return json_safe(value.value)
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return str(value)
+    return number if math.isfinite(number) else None

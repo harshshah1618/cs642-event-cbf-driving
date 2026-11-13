@@ -22,10 +22,11 @@ from driving.env_base import (
     validate_action,
     validate_lateral_bounds,
 )
-from driving.env_lane import LANE_Y, TARGET_SPEED
 from driving.env_types import (
     ACTION_HIGH,
     ACTION_LOW,
+    LANE_Y,
+    TARGET_SPEED,
     VehicleState,
     WorldSnapshot,
     collide,
@@ -40,7 +41,9 @@ def _is_scalar(value: Any) -> bool:
     return bool(np.isscalar(value))
 
 
-def _multi_ranges(value: Any, count: int, *, name: str, range_key: bool) -> List[Tuple[float, float]]:
+def _multi_ranges(
+    value: Any, count: int, *, name: str, range_key: bool
+) -> List[Tuple[float, float]]:
     """Parse shared/per-vehicle ranges for the two left-lane vehicles."""
 
     if _is_scalar(value):
@@ -62,9 +65,7 @@ def _multi_ranges(value: Any, count: int, *, name: str, range_key: bool) -> List
             normalize_range(high, name=f"{name}[1]"),
         ]
     if len(seq) == count:
-        return [
-            normalize_range(item, name=f"{name}[{i}]") for i, item in enumerate(seq)
-        ]
+        return [normalize_range(item, name=f"{name}[{i}]") for i, item in enumerate(seq)]
     raise ValidationError(
         f"{name}: expected two bounds or {count} per-vehicle ranges, got {value!r}"
     )
@@ -171,9 +172,7 @@ class MergeScenarioEnv(gym.Env):
         self._rng = np.random.default_rng(seed)
         self._seed = seed
         self._step_i = 0
-        self._ego = VehicleState(
-            x=0.0, y=LANE_Y[0], vx=self.DEFAULT_PARAMS["ego_vx"], vy=0.0
-        )
+        self._ego = VehicleState(x=0.0, y=LANE_Y[0], vx=self.DEFAULT_PARAMS["ego_vx"], vy=0.0)
         self._others: List[VehicleState] = []
         self._merger: Optional[VehicleState] = None
         self._crashed = False
@@ -186,14 +185,10 @@ class MergeScenarioEnv(gym.Env):
                 left_speeds_range if left_speeds_range is not None else left_speed_range
             ),
             "merger_gap": (
-                merger_gap_range
-                if merger_gap_range is not None
-                else merger_spawn_gap_range
+                merger_gap_range if merger_gap_range is not None else merger_spawn_gap_range
             ),
             "merger_speed": (
-                merger_speed_range
-                if merger_speed_range is not None
-                else merger_spawn_speed_range
+                merger_speed_range if merger_speed_range is not None else merger_spawn_speed_range
             ),
             "merger_vy": merger_vy_range,
             "ego_vx": ego_vx_range,
@@ -236,9 +231,7 @@ class MergeScenarioEnv(gym.Env):
             specs["merger_speed"] = normalize_range(
                 self.RANDOM_RANGES["merger_speed"], name="merger_speed"
             )
-            specs["merger_vy"] = normalize_range(
-                self.RANDOM_RANGES["merger_vy"], name="merger_vy"
-            )
+            specs["merger_vy"] = normalize_range(self.RANDOM_RANGES["merger_vy"], name="merger_vy")
             specs["ego_vx"] = normalize_range(self.RANDOM_RANGES["ego_vx"], name="ego_vx")
 
         for key, value in explicit_ranges.items():
@@ -447,11 +440,7 @@ class MergeScenarioEnv(gym.Env):
         return self._obs(), 0.0 if self._crashed else 1.0, terminated, truncated, self._step_info()
 
     def snapshot(self) -> WorldSnapshot:
-        done = (
-            self._crashed
-            or self._ego.x >= self.route_length
-            or self._step_i >= self.max_steps
-        )
+        done = self._crashed or self._ego.x >= self.route_length or self._step_i >= self.max_steps
         return detached_snapshot(
             t=self._step_i * DT,
             ego=self._ego,

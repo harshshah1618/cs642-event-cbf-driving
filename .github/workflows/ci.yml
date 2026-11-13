@@ -28,10 +28,10 @@ jobs:
           python -m metadrive.pull_asset
       - name: Real physics, replay and background-router contracts
         run: python -m pytest -q tests/test_metadrive.py tests/test_layer_interactions.py tests/test_study.py
-      - name: Randomized physical regression gate
+      - name: Randomized physical evaluation
         run: |
           python -m driving eval --profile metadrive-study \
-            --modes proposed --seeds 0 1 2 --no-figures \
+            --modes proposed --seeds 0 1 2 \
             --run-id "metadrive-ci-${GITHUB_RUN_ID}"
       - name: Upload physical evaluation artifacts
         if: always()
@@ -75,7 +75,7 @@ jobs:
         run: python -m driving verify --profile ci
 
       - name: Doctor
-        run: python -m driving doctor --json
+        run: python -m driving doctor
 
       - name: Offline CI evaluation
         run: |

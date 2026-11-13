@@ -30,8 +30,7 @@ from driving import DT
 from driving.config import ScenarioConfig
 from driving.env_registry import make_env
 from driving.errors import ArtifactError, ValidationError
-from driving.io_utils import atomic_write_json, read_json, utc_now
-from driving.metrics import json_safe
+from driving.io_utils import atomic_write_json, json_safe, read_json, utc_now
 from driving.result import RolloutResult
 
 EPISODE_SCHEMA_VERSION = 1
@@ -119,8 +118,7 @@ def validate_episode(payload: Mapping[str, Any]) -> List[str]:
         skills = []
     if not (len(xs) == len(ys) == len(skills)):
         problems.append(
-            "xs, ys, and skills must have equal length "
-            f"(got {len(xs)}, {len(ys)}, {len(skills)})"
+            f"xs, ys, and skills must have equal length (got {len(xs)}, {len(ys)}, {len(skills)})"
         )
 
     actions_present = "actions" in payload
@@ -161,8 +159,11 @@ def validate_episode(payload: Mapping[str, Any]) -> List[str]:
                 previous_t = t
             for field in ("requested_action", "shield_action", "applied_action"):
                 value = row.get(field)
-                if (not isinstance(value, (list, tuple)) or len(value) != 2
-                        or any(_number(v) is None for v in value)):
+                if (
+                    not isinstance(value, (list, tuple))
+                    or len(value) != 2
+                    or any(_number(v) is None for v in value)
+                ):
                     problems.append(f"{prefix}.{field} must be a finite two-component action")
 
     route = _number(payload.get("route_pct"))
@@ -276,9 +277,7 @@ class Episode:
                 vx = (float(x) - float(xs[index - 1])) / DT
             else:
                 vx = None
-            yield TrajectorySample(
-                index=index, t=index * DT, x=x, y=y, skill=skill, vx=vx
-            )
+            yield TrajectorySample(index=index, t=index * DT, x=x, y=y, skill=skill, vx=vx)
 
     def to_payload(self) -> Dict[str, Any]:
         payload = json_safe(self.result.to_dict())
@@ -321,9 +320,7 @@ def write_episode(
     """Atomically write ``result`` as a replayable episode document."""
 
     if not isinstance(result, RolloutResult):
-        raise ValidationError(
-            f"write_episode expected RolloutResult, got {type(result).__name__}"
-        )
+        raise ValidationError(f"write_episode expected RolloutResult, got {type(result).__name__}")
     scenario_cfg = scenario if scenario is not None else _scenario_for(result, None)
     episode = Episode(
         result=result,
@@ -435,9 +432,7 @@ def replay_open_loop(
     replayed_y = float(final.ego.y)
     error = max(abs(replayed_x - expected_x), abs(replayed_y - expected_y))
     if error > float(tolerance):
-        errors.append(
-            f"final state differs by {error:.6g} m (tolerance {float(tolerance):.6g} m)"
-        )
+        errors.append(f"final state differs by {error:.6g} m (tolerance {float(tolerance):.6g} m)")
     if crashed != bool(recorded.result.crashed):
         errors.append(
             f"crash mismatch: replayed={crashed}, recorded={bool(recorded.result.crashed)}"

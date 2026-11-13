@@ -6,7 +6,7 @@ import numpy as np
 
 from driving import DT
 from driving.env_types import AX_HIGH, AX_LOW, AY_HIGH, AY_LOW
-from driving.legacy_network import encode
+from driving.network import encode
 
 
 class EmptyRoadVec:

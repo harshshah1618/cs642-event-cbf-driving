@@ -14,6 +14,7 @@ Production changes over the research prototype:
 from __future__ import annotations
 
 import copy
+import logging
 import math
 import secrets
 import time
@@ -26,7 +27,6 @@ from driving.blend import blend_actions, sigmoid_blend_alpha
 from driving.config import StackConfig, StackMode
 from driving.env_types import WorldSnapshot
 from driving.errors import RouterError, SafetyError
-from driving.logging_utils import get_logger
 from driving.pending import FuturePendingCall, PendingCall
 from driving.policy import SkillPolicy
 from driving.result import RolloutResult, RolloutTracker
@@ -40,7 +40,7 @@ from driving.safety import InflatedCBFShield
 from driving.safety_monitor import SafetyMonitor, SafetyStatus
 from driving.scheduling import lane_opportunity, opportunity_due
 
-logger = get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 _VARIANT_MODES = {"proposed_no_margin", "proposed_no_blend"}
 

@@ -28,10 +28,11 @@ from driving.env_base import (
     validate_action,
     validate_lateral_bounds,
 )
-from driving.env_lane import LANE_Y, TARGET_SPEED
 from driving.env_types import (
     ACTION_HIGH,
     ACTION_LOW,
+    LANE_Y,
+    TARGET_SPEED,
     VehicleState,
     WorldSnapshot,
     collide,
@@ -155,14 +156,10 @@ class DenseHighwayEnv(gym.Env):
             or any(value is not None for value in explicit_jitter.values())
         )
 
-        specs = {
-            key: _jitter_bounds(value, name=key)
-            for key, value in self.DEFAULT_PARAMS.items()
-        }
+        specs = {key: _jitter_bounds(value, name=key) for key, value in self.DEFAULT_PARAMS.items()}
         if randomize:
             specs = {
-                key: _jitter_bounds(value, name=key)
-                for key, value in self.RANDOM_RANGES.items()
+                key: _jitter_bounds(value, name=key) for key, value in self.RANDOM_RANGES.items()
             }
         for key, value in explicit_jitter.items():
             if value is not None:
@@ -220,12 +217,8 @@ class DenseHighwayEnv(gym.Env):
 
     def _sample_params(self) -> Dict[str, Any]:
         slots = self._base_slots()
-        pos_offsets = [
-            sample_range(self._rng, self.param_spec["position_jitter"]) for _ in slots
-        ]
-        speed_offsets = [
-            sample_range(self._rng, self.param_spec["speed_jitter"]) for _ in slots
-        ]
+        pos_offsets = [sample_range(self._rng, self.param_spec["position_jitter"]) for _ in slots]
+        speed_offsets = [sample_range(self._rng, self.param_spec["speed_jitter"]) for _ in slots]
         positions = [max(1.0, x + dx) for (x, _, _), dx in zip(slots, pos_offsets, strict=False)]
         speeds = [max(0.0, v + dv) for (_, v, _), dv in zip(slots, speed_offsets, strict=False)]
         lanes = [lane for _, _, lane in slots]
@@ -328,11 +321,7 @@ class DenseHighwayEnv(gym.Env):
         return self._obs(), 0.0 if self._crashed else 1.0, terminated, truncated, self._step_info()
 
     def snapshot(self) -> WorldSnapshot:
-        done = (
-            self._crashed
-            or self._ego.x >= self.route_length
-            or self._step_i >= self.max_steps
-        )
+        done = self._crashed or self._ego.x >= self.route_length or self._step_i >= self.max_steps
         return detached_snapshot(
             t=self._step_i * DT,
             ego=self._ego,
@@ -345,31 +334,3 @@ class DenseHighwayEnv(gym.Env):
 
     def close(self) -> None:
         """No-op: this environment owns no external resources."""
-
-
-def make_highway_env_continuous(vehicles_count: int = 20, duration: int = 30):
-    """Optional upstream highway-env factory (ContinuousAction, 50 Hz).
-
-    This import is intentionally local so the package works without the
-    optional ``highway-env`` dependency installed.
-    """
-
-    import gymnasium as gym
-
-    env = gym.make("highway-v0", render_mode=None)
-    configure = getattr(env.unwrapped, "configure", None)
-    if not callable(configure):
-        raise ValidationError("highway-env environment does not expose configure()")
-    configure(
-        {
-            "observation": {"type": "Kinematics", "vehicles_count": 5},
-            "action": {"type": "ContinuousAction", "longitudinal": True, "lateral": True},
-            "lanes_count": 2,
-            "vehicles_count": vehicles_count,
-            "duration": duration,
-            "policy_frequency": 50,
-            "simulation_frequency": 50,
-            "initial_spacing": 2.0,
-        }
-    )
-    return env

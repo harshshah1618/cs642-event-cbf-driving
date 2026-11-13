@@ -16,8 +16,7 @@ import numpy as np
 import torch
 
 from driving.checkpoints import save_skill
-from driving.legacy_network import env_action_np
-from driving.network import CleanRLAgent
+from driving.network import CleanRLAgent, env_action_np
 from driving.policy import SkillMeta
 from driving.simulation import EmptyRoadVec
 
@@ -34,7 +33,9 @@ def train(args):
         raise ValueError("Training counts must be positive.")
     if batch_size % args.num_minibatches or batch_size // args.num_minibatches < 2:
         raise ValueError("Batch size must divide into minibatches with at least two samples.")
-    output = args.output or Path(__file__).resolve().parents[1] / f"runs/cleanrl-ppo/{args.skill}.pt"
+    output = (
+        args.output or Path(__file__).resolve().parents[1] / f"runs/cleanrl-ppo/{args.skill}.pt"
+    )
     metrics_path = output.with_suffix(".metrics.jsonl")
     if any(p.exists() for p in (output, output.with_suffix(".json"), metrics_path)):
         raise FileExistsError(f"Choose a fresh --output; files already exist for {output}.")

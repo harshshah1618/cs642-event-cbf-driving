@@ -11,7 +11,7 @@ from driving.config import ScenarioConfig, load_config
 from driving.env_base import DrivingEnv, validate_snapshot
 from driving.env_registry import make_env
 from driving.errors import ValidationError
-from driving.evaluation_runner import load_skill_bank, run_episode
+from driving.evaluation import load_skill_bank, run_episode
 from driving.io_utils import atomic_write_json
 from driving.planner import ScriptedRouter
 from driving.runtime import load_episode, replay_open_loop

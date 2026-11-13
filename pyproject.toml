@@ -13,14 +13,12 @@ dependencies = [
   "torch>=2.0",
   "gymnasium>=0.29",
   "matplotlib>=3.7",
-  "tqdm>=4.65",
   "pyyaml>=6.0",
 ]
 
 [project.optional-dependencies]
-highway = ["highway-env>=1.8"]
 metadrive = ["metadrive-simulator @ git+https://github.com/metadriverse/metadrive.git@fe54b03327b14bcfc17a9a04b60c8abbee4d7ab1"]
-local = ["transformers>=4.45,<5", "accelerate>=0.30"]
+camera = ["transformers==4.57.6", "accelerate>=0.30", "safetensors==0.8.0", "peft"]
 report = ["reportlab>=4.0"]
 dev = [
   "pytest>=7.0",
@@ -30,14 +28,6 @@ dev = [
   # Used by the camera contracts in the offline test suite.
   "transformers==4.57.6",
   "safetensors==0.8.0",
-]
-all = [
-  "highway-env>=1.8",
-  "transformers>=4.45,<5",
-  "accelerate>=0.30",
-  "pytest>=7.0",
-  "pytest-cov>=5.0",
-  "ruff>=0.6",
 ]
 
 [project.scripts]
@@ -74,7 +64,6 @@ ignore = ["E501", "B008"]
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["B011"]
 "tools/*" = ["E402"]
-"driving/train_legacy_cli.py" = ["E402"]
 
 [tool.mypy]
 cache_dir = "../cs642-driving-cache/mypy"

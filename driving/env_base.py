@@ -1,10 +1,6 @@
 """Environment contract, validation helpers, and deterministic sampling utils.
 
-Every scenario in :mod:`environments` implements the small
-:class:`DrivingEnv` protocol below.  Keeping the contract explicit makes the
-stack simulator-agnostic: the native scenarios, highway-env wrappers, and the
-CARLA integration skeleton are interchangeable from the controller's point of
-view.
+The native scenarios and MetaDrive adapter share this contract.
 
 Two invariants are enforced here:
 
@@ -35,9 +31,7 @@ class DrivingEnv(Protocol):
     ) -> Tuple[Any, Dict[str, Any]]:
         """Reset the environment and return ``(observation, info)``."""
 
-    def step(
-        self, action: np.ndarray
-    ) -> Tuple[Any, float, bool, bool, Dict[str, Any]]:
+    def step(self, action: np.ndarray) -> Tuple[Any, float, bool, bool, Dict[str, Any]]:
         """Apply ``[ax, ay]`` and return the Gymnasium five-tuple."""
 
     def snapshot(self) -> WorldSnapshot:
@@ -81,9 +75,7 @@ def validate_vehicle(state: VehicleState, *, name: str = "vehicle") -> VehicleSt
     if float(state.width) <= 0.0:
         raise ValidationError(f"{name}.width: must be > 0, got {state.width!r}")
     if float(state.speed_limit) < 0.0:
-        raise ValidationError(
-            f"{name}.speed_limit: must be >= 0, got {state.speed_limit!r}"
-        )
+        raise ValidationError(f"{name}.speed_limit: must be >= 0, got {state.speed_limit!r}")
     return state
 
 
@@ -116,13 +108,9 @@ def validate_action(
     if high is not None:
         high_arr = np.asarray(high, dtype=np.float64)
         if high_arr.shape != (2,):
-            raise ValidationError(
-                f"action high bound: expected shape (2,), got {high_arr.shape}"
-            )
+            raise ValidationError(f"action high bound: expected shape (2,), got {high_arr.shape}")
         if np.any(arr > high_arr):
-            raise ValidationError(
-                f"action: {arr.tolist()} above upper bound {high_arr.tolist()}"
-            )
+            raise ValidationError(f"action: {arr.tolist()} above upper bound {high_arr.tolist()}")
     return arr
 
 
@@ -130,17 +118,13 @@ def validate_snapshot(snapshot: WorldSnapshot) -> WorldSnapshot:
     """Validate a world snapshot and return it unchanged."""
 
     if not isinstance(snapshot, WorldSnapshot):
-        raise ValidationError(
-            f"snapshot: expected WorldSnapshot, got {type(snapshot).__name__}"
-        )
+        raise ValidationError(f"snapshot: expected WorldSnapshot, got {type(snapshot).__name__}")
     _finite(snapshot.t, "snapshot.t")
     if float(snapshot.t) < 0.0:
         raise ValidationError(f"snapshot.t: must be >= 0, got {snapshot.t!r}")
     route_length = _finite(snapshot.route_length, "snapshot.route_length")
     if route_length <= 0.0:
-        raise ValidationError(
-            f"snapshot.route_length: must be > 0, got {snapshot.route_length!r}"
-        )
+        raise ValidationError(f"snapshot.route_length: must be > 0, got {snapshot.route_length!r}")
     validate_vehicle(snapshot.ego, name="snapshot.ego")
     if not isinstance(snapshot.others, (list, tuple)):
         raise ValidationError(

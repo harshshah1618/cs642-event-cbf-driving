@@ -61,7 +61,7 @@ milestone:
 metadrive-check:
 	$(PYTHON) -m pytest -q tests/test_metadrive.py tests/test_layer_interactions.py tests/test_study.py
 	$(PYTHON) -m driving eval --profile metadrive-study \
-		--modes proposed --seeds 0 1 2 --no-figures --run-id metadrive-smoke
+		--modes proposed --seeds 0 1 2 --run-id metadrive-smoke
 
 calibrate:
 	$(PYTHON) tools/calibrate_metadrive.py

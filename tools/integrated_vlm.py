@@ -16,7 +16,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from driving.assets import asset_directory
-from driving.evaluation_runner import load_skill_bank
+from driving.evaluation import load_skill_bank
 
 from integrated_eval import (
     LOCAL_METHODS,

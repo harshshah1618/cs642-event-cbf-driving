@@ -30,10 +30,9 @@ import numpy as np
 
 from driving.config import ShieldConfig
 from driving.errors import SafetyError
-from driving.logging_utils import get_logger, log_event
 from driving.safety import ShieldResult
 
-logger = get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 
 class SafetyStatus(str, Enum):
@@ -167,21 +166,18 @@ class SafetyMonitor:
             return self.status
 
         violation_latch = (
-            self.latch_on_violation
-            and self._violation_streak >= self.violation_threshold
+            self.latch_on_violation and self._violation_streak >= self.violation_threshold
         )
         invalid_latch = self._invalid_streak >= self.max_invalid_ticks
         if violation_latch or invalid_latch:
             self.status = SafetyStatus.EMERGENCY
             self.emergency_count += 1
-            log_event(
-                logger,
-                "shield.monitor_emergency",
-                logging.WARNING,
-                reason=reason,
-                violation_streak=self._violation_streak,
-                invalid_streak=self._invalid_streak,
-                latch_on_violation=self.latch_on_violation,
+            logger.warning(
+                "shield.monitor_emergency reason=%s violation_streak=%s invalid_streak=%s latch_on_violation=%s",
+                reason,
+                self._violation_streak,
+                self._invalid_streak,
+                self.latch_on_violation,
             )
         elif unsafe:
             # Valid but infeasible/unsafe: the shield's action (ax_min) is
@@ -193,9 +189,7 @@ class SafetyMonitor:
             self.ok_count += 1
         return self.status
 
-    def safe_action(
-        self, requested_action: np.ndarray, shield_result: ShieldResult
-    ) -> np.ndarray:
+    def safe_action(self, requested_action: np.ndarray, shield_result: ShieldResult) -> np.ndarray:
         """Final gate: full emergency braking when latched, else shield action.
 
         ``requested_action`` is accepted for API symmetry/traceability; once a

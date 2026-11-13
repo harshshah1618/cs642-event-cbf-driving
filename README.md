@@ -26,8 +26,31 @@ under `models/`; supporting report tables, audits and fonts are kept together in
 6. **[driving/planner.py](driving/planner.py)** / **[driving/camera.py](driving/camera.py)** — choosing a maneuver.
 7. **[driving/controller.py](driving/controller.py)** — connecting the pieces.
 
-The `env_` and `router_` files support simulator/model backends. Legacy training
-and network files preserve the drivers used for the recorded experiments.
+The remaining `env_` files cover three native test scenarios and the MetaDrive
+physics adapter. `router_base.py` defines the request/response contract;
+`planner.py` supplies the scripted reference and `camera.py` the actual image
+router. The old saved drivers need the dual-critic architecture in `network.py`;
+new training uses the single-critic agent in the same file.
+
+## What was removed
+
+The old text-only model backends, CARLA placeholder, highway wrapper, duplicate
+practice environment, legacy trainer, compatibility imports and generic plotting/
+evaluation framework have been retired. Their feature-specific tests and profiles
+were retired with them. The maintained comparison still has its 15 methods in
+`tools/integrated_eval.py`; safety, model loading, camera contracts, replay and
+physical integration remain tested. Earlier experiments are recoverable from Git.
+
+The pruning reduced `driving/` from 60 Python files / 16,433 lines to 37 files /
+8,549 lines. Validation: 240 tests (85% coverage), model checks and replay, nine
+physical smoke episodes, and before/after physical runs of all 15 methods on one
+cut-in case (seed 8201, 1-second delay). Those 15 runs matched actions, positions,
+maneuvers and safety settings exactly; this is a cleanup check, not a new
+benchmark result.
+
+`python -m driving` now exposes just `train`, `eval`, `verify` and `doctor`.
+Evaluation writes episode recordings plus `results.json`; the full study and its
+statistics use the tools below.
 
 ## Run
 
@@ -58,5 +81,5 @@ its notice is in [driving/CLEANRL_LICENSE.txt](driving/CLEANRL_LICENSE.txt).
 
 The results do not establish that PPO or a language model is essential for the
 tested tasks, or prove real-vehicle safety. Saved weights and report contents
-were preserved during this reorganization. See [HISTORY.md](HISTORY.md) for source
+were preserved during the cleanup. See [HISTORY.md](HISTORY.md) for source
 snapshots and recovery instructions.

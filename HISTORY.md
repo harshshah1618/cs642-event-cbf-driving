@@ -3,6 +3,7 @@
 The maintained layout groups code, tests, tools, configuration, models and
 reports by purpose. Earlier layouts and experiments remain recoverable from Git.
 
+- `1ef9e0a`: grouped source before obsolete integrations and legacy training were pruned.
 - `42e26f8`: the flat layout before this grouping.
 - `4ea7285`: the previous nested package layout.
 - `0dbffe7`: source before old experiment runners and toy projects were retired.
@@ -25,7 +26,8 @@ remain together in `reports/study-evidence.zip`.
 
 Local recovery archives are kept next to this checkout under
 `../cs642-event-cbf-archive/`. The `regroup-42e26f8/` snapshot contains the source
-before this grouping. Earlier retired run folders and the complete raw release
+before this grouping. `prune-1ef9e0a/` contains the verified pre-pruning source
+snapshot and the retired code, tests and profiles. Earlier retired run folders and the complete raw release
 remain in `trim-0dbffe7/`; base model weights are external.
 
 New experiment output goes to `runs/` and is ignored by Git. Tool caches and the

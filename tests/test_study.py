@@ -8,8 +8,8 @@ from driving.assets import asset_directory
 from driving.config import RouterConfig, ScenarioConfig, ShieldConfig
 from driving.env_types import VehicleState, WorldSnapshot
 from driving.errors import ConfigError
-from driving.router_check import sample_request
-from driving.router_factory import create_router
+from driving.planner import create_router
+from driving.router_base import RouterRequest
 from driving.safety import InflatedCBFShield
 
 
@@ -164,7 +164,7 @@ def test_braking_target_lane_regression_recovers_instead_of_colliding_or_freezin
     from pathlib import Path
 
     from driving.config import load_config
-    from driving.evaluation_runner import load_skill_bank, run_episode
+    from driving.evaluation import load_skill_bank, run_episode
 
     root = Path(__file__).resolve().parents[1]
     cfg = load_config(root / "configs/metadrive-study.yaml")
@@ -193,8 +193,8 @@ def test_braking_target_lane_regression_recovers_instead_of_colliding_or_freezin
 def test_calibration_artifact_keeps_weights_fixed_and_validation_seeds_held_out():
     from pathlib import Path
 
+    from driving.checkpoints import load_skill, state_dict_fingerprint
     from driving.io_utils import read_json
-    from driving.ppo_compat import load_skill, state_dict_fingerprint
 
     root = asset_directory(Path(__file__).resolve().parents[1] / "models/native")
     physical = asset_directory(Path(__file__).resolve().parents[1] / "models/physical")
@@ -206,3 +206,26 @@ def test_calibration_artifact_keeps_weights_fixed_and_validation_seeds_held_out(
         assert state_dict_fingerprint(original.net.state_dict()) == state_dict_fingerprint(
             calibrated.net.state_dict()
         )
+
+
+def sample_request(t: float = 0.0, *, request_id: str = "router-check") -> RouterRequest:
+    """A deterministic, safety-relevant interrupt for a connectivity probe."""
+
+    snapshot = WorldSnapshot(
+        t=float(t),
+        ego=VehicleState(x=60.0, y=0.0, vx=20.0, vy=0.0),
+        others=[
+            VehicleState(x=75.0, y=0.0, vx=0.0, vy=0.0, speed_limit=0.01),
+            VehicleState(x=95.0, y=4.0, vx=24.0, vy=0.0),
+        ],
+        route_length=200.0,
+        info={"scenario": "router-check"},
+    )
+    return RouterRequest(
+        t=float(t),
+        current_skill="CRUISE_RIGHT",
+        snapshot=snapshot,
+        sigma=4.0,
+        reason="sigma",
+        request_id=request_id,
+    )

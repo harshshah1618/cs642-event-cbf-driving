@@ -11,5 +11,10 @@ stack:
   sigma_threshold_scale: 1.0
   rearm_on_skill_change: true
 eval:
-  seeds: [0, 1, 2, 3, 4]
+  seeds:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
   out_dir: runs/metadrive-study

@@ -1,5 +1,3 @@
-# Physical, straight-road evaluation; optional dependency installed separately.
-# Shared frozen PPO checkpoints are evaluated for transfer, not labelled retrained.
 extends: production.yaml
 name: event-cbf-metadrive
 shield:
@@ -10,21 +8,29 @@ stack:
   skill_switch_guard: true
 eval:
   scenarios:
-    - name: two_trap
-      simulator: metadrive
-      duration: 20.0
-      randomize: true
-    - name: merge
-      simulator: metadrive
-      duration: 20.0
-      randomize: true
-    - name: dense_highway
-      simulator: metadrive
-      duration: 20.0
-      randomize: true
-  seeds: [0, 1, 2, 3, 4]
-  modes: [static_cbf, fixed_rate_shielded, always_on_shielded, proposed, proposed_no_margin, proposed_no_blend]
-  figures: true
-  record_episodes: true
-  min_route_pct: 70.0
+  - name: two_trap
+    simulator: metadrive
+    duration: 20.0
+    randomize: true
+  - name: merge
+    simulator: metadrive
+    duration: 20.0
+    randomize: true
+  - name: dense_highway
+    simulator: metadrive
+    duration: 20.0
+    randomize: true
+  seeds:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  modes:
+  - static_cbf
+  - fixed_rate_shielded
+  - always_on_shielded
+  - proposed
+  - proposed_no_margin
+  - proposed_no_blend
   out_dir: runs/metadrive

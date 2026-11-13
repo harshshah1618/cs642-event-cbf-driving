@@ -5,11 +5,11 @@ from __future__ import annotations
 from pathlib import Path
 
 import cv2
-import driving.evaluation_runner as runner
+import driving.evaluation as runner
 import numpy as np
 from driving.config import ScenarioConfig, load_config
 from driving.env_registry import make_env as real_make_env
-from driving.evaluation_runner import run_episode
+from driving.evaluation import run_episode
 
 OUT = Path("outputs/camera-views")
 FRONT_MOUNT = ((0.0, 0.8, 1.5), (0.0, -5.0, 0.0))

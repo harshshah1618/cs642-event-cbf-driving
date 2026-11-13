@@ -22,10 +22,11 @@ from driving.env_base import (
     validate_action,
     validate_lateral_bounds,
 )
-from driving.env_lane import LANE_Y, TARGET_SPEED
 from driving.env_types import (
     ACTION_HIGH,
     ACTION_LOW,
+    LANE_Y,
+    TARGET_SPEED,
     VehicleState,
     WorldSnapshot,
     collide,
@@ -280,11 +281,7 @@ class TwoTrapGauntletEnv(gym.Env):
         return self._obs(), reward, terminated, truncated, self._step_info()
 
     def snapshot(self) -> WorldSnapshot:
-        done = (
-            self._crashed
-            or self._ego.x >= self.route_length
-            or self._step_i >= self.max_steps
-        )
+        done = self._crashed or self._ego.x >= self.route_length or self._step_i >= self.max_steps
         return detached_snapshot(
             t=self._step_i * DT,
             ego=self._ego,
