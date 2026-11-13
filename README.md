@@ -1,59 +1,55 @@
-# Event-CBF Driving
+# Driving project
 
-A driving simulator project with three parts: a model chooses a maneuver, a
-trained driver produces movement commands, and safety checks can override them.
-The car keeps driving while a slower decision is pending.
+Everything is directly in this folder: code, tests, configuration and reports.
 
-## Start here
+## Read the code in this order
 
-- [Two-page milestone report](docs/milestone-report.pdf) ([editable text](docs/milestone-report.md)).
-- [What the experiments found](final-study/EXPLAINED.md).
-- [Full final report](final-study/final-report.pdf) and [comparison tables](final-study/results/all-conditions.md).
-- [Readable PPO code guide](event-cbf-driving/event_cbf_driving/skills/README.md).
+1. **[simulation.py](simulation.py)** — how position and speed change, and how practice is scored.
+2. **[simple_driver.py](simple_driver.py)** — a handwritten driving rule.
+3. **[policy.py](policy.py)** and **[network.py](network.py)** — the trained driver's interface and network.
+4. **[train.py](train.py)** — the small CleanRL-based PPO training loop.
+5. **[safety.py](safety.py)** — checking and adjusting a proposed movement.
+6. **[planner.py](planner.py)** / **[camera.py](camera.py)** — selecting a maneuver.
+7. **[controller.py](controller.py)** — connecting the parts in the driving loop.
 
-The final comparison covered 1,440 controlled simulator drives and 36 camera-model
-integration drives. The integrated version finished all 72 short-delay conditions
-without crashes, using 98.6% fewer delayed requests than frequent polling.
-Those controlled requests used a traffic rule with an imposed wait. Simple rules
-also worked well; the tests do not establish that PPO, the language model, or our
-particular request timing is essential. The smaller camera-model comparison
-produced 22 real replies and does not establish superiority over simple rules.
+`main.py` is the command-line entry point. Files starting with `test_` are tests;
+files starting with `env_` or `router_` support the simulators and model backends.
+`legacy_` and `train_legacy` files preserve the measured older driver.
 
-## Run the code
+## Run
 
 ```bash
-cd event-cbf-driving
-python -m venv .venv
-. .venv/bin/activate
-python -m pip install -e ".[dev]"
+.venv/bin/python main.py doctor
 make check
 ```
 
-For new single-critic PPO training:
+For a fresh clone, create an environment with `uv venv` and install with
+`uv pip install -e ".[dev]"`.
 
-```bash
-python -m event_cbf_driving.skills.train_ppo --skill CRUISE_RIGHT --seed 0
-python -m event_cbf_driving.skills.train_ppo --skill OVERTAKE_LEFT --seed 1
-```
+Train a new single-critic driver with `.venv/bin/python train.py --skill CRUISE_RIGHT` or
+`.venv/bin/python train.py --skill OVERTAKE_LEFT --seed 1`. This training code is adapted
+from [CleanRL](https://github.com/vwxyzjn/cleanrl/blob/35896b1fefa9898b904f7e09bcbe6e168e15d2a9/cleanrl/ppo_continuous_action.py);
+see `CLEANRL_LICENSE.txt`. It uses our practice task and fixed input scaling,
+with no online tracking. It does not replace the measured drivers automatically.
 
-The existing measured drivers remain separate from new training output. See the
-[package guide](event-cbf-driving/README.md) for simulation and evaluation, and the
-[script index](event-cbf-driving/scripts/README.md) for the retained tools.
+Single-critic models have no critic-disagreement signal. Their routing must use
+a traffic-based trigger such as `deadline`, `benefit` or `barrier`.
+`make help` lists the other commands. Physical simulation needs the `metadrive`
+extra and `python -m metadrive.pull_asset`; PDF building needs the `report` extra.
 
-## Repository layout
+## Reports and saved assets
 
-| Folder | Contents |
-|---|---|
-| `event-cbf-driving/` | Maintained package, tests, configs, checkpoints and scripts. |
-| `final-study/` | Recorded final results, report, protocol and audits. |
-| `docs/` | Current milestone, its PDF builder, and history/recovery notes. |
-| `proposal/` | Original proposal and feedback. |
+- [Milestone report](milestone-report.pdf) and [editable text](milestone-report.md).
+- [Full final report](final-report.pdf), [editable text](final-report.md) and [plain-language findings](FINDINGS.md).
+- `study-evidence.zip`: intact final-study tables, audits, protocol and report fonts.
+- `checkpoints.zip`: recorded native-simulation driver bank.
+- `physical-checkpoints.zip`: recorded physical-simulation driver bank.
+- `camera-adapter.zip`: trained camera adapter, pinned prompt and model metadata.
 
-Older experiment runners, toy projects and duplicate deliveries have been
-retired. They remain recoverable from Git and a local archive; see
-[history and recovery](docs/history.md). Saved reports describe their original
-source versions. New source changes require fresh experiment directories.
+Assets unpack into the system temporary cache when needed. New runs, training
+outputs and analysis default to `../cs642-driving-runs/`, outside this folder.
+Model weights and report contents were preserved during the layout change.
 
-The full raw final-study release and base model weights are external to Git.
-See [the final study](final-study/README.md) for reproduction requirements.
-This is research software; simulation results do not prove real-vehicle safety.
+The recorded results do not establish that PPO or a language model is essential
+for the tested tasks. Simulation results do not prove real-vehicle safety.
+See [HISTORY.md](HISTORY.md) for older source and recovery instructions.

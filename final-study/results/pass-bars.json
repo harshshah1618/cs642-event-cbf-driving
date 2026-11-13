@@ -1,9 +1,0 @@
-{
-  "fewer_crashes_than_unprotected_arms": true,
-  "fewer_terminal_stalls_than_static_cbf": true,
-  "fewer_calls_than_high_rate_with_no_observed_success_loss": true,
-  "blend_mean_rms_and_mean_peak_not_worse_on_joint_success_subset": true,
-  "no_observed_pending_collisions_with_inflation_on": true,
-  "pending_margin_necessity": "Not established by zero-event equality; inspect matched ablation counts",
-  "published_system_superiority": "Not tested"
-}

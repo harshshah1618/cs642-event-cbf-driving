@@ -27,3 +27,11 @@ venv/
 # Development caches and temporary report previews.
 .ruff_cache/
 /output/
+
+# Flat-layout development artifacts
+.coverage
+.coverage.*
+htmlcov/
+RESULTS.md
+
+/.venv

@@ -1,0 +1,90 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "event-cbf-driving"
+version = "1.0.0"
+description = "Event-triggered VLM skill router + PPO skills + latency/uncertainty-inflated CBF shield"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "torch>=2.0",
+  "gymnasium>=0.29",
+  "matplotlib>=3.7",
+  "tqdm>=4.65",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+highway = ["highway-env>=1.8"]
+metadrive = ["metadrive-simulator @ git+https://github.com/metadriverse/metadrive.git@fe54b03327b14bcfc17a9a04b60c8abbee4d7ab1"]
+local = ["transformers>=4.45,<5", "accelerate>=0.30"]
+report = ["reportlab>=4.0"]
+dev = [
+  "pytest>=7.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.6",
+  "mypy>=1.10",
+]
+all = [
+  "highway-env>=1.8",
+  "transformers>=4.45,<5",
+  "accelerate>=0.30",
+  "pytest>=7.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.6",
+]
+
+[project.scripts]
+event-cbf = "main:main"
+event-cbf-eval = "main:eval_entry"
+event-cbf-train = "main:train_entry"
+event-cbf-verify = "main:verify_entry"
+event-cbf-doctor = "main:doctor_entry"
+
+[tool.setuptools]
+py-modules = ["constants", "main", "config", "environments", "env_base", "env_carla_stub", "env_dense", "env_highway", "env_merge", "env_physics", "env_registry", "env_lane", "env_two_trap", "env_types", "errors", "plotting", "plotting_actions", "plotting_baselines", "metrics", "reporting", "evaluation_runner", "io_utils", "logging_utils", "provenance", "router_base", "router_check", "router_dry_run", "router_factory", "router_local", "router_http", "router_opencode", "router_prompt", "planner", "camera", "runtime", "safety_exports", "safety", "safety_monitor", "checkpoints", "simple_driver", "network", "driver_checks", "simulation", "train_legacy", "model_loader", "legacy_network", "policy", "ppo_compat", "train", "baselines", "blend", "controller", "maneuver_reserve", "pending", "result", "road_planning", "scheduling", "train_legacy_cli", "assets"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["."]
+python_files = ["test_*.py"]
+norecursedirs = [".git", ".venv", ".github"]
+addopts = "-ra -p no:cacheprovider"
+markers = ["metadrive: real MetaDrive/Bullet integration tests (optional dependency)"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["."]
+cache-dir = "../cs642-driving-cache/ruff"
+
+[tool.ruff.lint]
+# Keep the 3.10-compatible typing style used throughout the package. The UP
+# annotation-modernization rules account for hundreds of cosmetic hits and do
+# not catch defects; correctness rules stay enabled.
+select = ["E4", "E7", "E9", "F", "I", "B"]
+ignore = [
+  "E501",  # line length is handled by the formatter
+  "B008",  # function calls in argument defaults are used for dataclass-like APIs
+]
+
+[tool.ruff.lint.per-file-ignores]
+"test_*.py" = ["B011"]
+"*.py" = ["E402"]  # retained tools bootstrap their local source path
+
+[tool.mypy]
+cache_dir = "../cs642-driving-cache/mypy"
+python_version = "3.10"
+ignore_missing_imports = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+
+files = ["constants.py", "main.py", "config.py", "environments.py", "env_base.py", "env_carla_stub.py", "env_dense.py", "env_highway.py", "env_merge.py", "env_physics.py", "env_registry.py", "env_lane.py", "env_two_trap.py", "env_types.py", "errors.py", "plotting.py", "plotting_actions.py", "plotting_baselines.py", "metrics.py", "reporting.py", "evaluation_runner.py", "io_utils.py", "logging_utils.py", "provenance.py", "router_base.py", "router_check.py", "router_dry_run.py", "router_factory.py", "router_local.py", "router_http.py", "router_opencode.py", "router_prompt.py", "planner.py", "camera.py", "runtime.py", "safety_exports.py", "safety.py", "safety_monitor.py", "checkpoints.py", "simple_driver.py", "network.py", "driver_checks.py", "simulation.py", "train_legacy.py", "model_loader.py", "legacy_network.py", "policy.py", "ppo_compat.py", "train.py", "baselines.py", "blend.py", "controller.py", "maneuver_reserve.py", "pending.py", "result.py", "road_planning.py", "scheduling.py", "train_legacy_cli.py", "assets.py"]
+
+[tool.coverage.run]
+source = ["."]
+omit = ["test_*.py", "integrated_*.py", "build_*.py", "calibrate_metadrive.py", "trained_vlm_*.py", "teammate_vlm_backend.py", "phase_vision_test.py", "plot_interactions.py", "render_demo.py", "record_cameras.py", "export_integrated_results.py"]
