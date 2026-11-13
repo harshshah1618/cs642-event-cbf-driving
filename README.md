@@ -12,15 +12,32 @@ traffic scenarios, recorded interaction traces for all three layers, matched
 shielded polling baselines, and a nonblocking live-router path. See
 [`METADRIVE.md`](event-cbf-driving/METADRIVE.md) for setup and scope.
 
-The completed physical study is in the [final report](event-cbf-driving/FINAL_REPORT.md)
-([PDF](event-cbf-driving/outputs/research-study/final-report.pdf),
-[three-layer demo](event-cbf-driving/outputs/research-study/three-layer-demo.mp4)).
-The proposed stack averages 99.8% route completion in 15 nominal episodes;
-all 42 expanded stress episodes avoid crashes and stalls. The actual local
-LLM pilot makes 62 model calls with zero fallbacks, but establishes no advantage
-over rule routing. Negative barrier states remain; these are research results.
-Use `metadrive-study` for this study; the native results below are historical,
-separate experiments.
+## Latest results and reports
+
+Start with the [two-page milestone report](docs/milestone-report.pdf)
+([editable text](docs/milestone-report.md)) for a plain-language account of what
+works, what remains unproved, and the proposed next steps.
+
+The [final integrated study](final-study/README.md) compares 15 versions across
+1,440 physical simulator drives, followed by 36 camera-model integration drives.
+The integrated system finished all 72 short-delay conditions without crashes,
+making 1.08 delayed requests per drive versus 75.82 for frequent polling
+(98.6% fewer). These controlled requests use a traffic rule with a simulated
+wait. Simpler rules also completed the routes; our particular trigger has not
+proved best, and PPO or the language model has not proved essential here.
+
+The actual camera-model check produced 22 real replies. Our system and a cheap
+local rule each finished six of six traffic setups; timer routing finished five.
+Different model response times prevent a clean claim that our trigger is better.
+See the [full report](final-study/final-report.pdf),
+[plain-language findings](final-study/EXPLAINED.md), and
+[comparison tables](final-study/results/all-conditions.md).
+
+Earlier studies are preserved under [research/](research/README.md),
+[component-study/](component-study/README.md),
+[vlm-study/](vlm-study/README.md), and [maneuver-study/](maneuver-study/README.md).
+Their measurements describe separate experiments. The earlier physical study is
+in [event-cbf-driving/FINAL_REPORT.md](event-cbf-driving/FINAL_REPORT.md).
 
 ## Quick start
 
@@ -43,7 +60,7 @@ event-cbf eval --profile production --router scripted \
   --out-dir runs/production --run-id production-v1 --update-docs
 ```
 
-## Measured results
+## Historical native-simulator results
 
 `production-v1`: 3 scenarios × 5 deterministic seeds, 9 modes, scripted
 router. Proposed stack across the three scenarios:
@@ -66,13 +83,28 @@ This is research software, not a safety-certified driving system.
 - [`event-cbf-driving/SAFETY.md`](event-cbf-driving/SAFETY.md) — fail-closed behavior, monitor policy, limitations.
 - [`event-cbf-driving/OPERATIONS.md`](event-cbf-driving/OPERATIONS.md) — operations, artifacts, CI, troubleshooting.
 - [`event-cbf-driving/RESULTS.md`](event-cbf-driving/RESULTS.md) — generated results.
+- [`final-study/README.md`](final-study/README.md) — final comparison, evidence and reproduction instructions.
+- [`docs/milestone-report.pdf`](docs/milestone-report.pdf) — current two-page milestone report.
 - [`docs/`](docs/) — proposal background, method novelty, and source feasibility notes.
+
+Rebuild the milestone PDF from the repository root with
+`python docs/build_milestone_report.py` after installing ReportLab. The font
+files are included under `final-study/fonts/`. Previous milestone reports are
+kept in `docs/archive/`.
+
+Raw final-study driving traces and the complete release ZIP remain in the local
+delivery folder and are excluded from Git. A source clone includes the source,
+reports, summaries, trained adapter and PPO checkpoints; the full raw release is
+needed to re-audit the saved final traces. Base model weights and Python
+environments are external. See the final study's reproduction instructions.
 
 ## Repository map
 
 | Path | What it is |
 | --- | --- |
 | `event-cbf-driving/` | Main package: scenarios, training, checkpoints, router, shield, controller, evaluation, CLI, tests, CI. |
+| `final-study/` | Latest integrated comparison, report, tables, audits and report fonts. |
+| `research/`, `component-study/`, `vlm-study/`, `maneuver-study/` | Earlier experiment protocols, results and integration evidence. |
 | `wip-minimal/` | Standalone early Two-Trap Gauntlet demo; no shared imports. |
 | `two-trap-gauntlet/` | Earlier scripted gauntlet/training sketch. |
 | `proposal/` | Course proposal (LaTeX + PDF). |

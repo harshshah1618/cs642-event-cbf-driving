@@ -1,45 +1,50 @@
-# CS642 milestone report
+# Safe Fast Control While a Slow Language Model Thinks
+Milestone report | November 12, 2026
+Akash Ravi, Harsh Shah, Ved Chadderwala
 
-Akash Ravi, Harsh Shah, Ved Chadderwala  
-November 11, 2026
+## Aim and current progress
 
-## What we said we would do
+Our project asks how a car can keep driving safely while a slower model decides what it should do next. We have built a working driving system in a simulator, connected the learned driver and the camera model, and completed comparisons with simpler systems. The main finding so far is that safety checks and changes of plan help a great deal. We have not yet shown that the learned driver or language model is needed for the tasks we tested.
 
-Build one closed-loop driving stack and measure it. A slow model only picks a skill (cruise, pass, return). Frozen PPO skills drive at 50 Hz. A safety filter can brake from the current scene, and can add extra gap while a skill call is still out. We call the model when the active skill looks unsure, or when the filter has been overriding for a while. We compare that with no filter, a filter that never changes skill, and asking on a timer. Same skills, same seeds, same roads.
+## What we have built
 
-## What we built
+The system has three parts. A planner looks at road images and suggests whether to stay in the right lane, pass on the left, or return right. A faster driver produces the steering and speed commands. It learned through practice in simulation, using a training method called PPO. A safety filter can reduce acceleration or brake when those commands would be unsafe. We also check the target lane before accepting a change and gradually mix the old and new commands to make the switch less sudden. Returning right uses the same driving skill as holding the right lane.
 
-The skills were trained on an empty road to hold a lane at 20 m/s, then frozen. Cruise is the right lane. Overtake is the left lane. Return reuses cruise.
+The main tests now run in MetaDrive, where the car and traffic move under simulated vehicle physics. The driver and safety checks continue working while a model reply is pending. A late reply is checked against the current scene before it can change the plan. We saved the settings, model inputs, replies and driving records so the comparisons can be checked and repeated. The software also passed 369 automated tests.
 
-The measured study runs in MetaDrive, so the car and the other traffic move under physics. The car is given true positions. There is no camera. CARLA was left as a stub.
+## What we have tested
 
-We also ran a real local model, Qwen2.5-1.5B on CPU, on 18 drives. Most comparison numbers use a rule router so the delay is controlled.
+We compared 15 versions in 1,440 simulated drives. These used three situations: a stopped car ahead, a stopped car followed by a vehicle cutting in, and denser traffic. We used eight traffic starting layouts and four waiting times. Each comparison starts from the same traffic conditions. The table covers the 0-1 second waits, giving 72 runs per version; the separate 18-second test checks unusually slow replies.
 
-## Results
+| Version | Finished | Crashes | Requests per drive |
+|---|---:|---:|---:|
+| Learned driver, no safety filter | 0/72 | 72 | 0 |
+| Safety filter, no change of plan | 24/72 | 12 | 0 |
+| Ask once per second, with protections | 72/72 | 0 | 13.82 |
+| Ask up to ten times per second, with protections | 72/72 | 0 | 75.82 |
+| Ask when needed, with protections | 72/72 | 0 | 1.08 |
+| Simple local rules, with protections | 72/72 | 0 | 0* |
 
-15 normal drives, 5 seeds, three roads (stalled car plus a cut-in, a merge, and denser traffic). Crashes and stalls are counts. Route and calls are averages.
+These comparisons use a traffic rule with a controlled waiting time, not the camera model. A finished run means no crash and at least 99% of the route. *The local replanner uses cheap rules rather than model requests. The protections include a braking backup and lane checks, so the gains cannot all be credited to one filter formula.
 
-| Method | Route | Crashes | Stalls | Calls |
-| --- | ---: | ---: | ---: | ---: |
-| Skill only | 37.9% | 15 | 0 | 0 |
-| Filter, no skill change | 79.0% | 0 | 5 | 0 |
-| Ask all the time, with filter | 100% | 0 | 0 | 36.5 |
-| Ask on a timer, with filter | 99.8% | 0 | 0 | 14.5 |
-| Ours (ask only when needed) | 99.8% | 0 | 0 | 9.2 |
-| Ours, no extra gap while waiting | 100% | 0 | 0 | 9.7 |
+<!-- PAGE BREAK -->
 
-On 42 harder drives (a lead car braking, cut-ins, tighter gaps, small timing noise) our stack had 0 crashes and 0 stalls. A few drives ended short of the full route. The worst case still finished about 92%.
+## What the results tell us
 
-The filter is what stops the crashes. Changing skill is what stops the stalls. Asking only when needed finishes about the same route as asking all the time, with about a quarter of the calls.
+Safety and progress are different problems. Braking can prevent a crash but leave the car waiting behind an obstacle. Changing the plan lets it continue. Our system asks for a new plan when the driving situation calls for one. It finished the same short-delay runs as asking up to ten times per second while making about 98.6% fewer requests. However, simpler rules for when to ask also worked well, and one used fewer requests than ours. Our rule for when to ask has not proved best.
 
-## What did not work
+We also found that a correct instruction can arrive after the car has stopped too close to turn. Keeping eight extra metres of stopping room while waiting, then letting the car use that room once a turn is accepted, helped in the 18-second tests: completion rose from 8/24 without the reserve to 24/24 with it. The original extra-margin version also finished 24/24, so our repair is not the only solution. Gradually changing commands reduced sudden changes in physical acceleration on average, although some individual cases became worse.
 
-The 1.5B model made 62 real calls and did not beat a rule that waited the same amount of time. Answers took about 3 to 7 seconds.
+The extra margin while waiting has a tradeoff. Both margin-on and margin-off versions avoided collisions in the protected tests, so we cannot say the margin was needed for safety. At long delays it made the driving smoother but added about four seconds to average completion time. This is a choice between progress and comfort, rather than a clear win in every measure.
 
-Turning on the extra gap while a call is in flight did not clearly help. On the normal drives, leaving it off finished slightly more of the route. With the slow model, one no-gap drive stalled.
+## Check with the actual camera model
 
-The gap target still goes negative on some ticks. Zero crashes in this sample is not a safety proof. The FASIONAD-style and CERT-style rows are our own stand-ins on this simulator. They are not the published systems, and we are not claiming to beat those papers.
+We connected our teammate's trained camera model and ran 36 additional comparison drives. Eighteen allowed model calls; 15 actually requested an answer, producing 22 real replies with no substitute answers. On six traffic setups, our model-based version finished six, asking on a timer finished five, and the simple local rule also finished six. All three avoided crashes. Model response times differed between runs, and the timer's missed route included a reply that arrived too late. This small test does not prove that our model or rule for when to ask is better. All model decisions applied during driving were passes on the left; a model-directed return was not demonstrated.
 
-## Where we are
+## What is still missing
 
-The stack, the comparison, the local-model check, and the write-up are done. We are not doing CARLA.
+Our roads have been straight and the task is limited. The driving skills were trained on empty roads. Earlier comparisons also found that a hand-written lane controller performed similarly to PPO. The rule-based planner receives exact traffic positions, which makes its decisions easier than interpreting images. Our current results therefore show a useful combined system, but do not establish that PPO or the language model is essential. They also do not show that we beat the published systems mentioned in the proposal. The control rate is measured in simulation time, and the CPU camera-model runs do not establish real-time performance on a vehicle.
+
+## Where we think this is leading
+
+The next step is to find a task where learning adds a measurable benefit. We are considering curved roads with changing vehicle response for the driver, and instructions such as passing a vehicle and returning right before a marked point for the planner. These harder tasks have not been built or tested yet. We will choose one fixed test setting, train for that task, compare against strong simple controllers, and keep separate cases for the final evaluation. The aim is to identify which parts improve safety, progress or smoothness enough to justify their cost, while keeping the working system and the results already collected.

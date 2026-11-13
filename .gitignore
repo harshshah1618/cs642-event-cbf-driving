@@ -22,3 +22,8 @@ venv/
 .vlm-deps/
 /.vlm-deps
 /tmp/
+
+# Local delivery copies and report-rendering workspace; canonical reports are tracked.
+/research-delivery/
+/output/
+/scratchpad/milestone-update/
