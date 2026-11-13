@@ -1,0 +1,16 @@
+extends: metadrive-study.yaml
+name: event-cbf-metadrive-deadline
+# Scheduling isolation: all methods use the same backup, without an arbitrary
+# distance jump at query submission. This is not a certified safety controller.
+shield:
+  pending_margin: false
+stack:
+  pending_margin: false
+  trigger_policy: deadline
+  trigger_latency_bound_s: 0.3
+  trigger_transition_s: 2.0
+  trigger_buffer_s: 0.5
+  simulate_deadline_wait: true
+eval:
+  modes: [proposed, fixed_rate_shielded]
+  out_dir: runs/deadline

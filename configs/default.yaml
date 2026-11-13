@@ -1,0 +1,129 @@
+# Research defaults: reproduce the original published numbers.
+name: event-cbf
+seed: 0
+checkpoint_dir: models/native
+log_level: INFO
+json_logs: false
+
+router:
+  backend: scripted
+  allow_live: false
+  latency_s: 0.30
+  timeout_s: 30.0
+  max_retries: 2
+  backoff_s: 0.25
+  allow_fallback: true
+  fail_on_fallback: false
+  model: gpt-4o-mini
+  base_url: https://api.openai.com/v1
+  api_key_env: OPENAI_API_KEY
+  api_key_env_fallback: EVENT_CBF_API_KEY
+  seed: 0
+  temperature: 0.0
+  max_tokens: 8
+  max_consecutive_failures: 5
+  local_model: Qwen/Qwen2.5-0.5B-Instruct
+  local_revision: null
+  local_device: cpu
+  local_backend: auto
+  trust_remote_code: false
+  ollama_url: http://127.0.0.1:11434
+  ollama_model: qwen2.5:0.5b
+  cache: false
+
+shield:
+  standoff: 6.0
+  headway_s: 1.1
+  class_k: 2.5
+  lane_half_width: 1.85
+  gamma_sigma: 2.8
+  sigma_cap: 10.0
+  eta_latency: 1.0
+  vlm_delay_s: 0.30
+  ax_min: -7.5
+  ax_max: 3.5
+  enabled: true
+  inflate: true
+  pending_margin: true
+  finite_checks: true
+  fail_closed: true
+  lateral_mode: lane
+  lateral_margin: 0.0
+  lookahead_s: 0.0
+  emergency_decel: -7.5
+  min_gap_m: 0.0
+
+stack:
+  mode: proposed
+  initial_skill: CRUISE_RIGHT
+  blend_ticks: 24
+  fixed_rate_hz: 1.0
+  always_on_hz: 10.0
+  shield_clear_ticks: 16
+  shield_hold_ticks: 1
+  min_call_ticks: 28
+  sigma_threshold_scale: 1.55
+  use_blend: true
+  hard_switch: false
+  pending_margin: true
+  pending_margin_on_all_calls: false
+  abort_on_emergency: false
+  freeze_speed: 0.5
+  freeze_window_s: 1.0
+  route_success_pct: 90.0
+  max_pending_s: 2.0
+  router_latency_s: null
+
+eval:
+  scenarios:
+    - name: two_trap
+      route_length: null
+      duration: null
+      seed: 0
+      randomize: false
+      params: {}
+    - name: merge
+      route_length: null
+      duration: null
+      seed: 0
+      randomize: false
+      params: {}
+    - name: dense_highway
+      route_length: null
+      duration: null
+      seed: 0
+      randomize: false
+      params: {}
+  modes:
+    - unshielded_skill
+    - static_cbf
+    - fixed_rate_vlm
+    - always_on_vlm
+    - fasionad_wakeup
+    - cert_replan
+    - proposed
+    - proposed_no_margin
+    - proposed_no_blend
+  seeds: [0, 1, 2, 3, 4]
+  repeats: 1
+  out_dir: runs
+  run_id: null
+  figures: true
+  update_docs: false
+  fail_on_regression: true
+  min_route_pct: 60.0
+  record_episodes: false
+  workers: 1
+  tags: []
+
+train:
+  skills: [CRUISE_RIGHT, OVERTAKE_LEFT, RETURN_RIGHT]
+  updates: 160
+  min_updates: 40
+  n_envs: 16
+  seeds: [0, 1, 2]
+  out_dir: checkpoints
+  seed: 0
+  device: cpu
+  deterministic: true
+  min_learned_skills: 2

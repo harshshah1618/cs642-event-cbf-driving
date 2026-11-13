@@ -1,0 +1,62 @@
+{
+  "CRUISE_RIGHT": {
+    "path": "event-cbf-driving/checkpoints/CRUISE_RIGHT.pt",
+    "meta": {
+      "name": "CRUISE_RIGHT",
+      "target_lane": 0,
+      "y_target": 0.0,
+      "threshold": 3.3980356454849243,
+      "sigma_mean": 0.3980356454849243,
+      "sigma_std": 1.0,
+      "spread": 1.0579993724822998
+    },
+    "diag": {
+      "hold": {
+        "mean_abs_y": 0.07890576398097553,
+        "mean_abs_v": 0.32089679208065186,
+        "final_y": -0.038957682302309254,
+        "final_vx": 20.507584388332884,
+        "t16": 0.02
+      },
+      "acquire": {
+        "mean_abs_y": 2.498527074899661,
+        "mean_abs_v": 1.9524851263976017,
+        "final_y": -0.02685797023585762,
+        "final_vx": 23.148706156145767,
+        "t16": 2.02
+      },
+      "learned": true
+    },
+    "final_return": -1655.8518784043997
+  },
+  "OVERTAKE_LEFT": {
+    "path": "event-cbf-driving/checkpoints/OVERTAKE_LEFT.pt",
+    "meta": {
+      "name": "OVERTAKE_LEFT",
+      "target_lane": 1,
+      "y_target": 4.0,
+      "threshold": 4.650345623493195,
+      "sigma_mean": 1.650345802307129,
+      "sigma_std": 0.9999999403953552,
+      "spread": 8.926342010498047
+    },
+    "diag": {
+      "hold": {
+        "mean_abs_y": 0.18684573811766209,
+        "mean_abs_v": 3.7351049175548505,
+        "final_y": 3.8204707137113676,
+        "final_vx": 26.91014016389845,
+        "t16": 0.02
+      },
+      "acquire": {
+        "mean_abs_y": 1.389992432209958,
+        "mean_abs_v": 3.4531158639502517,
+        "final_y": 2.9839507130520633,
+        "final_vx": 26.750913703441615,
+        "t16": 2.02
+      },
+      "learned": false
+    },
+    "final_return": -1821.9864385593787
+  }
+}

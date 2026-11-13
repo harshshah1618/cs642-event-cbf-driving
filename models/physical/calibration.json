@@ -1,0 +1,302 @@
+{
+  "quantile": 0.99,
+  "schema_version": 1,
+  "skills": {
+    "CRUISE_RIGHT": {
+      "calibrated_meta": {
+        "name": "CRUISE_RIGHT",
+        "sigma_mean": 1.8579005692739474,
+        "sigma_std": 1.0,
+        "spread": 1.6968071459894043,
+        "target_lane": 0,
+        "threshold": 6.2256389440898765,
+        "y_target": 0.0
+      },
+      "episodes": [
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.0029596516396850348,
+          "out_of_road": false,
+          "seed": 101,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.04012136161327362,
+          "out_of_road": false,
+          "seed": 101,
+          "ticks": 300
+        },
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.0033687292598187923,
+          "out_of_road": false,
+          "seed": 103,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.043860770761966705,
+          "out_of_road": false,
+          "seed": 103,
+          "ticks": 300
+        },
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.0021167146041989326,
+          "out_of_road": false,
+          "seed": 107,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.04092353582382202,
+          "out_of_road": false,
+          "seed": 107,
+          "ticks": 300
+        },
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.00039036801899783313,
+          "out_of_road": false,
+          "seed": 109,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.0326726958155632,
+          "out_of_road": false,
+          "seed": 109,
+          "ticks": 300
+        }
+      ],
+      "original_meta": {
+        "name": "CRUISE_RIGHT",
+        "sigma_mean": 0.8063009665774422,
+        "sigma_std": 1.0,
+        "spread": 5.031283467597741,
+        "target_lane": 0,
+        "threshold": 3.8063009665774423,
+        "y_target": 0.0
+      },
+      "original_validation_exceedance": 0.0,
+      "samples": 2400,
+      "source_fingerprint": "9706785d81623499e66f1b3b7d873c4f815832dff6e068feaa50317d319eb9dd",
+      "train_exceedance": 0.01,
+      "validation_episodes": [
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.002587495604529977,
+          "out_of_road": false,
+          "seed": 211,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.03344977647066116,
+          "out_of_road": false,
+          "seed": 211,
+          "ticks": 300
+        },
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.0025611973833292723,
+          "out_of_road": false,
+          "seed": 223,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.031176602467894554,
+          "out_of_road": false,
+          "seed": 223,
+          "ticks": 300
+        },
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.0018832950154319406,
+          "out_of_road": false,
+          "seed": 227,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.025526247918605804,
+          "out_of_road": false,
+          "seed": 227,
+          "ticks": 300
+        }
+      ],
+      "validation_exceedance": 0.005555555555555556,
+      "validation_samples": 1800
+    },
+    "OVERTAKE_LEFT": {
+      "calibrated_meta": {
+        "name": "OVERTAKE_LEFT",
+        "sigma_mean": 0.630450326917736,
+        "sigma_std": 0.9999999999999997,
+        "spread": 7.145571757985227,
+        "target_lane": 1,
+        "threshold": 5.480486907099611,
+        "y_target": 4.0
+      },
+      "episodes": [
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.013406753540039062,
+          "out_of_road": false,
+          "seed": 101,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.11204910278320312,
+          "out_of_road": false,
+          "seed": 101,
+          "ticks": 300
+        },
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.014368534088134766,
+          "out_of_road": false,
+          "seed": 103,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.19786977767944336,
+          "out_of_road": false,
+          "seed": 103,
+          "ticks": 300
+        },
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.012218952178955078,
+          "out_of_road": false,
+          "seed": 107,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.1496143341064453,
+          "out_of_road": false,
+          "seed": 107,
+          "ticks": 300
+        },
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.010312557220458984,
+          "out_of_road": false,
+          "seed": 109,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.06623220443725586,
+          "out_of_road": false,
+          "seed": 109,
+          "ticks": 300
+        }
+      ],
+      "original_meta": {
+        "name": "OVERTAKE_LEFT",
+        "sigma_mean": 1.0,
+        "sigma_std": 0.7117315898580233,
+        "spread": 2.0796918439865113,
+        "target_lane": 1,
+        "threshold": 3.13519476957407,
+        "y_target": 4.0
+      },
+      "original_validation_exceedance": 0.08222222222222222,
+      "samples": 2400,
+      "source_fingerprint": "1e44eba4c6911d19093f2cdfebd4533a02a08b3c7c910127444fec8fa4317920",
+      "train_exceedance": 0.01,
+      "validation_episodes": [
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.012978553771972656,
+          "out_of_road": false,
+          "seed": 211,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.13388395309448242,
+          "out_of_road": false,
+          "seed": 211,
+          "ticks": 300
+        },
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.012920379638671875,
+          "out_of_road": false,
+          "seed": 223,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.06431341171264648,
+          "out_of_road": false,
+          "seed": 223,
+          "ticks": 300
+        },
+        {
+          "acquire": false,
+          "crashed": false,
+          "final_lane_error": 0.012043952941894531,
+          "out_of_road": false,
+          "seed": 227,
+          "ticks": 300
+        },
+        {
+          "acquire": true,
+          "crashed": false,
+          "final_lane_error": 0.08199310302734375,
+          "out_of_road": false,
+          "seed": 227,
+          "ticks": 300
+        }
+      ],
+      "validation_exceedance": 0.0,
+      "validation_samples": 1800
+    }
+  },
+  "train_seeds": [
+    101,
+    103,
+    107,
+    109
+  ],
+  "validation_seeds": [
+    211,
+    223,
+    227
+  ],
+  "weights_updated": false
+}

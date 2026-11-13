@@ -28,10 +28,16 @@ venv/
 .ruff_cache/
 /output/
 
-# Flat-layout development artifacts
+# Coverage and generated summaries
 .coverage
 .coverage.*
 htmlcov/
 RESULTS.md
 
 /.venv
+
+# Generated experiment output and development metadata
+/runs/
+
+# Verification summaries are regenerated; model weights and sidecars stay tracked.
+/models/*/validation.json

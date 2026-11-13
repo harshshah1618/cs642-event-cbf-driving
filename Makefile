@@ -1,8 +1,8 @@
 PYTHON ?= .venv/bin/python
 PDF_PYTHON ?= $(PYTHON)
 WORKERS ?= 4
-RUN_DIR ?= ../cs642-driving-runs/final-integration
-RESULTS_DIR ?= ../cs642-driving-runs/final-analysis
+RUN_DIR ?= runs/final-integration
+RESULTS_DIR ?= runs/final-analysis
 SKILL ?= CRUISE_RIGHT
 SEED ?= 0
 export PYTHONPATH := .
@@ -22,49 +22,50 @@ install:
 	uv pip install --python $(PYTHON) -e ".[dev]"
 
 test:
-	$(PYTHON) -m pytest -q --cov=. --cov-report=term:skip-covered --cov-fail-under=60
+	$(PYTHON) -m pytest -q --cov=driving --cov-report=term:skip-covered --cov-fail-under=60
 
 lint:
-	$(PYTHON) -m ruff check .
+	$(PYTHON) -m ruff check driving tests tools
 
 typecheck:
 	$(PYTHON) -m mypy
 
 verify:
-	$(PYTHON) -m main verify --profile default
+	$(PYTHON) -m driving verify --profile default
 
 smoke:
-	$(PYTHON) -m main eval --profile ci --router scripted \
-		--out-dir ../cs642-driving-runs/ci --run-id ci-smoke
+	$(PYTHON) -m driving eval --profile ci --router scripted \
+		--out-dir runs/ci --run-id ci-smoke
 
 doctor:
-	$(PYTHON) -m main doctor
+	$(PYTHON) -m driving doctor
 
 check: lint typecheck test verify smoke
 
 train:
-	$(PYTHON) -m train --skill $(SKILL) --seed $(SEED)
+	$(PYTHON) -m driving.train --skill $(SKILL) --seed $(SEED)
 
 study:
-	$(PYTHON) integrated_eval.py test --workers $(WORKERS) --output $(RUN_DIR)
+	$(PYTHON) tools/integrated_eval.py test --workers $(WORKERS) --output $(RUN_DIR)
 
 analyze:
-	PYTHONPATH=. $(PYTHON) integrated_analysis.py \
+	PYTHONPATH=.:tools $(PYTHON) tools/integrated_analysis.py \
 		--runs-dir $(RUN_DIR) --results-dir $(RESULTS_DIR) --audit-traces
 
 report:
-	$(PDF_PYTHON) build_integrated_report.py
+	$(PDF_PYTHON) tools/build_integrated_report.py
 
 milestone:
-	$(PDF_PYTHON) build_milestone_report.py
+	$(PDF_PYTHON) tools/build_milestone_report.py
 
 metadrive-check:
-	$(PYTHON) -m pytest -q test_metadrive.py test_layer_interactions.py test_study.py
-	$(PYTHON) -m main eval --profile metadrive-study \
+	$(PYTHON) -m pytest -q tests/test_metadrive.py tests/test_layer_interactions.py tests/test_study.py
+	$(PYTHON) -m driving eval --profile metadrive-study \
 		--modes proposed --seeds 0 1 2 --no-figures --run-id metadrive-smoke
 
 calibrate:
-	$(PYTHON) calibrate_metadrive.py
+	$(PYTHON) tools/calibrate_metadrive.py
 
 clean:
 	rm -rf __pycache__ .pytest_cache .ruff_cache .mypy_cache build dist
+	find driving tests tools models -type d -name __pycache__ -prune -exec rm -rf {} +

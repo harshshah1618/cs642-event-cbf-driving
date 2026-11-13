@@ -27,10 +27,10 @@ jobs:
           python -m pip install -e ".[dev,metadrive]"
           python -m metadrive.pull_asset
       - name: Real physics, replay and background-router contracts
-        run: python -m pytest -q test_metadrive.py test_layer_interactions.py test_study.py
+        run: python -m pytest -q tests/test_metadrive.py tests/test_layer_interactions.py tests/test_study.py
       - name: Randomized physical regression gate
         run: |
-          python -m main eval --profile metadrive-study \
+          python -m driving eval --profile metadrive-study \
             --modes proposed --seeds 0 1 2 --no-figures \
             --run-id "metadrive-ci-${GITHUB_RUN_ID}"
       - name: Upload physical evaluation artifacts
@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: metadrive-evaluation
-          path: ../cs642-driving-runs/metadrive-study
+          path: runs/metadrive-study
           if-no-files-found: ignore
   test:
     name: tests + offline evaluation
@@ -62,30 +62,30 @@ jobs:
         run: python -m pip install -e ".[dev]"
 
       - name: Lint
-        run: python -m ruff check .
+        run: python -m ruff check driving tests tools
 
       - name: Typecheck
         run: python -m mypy
 
       - name: Tests with coverage
         run: |
-          python -m pytest -q --cov=. --cov-report=term-missing --cov-fail-under=60
+          python -m pytest -q --cov=driving --cov-report=term-missing --cov-fail-under=60
 
       - name: Checkpoint validation
-        run: python -m main verify --profile ci
+        run: python -m driving verify --profile ci
 
       - name: Doctor
-        run: python -m main doctor --json
+        run: python -m driving doctor --json
 
       - name: Offline CI evaluation
         run: |
-          python -m main eval --profile ci --router scripted \
-            --out-dir ../cs642-driving-runs/ci --run-id "ci-${GITHUB_RUN_ID}"
+          python -m driving eval --profile ci --router scripted \
+            --out-dir runs/ci --run-id "ci-${GITHUB_RUN_ID}"
 
       - name: Upload evaluation artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ci-evaluation
-          path: ../cs642-driving-runs/ci
+          path: runs/ci
           if-no-files-found: ignore
