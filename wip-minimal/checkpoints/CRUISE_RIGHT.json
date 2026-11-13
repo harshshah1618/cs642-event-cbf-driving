@@ -1,9 +1,0 @@
-{
-  "y_target": 0.0,
-  "kind": "PD_stand_in",
-  "hold_err": 0.0,
-  "acquire_t16": 0.84,
-  "final_y": 0.016,
-  "threshold": 1.0,
-  "spread": 1.0
-}

@@ -317,13 +317,19 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("stage", choices=("tune", "pilot", "test"))
     p.add_argument("--workers", type=int, default=4)
+    p.add_argument(
+        "--output",
+        type=Path,
+        default=OUT,
+        help="Run directory; use a fresh path after changing source",
+    )
     a = p.parse_args()
     selection = ROOT.parent / "final-study/selection.json"
     scale = json.loads(selection.read_text())["sigma_scale"] if selection.exists() else 0.2
     if a.stage == "test" and not selection.exists():
         raise ValueError("freeze selection before held-out test")
     design = jobs(a.stage, scale)
-    target = OUT / a.stage
+    target = a.output / a.stage
     target.mkdir(parents=True, exist_ok=True)
     lock = {
         "stage": a.stage,

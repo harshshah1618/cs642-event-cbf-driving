@@ -21,7 +21,7 @@ from event_cbf_driving.router.vlm import CHOICES, VLMRouter
 SOURCE_COMMIT = "1f16b7ff59aae20c2a9adfbeb4943762d4b1f5b4"
 PROMPTS_SHA256 = "0e6ea6d72a9492dc97c12ae71818aaf24d8cec3f656c8633148c8f0b913ebc5e"
 DEFAULT_PROMPTS = (
-    Path(__file__).resolve().parents[2] / "component-study/teammate-source/vlm-router/prompts.py"
+    Path(__file__).resolve().parents[1] / "checkpoints/vlm/prompts.py"
 )
 
 
@@ -29,7 +29,7 @@ class TeammateV1VLMRouter(VLMRouter):
     """Exact v1 messages with current HTTP choice decoding and strict failures.
 
     The serving endpoint must allow per-request mm_processor_kwargs, or reject
-    the request explicitly. See TEAMMATE_HANDOFF.md for the matching launch flag.
+    the request explicitly. The endpoint must be configured to accept per-request processor settings.
     """
 
     name = "vlm_teammate_v1"

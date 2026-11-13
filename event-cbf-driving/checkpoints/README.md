@@ -27,7 +27,7 @@ Do not trust that flag, and do not claim a skill is learned based on it.
 The current checkpoints were re-validated without training:
 
 ```bash
-PYTHONPATH=. .venv/bin/python scripts/train_skills.py --verify-only
+event-cbf train --verify-only
 ```
 
 Result (written to `validation.json` on 2026-11-05T03:22Z):
@@ -101,18 +101,18 @@ bank = load_skill_bank("checkpoints")  # CRUISE, OVERTAKE, RETURN alias
 
 `validate_checkpoint_dir` reports per-file fingerprints/meta, duplicate
 fingerprints across distinct skills, missing required skills, alias use, and
-stale or mismatched sidecar warnings. `scripts/train_skills.py --verify-only`
+stale or mismatched sidecar warnings. `event-cbf train --verify-only`
 regenerates `validation.json`; do not hand-edit that file.
 
 ## Training
 
 ```bash
 # Canonical: only the two distinct skills.
-PYTHONPATH=. .venv/bin/python scripts/train_skills.py
+event-cbf train
 
 # Explicitly requesting RETURN_RIGHT trains a distinct policy but warns that
 # canonical deployments alias it when no distinct checkpoint exists.
-PYTHONPATH=. .venv/bin/python scripts/train_skills.py --skills RETURN_RIGHT
+event-cbf train --skills RETURN_RIGHT
 ```
 
 Training writes `train_summary.json` atomically with per-skill seed,

@@ -182,7 +182,7 @@ def load_skill_bank(
         missing.append(str(path))
         if not allow_missing:
             raise FileNotFoundError(
-                f"Missing required skill checkpoint {path}; run scripts/train_skills.py first "
+                f"Missing required skill checkpoint {path}; run event-cbf train first "
                 "(or pass allow_missing_checkpoints=True for a smoke-only fallback)"
             )
         policies[name] = _fallback_policy(name)

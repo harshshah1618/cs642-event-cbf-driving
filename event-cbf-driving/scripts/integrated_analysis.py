@@ -7,6 +7,7 @@ import gzip
 import hashlib
 import json
 from collections import Counter, defaultdict
+from pathlib import Path
 
 import matplotlib
 
@@ -263,10 +264,14 @@ def plots(data):
 
 
 def main():
+    global OUT, RESULTS
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--with-live", action="store_true")
     p.add_argument("--audit-traces", action="store_true")
+    p.add_argument("--runs-dir", type=Path, default=OUT)
+    p.add_argument("--results-dir", type=Path, default=ROOT / "runs/final-analysis")
     a = p.parse_args()
+    OUT, RESULTS = a.runs_dir, a.results_dir
     RESULTS.mkdir(parents=True, exist_ok=True)
     rows = read_rows(OUT / "test/episodes.jsonl")
     lock = json.loads((OUT / "test/lock.json").read_text())

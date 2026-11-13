@@ -55,9 +55,9 @@ def main():
         Path(__file__),
         ROOT / "scripts/trained_vlm_cpu.py",
         ROOT / "scripts/trained_vlm_drive.py",
-        ROOT.parent / "component-study/teammate-source/vlm-router/prompts.py",
-        ROOT.parent / "vlm-study/model/adapter/adapter_model.safetensors",
-        ROOT.parent / "vlm-study/model/adapter/adapter_config.json",
+        ROOT / "checkpoints/vlm/prompts.py",
+        ROOT / "checkpoints/vlm/adapter/adapter_model.safetensors",
+        ROOT / "checkpoints/vlm/adapter/adapter_config.json",
         a.base / "config.json",
     ]
     external = {str(p.resolve()): digest(p) for p in extras}
@@ -96,8 +96,8 @@ def main():
     bank, checkpoint_info = load_skill_bank(ROOT / "checkpoints/metadrive-calibrated")
     policy = TrainedVLMCPU(
         a.base,
-        ROOT.parent / "vlm-study/model/adapter",
-        ROOT.parent / "component-study/teammate-source/vlm-router/prompts.py",
+        ROOT / "checkpoints/vlm/adapter",
+        ROOT / "checkpoints/vlm/prompts.py",
         threads=3,
     )
     (a.output / "model-audit.json").write_text(

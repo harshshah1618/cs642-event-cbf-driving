@@ -17,13 +17,13 @@ venv/
 *.aux
 *.log
 *.blg
+*.bbl
 *.out
 *.synctex.gz
 .vlm-deps/
 /.vlm-deps
 /tmp/
 
-# Local delivery copies and report-rendering workspace; canonical reports are tracked.
-/research-delivery/
+# Development caches and temporary report previews.
+.ruff_cache/
 /output/
-/scratchpad/milestone-update/

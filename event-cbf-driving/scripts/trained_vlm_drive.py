@@ -102,7 +102,7 @@ class ActualCPURouter(RouterBackend):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--base", type=Path, required=True)
-    p.add_argument("--output", type=Path, default=ROOT.parent / "vlm-study/drive")
+    p.add_argument("--output", type=Path, default=ROOT / "runs/camera-pilot")
     p.add_argument("--seed", type=int, default=6301)
     p.add_argument("--duration", type=float, default=60)
     args = p.parse_args()
@@ -111,8 +111,8 @@ def main():
     args.output.mkdir(parents=True)
     policy = TrainedVLMCPU(
         args.base,
-        ROOT.parent / "vlm-study/model/adapter",
-        ROOT.parent / "component-study/teammate-source/vlm-router/prompts.py",
+        ROOT / "checkpoints/vlm/adapter",
+        ROOT / "checkpoints/vlm/prompts.py",
         threads=4,
     )
     cfg = load_config(ROOT / "configs/metadrive-study.yaml")

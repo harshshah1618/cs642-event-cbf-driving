@@ -2,7 +2,7 @@
 #
 # This is an explicit live-call profile. Canonical published results remain the
 # scripted, offline `production` profile; live-model quality is exploratory and
-# is never claimed by RESULTS.md.
+# is never claimed by the recorded evaluation report.
 #
 # Setup:
 #   export OPENAI_API_KEY=...

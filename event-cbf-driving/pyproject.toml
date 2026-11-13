@@ -73,9 +73,6 @@ ignore = [
 "tests/*" = ["B011"]
 "scripts/*" = ["E402"]  # standalone scripts bootstrap sys.path before imports
 "event_cbf_driving/training.py" = ["E402"]
-# Frozen clock-control analysis consumes this local closure synchronously inside
-# each loop iteration; it is never stored or passed to deferred work.
-"scripts/research_clock_control.py" = ["B023"]
 
 [tool.mypy]
 python_version = "3.10"

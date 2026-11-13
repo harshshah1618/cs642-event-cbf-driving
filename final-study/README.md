@@ -14,7 +14,14 @@ Source branch: codex/final-integrated-evaluation, based on 6090300. Original har
 - results/*trace-audit.json and audits/: action/plant integrity and independent reviews.
 - verification.json and environment.json: checks, versions and preservation evidence.
 
-## Reproduction
+## Frozen reproduction
+
+The commands below describe the original snapshot at commit `2762d08`. Current
+source and model paths have been reorganized; use the [maintained script
+index](../event-cbf-driving/scripts/README.md) for new runs. Recorded result
+tables, reports and model bytes were preserved. See [history](../docs/history.md)
+for the original source and complete raw release.
+
 
 The release ZIP restores the event-cbf-driving/runs/final-integration paths. Those raw runs are intentionally outside Git; obtain the complete release, not only a source clone. Base weights (7.51GB) and Python environments are external; trained adapter and PPO checkpoints are included. Analysis needs no model loading. Embedded report fonts and their license are included.
 
@@ -34,4 +41,4 @@ Build the PDF using a Python environment with ReportLab 4.4.9 and Pillow:
 python scripts/build_integrated_report.py
 ```
 
-The complete release is delivered under the original checkout's research-delivery/final-integrated directory. No repository push, merge, external message, or cloud job was performed.
+The complete raw release is preserved in the external local archive described in [history](../docs/history.md). It is not part of a source clone.

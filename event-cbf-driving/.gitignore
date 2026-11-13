@@ -1,6 +1,7 @@
 # Generated evaluation artifacts
 runs/
 outputs/
+/RESULTS.md
 
 # Tool caches not covered by the repository-level .gitignore
 .ruff_cache/

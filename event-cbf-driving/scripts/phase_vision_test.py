@@ -134,11 +134,11 @@ def verify_lock(lock):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--base", type=Path, required=True)
-    p.add_argument("--adapter", type=Path, default=ROOT.parent / "vlm-study/model/adapter")
+    p.add_argument("--adapter", type=Path, default=ROOT / "checkpoints/vlm/adapter")
     p.add_argument(
         "--prompts",
         type=Path,
-        default=ROOT.parent / "component-study/teammate-source/vlm-router/prompts.py",
+        default=ROOT / "checkpoints/vlm/prompts.py",
     )
     p.add_argument("--output", type=Path, default=ROOT / "runs/maneuver-vision")
     args = p.parse_args()
