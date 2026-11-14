@@ -33,6 +33,10 @@ It runs on a CPU container. The volumes are created on first use.
 ```bash
 # first closed loop: two-trap (stalled car + cut-in), seeds 0..4, rule vs delayed rule vs VLM
 modal run modal/modal_app.py --stage loop --seeds 5
+# same, plus the skill-text diagnostic (VLM told CRUISE_RIGHT whenever the ego is in the right lane)
+modal run --detach modal/modal_app.py --stage loop --seeds 50 --diag --loop-tag two_trap_50
+# rule-router delay sweep + ablations (CPU only, 37 cells in parallel, ~5 min); -> vlm-router/results/rule_sweep/
+modal run modal/modal_app.py --stage sweep --seeds 50
 # accuracy and latency on the in-distribution test sets (renders them first if they're missing: --stage data)
 modal run modal/modal_app.py --stage eval --skip-base
 # harder held-out test (curves, lane changes, oncoming, ...)
@@ -71,3 +75,8 @@ Inside Modal these are `Renderer().render.remote` and `vlm_policy.VLLMPolicy(mod
 | `train` | L40S | Best bf16 throughput per dollar for a 3B LoRA. 18 minutes for 3,600 frames over 2 epochs. |
 | `eval`, `loop` | L4 | Same GPU as the Colab rounds, so latencies stay comparable (~125 ms per call). |
 | `merge`, `export` | CPU | No GPU needed. |
+| `sweep` | CPU | Rule router only (`vlm-router/sweep_eval.py`); no model, no renderer. |
+
+## Diagnostic patch: skill text
+
+`VLMRouter(..., right_lane_skill="CRUISE_RIGHT")` sends `CRUISE_RIGHT` as the current skill whenever the ego is in the right lane. Training (`gen_frames.py`) only ever paired the right lane with `CRUISE_RIGHT` and the left lane with `OVERTAKE_LEFT`. This is a diagnostic to measure that shortcut, not a fix. The fix is to retrain with the skill text decoupled from the lane.

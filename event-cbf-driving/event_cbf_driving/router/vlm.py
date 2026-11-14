@@ -105,7 +105,11 @@ class VLMRouter(RouterBackend):
     name = "vlm"
 
     def __init__(self, renderer: Callable[[dict], bytes], policy: Callable[[bytes, str, str], Tuple[str, float]],
-                 frame_sink: Optional[Callable[[str, bytes], None]] = None):
+                 frame_sink: Optional[Callable[[str, bytes], None]] = None, right_lane_skill: Optional[str] = None):
+        """right_lane_skill: DIAGNOSTIC PATCH, not a fix. If set, this skill text is sent instead of the real
+        current skill whenever the ego is in the RIGHT lane. Training only ever paired RIGHT with CRUISE_RIGHT
+        (gen_frames.py), so right_lane_skill="CRUISE_RIGHT" tests how much of the error is that shortcut."""
+        self.right_lane_skill = right_lane_skill
         self.renderer = renderer
         self.policy = policy
         self.frame_sink = frame_sink
@@ -125,14 +129,15 @@ class VLMRouter(RouterBackend):
         t0 = time.perf_counter()
         png = self.renderer(snapshot_to_scene(snap, self.car_seed))
         render_s = time.perf_counter() - t0
-        letter, infer_s = self.policy(png, lane, req.current_skill)
+        sent = self.right_lane_skill if (self.right_lane_skill and lane == "RIGHT") else req.current_skill
+        letter, infer_s = self.policy(png, lane, sent)
         skill = LETTER_TO_SKILL.get(letter, req.current_skill)  # unparseable answer: keep the current skill
         want = label_rule(snap)
         frame = f"{self.episode}_t{req.t:05.2f}.png"
         if self.frame_sink:
             self.frame_sink(frame, png)
         self.log.append(dict(episode=self.episode, t=round(req.t, 2), reason=req.reason, ego_lane=lane,
-                             current=req.current_skill, letter=letter, rule=want, ok=letter == want,
+                             current=req.current_skill, sent_skill=sent, letter=letter, rule=want, ok=letter == want,
                              infer_ms=round(infer_s * 1000, 1), render_ms=round(render_s * 1000, 1),
                              ego_y=round(snap.ego.y, 2), frame=frame,
                              cars=[dict(dx=round(o.x - snap.ego.x, 1), y=round(o.y, 2), vx=round(o.vx, 1))

@@ -37,6 +37,9 @@ class StackConfig:
     sigma_threshold_scale: float = 1.55
     use_blend: bool = True
     hard_switch: bool = False
+    # Ablation (PROPOSED mode only): if set, call the router on a timer at this rate instead of on sigma/shield
+    # events. Shield, inflation and blending stay as in PROPOSED. None = event-triggered (default).
+    periodic_hz: Optional[float] = None
 
 
 @dataclass
@@ -198,9 +201,17 @@ class DrivingStack:
                     and not blending
                     and since_call >= cfg.min_call_ticks
                 )
-                if can_call and (shield_rise or (sigma_high and not sigma_latch)):
+                if cfg.periodic_hz:
+                    fire = pending is None and not blending and t - last_fixed_t >= 1.0 / cfg.periodic_hz - 1e-9
+                else:
+                    fire = can_call and (shield_rise or (sigma_high and not sigma_latch))
+                if fire:
+                    if cfg.periodic_hz:
+                        last_fixed_t = t
                     reason = (
-                        "shield+sigma"
+                        "periodic"
+                        if cfg.periodic_hz
+                        else "shield+sigma"
                         if (overriding and sigma_high)
                         else ("shield" if overriding else "sigma")
                     )

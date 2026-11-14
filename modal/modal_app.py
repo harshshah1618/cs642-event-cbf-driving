@@ -50,7 +50,7 @@ SECRETS = [] if os.environ.get("CS642_NO_WANDB") == "1" else [modal.Secret.from_
 
 def _src(img):
     for f in ("gen_frames.py", "gen_ood.py", "prompts.py", "train_lora.py", "eval_router.py", "render_bridge.py",
-              "vlm_policy.py", "loop_eval.py"):
+              "vlm_policy.py", "loop_eval.py", "sweep_eval.py"):
         img = img.add_local_file(os.path.join(ROUTER, f), f"{SRC}/{f}")
     return img
 
@@ -175,7 +175,7 @@ class Renderer:
 
 
 @app.function(image=loop_image, volumes=VOLS, gpu=INFER_GPUS, cpu=4, memory=16384, timeout=3600)
-def closed_loop(run_name: str, seeds: list, tag: str):
+def closed_loop(run_name: str, seeds: list, tag: str, diag: bool = False):
     """VLM in this container (same L4 + vLLM setup as the evals); frames come from the Renderer on a T4."""
     vol.reload()
     # run the vLLM engine in this process: no fork/spawn of the Modal function runtime
@@ -190,9 +190,31 @@ def closed_loop(run_name: str, seeds: list, tag: str):
     import torch  # CUDA is already up inside vLLM (in-process engine), so this does not change the start method
 
     meta = dict(gpu=torch.cuda.get_device_name(0), model=f"/vol/ckpt/{run_name}/merged", seeds=seeds)
-    res = loop_eval.run(policy, lambda scene: renderer.render.remote(scene), seeds, out, f"{ECD}/checkpoints", meta)
+    # diag: also run the skill-text diagnostic patch (CRUISE_RIGHT sent whenever the ego is in the right lane)
+    variants = (("vlm", None), ("vlm_diag", "CRUISE_RIGHT")) if diag else (("vlm", None),)
+    meta["variants"] = [list(v) for v in variants]
+    res = loop_eval.run(policy, lambda scene: renderer.render.remote(scene), seeds, out, f"{ECD}/checkpoints", meta,
+                        vlm_variants=variants)
     vol.commit()
     return res, open(f"{out}/trajectories.png", "rb").read()
+
+
+@app.function(image=loop_image, cpu=2, memory=4096, timeout=3600)
+def sweep_cell(variant: str, delay, seeds: list, vlm_latencies: list):
+    """One (stack variant, router delay) cell of the rule-router sweep. CPU only."""
+    sys.path[:0] = [SRC, ECD]
+    import sweep_eval
+
+    return sweep_eval.job(variant, delay, seeds, f"{ECD}/checkpoints", vlm_latencies)
+
+
+@app.function(image=loop_image, cpu=1, timeout=600)
+def sweep_plot(cells: list) -> bytes:
+    sys.path[:0] = [SRC, ECD]
+    import sweep_eval
+
+    sweep_eval.plot(cells, "/tmp/delay_sweep.png")
+    return open("/tmp/delay_sweep.png", "rb").read()
 
 
 @app.function(image=train_image, volumes=VOLS, cpu=4, memory=8192, timeout=1200)
@@ -319,7 +341,7 @@ def pipeline(stage: str, dataset: str, run_name: str, per_kind: int, train_extra
 @app.local_entrypoint()
 def main(stage: str = "all", dataset: str = "v1", run_name: str = "qwen25vl3b-lora-r16", per_kind: int = 600,
          epochs: float = 2.0, smoke: bool = False, skip_base: bool = False, ood_n: int = 60, seeds: int = 5,
-         loop_tag: str = "two_trap", adapter: str = "qwen25vl3b-lora-r16"):
+         loop_tag: str = "two_trap", adapter: str = "qwen25vl3b-lora-r16", diag: bool = False):
     if stage == "export":
         out = os.path.join(MODELS, run_name, "adapter")
         os.makedirs(out, exist_ok=True)
@@ -335,8 +357,28 @@ def main(stage: str = "all", dataset: str = "v1", run_name: str = "qwen25vl3b-lo
             files["train_summary.json"] = open(os.path.join(src, "train_summary.json"), "rb").read()
         print("merged:", merge.remote(files, run_name), f"-> /vol/ckpt/{run_name}/merged")
         return
+    if stage == "sweep":  # rule-router delay sweep + ablations, CPU containers in parallel
+        sys.path[:0] = [ROUTER]
+        import sweep_eval  # only the constants are used locally; the stack runs on Modal
+
+        src = os.path.join(ROUTER, "results", run_name, "closed_loop_two_trap", "closed_loop.json")
+        lat = [c["infer_ms"] / 1000 for c in json.load(open(src))["vlm"]["call_log"]]
+        cells = [("proposed", d) for d in sweep_eval.DELAYS]
+        cells += [(v, d) for v in sweep_eval.VARIANTS if v != "proposed" for d in sweep_eval.ABLATION_DELAYS]
+        cells += [("proposed", d) for d in sweep_eval.ABLATION_DELAYS if d not in sweep_eval.DELAYS]
+        sd = list(range(seeds))
+        res = list(sweep_cell.starmap([(v, d, sd, lat) for v, d in cells]))
+        out = os.path.join(ROUTER, "results", "rule_sweep" + ("" if loop_tag == "two_trap" else f"_{loop_tag}"))
+        os.makedirs(out, exist_ok=True)
+        meta = dict(seeds=sd, vlm_latencies_s=lat, vlm_latency_source=os.path.relpath(src, ROUTER))
+        json.dump(dict(meta=meta, cells=res), open(os.path.join(out, "sweep.json"), "w"), indent=1)
+        open(os.path.join(out, "delay_sweep.png"), "wb").write(sweep_plot.remote(res))
+        for c in res:
+            print(f"{c['variant']:24s} {str(c['delay']):5s} {json.dumps(c['summary'])}")
+        print("saved to", out)
+        return
     if stage == "loop":
-        res, png = closed_loop.remote(run_name, list(range(seeds)), loop_tag)
+        res, png = closed_loop.remote(run_name, list(range(seeds)), loop_tag, diag)
         out = os.path.join(ROUTER, "results", run_name, f"closed_loop_{loop_tag}")
         os.makedirs(out, exist_ok=True)
         json.dump(res, open(os.path.join(out, "closed_loop.json"), "w"), indent=1)
