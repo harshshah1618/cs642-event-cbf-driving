@@ -1,0 +1,85 @@
+diff --git a/modal/modal_app.py b/modal/modal_app.py
+index f8b599e..64782d7 100644
+--- a/modal/modal_app.py
++++ b/modal/modal_app.py
+@@ -40,12 +40,11 @@ app = modal.App("cs642-vlm-router")
+ vol = modal.Volume.from_name("vlm-router", create_if_missing=True)
+ hf = modal.Volume.from_name("vlm-router-hf", create_if_missing=True)
+ VOLS = {"/vol": vol, "/hf": hf}
+-# W&B is optional: set CS642_NO_WANDB=1 if your Modal workspace has no secret named "wandb" (then pass
+-# train_extra "--wandb 0" for training).
+-# Inference GPU: L4 first (all reported latencies so far are on L4); if Modal has no L4 free, fall back in order.
+-# Each result records the GPU it actually ran on.
+-INFER_GPUS = ["L4", "A10G", "A100-40GB"]
+-SECRETS = [] if os.environ.get("CS642_NO_WANDB") == "1" else [modal.Secret.from_name("wandb")]
++# This account has no W&B secret. Keep this list empty in both the local and remote
++# process. A conditional here makes the training container crash and restart.
++# Inference stays on L4, then A10. A100 is left out because it costs more than twice an L4.
++INFER_GPUS = ["L4", "A10G"]
++SECRETS = []
+ 
+ 
+ def _src(img):
+@@ -253,7 +252,8 @@ def data_jobs(dataset, per_kind, shard=200):
+ 
+ @app.function(image=sim_image, volumes=VOLS, timeout=8 * 3600)
+ def pipeline(stage: str, dataset: str, run_name: str, per_kind: int, train_extra: list, limit: int,
+-             skip_base: bool = False, ood_n: int = 60, ood_set: str = "ood1"):
++             skip_base: bool = False, ood_n: int = 60, ood_set: str = "ood1", also_loop: bool = False,
++             seeds: int = 5, loop_tag: str = "two_trap"):
+     """Runs on Modal (not the laptop), so a `modal run --detach` survives the laptop sleeping.
+     Results land in /vol/results/<run>/ and are also returned."""
+     rdir = f"/vol/results/{run_name}"
+@@ -309,9 +309,17 @@ def pipeline(stage: str, dataset: str, run_name: str, per_kind: int, train_extra
+                 print(f"{tag:14s} {name:10s} acc {summ['acc']:.3f}  median {summ['median_ms']} ms  "
+                       f"per kind {summ['per_kind']}", flush=True)
+ 
++    loop_png = None
++    if also_loop and stage in ("all", "train", "eval"):
++        res, loop_png = closed_loop.remote(run_name, list(range(seeds)), loop_tag)
++        results["closed_loop"] = res
++
+     vol.reload()
++    os.makedirs(rdir, exist_ok=True)
+     for k, v in results.items():
+         json.dump(v, open(f"{rdir}/{k}.json", "w"), indent=1)
++    if loop_png is not None:
++        open(f"{rdir}/trajectories.png", "wb").write(loop_png)
+     vol.commit()
+     return results
+ 
+@@ -319,7 +327,7 @@ def pipeline(stage: str, dataset: str, run_name: str, per_kind: int, train_extra
+ @app.local_entrypoint()
+ def main(stage: str = "all", dataset: str = "v1", run_name: str = "qwen25vl3b-lora-r16", per_kind: int = 600,
+          epochs: float = 2.0, smoke: bool = False, skip_base: bool = False, ood_n: int = 60, seeds: int = 5,
+-         loop_tag: str = "two_trap", adapter: str = "qwen25vl3b-lora-r16"):
++         loop_tag: str = "two_trap", adapter: str = "qwen25vl3b-lora-r16", also_loop: bool = False):
+     if stage == "export":
+         out = os.path.join(MODELS, run_name, "adapter")
+         os.makedirs(out, exist_ok=True)
+@@ -348,7 +356,10 @@ def main(stage: str = "all", dataset: str = "v1", run_name: str = "qwen25vl3b-lo
+     if smoke:
+         dataset, run_name, per_kind, limit = "smoke", "smoke", 8, 12
+         train_extra = ["--max-steps", "4", "--eval-every", "2", "--bs", "2", "--accum", "2"]
+-    results = pipeline.remote(stage, dataset, run_name, per_kind, train_extra, limit, skip_base, ood_n)
++    if os.environ.get("CS642_NO_WANDB") == "1":
++        train_extra = train_extra + ["--wandb", "0"]
++    results = pipeline.remote(stage, dataset, run_name, per_kind, train_extra, limit, skip_base, ood_n,
++                              also_loop=also_loop, seeds=seeds, loop_tag=loop_tag)
+     out = os.path.join(ROUTER, "results", run_name)
+     os.makedirs(out, exist_ok=True)
+     for k, v in results.items():
+diff --git a/vlm-router/prompts.py b/vlm-router/prompts.py
+index a6cd195..264f3b5 100644
+--- a/vlm-router/prompts.py
++++ b/vlm-router/prompts.py
+@@ -21,7 +21,8 @@ MIN_PIXELS, MAX_PIXELS = 28 * 28, 1600 * 28 * 28
+ 
+ 
+ def state_text(lab):
+-    return f"Our car is in the {lab['ego_lane']} lane. Current skill: {lab['current_skill']}. Ego speed: 20 m/s."
++    # v2: do not tell the model the current skill. That line was copied instead of the image.
++    return f"Our car is in the {lab['ego_lane']} lane. Ego speed: 20 m/s."
+ 
+ 
+ def messages(image, lab, answer=None):

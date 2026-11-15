@@ -1,0 +1,84 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=0.85in]{geometry}
+\usepackage{times}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\setstretch{1.02}
+\setlength{\parskip}{0.3em}
+\setlength{\parindent}{0pt}
+\titleformat{\section}{\normalsize\bfseries}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{0.6em}{0.2em}
+\setlist{nosep,leftmargin=1.2em}
+
+\title{\vspace{-1.4em}Safe Fast Control While a Slow Language Model Thinks}
+\author{Akash Ravi \quad Harsh Shah \quad Ved Chadderwala\\
+\small CS642 milestone report \quad November 14, 2026}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-2em}
+
+\section{Where we are}
+Since the proposal, we have built the full system and run it with the trained camera model making every decision, on a cloud GPU. We also moved from highway-env to MetaDrive, which simulates real vehicle physics. Along the way we found that the model was copying part of its prompt instead of reading the image, and we fixed it. With the fixed model, the full system has finished every drive we have run, with no crashes.
+
+\section{How the system works}
+The system has three parts, each with its own job. A vision-language model (VLM) looks at the camera image and chooses between three moves: stay in the right lane, pass on the left, or move back to the right. It only picks the move and never steers. Steering and speed come from driving policies we trained with reinforcement learning (PPO), one per move, running fifty times a second. Between those policies and the car sits a safety layer, a control barrier function (CBF), which checks every command and brakes or eases off whenever a crash is close.
+
+We do not ask the model on a timer. We ask only when the current lane is blocked and the other lane looks better. The car keeps driving while the model thinks. When the answer arrives, we check that it still makes sense before using it, and the switch to the new move happens gradually rather than all at once.
+
+\section{Results}
+All driving runs below used one NVIDIA A10 GPU and the same five random seeds per road. Training ran separately on one NVIDIA L40S and took about 17 minutes.
+
+\textbf{The model was copying its own prompt.} Our first prompt told the model which move the car was already making. On a simplified test course, that model covered only 48\% of the route on average and froze twice, because it kept repeating the current move instead of reading the image. We removed that line and retrained. The new model got every held-out test picture right and covered 83\% of the same course with no crashes or freezes. That is close to the most any driver reached there (about 86\%), since every drive is cut off after 12 seconds.
+
+\textbf{Every part of the system is needed.} We then put the fixed model into the full MetaDrive system and compared it with two weaker versions on three roads.
+
+\begin{table}[h]
+\centering\small
+\vspace{-0.3em}
+\begin{tabular}{llll}
+\toprule
+Road & No safety layer & Safety layer, no lane changes & Full system \\
+\midrule
+Stopped car ahead & 0/5, all crashed & 0/5: 4 stuck, 1 crashed & 10/10 \\
+Stopped car, then a cut-in & 0/5, all crashed & 0/5: 4 stuck, 1 crashed & 10/10 \\
+Dense traffic & 0/5, all crashed & 5/5 & 10/10 \\
+\bottomrule
+\end{tabular}
+\vspace{-0.5em}
+\end{table}
+
+Without the safety layer, the car crashed on every road. With the safety layer but no way to change lanes, it stopped behind the parked car and waited there for nearly a minute, until the drive ran out of time. It also crashed once. Neither weaker version got far enough to meet the cut-in. In dense traffic no lane change was needed, so the second version finished too. The full system finished every drive. Its column counts each seed twice, once with and once without the extra stopping room.
+
+\textbf{With a fast model, the car never waits.} Each answer came back in about 90\,ms. On the stopped-car road the model said to pass, and the car began the pass before it ever had to brake. On the cut-in road the model said to pass and then to move back right, both answers were used, and the cut-in happened as planned without trouble. In dense traffic the model was never asked. The car never came to a stop in any of the 30 drives, and turning the extra room on or off changed nothing.
+
+\section{Your two questions}
+\textbf{Why give extra room while the model is thinking, if the controller still sees the road?} You were right, and our results bear this out. The safety layer works from what the car sees at that moment, so it handles a car cutting in whether or not the model is thinking. The extra room was never meant to prevent crashes. It was meant for one case, where the car is stuck behind a stopped car with a pass on the way, and braking right up to the bumper would leave it too close to steer around. That case only arises when the answer is slow. With answers in about 90\,ms, the pass begins before the car has to brake, and the extra room made no difference on any road. We expect it to matter only when answers take seconds, and we have not yet tested that.
+
+\textbf{How is this different from existing work?} LeapAD~\cite{leapad} and DriveVLM-Dual~\cite{drivevlm} also pair a slow language model with a fast driver, but they study how good the plans are, not what the car does while it waits for one, and neither has a safety layer acting during that wait. FASIONAD~\cite{fasionad} asks its slow model only when the fast planner is unsure, which is close to our idea of asking only when needed, but it feeds a single planner instead of choosing between separate driving skills. Work on delays in remote operation, such as Periotto et al.~\cite{periotto}, adds room because the robot's sensor readings arrive late. In our case the readings are current and only the advice is late, which is why the safety layer can handle sudden events by itself. We are not proposing a new method. Our contribution is putting these pieces together and testing them on the situations where waiting goes wrong.
+
+\section{Next steps}
+\begin{itemize}
+\item Run more seeds per road. Five each is enough to see the system work, not enough to compare close settings.
+\item Slow the answers down on purpose to find the delay at which the extra room starts to matter.
+\item Try roads the model has not seen, such as curves and a car driving alongside.
+\item Fix the last known prompt problem: it still describes other cars as parked.
+\end{itemize}
+All of this work is in simulation.
+
+\clearpage
+\footnotesize
+\begin{thebibliography}{9}\setlength{\itemsep}{0pt}
+\bibitem{leapad} J.~Mei et al. Continuously learning, adapting, and improving: a dual-process approach to autonomous driving. NeurIPS, 2024.
+\bibitem{drivevlm} X.~Tian et al. DriveVLM: the convergence of autonomous driving and large vision-language models. CoRL, 2024.
+\bibitem{fasionad} K.~Qian et al. FASIONAD: FAst and Slow FusION thinking systems for human-like autonomous driving with adaptive feedback. arXiv:2411.18013, 2024.
+\bibitem{periotto} R.~Periotto et al. MPC-CBF with adaptive safety margins for safety-critical teleoperation over imperfect network connections. arXiv:2403.18650, 2024.
+\bibitem{qwen} Qwen Team. Qwen2.5-VL technical report. arXiv:2502.13923, 2025.
+\end{thebibliography}
+
+\end{document}

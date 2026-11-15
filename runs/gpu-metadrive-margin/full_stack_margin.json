@@ -1,0 +1,286 @@
+{
+ "gpu": "NVIDIA A10",
+ "model": "/vol/ckpt/qwen25vl3b-lora-r16-noskill/merged",
+ "episodes": [
+  {
+   "method": "final_integrated",
+   "seed": 9001,
+   "reserve_mode": "fixed_latched",
+   "pending_margin": false,
+   "route_pct": 100.0,
+   "crashed": false,
+   "success": true,
+   "freeze": false,
+   "end_reason": "route_complete",
+   "end_time_s": 11.32,
+   "wall_s": 22.812157921999997,
+   "router_calls": 1,
+   "calls_applied": 1,
+   "calls_rejected": 0,
+   "stopped_s": 0.0,
+   "terminal_stall": false,
+   "pending_survival": true,
+   "letters": [
+    "B"
+   ],
+   "call_latency_ms": [
+    248.5
+   ],
+   "call_lanes": [
+    "RIGHT"
+   ]
+  },
+  {
+   "method": "final_integrated",
+   "seed": 9002,
+   "reserve_mode": "fixed_latched",
+   "pending_margin": false,
+   "route_pct": 100.0,
+   "crashed": false,
+   "success": true,
+   "freeze": false,
+   "end_reason": "route_complete",
+   "end_time_s": 11.18,
+   "wall_s": 17.911517315999987,
+   "router_calls": 1,
+   "calls_applied": 1,
+   "calls_rejected": 0,
+   "stopped_s": 0.0,
+   "terminal_stall": false,
+   "pending_survival": true,
+   "letters": [
+    "B"
+   ],
+   "call_latency_ms": [
+    91.2
+   ],
+   "call_lanes": [
+    "RIGHT"
+   ]
+  },
+  {
+   "method": "final_integrated",
+   "seed": 9003,
+   "reserve_mode": "fixed_latched",
+   "pending_margin": false,
+   "route_pct": 100.0,
+   "crashed": false,
+   "success": true,
+   "freeze": false,
+   "end_reason": "route_complete",
+   "end_time_s": 10.9,
+   "wall_s": 17.62907932799999,
+   "router_calls": 1,
+   "calls_applied": 1,
+   "calls_rejected": 0,
+   "stopped_s": 0.0,
+   "terminal_stall": false,
+   "pending_survival": true,
+   "letters": [
+    "B"
+   ],
+   "call_latency_ms": [
+    90.2
+   ],
+   "call_lanes": [
+    "RIGHT"
+   ]
+  },
+  {
+   "method": "final_integrated",
+   "seed": 9004,
+   "reserve_mode": "fixed_latched",
+   "pending_margin": false,
+   "route_pct": 100.0,
+   "crashed": false,
+   "success": true,
+   "freeze": false,
+   "end_reason": "route_complete",
+   "end_time_s": 10.74,
+   "wall_s": 17.502647961999998,
+   "router_calls": 1,
+   "calls_applied": 1,
+   "calls_rejected": 0,
+   "stopped_s": 0.0,
+   "terminal_stall": false,
+   "pending_survival": true,
+   "letters": [
+    "B"
+   ],
+   "call_latency_ms": [
+    89.9
+   ],
+   "call_lanes": [
+    "RIGHT"
+   ]
+  },
+  {
+   "method": "final_integrated",
+   "seed": 9005,
+   "reserve_mode": "fixed_latched",
+   "pending_margin": false,
+   "route_pct": 100.0,
+   "crashed": false,
+   "success": true,
+   "freeze": false,
+   "end_reason": "route_complete",
+   "end_time_s": 10.96,
+   "wall_s": 17.62604058300002,
+   "router_calls": 1,
+   "calls_applied": 1,
+   "calls_rejected": 0,
+   "stopped_s": 0.0,
+   "terminal_stall": false,
+   "pending_survival": true,
+   "letters": [
+    "B"
+   ],
+   "call_latency_ms": [
+    90.3
+   ],
+   "call_lanes": [
+    "RIGHT"
+   ]
+  },
+  {
+   "method": "no_reserve",
+   "seed": 9001,
+   "reserve_mode": "baseline",
+   "pending_margin": false,
+   "route_pct": 100.0,
+   "crashed": false,
+   "success": true,
+   "freeze": false,
+   "end_reason": "route_complete",
+   "end_time_s": 11.040000000000001,
+   "wall_s": 17.65875017799999,
+   "router_calls": 1,
+   "calls_applied": 1,
+   "calls_rejected": 0,
+   "stopped_s": 0.0,
+   "terminal_stall": false,
+   "pending_survival": true,
+   "letters": [
+    "B"
+   ],
+   "call_latency_ms": [
+    28.5
+   ],
+   "call_lanes": [
+    "RIGHT"
+   ]
+  },
+  {
+   "method": "no_reserve",
+   "seed": 9002,
+   "reserve_mode": "baseline",
+   "pending_margin": false,
+   "route_pct": 100.0,
+   "crashed": false,
+   "success": true,
+   "freeze": false,
+   "end_reason": "route_complete",
+   "end_time_s": 11.18,
+   "wall_s": 17.886555297,
+   "router_calls": 1,
+   "calls_applied": 1,
+   "calls_rejected": 0,
+   "stopped_s": 0.0,
+   "terminal_stall": false,
+   "pending_survival": true,
+   "letters": [
+    "B"
+   ],
+   "call_latency_ms": [
+    90.8
+   ],
+   "call_lanes": [
+    "RIGHT"
+   ]
+  },
+  {
+   "method": "no_reserve",
+   "seed": 9003,
+   "reserve_mode": "baseline",
+   "pending_margin": false,
+   "route_pct": 100.0,
+   "crashed": false,
+   "success": true,
+   "freeze": false,
+   "end_reason": "route_complete",
+   "end_time_s": 10.84,
+   "wall_s": 17.672463907000008,
+   "router_calls": 1,
+   "calls_applied": 1,
+   "calls_rejected": 0,
+   "stopped_s": 0.0,
+   "terminal_stall": false,
+   "pending_survival": true,
+   "letters": [
+    "B"
+   ],
+   "call_latency_ms": [
+    28.9
+   ],
+   "call_lanes": [
+    "RIGHT"
+   ]
+  },
+  {
+   "method": "no_reserve",
+   "seed": 9004,
+   "reserve_mode": "baseline",
+   "pending_margin": false,
+   "route_pct": 100.0,
+   "crashed": false,
+   "success": true,
+   "freeze": false,
+   "end_reason": "route_complete",
+   "end_time_s": 10.74,
+   "wall_s": 17.416099442000018,
+   "router_calls": 1,
+   "calls_applied": 1,
+   "calls_rejected": 0,
+   "stopped_s": 0.0,
+   "terminal_stall": false,
+   "pending_survival": true,
+   "letters": [
+    "B"
+   ],
+   "call_latency_ms": [
+    90.7
+   ],
+   "call_lanes": [
+    "RIGHT"
+   ]
+  },
+  {
+   "method": "no_reserve",
+   "seed": 9005,
+   "reserve_mode": "baseline",
+   "pending_margin": false,
+   "route_pct": 100.0,
+   "crashed": false,
+   "success": true,
+   "freeze": false,
+   "end_reason": "route_complete",
+   "end_time_s": 10.9,
+   "wall_s": 17.590476816999967,
+   "router_calls": 1,
+   "calls_applied": 1,
+   "calls_rejected": 0,
+   "stopped_s": 0.0,
+   "terminal_stall": false,
+   "pending_survival": true,
+   "letters": [
+    "B"
+   ],
+   "call_latency_ms": [
+    29.2
+   ],
+   "call_lanes": [
+    "RIGHT"
+   ]
+  }
+ ]
+}
