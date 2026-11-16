@@ -45,17 +45,17 @@ All driving runs below used one NVIDIA A10 GPU and the same five random seeds pe
 \toprule
 Road & No safety layer & Safety layer, no lane changes & Full system \\
 \midrule
-Stopped car ahead & 0/5, all crashed & 0/5: 4 stuck, 1 crashed & 10/10 \\
-Stopped car, then a cut-in & 0/5, all crashed & 0/5: 4 stuck, 1 crashed & 10/10 \\
-Dense traffic & 0/5, all crashed & 5/5 & 10/10 \\
+Stopped car ahead & 0/5, all crashed & 0/5: 4 stuck, 1 crashed & 5/5 \\
+Stopped car, then a cut-in & 0/5, all crashed & 0/5: 4 stuck, 1 crashed & 5/5 \\
+Dense traffic & 0/5, all crashed & 5/5 & 5/5 \\
 \bottomrule
 \end{tabular}
 \vspace{-0.5em}
 \end{table}
 
-Without the safety layer, the car crashed on every road. With the safety layer but no way to change lanes, it stopped behind the parked car and waited there for nearly a minute, until the drive ran out of time. It also crashed once. Neither weaker version got far enough to meet the cut-in. In dense traffic no lane change was needed, so the second version finished too. The full system finished every drive. Its column counts each seed twice, once with and once without the extra stopping room.
+Without the safety layer, the car crashed on every road. With the safety layer but no way to change lanes, it stopped behind the parked car and waited there for nearly a minute, until the drive ran out of time. It also crashed once. Neither weaker version got far enough to meet the cut-in. In dense traffic no lane change was needed, so the second version finished too. The full system finished every drive. We ran it twice on each seed, with and without the extra stopping room, and got 5/5 both times.
 
-\textbf{With a fast model, the car never waits.} Each answer came back in about 90\,ms. On the stopped-car road the model said to pass, and the car began the pass before it ever had to brake. On the cut-in road the model said to pass and then to move back right, both answers were used, and the cut-in happened as planned without trouble. In dense traffic the model was never asked. The car never came to a stop in any of the 30 drives, and turning the extra room on or off changed nothing.
+\textbf{With a fast model, the car never waits.} Each answer came back in about 90\,ms. On the stopped-car road the model said to pass, and the car began the pass before it ever had to brake. On the cut-in road the model said to pass and then to move back right, both answers were used, and the cut-in happened as planned without trouble. In dense traffic the model was never asked. Across all 30 full-system drives (three roads, five seeds, room on and off), the car never came to a stop, and turning the extra room on or off changed nothing.
 
 \section{Your two questions}
 \textbf{Why give extra room while the model is thinking, if the controller still sees the road?} You were right, and our results bear this out. The safety layer works from what the car sees at that moment, so it handles a car cutting in whether or not the model is thinking. The extra room was never meant to prevent crashes. It was meant for one case, where the car is stuck behind a stopped car with a pass on the way, and braking right up to the bumper would leave it too close to steer around. That case only arises when the answer is slow. With answers in about 90\,ms, the pass begins before the car has to brake, and the extra room made no difference on any road. We expect it to matter only when answers take seconds, and we have not yet tested that.
