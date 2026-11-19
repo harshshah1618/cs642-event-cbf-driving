@@ -1,0 +1,13 @@
+{
+  "observed_at_utc": "2026-11-19T21:27:37.429112+00:00",
+  "project_reported_compute_estimate_usd": "33.41957740",
+  "prior_project_metered_usage_usd": "7.29498340",
+  "deployed_app_metered_compute_usd": "26.12459400",
+  "account_month_metered_usd": "35.99549191",
+  "account_billed_after_credits_usd": "5.70000000",
+  "account_credits_usd": "30.00",
+  "app_state": "stopped",
+  "active_containers": 0,
+  "app_stopped_at": "2026-11-19 13:19:56-08:00",
+  "note": "Project estimate combines completed prior project buckets with all current deployed-app compute; credits are account-wide and billing may settle later."
+}

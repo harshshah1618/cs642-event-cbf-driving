@@ -1,0 +1,21 @@
+{
+  "base_model": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "base_model_revision": "66285546d2b821cf421d4f5eb2576359d3770cd3",
+  "sha256": {
+    "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-250.pt": "1ece038ab4d064322daf995bfcea9d290876c9ce39b6575c6558d7f9e6c86fe5",
+    "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-250.pt": "8c9e9b481593ba4270f0e28b950f0228a4d07b912db839e0560bddde7b65bd2d",
+    "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-250.pt": "5b48049954f7a32da8d1f883cacf0f3a2ade4df5ae5e61311d5968fbf9857e3c",
+    "/results/camera-recovery-v5/snapshots/seed0-through1000/adapter_model.safetensors": "19dd87e557ea3a6d0015175c5100cf6428065f1c8840fd5e3d0150f290deb6e6",
+    "/results/camera-recovery-v5/snapshots/seed1-through1000/adapter_model.safetensors": "dde588f909aeb9916c112b06f98f328256eee7c39f759e7fb23016a85af0f0b9",
+    "/results/camera-recovery-v5/snapshots/seed2-through1000/adapter_model.safetensors": "427328238d1d246686a2921b1c7416e49b4f10fe861ec242f19eb4b714350fe4",
+    "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-150.pt": "809c84ffa5dcb797fe84c7f55a2df695987333052e1e3f0dbf5a44d61fa07ae5",
+    "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-150.pt": "636387968028de8eea0a36afa7de7d6715ad9b7a1c777f30cececf24cacead34",
+    "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-150.pt": "d14378f594229ba0502b149c2b1570f12656d61fa8b0561966a3657ae5870e1a",
+    "/results/skills-1m-v1/skills-seed0/cloned.zip": "95f0a99d5456d72e7cf95932e35a760afdc22281bed90676108a576b6b221d78",
+    "/results/skills-1m-v1/skills-seed0/ppo.zip": "30d4d0ff2fa6cf63e9477af293a61bee955312974f94ef6edda91f0cc6f201d4",
+    "/results/skills-1m-v1/skills-seed1/cloned.zip": "72ec8fde9d2b4081ea6d38ead4b06d0298cde1fc129d3df3436ac822f54e953b",
+    "/results/skills-1m-v1/skills-seed1/ppo.zip": "0ea58e8c193bfdc9634c5ccea2adaddc87d63c1d4b886e9a54fd9d304223200d",
+    "/results/skills-1m-v1/skills-seed2/cloned.zip": "e4738b7c2496e824467a5706098730ea2f1a67a6ae7fd14dcf5b7d90a2661602",
+    "/results/skills-1m-v1/skills-seed2/ppo.zip": "65c0a41203f1af47d7518825d1b0eb3553e766e876c5b5c9892e104211937dea"
+  }
+}

@@ -45,6 +45,15 @@ All pilot runs are feasibility measurements, not benchmark victories. No
 camera-model, learned-skill, CBF-certificate or state-of-the-art claim is earned
 by the rule controller. Failed experiments remain in the run records.
 
+Latency uses a single outstanding planner request. The next request is nominally
+1.5 seconds after capture, but waits if the previous request remains pending.
+Consequently, injected delays above that period also reduce query frequency
+and increase the spacing between the two input frames. The sweep measures this
+system's combined response-delay and throughput sensitivity; it does not isolate
+staleness at a fixed request rate. Inference time is measured on the recorded
+GPU and added to injected simulated delay. This is a logical command-holding
+experiment, without a demonstrated asynchronous real-time hardware deployment.
+
 Sources: [MetaDrive source](https://github.com/metadriverse/metadrive),
 [EGPO evaluation configuration](https://github.com/decisionforce/EGPO/blob/main/egpo_utils/common.py),
 [original EGPO PPO-Lag training](https://github.com/decisionforce/EGPO/blob/main/training_script/train_ppo_lag_native.py).

@@ -1,0 +1,216 @@
+{
+  "Camera-delay0": {
+    "episodes": 150,
+    "requests": 5913,
+    "response_status": {
+      "applied": 5376,
+      "rejected": 501,
+      "pending_at_termination": 36
+    },
+    "applied_fraction": 0.9091831557584982,
+    "expired_fraction": 0.0,
+    "rejected_fraction": 0.08472856418061897,
+    "mean_requests_per_drive": 39.42,
+    "inference_seconds": {
+      "p50": 0.227992790999906,
+      "p95": 0.27147758159999286,
+      "p99": 0.2721850741201706
+    },
+    "response_age_seconds": {
+      "p50": 0.3000000000000007,
+      "p95": 0.30000000000000426,
+      "p99": 0.30000000000001137
+    },
+    "request_interval_seconds": {
+      "p50": 1.5,
+      "p95": 1.5,
+      "p99": 1.5
+    },
+    "mean_hard_brake_steps": 2.3666666666666667,
+    "hard_brake_step_fraction": 0.00405380715297127,
+    "mean_protection_interventions": 65.42666666666666,
+    "mean_lane_changes": 2.533333333333333,
+    "hardware_episode_counts": {
+      "NVIDIA A10": 125,
+      "NVIDIA A10G": 25
+    }
+  },
+  "Camera-delay0.5": {
+    "episodes": 150,
+    "requests": 5800,
+    "response_status": {
+      "rejected": 981,
+      "applied": 4738,
+      "pending_at_termination": 81
+    },
+    "applied_fraction": 0.8168965517241379,
+    "expired_fraction": 0.0,
+    "rejected_fraction": 0.16913793103448277,
+    "mean_requests_per_drive": 38.666666666666664,
+    "inference_seconds": {
+      "p50": 0.22759711199992694,
+      "p95": 0.23112598279999474,
+      "p99": 0.2335317109499968
+    },
+    "response_age_seconds": {
+      "p50": 0.8000000000000007,
+      "p95": 0.8000000000000043,
+      "p99": 0.8000000000000114
+    },
+    "request_interval_seconds": {
+      "p50": 1.5,
+      "p95": 1.5,
+      "p99": 1.5
+    },
+    "mean_hard_brake_steps": 1.9,
+    "hard_brake_step_fraction": 0.0033169618956728195,
+    "mean_protection_interventions": 52.5,
+    "mean_lane_changes": 2.3333333333333335,
+    "hardware_episode_counts": {
+      "NVIDIA A10": 150
+    }
+  },
+  "Camera-delay1": {
+    "episodes": 150,
+    "requests": 5809,
+    "response_status": {
+      "rejected": 1440,
+      "applied": 4236,
+      "pending_at_termination": 133
+    },
+    "applied_fraction": 0.7292132897228438,
+    "expired_fraction": 0.0,
+    "rejected_fraction": 0.24789120330521605,
+    "mean_requests_per_drive": 38.72666666666667,
+    "inference_seconds": {
+      "p50": 0.22918717300035496,
+      "p95": 0.271683562200019,
+      "p99": 0.2726711728398459
+    },
+    "response_age_seconds": {
+      "p50": 1.3000000000000007,
+      "p95": 1.3000000000000043,
+      "p99": 1.3000000000000114
+    },
+    "request_interval_seconds": {
+      "p50": 1.5,
+      "p95": 1.5,
+      "p99": 1.5
+    },
+    "mean_hard_brake_steps": 2.04,
+    "hard_brake_step_fraction": 0.0035580981616492834,
+    "mean_protection_interventions": 50.473333333333336,
+    "mean_lane_changes": 2.74,
+    "hardware_episode_counts": {
+      "NVIDIA A10": 100,
+      "NVIDIA A10G": 50
+    }
+  },
+  "Camera-delay2": {
+    "episodes": 150,
+    "requests": 3709,
+    "response_status": {
+      "rejected": 1348,
+      "applied": 2211,
+      "pending_at_termination": 150
+    },
+    "applied_fraction": 0.5961175519007819,
+    "expired_fraction": 0.0,
+    "rejected_fraction": 0.36344028039902937,
+    "mean_requests_per_drive": 24.726666666666667,
+    "inference_seconds": {
+      "p50": 0.22659238999995068,
+      "p95": 0.2296832183998049,
+      "p99": 0.23218358328005706
+    },
+    "response_age_seconds": {
+      "p50": 2.3000000000000007,
+      "p95": 2.3000000000000043,
+      "p99": 2.3000000000000043
+    },
+    "request_interval_seconds": {
+      "p50": 2.3000000000000007,
+      "p95": 2.3000000000000043,
+      "p99": 2.3000000000000043
+    },
+    "mean_hard_brake_steps": 2.2133333333333334,
+    "hard_brake_step_fraction": 0.003971624418312538,
+    "mean_protection_interventions": 44.50666666666667,
+    "mean_lane_changes": 2.033333333333333,
+    "hardware_episode_counts": {
+      "NVIDIA A10": 150
+    }
+  },
+  "Camera-delay4": {
+    "episodes": 150,
+    "requests": 1963,
+    "response_status": {
+      "rejected": 1192,
+      "applied": 621,
+      "pending_at_termination": 150
+    },
+    "applied_fraction": 0.3163525216505349,
+    "expired_fraction": 0.0,
+    "rejected_fraction": 0.6072338257768721,
+    "mean_requests_per_drive": 13.086666666666666,
+    "inference_seconds": {
+      "p50": 0.22652606600013314,
+      "p95": 0.27128909930015654,
+      "p99": 0.2718915797201589
+    },
+    "response_age_seconds": {
+      "p50": 4.3,
+      "p95": 4.300000000000004,
+      "p99": 4.300000000000004
+    },
+    "request_interval_seconds": {
+      "p50": 4.3,
+      "p95": 4.300000000000004,
+      "p99": 4.300000000000004
+    },
+    "mean_hard_brake_steps": 1.1733333333333333,
+    "hard_brake_step_fraction": 0.0021678080504508057,
+    "mean_protection_interventions": 45.846666666666664,
+    "mean_lane_changes": 1.4533333333333334,
+    "hardware_episode_counts": {
+      "NVIDIA A10": 125,
+      "NVIDIA A10G": 25
+    }
+  },
+  "Camera-unprotected": {
+    "episodes": 150,
+    "requests": 5089,
+    "response_status": {
+      "applied": 4758,
+      "rejected": 299,
+      "pending_at_termination": 32
+    },
+    "applied_fraction": 0.9349577520141482,
+    "expired_fraction": 0.0,
+    "rejected_fraction": 0.05875417567302024,
+    "mean_requests_per_drive": 33.92666666666667,
+    "inference_seconds": {
+      "p50": 0.2294115019999481,
+      "p95": 0.27152992800008635,
+      "p99": 0.27214472444004967
+    },
+    "response_age_seconds": {
+      "p50": 0.3000000000000007,
+      "p95": 0.30000000000000426,
+      "p99": 0.30000000000001137
+    },
+    "request_interval_seconds": {
+      "p50": 1.5,
+      "p95": 1.5,
+      "p99": 1.5
+    },
+    "mean_hard_brake_steps": 0.6466666666666666,
+    "hard_brake_step_fraction": 0.001287958254219059,
+    "mean_protection_interventions": 0.0,
+    "mean_lane_changes": 3.3466666666666667,
+    "hardware_episode_counts": {
+      "NVIDIA A10": 125,
+      "NVIDIA A10G": 25
+    }
+  }
+}

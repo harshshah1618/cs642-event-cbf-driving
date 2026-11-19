@@ -1,0 +1,3922 @@
+{
+  "protocol": "safemetadrive-current-v1",
+  "split": "test",
+  "seeds": [
+    500,
+    501,
+    502,
+    503,
+    504,
+    505,
+    506,
+    507,
+    508,
+    509,
+    510,
+    511,
+    512,
+    513,
+    514,
+    515,
+    516,
+    517,
+    518,
+    519,
+    520,
+    521,
+    522,
+    523,
+    524,
+    525,
+    526,
+    527,
+    528,
+    529,
+    530,
+    531,
+    532,
+    533,
+    534,
+    535,
+    536,
+    537,
+    538,
+    539,
+    540,
+    541,
+    542,
+    543,
+    544,
+    545,
+    546,
+    547,
+    548,
+    549
+  ],
+  "frozen_at": "2026-11-19T20:10:35.261453+00:00",
+  "simulator_revision": "fe54b03327b14bcfc17a9a04b60c8abbee4d7ab1",
+  "base_model_revision": "66285546d2b821cf421d4f5eb2576359d3770cd3",
+  "baseline_selection": {
+    "split": "validation",
+    "selection": {
+      "PPOLag": {
+        "algorithm": "PPOLag",
+        "training_family": "original",
+        "epoch": 250,
+        "transitions": 1000000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.42,
+            "mean_cost": 1.2,
+            "mean_reward": 240.92766124803595
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.6,
+            "mean_cost": 1.82,
+            "mean_reward": 302.2002883385369
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.62,
+            "mean_cost": 2.48,
+            "mean_reward": 284.25293429661485
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-250.pt",
+          "1": "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-250.pt",
+          "2": "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-250.pt"
+        },
+        "success_rate": 0.5466666666666667,
+        "mean_cost": 1.8333333333333333,
+        "mean_reward": 275.79362796106255
+      },
+      "CPO": {
+        "algorithm": "CPO",
+        "training_family": "critic-lr1e-3",
+        "epoch": 150,
+        "transitions": 600000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.08,
+            "mean_cost": 0.12,
+            "mean_reward": 155.82346699676623
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.02,
+            "mean_cost": 1.06,
+            "mean_reward": 121.89553735525689
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.02,
+            "mean_cost": 1.54,
+            "mean_reward": 90.59521399122801
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-150.pt",
+          "1": "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-150.pt",
+          "2": "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-150.pt"
+        },
+        "success_rate": 0.04,
+        "mean_cost": 0.9066666666666667,
+        "mean_reward": 122.77140611441705
+      }
+    },
+    "candidates": [
+      {
+        "algorithm": "PPOLag",
+        "training_family": "original",
+        "epoch": 50,
+        "transitions": 200000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.26,
+            "mean_cost": 1.84,
+            "mean_reward": 190.07662470628136
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.06,
+            "mean_cost": 3.8,
+            "mean_reward": 123.61151387303603
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.12,
+            "mean_cost": 4.12,
+            "mean_reward": 145.4725355024956
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-50.pt",
+          "1": "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-50.pt",
+          "2": "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-50.pt"
+        },
+        "success_rate": 0.14666666666666667,
+        "mean_cost": 3.2533333333333334,
+        "mean_reward": 153.053558027271
+      },
+      {
+        "algorithm": "PPOLag",
+        "training_family": "original",
+        "epoch": 50,
+        "transitions": 200000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.02,
+            "mean_cost": 2.82,
+            "mean_reward": 94.01153693793735
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.02,
+            "mean_cost": 1.9,
+            "mean_reward": 101.31846187625224
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.04,
+            "mean_cost": 4.34,
+            "mean_reward": 106.10839338725367
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-50.pt",
+          "1": "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-50.pt",
+          "2": "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-50.pt"
+        },
+        "success_rate": 0.02666666666666667,
+        "mean_cost": 3.0199999999999996,
+        "mean_reward": 100.47946406714776
+      },
+      {
+        "algorithm": "PPOLag",
+        "training_family": "original",
+        "epoch": 100,
+        "transitions": 400000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.26,
+            "mean_cost": 2.14,
+            "mean_reward": 207.75754035095395
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.18,
+            "mean_cost": 1.92,
+            "mean_reward": 195.1330991754473
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.34,
+            "mean_cost": 12.72,
+            "mean_reward": 183.76670301661528
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-100.pt",
+          "1": "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-100.pt",
+          "2": "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-100.pt"
+        },
+        "success_rate": 0.26,
+        "mean_cost": 5.593333333333334,
+        "mean_reward": 195.55244751433884
+      },
+      {
+        "algorithm": "PPOLag",
+        "training_family": "original",
+        "epoch": 100,
+        "transitions": 400000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.02,
+            "mean_cost": 1.74,
+            "mean_reward": 117.8042966631318
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.02,
+            "mean_cost": 1.72,
+            "mean_reward": 113.21426785394115
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.04,
+            "mean_cost": 1.76,
+            "mean_reward": 118.12973049487145
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-100.pt",
+          "1": "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-100.pt",
+          "2": "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-100.pt"
+        },
+        "success_rate": 0.02666666666666667,
+        "mean_cost": 1.74,
+        "mean_reward": 116.38276500398148
+      },
+      {
+        "algorithm": "PPOLag",
+        "training_family": "original",
+        "epoch": 150,
+        "transitions": 600000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.6,
+            "mean_cost": 1.56,
+            "mean_reward": 290.97093567577076
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.46,
+            "mean_cost": 2.06,
+            "mean_reward": 246.72973592676962
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.36,
+            "mean_cost": 2.62,
+            "mean_reward": 217.38202482092638
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-150.pt",
+          "1": "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-150.pt",
+          "2": "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-150.pt"
+        },
+        "success_rate": 0.47333333333333333,
+        "mean_cost": 2.08,
+        "mean_reward": 251.6942321411556
+      },
+      {
+        "algorithm": "PPOLag",
+        "training_family": "original",
+        "epoch": 150,
+        "transitions": 600000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.06,
+            "mean_cost": 2.2,
+            "mean_reward": 114.96628363849206
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.08,
+            "mean_cost": 1.76,
+            "mean_reward": 132.50767424630024
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.06,
+            "mean_cost": 2.98,
+            "mean_reward": 115.55835786344063
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-150.pt",
+          "1": "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-150.pt",
+          "2": "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-150.pt"
+        },
+        "success_rate": 0.06666666666666667,
+        "mean_cost": 2.313333333333333,
+        "mean_reward": 121.01077191607764
+      },
+      {
+        "algorithm": "PPOLag",
+        "training_family": "original",
+        "epoch": 200,
+        "transitions": 800000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.26,
+            "mean_cost": 1.56,
+            "mean_reward": 223.34587857571728
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.66,
+            "mean_cost": 2.54,
+            "mean_reward": 308.1276852463497
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.5,
+            "mean_cost": 2.14,
+            "mean_reward": 257.35490506777114
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-200.pt",
+          "1": "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-200.pt",
+          "2": "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-200.pt"
+        },
+        "success_rate": 0.47333333333333333,
+        "mean_cost": 2.08,
+        "mean_reward": 262.9428229632794
+      },
+      {
+        "algorithm": "PPOLag",
+        "training_family": "original",
+        "epoch": 200,
+        "transitions": 800000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.02,
+            "mean_cost": 1.76,
+            "mean_reward": 105.52603783982093
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.04,
+            "mean_cost": 2.22,
+            "mean_reward": 116.41060547716505
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.02,
+            "mean_cost": 2.02,
+            "mean_reward": 94.9312555609796
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-200.pt",
+          "1": "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-200.pt",
+          "2": "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-200.pt"
+        },
+        "success_rate": 0.02666666666666667,
+        "mean_cost": 2.0,
+        "mean_reward": 105.62263295932185
+      },
+      {
+        "algorithm": "PPOLag",
+        "training_family": "original",
+        "epoch": 250,
+        "transitions": 1000000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.42,
+            "mean_cost": 1.2,
+            "mean_reward": 240.92766124803595
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.6,
+            "mean_cost": 1.82,
+            "mean_reward": 302.2002883385369
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.62,
+            "mean_cost": 2.48,
+            "mean_reward": 284.25293429661485
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-250.pt",
+          "1": "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-250.pt",
+          "2": "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-250.pt"
+        },
+        "success_rate": 0.5466666666666667,
+        "mean_cost": 1.8333333333333333,
+        "mean_reward": 275.79362796106255
+      },
+      {
+        "algorithm": "PPOLag",
+        "training_family": "original",
+        "epoch": 250,
+        "transitions": 1000000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.04,
+            "mean_cost": 1.54,
+            "mean_reward": 108.33093765514657
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.06,
+            "mean_cost": 1.74,
+            "mean_reward": 125.6693672853734
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.02,
+            "mean_cost": 2.1,
+            "mean_reward": 103.59112777449262
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-250.pt",
+          "1": "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-250.pt",
+          "2": "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-250.pt"
+        },
+        "success_rate": 0.04,
+        "mean_cost": 1.7933333333333337,
+        "mean_reward": 112.53047757167087
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "critic-lr1e-3",
+        "epoch": 50,
+        "transitions": 200000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.12,
+            "mean_cost": 15.64,
+            "mean_reward": 94.29617689357642
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.0,
+            "mean_cost": 1.0,
+            "mean_reward": 13.392620457660419
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.0,
+            "mean_cost": 0.26,
+            "mean_reward": -1.5401153402406464
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-50.pt",
+          "1": "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-50.pt",
+          "2": "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-50.pt"
+        },
+        "success_rate": 0.04,
+        "mean_cost": 5.633333333333334,
+        "mean_reward": 35.38289400366539
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "critic-lr1e-3",
+        "epoch": 50,
+        "transitions": 200000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.02,
+            "mean_cost": 1.16,
+            "mean_reward": 95.84574250213603
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.0,
+            "mean_cost": 1.44,
+            "mean_reward": 40.0582009103186
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.0,
+            "mean_cost": 0.0,
+            "mean_reward": -0.008701215619409034
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-50.pt",
+          "1": "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-50.pt",
+          "2": "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-50.pt"
+        },
+        "success_rate": 0.006666666666666667,
+        "mean_cost": 0.8666666666666666,
+        "mean_reward": 45.298414065611745
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "critic-lr1e-3",
+        "epoch": 100,
+        "transitions": 400000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.0,
+            "mean_cost": 19.62,
+            "mean_reward": -3.4215030148488417
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.1,
+            "mean_cost": 6.62,
+            "mean_reward": 137.91868501223402
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.0,
+            "mean_cost": 0.18,
+            "mean_reward": 58.927786073391616
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-100.pt",
+          "1": "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-100.pt",
+          "2": "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-100.pt"
+        },
+        "success_rate": 0.03333333333333333,
+        "mean_cost": 8.806666666666667,
+        "mean_reward": 64.4749893569256
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "critic-lr1e-3",
+        "epoch": 100,
+        "transitions": 400000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.1,
+            "mean_cost": 100.68,
+            "mean_reward": -319.15441118702836
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.02,
+            "mean_cost": 2.98,
+            "mean_reward": 77.16931765901353
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.0,
+            "mean_cost": 0.44,
+            "mean_reward": 25.34231803591648
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-100.pt",
+          "1": "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-100.pt",
+          "2": "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-100.pt"
+        },
+        "success_rate": 0.04,
+        "mean_cost": 34.7,
+        "mean_reward": -72.21425849736612
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "critic-lr1e-3",
+        "epoch": 150,
+        "transitions": 600000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.08,
+            "mean_cost": 0.12,
+            "mean_reward": 155.82346699676623
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.02,
+            "mean_cost": 1.06,
+            "mean_reward": 121.89553735525689
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.02,
+            "mean_cost": 1.54,
+            "mean_reward": 90.59521399122801
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-150.pt",
+          "1": "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-150.pt",
+          "2": "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-150.pt"
+        },
+        "success_rate": 0.04,
+        "mean_cost": 0.9066666666666667,
+        "mean_reward": 122.77140611441705
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "critic-lr1e-3",
+        "epoch": 150,
+        "transitions": 600000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.0,
+            "mean_cost": 1.02,
+            "mean_reward": 124.91863901066893
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.04,
+            "mean_cost": 18.44,
+            "mean_reward": 24.903381188829385
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.02,
+            "mean_cost": 1.7,
+            "mean_reward": 69.91716456256422
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-150.pt",
+          "1": "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-150.pt",
+          "2": "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-150.pt"
+        },
+        "success_rate": 0.02,
+        "mean_cost": 7.053333333333334,
+        "mean_reward": 73.24639492068751
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "critic-lr1e-3",
+        "epoch": 200,
+        "transitions": 800000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.02,
+            "mean_cost": 11.68,
+            "mean_reward": 72.4641283063923
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.08,
+            "mean_cost": 10.08,
+            "mean_reward": 94.59997402418576
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.0,
+            "mean_cost": 1.0,
+            "mean_reward": 0.9369365752487431
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-200.pt",
+          "1": "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-200.pt",
+          "2": "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-200.pt"
+        },
+        "success_rate": 0.03333333333333333,
+        "mean_cost": 7.586666666666666,
+        "mean_reward": 56.00034630194227
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "critic-lr1e-3",
+        "epoch": 200,
+        "transitions": 800000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.0,
+            "mean_cost": 0.64,
+            "mean_reward": 117.05664425003637
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.1,
+            "mean_cost": 1.38,
+            "mean_reward": 122.64237559702978
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.02,
+            "mean_cost": 1.84,
+            "mean_reward": 45.60124910812637
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-200.pt",
+          "1": "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-200.pt",
+          "2": "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-200.pt"
+        },
+        "success_rate": 0.04,
+        "mean_cost": 1.2866666666666668,
+        "mean_reward": 95.10008965173084
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "critic-lr1e-3",
+        "epoch": 250,
+        "transitions": 1000000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.0,
+            "mean_cost": 0.04,
+            "mean_reward": 11.83008862147115
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.0,
+            "mean_cost": 0.9,
+            "mean_reward": 89.66271291791386
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.0,
+            "mean_cost": 1.0,
+            "mean_reward": 0.9369580386798967
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-250.pt",
+          "1": "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-250.pt",
+          "2": "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-250.pt"
+        },
+        "success_rate": 0.0,
+        "mean_cost": 0.6466666666666666,
+        "mean_reward": 34.1432531926883
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "critic-lr1e-3",
+        "epoch": 250,
+        "transitions": 1000000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.0,
+            "mean_cost": 0.1,
+            "mean_reward": 15.920200804825104
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.02,
+            "mean_cost": 37.5,
+            "mean_reward": -90.0188887447503
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.02,
+            "mean_cost": 1.96,
+            "mean_reward": 47.19474323805882
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-250.pt",
+          "1": "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-250.pt",
+          "2": "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-250.pt"
+        },
+        "success_rate": 0.013333333333333334,
+        "mean_cost": 13.186666666666667,
+        "mean_reward": -8.967981567288794
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "original",
+        "epoch": 50,
+        "transitions": 200000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.02,
+            "mean_cost": 1.16,
+            "mean_reward": 91.32765330685442
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.02,
+            "mean_cost": 16.66,
+            "mean_reward": 48.12060974355405
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.02,
+            "mean_cost": 3.42,
+            "mean_reward": 118.24705743394588
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-completion-v2/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-18-27-28/torch_save/epoch-50.pt",
+          "1": "/results/baselines-completion-v2/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-28/torch_save/epoch-50.pt",
+          "2": "/results/baselines-completion-v2/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-18-27-22/torch_save/epoch-50.pt"
+        },
+        "success_rate": 0.02,
+        "mean_cost": 7.080000000000001,
+        "mean_reward": 85.89844016145145
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "original",
+        "epoch": 50,
+        "transitions": 200000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.0,
+            "mean_cost": 1.06,
+            "mean_reward": 73.1239374183652
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.04,
+            "mean_cost": 3.0,
+            "mean_reward": 75.1749283447032
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.0,
+            "mean_cost": 1.38,
+            "mean_reward": 79.64799051126859
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-completion-v2/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-18-27-28/torch_save/epoch-50.pt",
+          "1": "/results/baselines-completion-v2/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-28/torch_save/epoch-50.pt",
+          "2": "/results/baselines-completion-v2/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-18-27-22/torch_save/epoch-50.pt"
+        },
+        "success_rate": 0.013333333333333334,
+        "mean_cost": 1.8133333333333335,
+        "mean_reward": 75.982285424779
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "original",
+        "epoch": 100,
+        "transitions": 400000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.0,
+            "mean_cost": 1.08,
+            "mean_reward": 64.37307758189534
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.0,
+            "mean_cost": 1.0,
+            "mean_reward": 15.372748181556688
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.04,
+            "mean_cost": 56.56,
+            "mean_reward": -141.3490460676812
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-completion-v2/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-18-27-28/torch_save/epoch-100.pt",
+          "1": "/results/baselines-completion-v2/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-28/torch_save/epoch-100.pt",
+          "2": "/results/baselines-completion-v2/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-18-27-22/torch_save/epoch-100.pt"
+        },
+        "success_rate": 0.013333333333333334,
+        "mean_cost": 19.546666666666667,
+        "mean_reward": -20.53440676807639
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "original",
+        "epoch": 100,
+        "transitions": 400000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.02,
+            "mean_cost": 1.54,
+            "mean_reward": 84.05582314571589
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.02,
+            "mean_cost": 2.5,
+            "mean_reward": 80.8325992977402
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.02,
+            "mean_cost": 1.62,
+            "mean_reward": 106.70831343690237
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-completion-v2/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-18-27-28/torch_save/epoch-100.pt",
+          "1": "/results/baselines-completion-v2/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-28/torch_save/epoch-100.pt",
+          "2": "/results/baselines-completion-v2/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-18-27-22/torch_save/epoch-100.pt"
+        },
+        "success_rate": 0.02,
+        "mean_cost": 1.8866666666666667,
+        "mean_reward": 90.53224529345282
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "original",
+        "epoch": 150,
+        "transitions": 600000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.08,
+            "mean_cost": 2.66,
+            "mean_reward": 124.04745626821466
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.0,
+            "mean_cost": 1.0,
+            "mean_reward": 5.9445548491486395
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.02,
+            "mean_cost": 19.44,
+            "mean_reward": 46.532053542916984
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-completion-v2/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-18-27-28/torch_save/epoch-150.pt",
+          "1": "/results/baselines-completion-v2/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-28/torch_save/epoch-150.pt",
+          "2": "/results/baselines-completion-v2/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-18-27-22/torch_save/epoch-150.pt"
+        },
+        "success_rate": 0.03333333333333333,
+        "mean_cost": 7.7,
+        "mean_reward": 58.84135488676009
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "original",
+        "epoch": 150,
+        "transitions": 600000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.02,
+            "mean_cost": 1.06,
+            "mean_reward": 78.02074249687881
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.02,
+            "mean_cost": 1.98,
+            "mean_reward": 67.28203991899584
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.06,
+            "mean_cost": 19.74,
+            "mean_reward": 18.51486465735127
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-completion-v2/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-18-27-28/torch_save/epoch-150.pt",
+          "1": "/results/baselines-completion-v2/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-28/torch_save/epoch-150.pt",
+          "2": "/results/baselines-completion-v2/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-18-27-22/torch_save/epoch-150.pt"
+        },
+        "success_rate": 0.03333333333333333,
+        "mean_cost": 7.593333333333333,
+        "mean_reward": 54.60588235774197
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "original",
+        "epoch": 200,
+        "transitions": 800000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.06,
+            "mean_cost": 11.86,
+            "mean_reward": 84.67491343866213
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.0,
+            "mean_cost": 1.0,
+            "mean_reward": 4.77027153018292
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.04,
+            "mean_cost": 33.98,
+            "mean_reward": -34.6489982783457
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-completion-v2/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-18-27-28/torch_save/epoch-200.pt",
+          "1": "/results/baselines-completion-v2/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-28/torch_save/epoch-200.pt",
+          "2": "/results/baselines-completion-v2/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-18-27-22/torch_save/epoch-200.pt"
+        },
+        "success_rate": 0.03333333333333333,
+        "mean_cost": 15.613333333333332,
+        "mean_reward": 18.265395563499784
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "original",
+        "epoch": 200,
+        "transitions": 800000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.02,
+            "mean_cost": 19.88,
+            "mean_reward": 22.271987847970532
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.02,
+            "mean_cost": 1.96,
+            "mean_reward": 62.91054979765827
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.02,
+            "mean_cost": 72.96,
+            "mean_reward": -257.4318169975447
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-completion-v2/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-18-27-28/torch_save/epoch-200.pt",
+          "1": "/results/baselines-completion-v2/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-28/torch_save/epoch-200.pt",
+          "2": "/results/baselines-completion-v2/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-18-27-22/torch_save/epoch-200.pt"
+        },
+        "success_rate": 0.02,
+        "mean_cost": 31.599999999999998,
+        "mean_reward": -57.416426450638625
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "original",
+        "epoch": 250,
+        "transitions": 1000000,
+        "deterministic": false,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.02,
+            "mean_cost": 26.86,
+            "mean_reward": -8.229894719767548
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.0,
+            "mean_cost": 1.0,
+            "mean_reward": 4.770704179055196
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.06,
+            "mean_cost": 0.52,
+            "mean_reward": 142.1106253481392
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-completion-v2/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-18-27-28/torch_save/epoch-250.pt",
+          "1": "/results/baselines-completion-v2/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-28/torch_save/epoch-250.pt",
+          "2": "/results/baselines-completion-v2/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-18-27-22/torch_save/epoch-250.pt"
+        },
+        "success_rate": 0.02666666666666667,
+        "mean_cost": 9.459999999999999,
+        "mean_reward": 46.21714493580895
+      },
+      {
+        "algorithm": "CPO",
+        "training_family": "original",
+        "epoch": 250,
+        "transitions": 1000000,
+        "deterministic": true,
+        "replicas": [
+          {
+            "seed": 0,
+            "success_rate": 0.04,
+            "mean_cost": 19.92,
+            "mean_reward": 12.414338140165144
+          },
+          {
+            "seed": 1,
+            "success_rate": 0.02,
+            "mean_cost": 2.16,
+            "mean_reward": 64.1784783531677
+          },
+          {
+            "seed": 2,
+            "success_rate": 0.06,
+            "mean_cost": 0.74,
+            "mean_reward": 113.26811368252258
+          }
+        ],
+        "checkpoints": {
+          "0": "/results/baselines-completion-v2/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-18-27-28/torch_save/epoch-250.pt",
+          "1": "/results/baselines-completion-v2/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-28/torch_save/epoch-250.pt",
+          "2": "/results/baselines-completion-v2/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-18-27-22/torch_save/epoch-250.pt"
+        },
+        "success_rate": 0.04,
+        "mean_cost": 7.6066666666666665,
+        "mean_reward": 63.28697672528514
+      }
+    ],
+    "criterion": "Maximize mean destination success across three seeds; ties minimize native cost, maximize return, prefer earlier checkpoints, then mean actions. Use one training family, checkpoint epoch and inference mode per algorithm."
+  },
+  "camera_selection": {
+    "run": "camera-recovery-v5",
+    "through_step": 1000,
+    "success_rate": 0.92,
+    "mean_cost": 0.11333333333333333,
+    "mean_reward": 357.17689915980975,
+    "per_seed_success": [
+      0.96,
+      0.92,
+      0.88
+    ]
+  },
+  "camera_candidates": [
+    {
+      "run": "camera-balanced-v2",
+      "through_step": 600,
+      "success_rate": 0.9066666666666666,
+      "mean_cost": 0.14,
+      "mean_reward": 350.6408404648112,
+      "per_seed_success": [
+        0.94,
+        0.92,
+        0.86
+      ]
+    },
+    {
+      "run": "camera-recovery-v5",
+      "through_step": 1000,
+      "success_rate": 0.92,
+      "mean_cost": 0.11333333333333333,
+      "mean_reward": 357.17689915980975,
+      "per_seed_success": [
+        0.96,
+        0.92,
+        0.88
+      ]
+    }
+  ],
+  "camera_criterion": "Common family across three seeds: maximize development destination success, then lower native cost, higher return, earlier family.",
+  "cpu_specs": [
+    [
+      "heldout-study-v1/episodes/IDM-seed0",
+      "idm",
+      {},
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Rule-seed0",
+      "lane_caution_rule",
+      {
+        "speed": 30.0
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Rule-PPO-seed0",
+      "lane_caution_rule",
+      {
+        "speed": 30.0,
+        "skill_checkpoint": "/results/skills-1m-v1/skills-seed0/ppo.zip"
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Rule-BC-seed0",
+      "lane_caution_rule",
+      {
+        "speed": 30.0,
+        "skill_checkpoint": "/results/skills-1m-v1/skills-seed0/cloned.zip"
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Fixed-normal-seed0",
+      "lane_caution_rule",
+      {
+        "speed": 30.0,
+        "skill_checkpoint": "/results/skills-1m-v1/skills-seed0/ppo.zip",
+        "planner": "external",
+        "initial_careful": false
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Fixed-careful-seed0",
+      "lane_caution_rule",
+      {
+        "speed": 30.0,
+        "skill_checkpoint": "/results/skills-1m-v1/skills-seed0/ppo.zip",
+        "planner": "external",
+        "initial_careful": true
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/PPOLag-seed0",
+      "native_learned",
+      {
+        "checkpoint": "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-250.pt",
+        "deterministic": false,
+        "policy_seed": 0
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/CPO-seed0",
+      "native_learned",
+      {
+        "checkpoint": "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-150.pt",
+        "deterministic": false,
+        "policy_seed": 0
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Rule-PPO-seed1",
+      "lane_caution_rule",
+      {
+        "speed": 30.0,
+        "skill_checkpoint": "/results/skills-1m-v1/skills-seed1/ppo.zip"
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Rule-BC-seed1",
+      "lane_caution_rule",
+      {
+        "speed": 30.0,
+        "skill_checkpoint": "/results/skills-1m-v1/skills-seed1/cloned.zip"
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Fixed-normal-seed1",
+      "lane_caution_rule",
+      {
+        "speed": 30.0,
+        "skill_checkpoint": "/results/skills-1m-v1/skills-seed1/ppo.zip",
+        "planner": "external",
+        "initial_careful": false
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Fixed-careful-seed1",
+      "lane_caution_rule",
+      {
+        "speed": 30.0,
+        "skill_checkpoint": "/results/skills-1m-v1/skills-seed1/ppo.zip",
+        "planner": "external",
+        "initial_careful": true
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/PPOLag-seed1",
+      "native_learned",
+      {
+        "checkpoint": "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-250.pt",
+        "deterministic": false,
+        "policy_seed": 1000003
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/CPO-seed1",
+      "native_learned",
+      {
+        "checkpoint": "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-150.pt",
+        "deterministic": false,
+        "policy_seed": 1000003
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Rule-PPO-seed2",
+      "lane_caution_rule",
+      {
+        "speed": 30.0,
+        "skill_checkpoint": "/results/skills-1m-v1/skills-seed2/ppo.zip"
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Rule-BC-seed2",
+      "lane_caution_rule",
+      {
+        "speed": 30.0,
+        "skill_checkpoint": "/results/skills-1m-v1/skills-seed2/cloned.zip"
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Fixed-normal-seed2",
+      "lane_caution_rule",
+      {
+        "speed": 30.0,
+        "skill_checkpoint": "/results/skills-1m-v1/skills-seed2/ppo.zip",
+        "planner": "external",
+        "initial_careful": false
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/Fixed-careful-seed2",
+      "lane_caution_rule",
+      {
+        "speed": 30.0,
+        "skill_checkpoint": "/results/skills-1m-v1/skills-seed2/ppo.zip",
+        "planner": "external",
+        "initial_careful": true
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/PPOLag-seed2",
+      "native_learned",
+      {
+        "checkpoint": "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-250.pt",
+        "deterministic": false,
+        "policy_seed": 2000006
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ],
+    [
+      "heldout-study-v1/episodes/CPO-seed2",
+      "native_learned",
+      {
+        "checkpoint": "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-150.pt",
+        "deterministic": false,
+        "policy_seed": 2000006
+      },
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ]
+    ]
+  ],
+  "camera_specs": [
+    [
+      "heldout-study-v1/episodes/Camera-delay0-seed0-500",
+      "/results/camera-recovery-v5/snapshots/seed0-through1000",
+      "/results/skills-1m-v1/skills-seed0/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      0.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay0-seed0-525",
+      "/results/camera-recovery-v5/snapshots/seed0-through1000",
+      "/results/skills-1m-v1/skills-seed0/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      0.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay0.5-seed0-500",
+      "/results/camera-recovery-v5/snapshots/seed0-through1000",
+      "/results/skills-1m-v1/skills-seed0/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      0.5,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay0.5-seed0-525",
+      "/results/camera-recovery-v5/snapshots/seed0-through1000",
+      "/results/skills-1m-v1/skills-seed0/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      0.5,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay1-seed0-500",
+      "/results/camera-recovery-v5/snapshots/seed0-through1000",
+      "/results/skills-1m-v1/skills-seed0/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      1.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay1-seed0-525",
+      "/results/camera-recovery-v5/snapshots/seed0-through1000",
+      "/results/skills-1m-v1/skills-seed0/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      1.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay2-seed0-500",
+      "/results/camera-recovery-v5/snapshots/seed0-through1000",
+      "/results/skills-1m-v1/skills-seed0/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      2.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay2-seed0-525",
+      "/results/camera-recovery-v5/snapshots/seed0-through1000",
+      "/results/skills-1m-v1/skills-seed0/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      2.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay4-seed0-500",
+      "/results/camera-recovery-v5/snapshots/seed0-through1000",
+      "/results/skills-1m-v1/skills-seed0/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      4.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay4-seed0-525",
+      "/results/camera-recovery-v5/snapshots/seed0-through1000",
+      "/results/skills-1m-v1/skills-seed0/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      4.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-unprotected-seed0-500",
+      "/results/camera-recovery-v5/snapshots/seed0-through1000",
+      "/results/skills-1m-v1/skills-seed0/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      0.0,
+      false
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-unprotected-seed0-525",
+      "/results/camera-recovery-v5/snapshots/seed0-through1000",
+      "/results/skills-1m-v1/skills-seed0/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      0.0,
+      false
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay0-seed1-500",
+      "/results/camera-recovery-v5/snapshots/seed1-through1000",
+      "/results/skills-1m-v1/skills-seed1/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      0.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay0-seed1-525",
+      "/results/camera-recovery-v5/snapshots/seed1-through1000",
+      "/results/skills-1m-v1/skills-seed1/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      0.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay0.5-seed1-500",
+      "/results/camera-recovery-v5/snapshots/seed1-through1000",
+      "/results/skills-1m-v1/skills-seed1/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      0.5,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay0.5-seed1-525",
+      "/results/camera-recovery-v5/snapshots/seed1-through1000",
+      "/results/skills-1m-v1/skills-seed1/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      0.5,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay1-seed1-500",
+      "/results/camera-recovery-v5/snapshots/seed1-through1000",
+      "/results/skills-1m-v1/skills-seed1/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      1.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay1-seed1-525",
+      "/results/camera-recovery-v5/snapshots/seed1-through1000",
+      "/results/skills-1m-v1/skills-seed1/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      1.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay2-seed1-500",
+      "/results/camera-recovery-v5/snapshots/seed1-through1000",
+      "/results/skills-1m-v1/skills-seed1/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      2.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay2-seed1-525",
+      "/results/camera-recovery-v5/snapshots/seed1-through1000",
+      "/results/skills-1m-v1/skills-seed1/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      2.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay4-seed1-500",
+      "/results/camera-recovery-v5/snapshots/seed1-through1000",
+      "/results/skills-1m-v1/skills-seed1/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      4.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay4-seed1-525",
+      "/results/camera-recovery-v5/snapshots/seed1-through1000",
+      "/results/skills-1m-v1/skills-seed1/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      4.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-unprotected-seed1-500",
+      "/results/camera-recovery-v5/snapshots/seed1-through1000",
+      "/results/skills-1m-v1/skills-seed1/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      0.0,
+      false
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-unprotected-seed1-525",
+      "/results/camera-recovery-v5/snapshots/seed1-through1000",
+      "/results/skills-1m-v1/skills-seed1/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      0.0,
+      false
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay0-seed2-500",
+      "/results/camera-recovery-v5/snapshots/seed2-through1000",
+      "/results/skills-1m-v1/skills-seed2/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      0.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay0-seed2-525",
+      "/results/camera-recovery-v5/snapshots/seed2-through1000",
+      "/results/skills-1m-v1/skills-seed2/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      0.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay0.5-seed2-500",
+      "/results/camera-recovery-v5/snapshots/seed2-through1000",
+      "/results/skills-1m-v1/skills-seed2/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      0.5,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay0.5-seed2-525",
+      "/results/camera-recovery-v5/snapshots/seed2-through1000",
+      "/results/skills-1m-v1/skills-seed2/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      0.5,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay1-seed2-500",
+      "/results/camera-recovery-v5/snapshots/seed2-through1000",
+      "/results/skills-1m-v1/skills-seed2/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      1.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay1-seed2-525",
+      "/results/camera-recovery-v5/snapshots/seed2-through1000",
+      "/results/skills-1m-v1/skills-seed2/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      1.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay2-seed2-500",
+      "/results/camera-recovery-v5/snapshots/seed2-through1000",
+      "/results/skills-1m-v1/skills-seed2/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      2.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay2-seed2-525",
+      "/results/camera-recovery-v5/snapshots/seed2-through1000",
+      "/results/skills-1m-v1/skills-seed2/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      2.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay4-seed2-500",
+      "/results/camera-recovery-v5/snapshots/seed2-through1000",
+      "/results/skills-1m-v1/skills-seed2/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      4.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-delay4-seed2-525",
+      "/results/camera-recovery-v5/snapshots/seed2-through1000",
+      "/results/skills-1m-v1/skills-seed2/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      4.0,
+      true
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-unprotected-seed2-500",
+      "/results/camera-recovery-v5/snapshots/seed2-through1000",
+      "/results/skills-1m-v1/skills-seed2/ppo.zip",
+      "test",
+      [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524
+      ],
+      0.0,
+      false
+    ],
+    [
+      "heldout-study-v1/episodes/Camera-unprotected-seed2-525",
+      "/results/camera-recovery-v5/snapshots/seed2-through1000",
+      "/results/skills-1m-v1/skills-seed2/ppo.zip",
+      "test",
+      [
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      0.0,
+      false
+    ]
+  ],
+  "groups": {
+    "IDM": [
+      [
+        "/results/heldout-study-v1/episodes/IDM-seed0.json"
+      ]
+    ],
+    "Rule": [
+      [
+        "/results/heldout-study-v1/episodes/Rule-seed0.json"
+      ]
+    ],
+    "Rule-PPO": [
+      [
+        "/results/heldout-study-v1/episodes/Rule-PPO-seed0.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Rule-PPO-seed1.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Rule-PPO-seed2.json"
+      ]
+    ],
+    "Rule-BC": [
+      [
+        "/results/heldout-study-v1/episodes/Rule-BC-seed0.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Rule-BC-seed1.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Rule-BC-seed2.json"
+      ]
+    ],
+    "Fixed-normal": [
+      [
+        "/results/heldout-study-v1/episodes/Fixed-normal-seed0.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Fixed-normal-seed1.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Fixed-normal-seed2.json"
+      ]
+    ],
+    "Fixed-careful": [
+      [
+        "/results/heldout-study-v1/episodes/Fixed-careful-seed0.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Fixed-careful-seed1.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Fixed-careful-seed2.json"
+      ]
+    ],
+    "PPOLag": [
+      [
+        "/results/heldout-study-v1/episodes/PPOLag-seed0.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/PPOLag-seed1.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/PPOLag-seed2.json"
+      ]
+    ],
+    "CPO": [
+      [
+        "/results/heldout-study-v1/episodes/CPO-seed0.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/CPO-seed1.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/CPO-seed2.json"
+      ]
+    ],
+    "Camera-delay0": [
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay0-seed0-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay0-seed0-525.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay0-seed1-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay0-seed1-525.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay0-seed2-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay0-seed2-525.json"
+      ]
+    ],
+    "Camera-delay0.5": [
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay0.5-seed0-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay0.5-seed0-525.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay0.5-seed1-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay0.5-seed1-525.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay0.5-seed2-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay0.5-seed2-525.json"
+      ]
+    ],
+    "Camera-delay1": [
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay1-seed0-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay1-seed0-525.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay1-seed1-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay1-seed1-525.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay1-seed2-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay1-seed2-525.json"
+      ]
+    ],
+    "Camera-delay2": [
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay2-seed0-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay2-seed0-525.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay2-seed1-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay2-seed1-525.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay2-seed2-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay2-seed2-525.json"
+      ]
+    ],
+    "Camera-delay4": [
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay4-seed0-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay4-seed0-525.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay4-seed1-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay4-seed1-525.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Camera-delay4-seed2-500.json",
+        "/results/heldout-study-v1/episodes/Camera-delay4-seed2-525.json"
+      ]
+    ],
+    "Camera-unprotected": [
+      [
+        "/results/heldout-study-v1/episodes/Camera-unprotected-seed0-500.json",
+        "/results/heldout-study-v1/episodes/Camera-unprotected-seed0-525.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Camera-unprotected-seed1-500.json",
+        "/results/heldout-study-v1/episodes/Camera-unprotected-seed1-525.json"
+      ],
+      [
+        "/results/heldout-study-v1/episodes/Camera-unprotected-seed2-500.json",
+        "/results/heldout-study-v1/episodes/Camera-unprotected-seed2-525.json"
+      ]
+    ]
+  },
+  "artifact_sha256": {
+    "/results/baselines-1m-v1/PPOLag-seed0/PPOLag-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-02-02-42/torch_save/epoch-250.pt": "1ece038ab4d064322daf995bfcea9d290876c9ce39b6575c6558d7f9e6c86fe5",
+    "/results/baselines-1m-v1/PPOLag-seed2/PPOLag-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-02-02-57/torch_save/epoch-250.pt": "8c9e9b481593ba4270f0e28b950f0228a4d07b912db839e0560bddde7b65bd2d",
+    "/results/baselines-completion-v2/PPOLag-seed1/PPOLag-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-18-27-20/torch_save/epoch-250.pt": "5b48049954f7a32da8d1f883cacf0f3a2ade4df5ae5e61311d5968fbf9857e3c",
+    "/results/camera-recovery-v5/snapshots/seed0-through1000/adapter_model.safetensors": "19dd87e557ea3a6d0015175c5100cf6428065f1c8840fd5e3d0150f290deb6e6",
+    "/results/camera-recovery-v5/snapshots/seed1-through1000/adapter_model.safetensors": "dde588f909aeb9916c112b06f98f328256eee7c39f759e7fb23016a85af0f0b9",
+    "/results/camera-recovery-v5/snapshots/seed2-through1000/adapter_model.safetensors": "427328238d1d246686a2921b1c7416e49b4f10fe861ec242f19eb4b714350fe4",
+    "/results/cpo-critic-lr-v1/CPO-seed0/CPO-{CS642SafeMetaDrive-v0}/seed-000-2026-11-19-19-28-02/torch_save/epoch-150.pt": "809c84ffa5dcb797fe84c7f55a2df695987333052e1e3f0dbf5a44d61fa07ae5",
+    "/results/cpo-critic-lr-v1/CPO-seed1/CPO-{CS642SafeMetaDrive-v0}/seed-001-2026-11-19-19-28-02/torch_save/epoch-150.pt": "636387968028de8eea0a36afa7de7d6715ad9b7a1c777f30cececf24cacead34",
+    "/results/cpo-critic-lr-v1/CPO-seed2/CPO-{CS642SafeMetaDrive-v0}/seed-002-2026-11-19-19-28-03/torch_save/epoch-150.pt": "d14378f594229ba0502b149c2b1570f12656d61fa8b0561966a3657ae5870e1a",
+    "/results/skills-1m-v1/skills-seed0/cloned.zip": "95f0a99d5456d72e7cf95932e35a760afdc22281bed90676108a576b6b221d78",
+    "/results/skills-1m-v1/skills-seed0/ppo.zip": "30d4d0ff2fa6cf63e9477af293a61bee955312974f94ef6edda91f0cc6f201d4",
+    "/results/skills-1m-v1/skills-seed1/cloned.zip": "72ec8fde9d2b4081ea6d38ead4b06d0298cde1fc129d3df3436ac822f54e953b",
+    "/results/skills-1m-v1/skills-seed1/ppo.zip": "0ea58e8c193bfdc9634c5ccea2adaddc87d63c1d4b886e9a54fd9d304223200d",
+    "/results/skills-1m-v1/skills-seed2/cloned.zip": "e4738b7c2496e824467a5706098730ea2f1a67a6ae7fd14dcf5b7d90a2661602",
+    "/results/skills-1m-v1/skills-seed2/ppo.zip": "65c0a41203f1af47d7518825d1b0eb3553e766e876c5b5c9892e104211937dea"
+  },
+  "source_sha256": {
+    "driving/safemetadrive/__init__.py": "7bcde39b18e055c94ed7cb34bbeb3f13a80cc8bd78e64c3ceb65d5ff95399238",
+    "driving/safemetadrive/camera_planner.py": "71ce9f8f6c62ae6910b939831247627fa08b832c18718cf20aebe30ed8fbcb29",
+    "driving/safemetadrive/campaign.py": "0cdb4f04bf5ddbc28bd1fdcdfbda5d1f6512f8ccd68d08c01ad40503d4cf34a8",
+    "driving/safemetadrive/omnisafe_env.py": "a00b935a5a452d1573e772a13a2274f1c39339a05e5c7048ceff390fa4a173cd",
+    "driving/safemetadrive/policies.py": "e55ad2339faa79ccee4370f1a73bed1f84d835d614e4433d4a6b92e53ae7a80d",
+    "driving/safemetadrive/protocol.py": "1ee8d8f075a5d015c3f30c5cdf35a66874dd3b04022ab3bdf9ef23117acb05b9",
+    "driving/safemetadrive/selection.py": "244ee4a43a4f0a80c8f470130d7683d79fc17392ef49527566da7c3c6a294d10",
+    "driving/safemetadrive/skill_env.py": "d67209494cea6961da92703324cee444ee595140da9ea2fbcb6c13a649b65f72",
+    "driving/safemetadrive/training_state.py": "d52b6dc88b984f04ed12f47733db8bc26eb3f3b2c2327a981d851501ff87f5ec",
+    "tools/safemetadrive_analyze.py": "f4c208d140b69a7374fedadeff9504a57513fca29dbd2a39d85f26b0839c0ebe",
+    "tools/safemetadrive_camera_data.py": "59ec69604a3e6422f052614152cf426ef1bb352d716ca87836e245b021e9c6a8",
+    "tools/safemetadrive_camera_eval.py": "8f704a31831f95261e8ef046fcfab6f2216060592128c103f88e750cd92b8f90",
+    "tools/safemetadrive_eval.py": "91edd1cd23c7872876268785b32f9f4b0d8ab20b50e7c2829c2077941e04132f",
+    "tools/safemetadrive_train.py": "59710ee873734fa5666efcaee334132885d1f6fa375390e7007301cfa06ba486",
+    "tools/safemetadrive_train_camera.py": "e3587e9eb4057e6e078210f032defbd95da705228ff6fe93f93735b8c0cfcb36",
+    "tools/safemetadrive_train_skills.py": "a504973e880ac4b49dc0a9f2d8019c19727f291d6c5b3e3e7a3bd15ac3bf014f"
+  },
+  "plan_sha256": "85782015a88e80f79828c1398b1a450acbd115b61b761b714e8a43c0461f5f30"
+}

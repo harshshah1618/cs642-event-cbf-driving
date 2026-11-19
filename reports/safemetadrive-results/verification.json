@@ -1,0 +1,19 @@
+{
+  "final_episodes": 1900,
+  "unique_test_maps": 50,
+  "cpu_reports": 20,
+  "camera_reports": 36,
+  "camera_calls": 28283,
+  "frozen_model_hashes_verified": 15,
+  "downloaded_model_files": 51,
+  "model_backup_mb": 410.9,
+  "package_source_hashes_match": true,
+  "map_coverage_verified": true,
+  "local_and_remote_aggregates_and_paired_intervals_match": true,
+  "camera_probability_vectors_finite": true,
+  "lane_action_masks_verified": true,
+  "repository_tests_passed": 257,
+  "frozen_plan_sha256": "85782015a88e80f79828c1398b1a450acbd115b61b761b714e8a43c0461f5f30",
+  "frozen_plan_hash_definition": "SHA256 of json.dumps(plan without plan_sha256, sort_keys=True).encode()",
+  "frozen_plan_file_sha256": "ca1ce844b985f74fa91e87bc4cd56087a9d103f4659f944ca21ed30c5b7984b2"
+}
