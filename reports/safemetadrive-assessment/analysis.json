@@ -1,0 +1,1921 @@
+{
+  "scope": "Retrospective audit of frozen test outputs; diagnostic, not a new model-selection set.",
+  "summaries": {
+    "IDM": {
+      "episodes": 50,
+      "successes": 44,
+      "zero_cost_successes": 38,
+      "positive_cost_episodes": 12,
+      "total_cost": 59.0,
+      "timeouts": 0,
+      "failed_violations": {
+        "out_of_road": 6,
+        "crash_vehicle": 1
+      },
+      "mean_steps": 438.94,
+      "mean_interventions": null,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 44,
+          "cost": 59.0
+        }
+      ]
+    },
+    "Rule": {
+      "episodes": 50,
+      "successes": 50,
+      "zero_cost_successes": 50,
+      "positive_cost_episodes": 0,
+      "total_cost": 0.0,
+      "timeouts": 0,
+      "failed_violations": {},
+      "mean_steps": 481.34,
+      "mean_interventions": 12.62,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 50,
+          "cost": 0.0
+        }
+      ]
+    },
+    "Rule-PPO": {
+      "episodes": 150,
+      "successes": 150,
+      "zero_cost_successes": 149,
+      "positive_cost_episodes": 1,
+      "total_cost": 3.0,
+      "timeouts": 0,
+      "failed_violations": {},
+      "mean_steps": 481.74,
+      "mean_interventions": 12.126666666666667,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 50,
+          "cost": 3.0
+        },
+        {
+          "replica": 1,
+          "successes": 50,
+          "cost": 0.0
+        },
+        {
+          "replica": 2,
+          "successes": 50,
+          "cost": 0.0
+        }
+      ]
+    },
+    "Rule-BC": {
+      "episodes": 150,
+      "successes": 150,
+      "zero_cost_successes": 150,
+      "positive_cost_episodes": 0,
+      "total_cost": 0.0,
+      "timeouts": 0,
+      "failed_violations": {},
+      "mean_steps": 483.11333333333334,
+      "mean_interventions": 12.12,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 50,
+          "cost": 0.0
+        },
+        {
+          "replica": 1,
+          "successes": 50,
+          "cost": 0.0
+        },
+        {
+          "replica": 2,
+          "successes": 50,
+          "cost": 0.0
+        }
+      ]
+    },
+    "Fixed-normal": {
+      "episodes": 150,
+      "successes": 69,
+      "zero_cost_successes": 68,
+      "positive_cost_episodes": 1,
+      "total_cost": 3.0,
+      "timeouts": 81,
+      "failed_violations": {},
+      "mean_steps": 766.1866666666666,
+      "mean_interventions": 427.12,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 23,
+          "cost": 3.0
+        },
+        {
+          "replica": 1,
+          "successes": 23,
+          "cost": 0.0
+        },
+        {
+          "replica": 2,
+          "successes": 23,
+          "cost": 0.0
+        }
+      ]
+    },
+    "Fixed-careful": {
+      "episodes": 150,
+      "successes": 69,
+      "zero_cost_successes": 66,
+      "positive_cost_episodes": 3,
+      "total_cost": 10.0,
+      "timeouts": 81,
+      "failed_violations": {},
+      "mean_steps": 841.26,
+      "mean_interventions": 372.48,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 23,
+          "cost": 4.0
+        },
+        {
+          "replica": 1,
+          "successes": 23,
+          "cost": 3.0
+        },
+        {
+          "replica": 2,
+          "successes": 23,
+          "cost": 3.0
+        }
+      ]
+    },
+    "PPOLag": {
+      "episodes": 150,
+      "successes": 89,
+      "zero_cost_successes": 69,
+      "positive_cost_episodes": 81,
+      "total_cost": 289.0,
+      "timeouts": 0,
+      "failed_violations": {
+        "out_of_road": 61,
+        "crash_object": 14,
+        "crash_vehicle": 3
+      },
+      "mean_steps": 444.7133333333333,
+      "mean_interventions": null,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 31,
+          "cost": 134.0
+        },
+        {
+          "replica": 1,
+          "successes": 31,
+          "cost": 94.0
+        },
+        {
+          "replica": 2,
+          "successes": 27,
+          "cost": 61.0
+        }
+      ]
+    },
+    "CPO": {
+      "episodes": 150,
+      "successes": 1,
+      "zero_cost_successes": 1,
+      "positive_cost_episodes": 67,
+      "total_cost": 3290.0,
+      "timeouts": 88,
+      "failed_violations": {
+        "out_of_road": 61,
+        "crash_object": 6
+      },
+      "mean_steps": 736.1733333333333,
+      "mean_interventions": null,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 1,
+          "cost": 7.0
+        },
+        {
+          "replica": 1,
+          "successes": 0,
+          "cost": 3236.0
+        },
+        {
+          "replica": 2,
+          "successes": 0,
+          "cost": 47.0
+        }
+      ]
+    },
+    "Camera-delay0": {
+      "episodes": 150,
+      "successes": 138,
+      "zero_cost_successes": 134,
+      "positive_cost_episodes": 5,
+      "total_cost": 50.0,
+      "timeouts": 11,
+      "failed_violations": {
+        "crash_vehicle": 1,
+        "out_of_road": 1
+      },
+      "mean_steps": 583.8133333333334,
+      "mean_interventions": 65.42666666666666,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 46,
+          "cost": 0.0
+        },
+        {
+          "replica": 1,
+          "successes": 46,
+          "cost": 41.0
+        },
+        {
+          "replica": 2,
+          "successes": 46,
+          "cost": 9.0
+        }
+      ]
+    },
+    "Camera-delay0.5": {
+      "episodes": 150,
+      "successes": 141,
+      "zero_cost_successes": 141,
+      "positive_cost_episodes": 1,
+      "total_cost": 3.0,
+      "timeouts": 8,
+      "failed_violations": {
+        "crash_vehicle": 1,
+        "out_of_road": 1
+      },
+      "mean_steps": 572.8133333333334,
+      "mean_interventions": 52.5,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 47,
+          "cost": 0.0
+        },
+        {
+          "replica": 1,
+          "successes": 47,
+          "cost": 0.0
+        },
+        {
+          "replica": 2,
+          "successes": 47,
+          "cost": 3.0
+        }
+      ]
+    },
+    "Camera-delay1": {
+      "episodes": 150,
+      "successes": 143,
+      "zero_cost_successes": 141,
+      "positive_cost_episodes": 2,
+      "total_cost": 31.0,
+      "timeouts": 7,
+      "failed_violations": {},
+      "mean_steps": 573.34,
+      "mean_interventions": 50.473333333333336,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 44,
+          "cost": 17.0
+        },
+        {
+          "replica": 1,
+          "successes": 49,
+          "cost": 0.0
+        },
+        {
+          "replica": 2,
+          "successes": 50,
+          "cost": 14.0
+        }
+      ]
+    },
+    "Camera-delay2": {
+      "episodes": 150,
+      "successes": 144,
+      "zero_cost_successes": 144,
+      "positive_cost_episodes": 2,
+      "total_cost": 66.0,
+      "timeouts": 4,
+      "failed_violations": {
+        "crash_vehicle": 2,
+        "out_of_road": 2
+      },
+      "mean_steps": 557.2866666666666,
+      "mean_interventions": 44.50666666666667,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 47,
+          "cost": 31.0
+        },
+        {
+          "replica": 1,
+          "successes": 48,
+          "cost": 0.0
+        },
+        {
+          "replica": 2,
+          "successes": 49,
+          "cost": 35.0
+        }
+      ]
+    },
+    "Camera-delay4": {
+      "episodes": 150,
+      "successes": 149,
+      "zero_cost_successes": 148,
+      "positive_cost_episodes": 1,
+      "total_cost": 3.0,
+      "timeouts": 1,
+      "failed_violations": {},
+      "mean_steps": 541.2533333333333,
+      "mean_interventions": 45.846666666666664,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 50,
+          "cost": 3.0
+        },
+        {
+          "replica": 1,
+          "successes": 50,
+          "cost": 0.0
+        },
+        {
+          "replica": 2,
+          "successes": 49,
+          "cost": 0.0
+        }
+      ]
+    },
+    "Camera-unprotected": {
+      "episodes": 150,
+      "successes": 143,
+      "zero_cost_successes": 85,
+      "positive_cost_episodes": 65,
+      "total_cost": 899.0,
+      "timeouts": 2,
+      "failed_violations": {
+        "crash_object": 1,
+        "crash_vehicle": 7,
+        "out_of_road": 5
+      },
+      "mean_steps": 502.08666666666664,
+      "mean_interventions": 0,
+      "per_replica": [
+        {
+          "replica": 0,
+          "successes": 48,
+          "cost": 321.0
+        },
+        {
+          "replica": 1,
+          "successes": 48,
+          "cost": 242.0
+        },
+        {
+          "replica": 2,
+          "successes": 47,
+          "cost": 336.0
+        }
+      ]
+    }
+  },
+  "camera_failures": [
+    {
+      "replica": 0,
+      "seed": 514,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 0.0,
+      "reward": 194.5120297498821,
+      "steps": 1000,
+      "route_completion": 0.3407667862015911,
+      "calls": 67,
+      "response_status": {
+        "applied": 66,
+        "rejected": 1,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.2267374875970131,
+      "lane_changes": 4,
+      "interventions": 700,
+      "violations": [],
+      "hard_brake_steps": 10,
+      "terminated": false,
+      "truncated": true,
+      "request_labels": {
+        "A": 7,
+        "D": 55,
+        "F": 2,
+        "C": 1,
+        "E": 2
+      },
+      "last_requests": [
+        {
+          "captured_t": 91.5,
+          "letter": "D",
+          "speed_mps": 0.0027514621018148483,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 93.0,
+          "letter": "D",
+          "speed_mps": 0.004491360155075655,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 94.5,
+          "letter": "D",
+          "speed_mps": 0.0027550289210109997,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 96.0,
+          "letter": "D",
+          "speed_mps": 0.004487835368499178,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 97.5,
+          "letter": "D",
+          "speed_mps": 0.0027585984380483868,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 99.0,
+          "letter": "D",
+          "speed_mps": 0.0044842005580674315,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        }
+      ],
+      "low_speed_request_fraction": 0.6865671641791045,
+      "terminal_low_speed_samples": 44,
+      "terminal_low_speed_sample_span": 64.5,
+      "longest_consecutive_rejections": 1,
+      "mean_top_choice_probability": 0.8573729831780961
+    },
+    {
+      "replica": 0,
+      "seed": 524,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 0.0,
+      "reward": 75.33362546970687,
+      "steps": 1000,
+      "route_completion": 0.21643420316995174,
+      "calls": 67,
+      "response_status": {
+        "applied": 7,
+        "rejected": 60,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.22666241552239097,
+      "lane_changes": 1,
+      "interventions": 907,
+      "violations": [],
+      "hard_brake_steps": 3,
+      "terminated": false,
+      "truncated": true,
+      "request_labels": {
+        "A": 6,
+        "B": 8,
+        "C": 53
+      },
+      "last_requests": [
+        {
+          "captured_t": 91.5,
+          "letter": "C",
+          "speed_mps": 0.004581482772330433,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 93.0,
+          "letter": "C",
+          "speed_mps": 0.002675139247303291,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 94.5,
+          "letter": "C",
+          "speed_mps": 0.004579911351778272,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 96.0,
+          "letter": "C",
+          "speed_mps": 0.00267669338672088,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 97.5,
+          "letter": "C",
+          "speed_mps": 0.004578376592289817,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 99.0,
+          "letter": "C",
+          "speed_mps": 0.002678188363676794,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "rejected"
+        }
+      ],
+      "low_speed_request_fraction": 0.8955223880597015,
+      "terminal_low_speed_samples": 59,
+      "terminal_low_speed_sample_span": 87.0,
+      "longest_consecutive_rejections": 60,
+      "mean_top_choice_probability": 0.7366429887600799
+    },
+    {
+      "replica": 0,
+      "seed": 541,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 0.0,
+      "reward": 176.71735151183458,
+      "steps": 1000,
+      "route_completion": 0.5089837684919984,
+      "calls": 67,
+      "response_status": {
+        "applied": 16,
+        "rejected": 51,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.22802213797014664,
+      "lane_changes": 2,
+      "interventions": 770,
+      "violations": [],
+      "hard_brake_steps": 6,
+      "terminated": false,
+      "truncated": true,
+      "request_labels": {
+        "A": 9,
+        "D": 5,
+        "C": 35,
+        "B": 3,
+        "E": 1,
+        "F": 14
+      },
+      "last_requests": [
+        {
+          "captured_t": 91.5,
+          "letter": "C",
+          "speed_mps": 0.004304803647704037,
+          "current_lane": 1,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 93.0,
+          "letter": "C",
+          "speed_mps": 0.002964879830802427,
+          "current_lane": 1,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 94.5,
+          "letter": "C",
+          "speed_mps": 0.004304748161665811,
+          "current_lane": 1,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 96.0,
+          "letter": "C",
+          "speed_mps": 0.0029648923095107224,
+          "current_lane": 1,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 97.5,
+          "letter": "C",
+          "speed_mps": 0.0043047454584572925,
+          "current_lane": 1,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 99.0,
+          "letter": "C",
+          "speed_mps": 0.0029649074694168363,
+          "current_lane": 1,
+          "target_lane": 0,
+          "response_status": "rejected"
+        }
+      ],
+      "low_speed_request_fraction": 0.746268656716418,
+      "terminal_low_speed_samples": 48,
+      "terminal_low_speed_sample_span": 70.5,
+      "longest_consecutive_rejections": 46,
+      "mean_top_choice_probability": 0.6937882259710512
+    },
+    {
+      "replica": 0,
+      "seed": 543,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 0.0,
+      "reward": 415.2087290018206,
+      "steps": 1000,
+      "route_completion": 0.9326290432088803,
+      "calls": 67,
+      "response_status": {
+        "applied": 44,
+        "rejected": 23,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.22762956150745595,
+      "lane_changes": 6,
+      "interventions": 467,
+      "violations": [],
+      "hard_brake_steps": 1,
+      "terminated": false,
+      "truncated": true,
+      "request_labels": {
+        "A": 29,
+        "C": 14,
+        "B": 3,
+        "D": 11,
+        "E": 1,
+        "F": 9
+      },
+      "last_requests": [
+        {
+          "captured_t": 91.5,
+          "letter": "F",
+          "speed_mps": 0.0047491343438615975,
+          "current_lane": 1,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 93.0,
+          "letter": "C",
+          "speed_mps": 0.002523152237702318,
+          "current_lane": 1,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 94.5,
+          "letter": "F",
+          "speed_mps": 0.004749157826001774,
+          "current_lane": 1,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 96.0,
+          "letter": "C",
+          "speed_mps": 0.0025231224251609733,
+          "current_lane": 1,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 97.5,
+          "letter": "D",
+          "speed_mps": 0.00474917257825972,
+          "current_lane": 1,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 99.0,
+          "letter": "F",
+          "speed_mps": 0.0025230939452806646,
+          "current_lane": 1,
+          "target_lane": 0,
+          "response_status": "rejected"
+        }
+      ],
+      "low_speed_request_fraction": 0.43283582089552236,
+      "terminal_low_speed_samples": 28,
+      "terminal_low_speed_sample_span": 40.5,
+      "longest_consecutive_rejections": 6,
+      "mean_top_choice_probability": 0.7195997634040776
+    },
+    {
+      "replica": 1,
+      "seed": 502,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 0.0,
+      "reward": 342.0376101762169,
+      "steps": 1000,
+      "route_completion": 0.9060652927767326,
+      "calls": 67,
+      "response_status": {
+        "applied": 48,
+        "rejected": 19,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.22853374928356956,
+      "lane_changes": 5,
+      "interventions": 517,
+      "violations": [],
+      "hard_brake_steps": 6,
+      "terminated": false,
+      "truncated": true,
+      "request_labels": {
+        "A": 14,
+        "D": 30,
+        "B": 18,
+        "E": 3,
+        "C": 2
+      },
+      "last_requests": [
+        {
+          "captured_t": 91.5,
+          "letter": "D",
+          "speed_mps": 0.0037410828000506843,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 93.0,
+          "letter": "B",
+          "speed_mps": 0.003521853192627393,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 94.5,
+          "letter": "B",
+          "speed_mps": 0.0037414361849204465,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 96.0,
+          "letter": "B",
+          "speed_mps": 0.0035215039288218953,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 97.5,
+          "letter": "B",
+          "speed_mps": 0.003741775472168206,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 99.0,
+          "letter": "B",
+          "speed_mps": 0.0035211563454911137,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "rejected"
+        }
+      ],
+      "low_speed_request_fraction": 0.5074626865671642,
+      "terminal_low_speed_samples": 33,
+      "terminal_low_speed_sample_span": 48.0,
+      "longest_consecutive_rejections": 5,
+      "mean_top_choice_probability": 0.6647583232886756
+    },
+    {
+      "replica": 1,
+      "seed": 522,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 0.0,
+      "reward": 223.1719660844258,
+      "steps": 1000,
+      "route_completion": 0.690801326726634,
+      "calls": 67,
+      "response_status": {
+        "applied": 26,
+        "rejected": 41,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.23004920911941906,
+      "lane_changes": 4,
+      "interventions": 712,
+      "violations": [],
+      "hard_brake_steps": 4,
+      "terminated": false,
+      "truncated": true,
+      "request_labels": {
+        "A": 19,
+        "B": 3,
+        "D": 3,
+        "F": 20,
+        "C": 22
+      },
+      "last_requests": [
+        {
+          "captured_t": 91.5,
+          "letter": "A",
+          "speed_mps": 0.003028465793179604,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 93.0,
+          "letter": "F",
+          "speed_mps": 0.004209004011932084,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 94.5,
+          "letter": "F",
+          "speed_mps": 0.0030320727578784013,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 96.0,
+          "letter": "F",
+          "speed_mps": 0.00420539413931031,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 97.5,
+          "letter": "A",
+          "speed_mps": 0.0030356652716699165,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 99.0,
+          "letter": "A",
+          "speed_mps": 0.0042018061989632675,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        }
+      ],
+      "low_speed_request_fraction": 0.6865671641791045,
+      "terminal_low_speed_samples": 45,
+      "terminal_low_speed_sample_span": 66.0,
+      "longest_consecutive_rejections": 37,
+      "mean_top_choice_probability": 0.6658014619528357
+    },
+    {
+      "replica": 1,
+      "seed": 524,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 0.0,
+      "reward": 75.36265611032286,
+      "steps": 1000,
+      "route_completion": 0.21649352433212893,
+      "calls": 67,
+      "response_status": {
+        "applied": 53,
+        "rejected": 14,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.22966178447762362,
+      "lane_changes": 1,
+      "interventions": 907,
+      "violations": [],
+      "hard_brake_steps": 3,
+      "terminated": false,
+      "truncated": true,
+      "request_labels": {
+        "A": 48,
+        "B": 13,
+        "D": 4,
+        "C": 1,
+        "F": 1
+      },
+      "last_requests": [
+        {
+          "captured_t": 91.5,
+          "letter": "A",
+          "speed_mps": 0.0028402785655811395,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 93.0,
+          "letter": "A",
+          "speed_mps": 0.0043936801499460665,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 94.5,
+          "letter": "A",
+          "speed_mps": 0.002845742839546398,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 96.0,
+          "letter": "A",
+          "speed_mps": 0.004388219974902002,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 97.5,
+          "letter": "A",
+          "speed_mps": 0.002851169393818913,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 99.0,
+          "letter": "A",
+          "speed_mps": 0.004382803093502537,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        }
+      ],
+      "low_speed_request_fraction": 0.8805970149253731,
+      "terminal_low_speed_samples": 58,
+      "terminal_low_speed_sample_span": 85.5,
+      "longest_consecutive_rejections": 3,
+      "mean_top_choice_probability": 0.711095249919749
+    },
+    {
+      "replica": 1,
+      "seed": 533,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 9.0,
+      "reward": 234.58952706155293,
+      "steps": 469,
+      "route_completion": 0.8091281129778439,
+      "calls": 32,
+      "response_status": {
+        "applied": 30,
+        "rejected": 2,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.22713057796877223,
+      "lane_changes": 6,
+      "interventions": 60,
+      "violations": [
+        "crash_vehicle",
+        "out_of_road"
+      ],
+      "hard_brake_steps": 24,
+      "terminated": true,
+      "truncated": false,
+      "request_labels": {
+        "A": 17,
+        "C": 3,
+        "D": 7,
+        "E": 2,
+        "B": 1,
+        "F": 2
+      },
+      "last_requests": [
+        {
+          "captured_t": 39.0,
+          "letter": "A",
+          "speed_mps": 7.127368882351497,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 40.5,
+          "letter": "F",
+          "speed_mps": 7.130460450732365,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 42.0,
+          "letter": "F",
+          "speed_mps": 0.009614067903267699,
+          "current_lane": 0,
+          "target_lane": 1,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 43.5,
+          "letter": "D",
+          "speed_mps": 3.862650351212019,
+          "current_lane": 0,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 45.0,
+          "letter": "D",
+          "speed_mps": 2.6838098832081014,
+          "current_lane": 0,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 46.5,
+          "letter": "D",
+          "speed_mps": 3.513317543484277,
+          "current_lane": 0,
+          "target_lane": 1,
+          "response_status": "applied"
+        }
+      ],
+      "low_speed_request_fraction": 0.0625,
+      "terminal_low_speed_samples": 0,
+      "terminal_low_speed_sample_span": 0,
+      "longest_consecutive_rejections": 1,
+      "mean_top_choice_probability": 0.802123717032373
+    },
+    {
+      "replica": 2,
+      "seed": 522,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 0.0,
+      "reward": 222.99944228116414,
+      "steps": 1000,
+      "route_completion": 0.6904671093174989,
+      "calls": 67,
+      "response_status": {
+        "applied": 53,
+        "rejected": 14,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.2278866252835433,
+      "lane_changes": 2,
+      "interventions": 734,
+      "violations": [],
+      "hard_brake_steps": 4,
+      "terminated": false,
+      "truncated": true,
+      "request_labels": {
+        "A": 25,
+        "B": 2,
+        "C": 13,
+        "D": 27
+      },
+      "last_requests": [
+        {
+          "captured_t": 91.5,
+          "letter": "C",
+          "speed_mps": 0.004235127580735296,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 93.0,
+          "letter": "C",
+          "speed_mps": 0.003027298403022656,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 94.5,
+          "letter": "D",
+          "speed_mps": 0.004234770277966539,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 96.0,
+          "letter": "C",
+          "speed_mps": 0.003027700991919816,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 97.5,
+          "letter": "C",
+          "speed_mps": 0.004234376971479899,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 99.0,
+          "letter": "C",
+          "speed_mps": 0.0030281226730792935,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "rejected"
+        }
+      ],
+      "low_speed_request_fraction": 0.7164179104477612,
+      "terminal_low_speed_samples": 47,
+      "terminal_low_speed_sample_span": 69.0,
+      "longest_consecutive_rejections": 3,
+      "mean_top_choice_probability": 0.7859266729497197
+    },
+    {
+      "replica": 2,
+      "seed": 530,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 0.0,
+      "reward": 268.4166394566991,
+      "steps": 1000,
+      "route_completion": 0.7272648336900093,
+      "calls": 67,
+      "response_status": {
+        "applied": 65,
+        "rejected": 2,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.27149502398508535,
+      "lane_changes": 3,
+      "interventions": 682,
+      "violations": [],
+      "hard_brake_steps": 3,
+      "terminated": false,
+      "truncated": true,
+      "request_labels": {
+        "A": 27,
+        "B": 1,
+        "C": 2,
+        "E": 2,
+        "D": 35
+      },
+      "last_requests": [
+        {
+          "captured_t": 91.5,
+          "letter": "D",
+          "speed_mps": 0.004466609208857066,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 93.0,
+          "letter": "D",
+          "speed_mps": 0.0027840926981683965,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 94.5,
+          "letter": "D",
+          "speed_mps": 0.004463919184563623,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 96.0,
+          "letter": "D",
+          "speed_mps": 0.0027867842839844276,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 97.5,
+          "letter": "D",
+          "speed_mps": 0.0044612404664465906,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 99.0,
+          "letter": "D",
+          "speed_mps": 0.00278946192276098,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "applied"
+        }
+      ],
+      "low_speed_request_fraction": 0.6716417910447762,
+      "terminal_low_speed_samples": 44,
+      "terminal_low_speed_sample_span": 64.5,
+      "longest_consecutive_rejections": 1,
+      "mean_top_choice_probability": 0.7169333985492364
+    },
+    {
+      "replica": 2,
+      "seed": 543,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 0.0,
+      "reward": 317.21399491629586,
+      "steps": 1000,
+      "route_completion": 0.715328629668742,
+      "calls": 67,
+      "response_status": {
+        "applied": 65,
+        "rejected": 2,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.2712512301790778,
+      "lane_changes": 3,
+      "interventions": 622,
+      "violations": [],
+      "hard_brake_steps": 4,
+      "terminated": false,
+      "truncated": true,
+      "request_labels": {
+        "A": 23,
+        "C": 2,
+        "B": 2,
+        "E": 1,
+        "D": 39
+      },
+      "last_requests": [
+        {
+          "captured_t": 91.5,
+          "letter": "D",
+          "speed_mps": 0.0027760408941815296,
+          "current_lane": 2,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 93.0,
+          "letter": "D",
+          "speed_mps": 0.004460065915401873,
+          "current_lane": 2,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 94.5,
+          "letter": "D",
+          "speed_mps": 0.002781484680070317,
+          "current_lane": 2,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 96.0,
+          "letter": "D",
+          "speed_mps": 0.004454443577357791,
+          "current_lane": 2,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 97.5,
+          "letter": "D",
+          "speed_mps": 0.0027869707882485386,
+          "current_lane": 2,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 99.0,
+          "letter": "D",
+          "speed_mps": 0.004448764172103149,
+          "current_lane": 2,
+          "target_lane": 1,
+          "response_status": "applied"
+        }
+      ],
+      "low_speed_request_fraction": 0.6119402985074627,
+      "terminal_low_speed_samples": 40,
+      "terminal_low_speed_sample_span": 58.5,
+      "longest_consecutive_rejections": 2,
+      "mean_top_choice_probability": 0.9607888059829598
+    },
+    {
+      "replica": 2,
+      "seed": 548,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 0.0,
+      "reward": 84.19045446120435,
+      "steps": 1000,
+      "route_completion": 0.1813618932755912,
+      "calls": 67,
+      "response_status": {
+        "applied": 55,
+        "rejected": 12,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.2715267614030042,
+      "lane_changes": 3,
+      "interventions": 892,
+      "violations": [],
+      "hard_brake_steps": 4,
+      "terminated": false,
+      "truncated": true,
+      "request_labels": {
+        "A": 35,
+        "B": 1,
+        "C": 2,
+        "D": 17,
+        "E": 12
+      },
+      "last_requests": [
+        {
+          "captured_t": 91.5,
+          "letter": "A",
+          "speed_mps": 0.0045100986858471765,
+          "current_lane": 1,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 93.0,
+          "letter": "A",
+          "speed_mps": 0.002760910324212244,
+          "current_lane": 1,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 94.5,
+          "letter": "A",
+          "speed_mps": 0.0045100834664284035,
+          "current_lane": 1,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 96.0,
+          "letter": "A",
+          "speed_mps": 0.0027609510225968643,
+          "current_lane": 1,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 97.5,
+          "letter": "A",
+          "speed_mps": 0.004510065724066003,
+          "current_lane": 1,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 99.0,
+          "letter": "A",
+          "speed_mps": 0.002760986651425294,
+          "current_lane": 1,
+          "target_lane": 2,
+          "response_status": "applied"
+        }
+      ],
+      "low_speed_request_fraction": 0.8805970149253731,
+      "terminal_low_speed_samples": 58,
+      "terminal_low_speed_sample_span": 85.5,
+      "longest_consecutive_rejections": 8,
+      "mean_top_choice_probability": 0.6712898576437537
+    }
+  ],
+  "camera_positive_cost": [
+    {
+      "replica": 1,
+      "seed": 513,
+      "success": true,
+      "collision_free_success": false,
+      "cost": 5.0,
+      "reward": 288.9672374826136,
+      "steps": 508,
+      "route_completion": 0.9869353494068195,
+      "calls": 34,
+      "response_status": {
+        "applied": 32,
+        "rejected": 2,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.2324283829705778,
+      "lane_changes": 3,
+      "interventions": 25,
+      "violations": [
+        "crash_vehicle"
+      ],
+      "hard_brake_steps": 11,
+      "terminated": true,
+      "truncated": false,
+      "request_labels": {
+        "A": 11,
+        "D": 19,
+        "F": 3,
+        "E": 1
+      },
+      "last_requests": [
+        {
+          "captured_t": 42.0,
+          "letter": "F",
+          "speed_mps": 5.61512487441929,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 43.5,
+          "letter": "D",
+          "speed_mps": 4.78439022808579,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 45.0,
+          "letter": "D",
+          "speed_mps": 5.101009317822459,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 46.5,
+          "letter": "D",
+          "speed_mps": 5.748359985301702,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 48.0,
+          "letter": "A",
+          "speed_mps": 5.8256298076844955,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 49.5,
+          "letter": "D",
+          "speed_mps": 7.875068829469404,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        }
+      ],
+      "low_speed_request_fraction": 0.029411764705882353,
+      "terminal_low_speed_samples": 0,
+      "terminal_low_speed_sample_span": 0,
+      "longest_consecutive_rejections": 1,
+      "mean_top_choice_probability": 0.881201858906185
+    },
+    {
+      "replica": 1,
+      "seed": 529,
+      "success": true,
+      "collision_free_success": false,
+      "cost": 27.0,
+      "reward": 156.21978301388776,
+      "steps": 518,
+      "route_completion": 0.9811242574960936,
+      "calls": 35,
+      "response_status": {
+        "applied": 33,
+        "rejected": 2,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.22739418019999513,
+      "lane_changes": 0,
+      "interventions": 55,
+      "violations": [
+        "crash_vehicle"
+      ],
+      "hard_brake_steps": 12,
+      "terminated": true,
+      "truncated": false,
+      "request_labels": {
+        "A": 9,
+        "D": 25,
+        "F": 1
+      },
+      "last_requests": [
+        {
+          "captured_t": 43.5,
+          "letter": "D",
+          "speed_mps": 5.826850853535947,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 45.0,
+          "letter": "D",
+          "speed_mps": 5.826821440037884,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 46.5,
+          "letter": "A",
+          "speed_mps": 5.833356750953004,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 48.0,
+          "letter": "A",
+          "speed_mps": 7.9216227007454085,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 49.5,
+          "letter": "A",
+          "speed_mps": 8.299881041472114,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 51.0,
+          "letter": "A",
+          "speed_mps": 8.330618018990972,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        }
+      ],
+      "low_speed_request_fraction": 0.08571428571428572,
+      "terminal_low_speed_samples": 0,
+      "terminal_low_speed_sample_span": 0,
+      "longest_consecutive_rejections": 1,
+      "mean_top_choice_probability": 0.8654661451067244
+    },
+    {
+      "replica": 1,
+      "seed": 533,
+      "success": false,
+      "collision_free_success": false,
+      "cost": 9.0,
+      "reward": 234.58952706155293,
+      "steps": 469,
+      "route_completion": 0.8091281129778439,
+      "calls": 32,
+      "response_status": {
+        "applied": 30,
+        "rejected": 2,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.22713057796877223,
+      "lane_changes": 6,
+      "interventions": 60,
+      "violations": [
+        "crash_vehicle",
+        "out_of_road"
+      ],
+      "hard_brake_steps": 24,
+      "terminated": true,
+      "truncated": false,
+      "request_labels": {
+        "A": 17,
+        "C": 3,
+        "D": 7,
+        "E": 2,
+        "B": 1,
+        "F": 2
+      },
+      "last_requests": [
+        {
+          "captured_t": 39.0,
+          "letter": "A",
+          "speed_mps": 7.127368882351497,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 40.5,
+          "letter": "F",
+          "speed_mps": 7.130460450732365,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 42.0,
+          "letter": "F",
+          "speed_mps": 0.009614067903267699,
+          "current_lane": 0,
+          "target_lane": 1,
+          "response_status": "rejected"
+        },
+        {
+          "captured_t": 43.5,
+          "letter": "D",
+          "speed_mps": 3.862650351212019,
+          "current_lane": 0,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 45.0,
+          "letter": "D",
+          "speed_mps": 2.6838098832081014,
+          "current_lane": 0,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 46.5,
+          "letter": "D",
+          "speed_mps": 3.513317543484277,
+          "current_lane": 0,
+          "target_lane": 1,
+          "response_status": "applied"
+        }
+      ],
+      "low_speed_request_fraction": 0.0625,
+      "terminal_low_speed_samples": 0,
+      "terminal_low_speed_sample_span": 0,
+      "longest_consecutive_rejections": 1,
+      "mean_top_choice_probability": 0.802123717032373
+    },
+    {
+      "replica": 2,
+      "seed": 513,
+      "success": true,
+      "collision_free_success": false,
+      "cost": 7.0,
+      "reward": 280.8418896238645,
+      "steps": 509,
+      "route_completion": 0.9846641174109283,
+      "calls": 34,
+      "response_status": {
+        "applied": 29,
+        "rejected": 5,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.22737272385292914,
+      "lane_changes": 2,
+      "interventions": 21,
+      "violations": [
+        "crash_vehicle"
+      ],
+      "hard_brake_steps": 11,
+      "terminated": true,
+      "truncated": false,
+      "request_labels": {
+        "A": 11,
+        "D": 19,
+        "F": 3,
+        "E": 1
+      },
+      "last_requests": [
+        {
+          "captured_t": 42.0,
+          "letter": "F",
+          "speed_mps": 5.818870019342729,
+          "current_lane": 0,
+          "target_lane": 0,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 43.5,
+          "letter": "E",
+          "speed_mps": 4.794490145219084,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 45.0,
+          "letter": "D",
+          "speed_mps": 4.789771706618319,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 46.5,
+          "letter": "D",
+          "speed_mps": 5.673151108819893,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 48.0,
+          "letter": "A",
+          "speed_mps": 5.818752337668788,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 49.5,
+          "letter": "D",
+          "speed_mps": 7.838766236793558,
+          "current_lane": 1,
+          "target_lane": 1,
+          "response_status": "applied"
+        }
+      ],
+      "low_speed_request_fraction": 0.029411764705882353,
+      "terminal_low_speed_samples": 0,
+      "terminal_low_speed_sample_span": 0,
+      "longest_consecutive_rejections": 3,
+      "mean_top_choice_probability": 0.9140893615343991
+    },
+    {
+      "replica": 2,
+      "seed": 533,
+      "success": true,
+      "collision_free_success": false,
+      "cost": 2.0,
+      "reward": 346.66688142513215,
+      "steps": 574,
+      "route_completion": 0.9834592179686082,
+      "calls": 39,
+      "response_status": {
+        "applied": 35,
+        "rejected": 4,
+        "pending_at_termination": 0
+      },
+      "mean_inference_seconds": 0.27124038230774133,
+      "lane_changes": 7,
+      "interventions": 81,
+      "violations": [
+        "crash_vehicle"
+      ],
+      "hard_brake_steps": 23,
+      "terminated": true,
+      "truncated": false,
+      "request_labels": {
+        "A": 20,
+        "C": 5,
+        "B": 1,
+        "D": 8,
+        "E": 3,
+        "F": 2
+      },
+      "last_requests": [
+        {
+          "captured_t": 49.5,
+          "letter": "D",
+          "speed_mps": 5.459575393713877,
+          "current_lane": 0,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 51.0,
+          "letter": "D",
+          "speed_mps": 5.646518813416858,
+          "current_lane": 1,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 52.5,
+          "letter": "D",
+          "speed_mps": 5.811178739359497,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 54.0,
+          "letter": "A",
+          "speed_mps": 5.833337408158554,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 55.5,
+          "letter": "A",
+          "speed_mps": 7.867957886623573,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "applied"
+        },
+        {
+          "captured_t": 57.0,
+          "letter": "A",
+          "speed_mps": 8.29318454394883,
+          "current_lane": 2,
+          "target_lane": 2,
+          "response_status": "applied"
+        }
+      ],
+      "low_speed_request_fraction": 0.02564102564102564,
+      "terminal_low_speed_samples": 0,
+      "terminal_low_speed_sample_span": 0,
+      "longest_consecutive_rejections": 1,
+      "mean_top_choice_probability": 0.8289898870847164
+    }
+  ],
+  "bad_episode_count": 16,
+  "unique_failed_maps": [
+    502,
+    514,
+    522,
+    524,
+    530,
+    533,
+    541,
+    543,
+    548
+  ],
+  "largest_cost_share": 0.54,
+  "paired": [
+    {
+      "episodes": 150,
+      "a": "Camera-delay0",
+      "b": "Fixed-normal",
+      "a_only_success": 70,
+      "b_only_success": 1,
+      "both_fail": 11,
+      "a_lower_cost": 1,
+      "b_lower_cost": 5,
+      "equal_cost": 144
+    },
+    {
+      "episodes": 150,
+      "a": "Camera-delay0",
+      "b": "Rule-PPO",
+      "a_only_success": 0,
+      "b_only_success": 12,
+      "both_fail": 0,
+      "a_lower_cost": 1,
+      "b_lower_cost": 5,
+      "equal_cost": 144
+    },
+    {
+      "episodes": 150,
+      "a": "Camera-delay0",
+      "b": "Camera-delay4",
+      "a_only_success": 1,
+      "b_only_success": 12,
+      "both_fail": 0,
+      "a_lower_cost": 1,
+      "b_lower_cost": 5,
+      "equal_cost": 144
+    },
+    {
+      "episodes": 150,
+      "a": "Camera-delay0",
+      "b": "Camera-unprotected",
+      "a_only_success": 7,
+      "b_only_success": 12,
+      "both_fail": 0,
+      "a_lower_cost": 63,
+      "b_lower_cost": 3,
+      "equal_cost": 84
+    }
+  ],
+  "sampling_note": "Low-speed spans describe observations at query times, not continuous vehicle telemetry. Model choice probabilities are not calibrated correctness probabilities."
+}

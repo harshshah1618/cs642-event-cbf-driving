@@ -1,0 +1,1849 @@
+{
+  "replay_count": 17,
+  "strict_matches": 7,
+  "outcome_matches": 14,
+  "strict_definition": "All request speed errors <1e-4 m/s; reward error <1e-3; matching request count, lane metadata, response statuses, success, cost, steps, lane changes and intervention counts.",
+  "original_benchmark_source_hashes_unchanged": {
+    "driving/safemetadrive/__init__.py": true,
+    "driving/safemetadrive/camera_planner.py": true,
+    "driving/safemetadrive/campaign.py": true,
+    "driving/safemetadrive/omnisafe_env.py": true,
+    "driving/safemetadrive/policies.py": true,
+    "driving/safemetadrive/protocol.py": true,
+    "driving/safemetadrive/selection.py": true,
+    "driving/safemetadrive/skill_env.py": true,
+    "driving/safemetadrive/training_state.py": true,
+    "tools/safemetadrive_analyze.py": true,
+    "tools/safemetadrive_camera_data.py": true,
+    "tools/safemetadrive_camera_eval.py": true,
+    "tools/safemetadrive_eval.py": true,
+    "tools/safemetadrive_train.py": true,
+    "tools/safemetadrive_train_camera.py": true,
+    "tools/safemetadrive_train_skills.py": true
+  },
+  "caveat": "Saved camera tokens and measured response times were replayed on CPU with a reconstructed deterministic tracker actor. No camera model was run. Local Torch 2.15 differs from cloud 2.8. Diagnostics from nonmatching replays do not establish the original collision sequence. Equality checks sample captured ego states, not every original physical state, which was not logged.",
+  "rows": [
+    {
+      "replica": 0,
+      "seed": 500,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 41,
+        "original_requests": 41,
+        "max_capture_speed_error": 6.417025447902347e-06,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 0.00015086119424267963,
+        "faithful_within_tolerance": true
+      },
+      "original": {
+        "seed": 500,
+        "success": true,
+        "collision_free_success": true,
+        "cost": 0.0,
+        "reward": 437.5655497602146,
+        "steps": 602,
+        "route_completion": 0.9882337033552768,
+        "calls": 41,
+        "response_status": {
+          "applied": 39,
+          "rejected": 1,
+          "pending_at_termination": 1
+        },
+        "mean_inference_seconds": 0.25597717863414576,
+        "lane_changes": 1,
+        "interventions": 4,
+        "violations": [],
+        "hard_brake_steps": 2,
+        "terminated": true,
+        "truncated": false
+      },
+      "actual": {
+        "success": true,
+        "cost": 0.0,
+        "reward": 437.56539889902035,
+        "steps": 602,
+        "route_completion": 0.9882332814008317,
+        "lane_changes": 1,
+        "interventions": 4
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "stale_lane_context": 1
+      },
+      "last_8_requests": [
+        {
+          "t": 49.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9670768976211548
+        },
+        {
+          "t": 51.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.9456793665885925
+        },
+        {
+          "t": 52.5,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9669246673583984
+        },
+        {
+          "t": 54.0,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9951921701431274
+        },
+        {
+          "t": 55.5,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9965900182723999
+        },
+        {
+          "t": 57.0,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9988892674446106
+        },
+        {
+          "t": 58.5,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9934013485908508
+        },
+        {
+          "t": 60.0,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9928562641143799
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 7.8493815852273805,
+        "desired_speed_mps": 8.036303992318635,
+        "lateral_error_m": 0.04795950127559216
+      },
+      "telemetry_is_evidence_for_original": true
+    },
+    {
+      "replica": 0,
+      "seed": 514,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 67,
+        "original_requests": 67,
+        "max_capture_speed_error": 2.7066243326601125e-06,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 1.3503994182428869e-05,
+        "faithful_within_tolerance": true
+      },
+      "original": {
+        "seed": 514,
+        "success": false,
+        "collision_free_success": false,
+        "cost": 0.0,
+        "reward": 194.5120297498821,
+        "steps": 1000,
+        "route_completion": 0.3407667862015911,
+        "calls": 67,
+        "response_status": {
+          "applied": 66,
+          "rejected": 1,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.2267374875970131,
+        "lane_changes": 4,
+        "interventions": 700,
+        "violations": [],
+        "hard_brake_steps": 10,
+        "terminated": false,
+        "truncated": true
+      },
+      "actual": {
+        "success": false,
+        "cost": 0.0,
+        "reward": 194.51204325387627,
+        "steps": 1000,
+        "route_completion": 0.3407668105245318,
+        "lane_changes": 4,
+        "interventions": 700
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "transition_unfinished_or_off_center": 1
+      },
+      "last_8_requests": [
+        {
+          "t": 88.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.5766695141792297
+        },
+        {
+          "t": 90.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.8011848330497742
+        },
+        {
+          "t": 91.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.7745711803436279
+        },
+        {
+          "t": 93.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9371856451034546
+        },
+        {
+          "t": 94.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.6984978318214417
+        },
+        {
+          "t": 96.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9419710040092468
+        },
+        {
+          "t": 97.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.8842200636863708
+        },
+        {
+          "t": 99.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.8869381546974182
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 0.0036137427961497595,
+        "desired_speed_mps": 0.0,
+        "lateral_error_m": 1.4015831333575863
+      },
+      "telemetry_is_evidence_for_original": true
+    },
+    {
+      "replica": 0,
+      "seed": 524,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 67,
+        "original_requests": 67,
+        "max_capture_speed_error": 2.136602803570753e-06,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 9.795716948701738e-08,
+        "faithful_within_tolerance": true
+      },
+      "original": {
+        "seed": 524,
+        "success": false,
+        "collision_free_success": false,
+        "cost": 0.0,
+        "reward": 75.33362546970687,
+        "steps": 1000,
+        "route_completion": 0.21643420316995174,
+        "calls": 67,
+        "response_status": {
+          "applied": 7,
+          "rejected": 60,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.22666241552239097,
+        "lane_changes": 1,
+        "interventions": 907,
+        "violations": [],
+        "hard_brake_steps": 3,
+        "terminated": false,
+        "truncated": true
+      },
+      "actual": {
+        "success": false,
+        "cost": 0.0,
+        "reward": 75.3336253717497,
+        "steps": 1000,
+        "route_completion": 0.21643420316995174,
+        "lane_changes": 1,
+        "interventions": 907
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "transition_unfinished_or_off_center": 60
+      },
+      "last_8_requests": [
+        {
+          "t": 88.5,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.8317455649375916
+        },
+        {
+          "t": 90.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.7521068453788757
+        },
+        {
+          "t": 91.5,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.8327317237854004
+        },
+        {
+          "t": 93.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.8465729355812073
+        },
+        {
+          "t": 94.5,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.6445928812026978
+        },
+        {
+          "t": 96.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.8089671730995178
+        },
+        {
+          "t": 97.5,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.8608281016349792
+        },
+        {
+          "t": 99.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.5568087697029114
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 0.003637339939112028,
+        "desired_speed_mps": 0.0,
+        "lateral_error_m": 1.1242206785643454
+      },
+      "telemetry_is_evidence_for_original": true
+    },
+    {
+      "replica": 0,
+      "seed": 541,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 67,
+        "original_requests": 67,
+        "max_capture_speed_error": 0.0053379827067834285,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 0.03306893547065215,
+        "faithful_within_tolerance": false
+      },
+      "original": {
+        "seed": 541,
+        "success": false,
+        "collision_free_success": false,
+        "cost": 0.0,
+        "reward": 176.71735151183458,
+        "steps": 1000,
+        "route_completion": 0.5089837684919984,
+        "calls": 67,
+        "response_status": {
+          "applied": 16,
+          "rejected": 51,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.22802213797014664,
+        "lane_changes": 2,
+        "interventions": 770,
+        "violations": [],
+        "hard_brake_steps": 6,
+        "terminated": false,
+        "truncated": true
+      },
+      "actual": {
+        "success": false,
+        "cost": 0.0,
+        "reward": 176.68428257636393,
+        "steps": 1000,
+        "route_completion": 0.5088877982027908,
+        "lane_changes": 2,
+        "interventions": 770
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "transition_unfinished_or_off_center": 49,
+        "front_or_rear_gap_too_small": 2
+      },
+      "last_8_requests": [
+        {
+          "t": 88.5,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.8010966181755066
+        },
+        {
+          "t": 90.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.524673581123352
+        },
+        {
+          "t": 91.5,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.8082301616668701
+        },
+        {
+          "t": 93.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.830722451210022
+        },
+        {
+          "t": 94.5,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.35752350091934204
+        },
+        {
+          "t": 96.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.5612834692001343
+        },
+        {
+          "t": 97.5,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.6962816715240479
+        },
+        {
+          "t": 99.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.9016554951667786
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 0.0036454199282233467,
+        "desired_speed_mps": 0.0,
+        "lateral_error_m": 1.9556351773219534
+      },
+      "telemetry_is_evidence_for_original": false
+    },
+    {
+      "replica": 0,
+      "seed": 543,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 67,
+        "original_requests": 67,
+        "max_capture_speed_error": 0.00012614935925569842,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 0.01569561522114782,
+        "faithful_within_tolerance": false
+      },
+      "original": {
+        "seed": 543,
+        "success": false,
+        "collision_free_success": false,
+        "cost": 0.0,
+        "reward": 415.2087290018206,
+        "steps": 1000,
+        "route_completion": 0.9326290432088803,
+        "calls": 67,
+        "response_status": {
+          "applied": 44,
+          "rejected": 23,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.22762956150745595,
+        "lane_changes": 6,
+        "interventions": 467,
+        "violations": [],
+        "hard_brake_steps": 1,
+        "terminated": false,
+        "truncated": true
+      },
+      "actual": {
+        "success": false,
+        "cost": 0.0,
+        "reward": 415.22442461704173,
+        "steps": 1000,
+        "route_completion": 0.9326654456363203,
+        "lane_changes": 6,
+        "interventions": 467
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "stale_lane_context": 2,
+        "transition_unfinished_or_off_center": 21
+      },
+      "last_8_requests": [
+        {
+          "t": 88.5,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.42439550161361694
+        },
+        {
+          "t": 90.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.33620113134384155
+        },
+        {
+          "t": 91.5,
+          "camera": "F",
+          "teacher": "D",
+          "top_probability": 0.2986334264278412
+        },
+        {
+          "t": 93.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.35347163677215576
+        },
+        {
+          "t": 94.5,
+          "camera": "F",
+          "teacher": "D",
+          "top_probability": 0.7990405559539795
+        },
+        {
+          "t": 96.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.4347136318683624
+        },
+        {
+          "t": 97.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.318945050239563
+        },
+        {
+          "t": 99.0,
+          "camera": "F",
+          "teacher": "D",
+          "top_probability": 0.7464566826820374
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 0.003645924305529472,
+        "desired_speed_mps": 0.0,
+        "lateral_error_m": 2.163128786452926
+      },
+      "telemetry_is_evidence_for_original": false
+    },
+    {
+      "replica": 1,
+      "seed": 502,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 67,
+        "original_requests": 67,
+        "max_capture_speed_error": 0.0006291337889151568,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 0.023372593542148934,
+        "faithful_within_tolerance": false
+      },
+      "original": {
+        "seed": 502,
+        "success": false,
+        "collision_free_success": false,
+        "cost": 0.0,
+        "reward": 342.0376101762169,
+        "steps": 1000,
+        "route_completion": 0.9060652927767326,
+        "calls": 67,
+        "response_status": {
+          "applied": 48,
+          "rejected": 19,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.22853374928356956,
+        "lane_changes": 5,
+        "interventions": 517,
+        "violations": [],
+        "hard_brake_steps": 6,
+        "terminated": false,
+        "truncated": true
+      },
+      "actual": {
+        "success": false,
+        "cost": 0.0,
+        "reward": 342.01423758267475,
+        "steps": 1000,
+        "route_completion": 0.9060007094877496,
+        "lane_changes": 5,
+        "interventions": 517
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "stale_lane_context": 1,
+        "transition_unfinished_or_off_center": 18
+      },
+      "last_8_requests": [
+        {
+          "t": 88.5,
+          "camera": "B",
+          "teacher": "D",
+          "top_probability": 0.46570613980293274
+        },
+        {
+          "t": 90.0,
+          "camera": "B",
+          "teacher": "D",
+          "top_probability": 0.48866528272628784
+        },
+        {
+          "t": 91.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.45489072799682617
+        },
+        {
+          "t": 93.0,
+          "camera": "B",
+          "teacher": "D",
+          "top_probability": 0.46550944447517395
+        },
+        {
+          "t": 94.5,
+          "camera": "B",
+          "teacher": "D",
+          "top_probability": 0.5566747188568115
+        },
+        {
+          "t": 96.0,
+          "camera": "B",
+          "teacher": "D",
+          "top_probability": 0.42968589067459106
+        },
+        {
+          "t": 97.5,
+          "camera": "B",
+          "teacher": "D",
+          "top_probability": 0.5409296154975891
+        },
+        {
+          "t": 99.0,
+          "camera": "B",
+          "teacher": "D",
+          "top_probability": 0.3497273623943329
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 0.0036269983986743017,
+        "desired_speed_mps": 0.0,
+        "lateral_error_m": 1.284111183468658
+      },
+      "telemetry_is_evidence_for_original": false
+    },
+    {
+      "replica": 1,
+      "seed": 513,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 34,
+        "original_requests": 34,
+        "max_capture_speed_error": 0.0693470216557169,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": false,
+        "reward_absolute_error": 9.934126569768466,
+        "faithful_within_tolerance": false
+      },
+      "original": {
+        "seed": 513,
+        "success": true,
+        "collision_free_success": false,
+        "cost": 5.0,
+        "reward": 288.9672374826136,
+        "steps": 508,
+        "route_completion": 0.9869353494068195,
+        "calls": 34,
+        "response_status": {
+          "applied": 32,
+          "rejected": 2,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.2324283829705778,
+        "lane_changes": 3,
+        "interventions": 25,
+        "violations": [
+          "crash_vehicle"
+        ],
+        "hard_brake_steps": 11,
+        "terminated": true,
+        "truncated": false
+      },
+      "actual": {
+        "success": true,
+        "cost": 7.0,
+        "reward": 279.03311091284513,
+        "steps": 508,
+        "route_completion": 0.9870807759052713,
+        "lane_changes": 3,
+        "interventions": 25
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "stale_lane_context": 1,
+        "transition_unfinished_or_off_center": 1
+      },
+      "last_8_requests": [
+        {
+          "t": 39.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.49941155314445496
+        },
+        {
+          "t": 40.5,
+          "camera": "E",
+          "teacher": "D",
+          "top_probability": 0.7632289528846741
+        },
+        {
+          "t": 42.0,
+          "camera": "F",
+          "teacher": "D",
+          "top_probability": 0.835333526134491
+        },
+        {
+          "t": 43.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9563249349594116
+        },
+        {
+          "t": 45.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9421974420547485
+        },
+        {
+          "t": 46.5,
+          "camera": "D",
+          "teacher": "A",
+          "top_probability": 0.776491641998291
+        },
+        {
+          "t": 48.0,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.8665867447853088
+        },
+        {
+          "t": 49.5,
+          "camera": "D",
+          "teacher": "A",
+          "top_probability": 0.9391589164733887
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 5.712747472052527,
+        "desired_speed_mps": 6.04420288954631,
+        "lateral_error_m": 0.7445310926853533
+      },
+      "telemetry_is_evidence_for_original": false
+    },
+    {
+      "replica": 1,
+      "seed": 522,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 67,
+        "original_requests": 67,
+        "max_capture_speed_error": 7.401605981820561e-05,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 0.003462785588595807,
+        "faithful_within_tolerance": false
+      },
+      "original": {
+        "seed": 522,
+        "success": false,
+        "collision_free_success": false,
+        "cost": 0.0,
+        "reward": 223.1719660844258,
+        "steps": 1000,
+        "route_completion": 0.690801326726634,
+        "calls": 67,
+        "response_status": {
+          "applied": 26,
+          "rejected": 41,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.23004920911941906,
+        "lane_changes": 4,
+        "interventions": 712,
+        "violations": [],
+        "hard_brake_steps": 4,
+        "terminated": false,
+        "truncated": true
+      },
+      "actual": {
+        "success": false,
+        "cost": 0.0,
+        "reward": 223.1685032988372,
+        "steps": 1000,
+        "route_completion": 0.6907903727341601,
+        "lane_changes": 4,
+        "interventions": 712
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "transition_unfinished_or_off_center": 41
+      },
+      "last_8_requests": [
+        {
+          "t": 88.5,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.5528631210327148
+        },
+        {
+          "t": 90.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.4915916919708252
+        },
+        {
+          "t": 91.5,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.7200541496276855
+        },
+        {
+          "t": 93.0,
+          "camera": "F",
+          "teacher": "D",
+          "top_probability": 0.34265953302383423
+        },
+        {
+          "t": 94.5,
+          "camera": "F",
+          "teacher": "D",
+          "top_probability": 0.49184906482696533
+        },
+        {
+          "t": 96.0,
+          "camera": "F",
+          "teacher": "D",
+          "top_probability": 0.5260303020477295
+        },
+        {
+          "t": 97.5,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.4285537004470825
+        },
+        {
+          "t": 99.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.7023747563362122
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 0.0036131856299701634,
+        "desired_speed_mps": 0.0,
+        "lateral_error_m": 0.7058570202034299
+      },
+      "telemetry_is_evidence_for_original": false
+    },
+    {
+      "replica": 1,
+      "seed": 524,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 67,
+        "original_requests": 67,
+        "max_capture_speed_error": 1.0625296464894518e-06,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 7.626281536943225e-05,
+        "faithful_within_tolerance": true
+      },
+      "original": {
+        "seed": 524,
+        "success": false,
+        "collision_free_success": false,
+        "cost": 0.0,
+        "reward": 75.36265611032286,
+        "steps": 1000,
+        "route_completion": 0.21649352433212893,
+        "calls": 67,
+        "response_status": {
+          "applied": 53,
+          "rejected": 14,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.22966178447762362,
+        "lane_changes": 1,
+        "interventions": 907,
+        "violations": [],
+        "hard_brake_steps": 3,
+        "terminated": false,
+        "truncated": true
+      },
+      "actual": {
+        "success": false,
+        "cost": 0.0,
+        "reward": 75.36257984750749,
+        "steps": 1000,
+        "route_completion": 0.21649331002157193,
+        "lane_changes": 1,
+        "interventions": 907
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "transition_unfinished_or_off_center": 14
+      },
+      "last_8_requests": [
+        {
+          "t": 88.5,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.9746168255805969
+        },
+        {
+          "t": 90.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.9758008718490601
+        },
+        {
+          "t": 91.5,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.9629157185554504
+        },
+        {
+          "t": 93.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.94319748878479
+        },
+        {
+          "t": 94.5,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.9503394365310669
+        },
+        {
+          "t": 96.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.8977096080780029
+        },
+        {
+          "t": 97.5,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.934019148349762
+        },
+        {
+          "t": 99.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.9632992148399353
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 0.003610695119385866,
+        "desired_speed_mps": 0.0,
+        "lateral_error_m": 0.678602786052345
+      },
+      "telemetry_is_evidence_for_original": true
+    },
+    {
+      "replica": 1,
+      "seed": 529,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 35,
+        "original_requests": 35,
+        "max_capture_speed_error": 0.19167159877606704,
+        "lane_metadata_mismatches": 1,
+        "response_status_mismatches": 0,
+        "outcome_matches": false,
+        "reward_absolute_error": 4.935114910628727,
+        "faithful_within_tolerance": false
+      },
+      "original": {
+        "seed": 529,
+        "success": true,
+        "collision_free_success": false,
+        "cost": 27.0,
+        "reward": 156.21978301388776,
+        "steps": 518,
+        "route_completion": 0.9811242574960936,
+        "calls": 35,
+        "response_status": {
+          "applied": 33,
+          "rejected": 2,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.22739418019999513,
+        "lane_changes": 0,
+        "interventions": 55,
+        "violations": [
+          "crash_vehicle"
+        ],
+        "hard_brake_steps": 12,
+        "terminated": true,
+        "truncated": false
+      },
+      "actual": {
+        "success": true,
+        "cost": 28.0,
+        "reward": 151.28466810325904,
+        "steps": 519,
+        "route_completion": 0.9816509317253798,
+        "lane_changes": 0,
+        "interventions": 56
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "stale_lane_context": 1,
+        "transition_unfinished_or_off_center": 1
+      },
+      "last_8_requests": [
+        {
+          "t": 40.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.8120425343513489
+        },
+        {
+          "t": 42.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.985855758190155
+        },
+        {
+          "t": 43.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.977822482585907
+        },
+        {
+          "t": 45.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9087029099464417
+        },
+        {
+          "t": 46.5,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.5216398239135742
+        },
+        {
+          "t": 48.0,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9662648439407349
+        },
+        {
+          "t": 49.5,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.991287887096405
+        },
+        {
+          "t": 51.0,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9870796799659729
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 6.908500643059758,
+        "desired_speed_mps": 7.095709820785145,
+        "lateral_error_m": 0.0196466655476194
+      },
+      "telemetry_is_evidence_for_original": false
+    },
+    {
+      "replica": 1,
+      "seed": 533,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 32,
+        "original_requests": 32,
+        "max_capture_speed_error": 0.09259758646015648,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": false,
+        "reward_absolute_error": 4.545653755139739,
+        "faithful_within_tolerance": false
+      },
+      "original": {
+        "seed": 533,
+        "success": false,
+        "collision_free_success": false,
+        "cost": 9.0,
+        "reward": 234.58952706155293,
+        "steps": 469,
+        "route_completion": 0.8091281129778439,
+        "calls": 32,
+        "response_status": {
+          "applied": 30,
+          "rejected": 2,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.22713057796877223,
+        "lane_changes": 6,
+        "interventions": 60,
+        "violations": [
+          "crash_vehicle",
+          "out_of_road"
+        ],
+        "hard_brake_steps": 24,
+        "terminated": true,
+        "truncated": false
+      },
+      "actual": {
+        "success": false,
+        "cost": 8.0,
+        "reward": 239.13518081669267,
+        "steps": 469,
+        "route_completion": 0.8090309760280141,
+        "lane_changes": 6,
+        "interventions": 59
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "front_or_rear_gap_too_small": 1,
+        "transition_unfinished_or_off_center": 1
+      },
+      "last_8_requests": [
+        {
+          "t": 36.0,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9514257907867432
+        },
+        {
+          "t": 37.5,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.892805814743042
+        },
+        {
+          "t": 39.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.7130277752876282
+        },
+        {
+          "t": 40.5,
+          "camera": "F",
+          "teacher": "D",
+          "top_probability": 0.8785846829414368
+        },
+        {
+          "t": 42.0,
+          "camera": "F",
+          "teacher": "D",
+          "top_probability": 0.8340877294540405
+        },
+        {
+          "t": 43.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.8096154928207397
+        },
+        {
+          "t": 45.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.5884349942207336
+        },
+        {
+          "t": 46.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.5409024357795715
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 4.7022484157773,
+        "desired_speed_mps": 4.55442155794342,
+        "lateral_error_m": 1.7047601775986623
+      },
+      "telemetry_is_evidence_for_original": false
+    },
+    {
+      "replica": 2,
+      "seed": 513,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 34,
+        "original_requests": 34,
+        "max_capture_speed_error": 0.0004901871936160429,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 0.00031921984304972284,
+        "faithful_within_tolerance": false
+      },
+      "original": {
+        "seed": 513,
+        "success": true,
+        "collision_free_success": false,
+        "cost": 7.0,
+        "reward": 280.8418896238645,
+        "steps": 509,
+        "route_completion": 0.9846641174109283,
+        "calls": 34,
+        "response_status": {
+          "applied": 29,
+          "rejected": 5,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.22737272385292914,
+        "lane_changes": 2,
+        "interventions": 21,
+        "violations": [
+          "crash_vehicle"
+        ],
+        "hard_brake_steps": 11,
+        "terminated": true,
+        "truncated": false
+      },
+      "actual": {
+        "success": true,
+        "cost": 7.0,
+        "reward": 280.84157040402147,
+        "steps": 509,
+        "route_completion": 0.9846642037280552,
+        "lane_changes": 2,
+        "interventions": 21
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "stale_lane_context": 3,
+        "transition_unfinished_or_off_center": 2
+      },
+      "last_8_requests": [
+        {
+          "t": 39.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9352183938026428
+        },
+        {
+          "t": 40.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.8144539594650269
+        },
+        {
+          "t": 42.0,
+          "camera": "F",
+          "teacher": "D",
+          "top_probability": 0.9787694215774536
+        },
+        {
+          "t": 43.5,
+          "camera": "E",
+          "teacher": "D",
+          "top_probability": 0.47885167598724365
+        },
+        {
+          "t": 45.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.4571134150028229
+        },
+        {
+          "t": 46.5,
+          "camera": "D",
+          "teacher": "A",
+          "top_probability": 0.9937217831611633
+        },
+        {
+          "t": 48.0,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9620227217674255
+        },
+        {
+          "t": 49.5,
+          "camera": "D",
+          "teacher": "A",
+          "top_probability": 0.5309240221977234
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 5.6772177673802515,
+        "desired_speed_mps": 6.041514306965441,
+        "lateral_error_m": 0.48740556421960557
+      },
+      "telemetry_is_evidence_for_original": false
+    },
+    {
+      "replica": 2,
+      "seed": 522,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 67,
+        "original_requests": 67,
+        "max_capture_speed_error": 0.0001327935119228344,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 0.026718685162848033,
+        "faithful_within_tolerance": false
+      },
+      "original": {
+        "seed": 522,
+        "success": false,
+        "collision_free_success": false,
+        "cost": 0.0,
+        "reward": 222.99944228116414,
+        "steps": 1000,
+        "route_completion": 0.6904671093174989,
+        "calls": 67,
+        "response_status": {
+          "applied": 53,
+          "rejected": 14,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.2278866252835433,
+        "lane_changes": 2,
+        "interventions": 734,
+        "violations": [],
+        "hard_brake_steps": 4,
+        "terminated": false,
+        "truncated": true
+      },
+      "actual": {
+        "success": false,
+        "cost": 0.0,
+        "reward": 222.9727235960013,
+        "steps": 1000,
+        "route_completion": 0.6903826139834828,
+        "lane_changes": 2,
+        "interventions": 734
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "stale_lane_context": 1,
+        "transition_unfinished_or_off_center": 13
+      },
+      "last_8_requests": [
+        {
+          "t": 88.5,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.4786493182182312
+        },
+        {
+          "t": 90.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.8327913880348206
+        },
+        {
+          "t": 91.5,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.9131746888160706
+        },
+        {
+          "t": 93.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.7235711812973022
+        },
+        {
+          "t": 94.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.5483453869819641
+        },
+        {
+          "t": 96.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.7542452812194824
+        },
+        {
+          "t": 97.5,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.8303305506706238
+        },
+        {
+          "t": 99.0,
+          "camera": "C",
+          "teacher": "D",
+          "top_probability": 0.4872357249259949
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 0.003638472643624392,
+        "desired_speed_mps": 0.0,
+        "lateral_error_m": 1.4917679780190534
+      },
+      "telemetry_is_evidence_for_original": false
+    },
+    {
+      "replica": 2,
+      "seed": 530,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 67,
+        "original_requests": 67,
+        "max_capture_speed_error": 2.0333683217188536e-06,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 1.966528827779257e-06,
+        "faithful_within_tolerance": true
+      },
+      "original": {
+        "seed": 530,
+        "success": false,
+        "collision_free_success": false,
+        "cost": 0.0,
+        "reward": 268.4166394566991,
+        "steps": 1000,
+        "route_completion": 0.7272648336900093,
+        "calls": 67,
+        "response_status": {
+          "applied": 65,
+          "rejected": 2,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.27149502398508535,
+        "lane_changes": 3,
+        "interventions": 682,
+        "violations": [],
+        "hard_brake_steps": 3,
+        "terminated": false,
+        "truncated": true
+      },
+      "actual": {
+        "success": false,
+        "cost": 0.0,
+        "reward": 268.41664142322793,
+        "steps": 1000,
+        "route_completion": 0.7272648336900093,
+        "lane_changes": 3,
+        "interventions": 682
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "transition_unfinished_or_off_center": 2
+      },
+      "last_8_requests": [
+        {
+          "t": 88.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.4641706049442291
+        },
+        {
+          "t": 90.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.6027672290802002
+        },
+        {
+          "t": 91.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.7196245193481445
+        },
+        {
+          "t": 93.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.7254706025123596
+        },
+        {
+          "t": 94.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.7762596011161804
+        },
+        {
+          "t": 96.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.8996089696884155
+        },
+        {
+          "t": 97.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.7194725275039673
+        },
+        {
+          "t": 99.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.8854187726974487
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 0.0036329768952800623,
+        "desired_speed_mps": 0.0,
+        "lateral_error_m": 0.9338286725601347
+      },
+      "telemetry_is_evidence_for_original": true
+    },
+    {
+      "replica": 2,
+      "seed": 533,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 39,
+        "original_requests": 39,
+        "max_capture_speed_error": 0.0013338857678890648,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 0.005351744208724085,
+        "faithful_within_tolerance": false
+      },
+      "original": {
+        "seed": 533,
+        "success": true,
+        "collision_free_success": false,
+        "cost": 2.0,
+        "reward": 346.66688142513215,
+        "steps": 574,
+        "route_completion": 0.9834592179686082,
+        "calls": 39,
+        "response_status": {
+          "applied": 35,
+          "rejected": 4,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.27124038230774133,
+        "lane_changes": 7,
+        "interventions": 81,
+        "violations": [
+          "crash_vehicle"
+        ],
+        "hard_brake_steps": 23,
+        "terminated": true,
+        "truncated": false
+      },
+      "actual": {
+        "success": true,
+        "cost": 2.0,
+        "reward": 346.67223316934087,
+        "steps": 574,
+        "route_completion": 0.9834731184714428,
+        "lane_changes": 7,
+        "interventions": 81
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "transition_unfinished_or_off_center": 3,
+        "front_or_rear_gap_too_small": 1
+      },
+      "last_8_requests": [
+        {
+          "t": 46.5,
+          "camera": "E",
+          "teacher": "D",
+          "top_probability": 0.8334890604019165
+        },
+        {
+          "t": 48.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.7970432043075562
+        },
+        {
+          "t": 49.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9984320998191833
+        },
+        {
+          "t": 51.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9853754043579102
+        },
+        {
+          "t": 52.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.8805275559425354
+        },
+        {
+          "t": 54.0,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9660844802856445
+        },
+        {
+          "t": 55.5,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9937021732330322
+        },
+        {
+          "t": 57.0,
+          "camera": "A",
+          "teacher": "A",
+          "top_probability": 0.9860399961471558
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 6.023181056474695,
+        "desired_speed_mps": 6.60066025682015,
+        "lateral_error_m": 2.2400256317330176
+      },
+      "telemetry_is_evidence_for_original": false
+    },
+    {
+      "replica": 2,
+      "seed": 543,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 67,
+        "original_requests": 67,
+        "max_capture_speed_error": 5.8529804981555245e-06,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 0.00021202165515887827,
+        "faithful_within_tolerance": true
+      },
+      "original": {
+        "seed": 543,
+        "success": false,
+        "collision_free_success": false,
+        "cost": 0.0,
+        "reward": 317.21399491629586,
+        "steps": 1000,
+        "route_completion": 0.715328629668742,
+        "calls": 67,
+        "response_status": {
+          "applied": 65,
+          "rejected": 2,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.2712512301790778,
+        "lane_changes": 3,
+        "interventions": 622,
+        "violations": [],
+        "hard_brake_steps": 4,
+        "terminated": false,
+        "truncated": true
+      },
+      "actual": {
+        "success": false,
+        "cost": 0.0,
+        "reward": 317.214206937951,
+        "steps": 1000,
+        "route_completion": 0.7153291250266754,
+        "lane_changes": 3,
+        "interventions": 622
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "transition_unfinished_or_off_center": 2
+      },
+      "last_8_requests": [
+        {
+          "t": 88.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9967302083969116
+        },
+        {
+          "t": 90.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9927142262458801
+        },
+        {
+          "t": 91.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9924389123916626
+        },
+        {
+          "t": 93.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9914116859436035
+        },
+        {
+          "t": 94.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9963417649269104
+        },
+        {
+          "t": 96.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.992233157157898
+        },
+        {
+          "t": 97.5,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.962257981300354
+        },
+        {
+          "t": 99.0,
+          "camera": "D",
+          "teacher": "D",
+          "top_probability": 0.9912444949150085
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 0.0036110978177057045,
+        "desired_speed_mps": 0.0,
+        "lateral_error_m": 2.4255709866485975
+      },
+      "telemetry_is_evidence_for_original": true
+    },
+    {
+      "replica": 2,
+      "seed": 548,
+      "label": "Camera-delay0",
+      "verification": {
+        "requests_replayed": 67,
+        "original_requests": 67,
+        "max_capture_speed_error": 1.8372991533204507e-05,
+        "lane_metadata_mismatches": 0,
+        "response_status_mismatches": 0,
+        "outcome_matches": true,
+        "reward_absolute_error": 7.636151806877933e-06,
+        "faithful_within_tolerance": true
+      },
+      "original": {
+        "seed": 548,
+        "success": false,
+        "collision_free_success": false,
+        "cost": 0.0,
+        "reward": 84.19045446120435,
+        "steps": 1000,
+        "route_completion": 0.1813618932755912,
+        "calls": 67,
+        "response_status": {
+          "applied": 55,
+          "rejected": 12,
+          "pending_at_termination": 0
+        },
+        "mean_inference_seconds": 0.2715267614030042,
+        "lane_changes": 3,
+        "interventions": 892,
+        "violations": [],
+        "hard_brake_steps": 4,
+        "terminated": false,
+        "truncated": true
+      },
+      "actual": {
+        "success": false,
+        "cost": 0.0,
+        "reward": 84.19044682505255,
+        "steps": 1000,
+        "route_completion": 0.18136187708754142,
+        "lane_changes": 3,
+        "interventions": 892
+      },
+      "torch_version": "2.15.0+cpu",
+      "rejection_reasons": {
+        "transition_unfinished_or_off_center": 12
+      },
+      "last_8_requests": [
+        {
+          "t": 88.5,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.5258488655090332
+        },
+        {
+          "t": 90.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.6159238219261169
+        },
+        {
+          "t": 91.5,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.473580539226532
+        },
+        {
+          "t": 93.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.6329030990600586
+        },
+        {
+          "t": 94.5,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.7524835467338562
+        },
+        {
+          "t": 96.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.8246559500694275
+        },
+        {
+          "t": 97.5,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.8332830667495728
+        },
+        {
+          "t": 99.0,
+          "camera": "A",
+          "teacher": "D",
+          "top_probability": 0.8257625699043274
+        }
+      ],
+      "last_10_seconds": {
+        "speed_mps": 0.003644356439679649,
+        "desired_speed_mps": 0.0,
+        "lateral_error_m": 1.870827854859947
+      },
+      "telemetry_is_evidence_for_original": true
+    }
+  ]
+}
