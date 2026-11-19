@@ -13,7 +13,8 @@ import numpy as np
 class LaneCautionDriver:
     def __init__(self, vehicle, speed=40.0, headway=1.0, lateral_accel=2.5,
                  clearance=3.0, change_period=15, preview=True, prediction=True,
-                 planner="rule", skill_checkpoint=None, protection=True, initial_careful=False):
+                 planner="rule", skill_checkpoint=None, protection=True, initial_careful=False,
+                 manage_maneuvers=False, control_dt=0.1):
         from metadrive.policy.idm_policy import IDMPolicy
 
         self.vehicle = vehicle
@@ -35,6 +36,12 @@ class LaneCautionDriver:
         self.last_features = None
         self.last_teacher_action = None
         self.last_caution_label = False
+        self.last_intent_reason = "no_previous_request"
+        self.last_caution_applied = False
+        self.maneuvers = None
+        if manage_maneuvers:
+            from driving.safemetadrive.maneuvers import ManeuverSupervisor
+            self.maneuvers = ManeuverSupervisor(dt=control_dt)
         self.skill = None
         if skill_checkpoint:
             from stable_baselines3 import PPO
@@ -43,24 +50,50 @@ class LaneCautionDriver:
     def apply_intent(self, delta, careful, capture_lane):
         """Admit a lane target captured before inference, using fresh gap checks."""
         lanes = self.vehicle.navigation.current_ref_lanes
+        self.last_caution_applied = False
         if capture_lane not in lanes or self.lane is not capture_lane:
+            self.last_intent_reason = "stale_lane_context"
             return False
+        supervisor = getattr(self, "maneuvers", None)
+        # A current-context request to be more cautious can survive a rejected
+        # lane change. A rejected normal-speed request never removes caution.
+        if supervisor is not None and careful:
+            self.careful = True
+            self.last_caution_applied = True
         current = lanes.index(capture_lane)
         target = current + int(delta)
         if not 0 <= target < len(lanes):
+            self.last_intent_reason = "invalid_adjacent_lane"
             return False
         if delta:
             _, lat = self.lane.local_coordinates(self.vehicle.position)
             if abs(lat) > 0.65:
+                self.last_intent_reason = "transition_unfinished_or_off_center"
                 return False
             objs = self.vehicle.lidar.get_surrounding_objects(self.vehicle)
             f, r, _ = self.lane_objects(lanes[target], objs)
             if self.protection and (f < max(8, self.vehicle.speed*1.1) or r < max(10, self.vehicle.speed*0.8)):
+                self.last_intent_reason = "front_or_rear_gap_too_small"
                 return False
+            if supervisor is not None:
+                reason = supervisor.admission_reason(self, lanes[target], objs)
+                if reason is not None:
+                    self.last_intent_reason = reason
+                    return False
+                supervisor.start(self.lane, lanes[target], self.vehicle.position)
             self.lane = lanes[target]
             self.changes += 1
-        self.careful = bool(careful)
+        returning = supervisor is not None and supervisor.phase == "returning"
+        self.careful = bool(careful) or returning
+        self.last_caution_applied = self.careful == bool(careful)
+        self.last_intent_reason = "accepted"
         return True
+
+    def planner_feedback(self):
+        if self.maneuvers is None:
+            return {}
+        return dict(**self.maneuvers.feedback(), last_intent_reason=self.last_intent_reason,
+                    caution_applied=self.last_caution_applied)
 
     def path_point(self, distance):
         """Continue the selected lane across the next navigation road seam."""
@@ -74,7 +107,7 @@ class LaneCautionDriver:
             s, lane = s - lane.length, successor
         return lane.position(min(s, lane.length), 0), lane.heading_theta_at(min(s, lane.length))
 
-    def conflict_time(self, objects):
+    def conflict_time(self, objects, *, include_rear=False):
         """Sample oriented footprints under constant-velocity object predictions.
 
         This is a heuristic collision forecast, not an invariant-set certificate.
@@ -101,7 +134,7 @@ class LaneCautionDriver:
             other_side = np.array([-axis[1], axis[0]])
             velocity = np.asarray(getattr(obj, "velocity", [0, 0]))
             # Rear following traffic is not made safer by braking in front of it.
-            if delta @ forward < -v.LENGTH and axis @ forward > 0.5:
+            if not include_rear and delta @ forward < -v.LENGTH and axis @ forward > 0.5:
                 continue
             if np.linalg.norm(delta) > (speed + np.linalg.norm(velocity))*horizon + 10:
                 continue
@@ -154,12 +187,17 @@ class LaneCautionDriver:
             # Several parallel lanes can share a road-network connection. Taking
             # the first one makes an unintended multi-lane change at every seam.
             self.lane = min(candidates, key=lambda lane: abs(lane.local_coordinates(v.position)[1]))
+            supervisor = getattr(self, "maneuvers", None)
+            if supervisor is not None:
+                supervisor.reset_road()
         return lanes
 
     def act(self):
         v = self.vehicle
         lanes = self.synchronize_lane()
         objects = v.lidar.get_surrounding_objects(v)
+        if self.maneuvers is not None:
+            self.maneuvers.update(self, objects)
         current = lanes.index(self.lane)
         ego_speed = v.speed
         gaps = [self.lane_objects(lane, objects) for lane in lanes]
@@ -189,6 +227,13 @@ class LaneCautionDriver:
                     if 0 <= toward < len(lanes) and gaps[toward][0] > 8 and gaps[toward][1] > 10:
                         best = toward
             if best != current:
+                if self.maneuvers is not None:
+                    reason = self.maneuvers.admission_reason(self, lanes[best], objects)
+                    if reason is not None:
+                        best = current
+                    else:
+                        self.maneuvers.start(self.lane, lanes[best], v.position)
+            if best != current:
                 self.lane = lanes[best]
                 self.changes += 1
                 current = best
@@ -201,6 +246,8 @@ class LaneCautionDriver:
         angles = np.unwrap(headings)
         curvature = max(abs(np.diff(angles))) / (look / 2)
         cruise = self.speed / 3.6 * (0.7 if self.careful else 1.0)
+        if self.maneuvers is not None and self.maneuvers.phase == "returning":
+            cruise = min(cruise, 2.0)
         target = min(cruise, math.sqrt(self.lateral_accel / max(curvature, 1e-4)))
         # A stopping-distance speed cap, with the front object's speed retained.
         front, _, fv = gaps[current]

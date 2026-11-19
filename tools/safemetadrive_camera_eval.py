@@ -12,7 +12,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
 def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0.0,
-                    split="validation", planner_kind="camera", protection=True, commit=None):
+                    split="validation", planner_kind="camera", protection=True, commit=None,
+                    manage_maneuvers=False):
     import numpy as np
     import torch
     from driving.safemetadrive.camera_planner import (
@@ -35,6 +36,7 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
     result = manifest(split, planner_kind, dict(adapter=adapter, skill_checkpoint=skill_checkpoint,
                       extra_delay=extra_delay, protection=protection, speed=30.0,
                       lane_action_mask=True,
+                      manage_maneuvers=manage_maneuvers,
                       delay_semantics="measured GPU inference time plus injected delay in simulation time"))
     result.update(episodes=[], seeds=seeds, calls=[])
     if camera:
@@ -47,12 +49,13 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
     try:
         for seed in seeds:
             env.reset(seed=seed)
+            dt = env.config["physics_world_step_size"] * env.config["decision_repeat"]
             driver = LaneCautionDriver(env.agent, speed=30, planner="external" if camera else "rule",
-                                       skill_checkpoint=skill_checkpoint, protection=protection)
+                                       skill_checkpoint=skill_checkpoint, protection=protection,
+                                       manage_maneuvers=manage_maneuvers, control_dt=dt)
             if planner_kind in ("normal", "careful"):
                 driver.planner = "external"
                 driver.careful = planner_kind == "careful"
-            dt = env.config["physics_world_step_size"] * env.config["decision_repeat"]
             tick = 0
             cost = reward = 0.0
             pending = None
@@ -70,7 +73,9 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
                     if status != "pending":
                         statuses[status] += 1
                         result["calls"][-1].update(response_status=status,resolved_t=now,
-                                                   response_age=now-pending.captured_at)
+                                                   response_age=now-pending.captured_at,
+                                                   response_reason=pending.reason,
+                                                   caution_applied=driver.last_caution_applied)
                         pending = None
                 if camera and pending is None and now >= next_request:
                     frame, state = capture(env, driver)
@@ -106,6 +111,10 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
                        lane_changes=driver.changes, interventions=driver.interventions,
                        violations=sorted(violations),hard_brake_steps=hard_brakes,
                        terminated=bool(terminated), truncated=bool(truncated))
+            if driver.maneuvers is not None:
+                row.update(maneuver_events=list(driver.maneuvers.events),
+                           recovery_aborts=driver.maneuvers.abort_count,
+                           completed_maneuvers=driver.maneuvers.completed_count)
             result["episodes"].append(row)
             output.write_text(json.dumps(result, indent=2))
             if commit and len(result["episodes"]) % 5 == 0:

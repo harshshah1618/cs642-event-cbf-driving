@@ -1,0 +1,1341 @@
+{
+  "note": "Development diagnostics with fixed saved planner letters/times. No camera inference, training or cloud. Not a camera benchmark after state divergence.",
+  "config": {
+    "start_seed": 100,
+    "num_scenarios": 50,
+    "map": 3,
+    "horizon": 1000,
+    "accident_prob": 0.8,
+    "traffic_density": 0.05,
+    "crash_vehicle_done": false,
+    "crash_object_done": false,
+    "use_render": false,
+    "log_level": 50
+  },
+  "maps": [
+    100,
+    103,
+    106,
+    112,
+    128,
+    138,
+    140
+  ],
+  "replicas": [
+    0,
+    1,
+    2
+  ],
+  "episodes": [
+    {
+      "replica": 0,
+      "seed": 100,
+      "managed": false,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.5206144522312164,
+      "response_status": {
+        "rejected": 44,
+        "applied": 23
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 1,
+        "transition_unfinished_or_off_center": 1,
+        "invalid_adjacent_lane": 42
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 4,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 0,
+      "seed": 100,
+      "managed": true,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.5206513079676917,
+      "response_status": {
+        "rejected": 44,
+        "applied": 23
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 1,
+        "transition_unfinished_or_off_center": 1,
+        "invalid_adjacent_lane": 42
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 4,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 6.7,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 7.0,
+          "phase": "idle",
+          "reason": "navigation_road_changed"
+        },
+        {
+          "t": 8.2,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 10.4,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        },
+        {
+          "t": 36.8,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 39.0,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        }
+      ]
+    },
+    {
+      "replica": 0,
+      "seed": 103,
+      "managed": false,
+      "success": true,
+      "cost": 0.0,
+      "steps": 373,
+      "route_completion": 0.9891387736432129,
+      "response_status": {
+        "applied": 23,
+        "rejected": 2
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 2
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 373,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 12,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 0,
+      "seed": 103,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 373,
+      "route_completion": 0.989138708224137,
+      "response_status": {
+        "applied": 23,
+        "rejected": 2
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 2
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 373,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 12,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 0,
+      "seed": 106,
+      "managed": false,
+      "success": false,
+      "cost": 11.0,
+      "steps": 156,
+      "route_completion": 0.1497407701823404,
+      "response_status": {
+        "applied": 9,
+        "rejected": 2
+      },
+      "rejection_reasons": {
+        "transition_unfinished_or_off_center": 2
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 10.0,
+      "original_steps": 156,
+      "original_endpoint_matches": false,
+      "steps_after_saved_requests_end": 5,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 0,
+      "seed": 106,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 568,
+      "route_completion": 0.9845597945910044,
+      "response_status": {
+        "applied": 9,
+        "rejected": 2
+      },
+      "rejection_reasons": {
+        "transition_forecast_conflict": 1,
+        "invalid_adjacent_lane": 1
+      },
+      "caution_on_rejected_request": 1,
+      "original_success": false,
+      "original_cost": 10.0,
+      "original_steps": 156,
+      "original_endpoint_matches": false,
+      "steps_after_saved_requests_end": 417,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 12.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 13.4,
+          "phase": "idle",
+          "reason": "navigation_road_changed"
+        }
+      ]
+    },
+    {
+      "replica": 0,
+      "seed": 112,
+      "managed": false,
+      "success": true,
+      "cost": 0.0,
+      "steps": 489,
+      "route_completion": 0.9866037376709369,
+      "response_status": {
+        "applied": 32,
+        "rejected": 1
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 489,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 8,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 0,
+      "seed": 112,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 464,
+      "route_completion": 0.985119544479013,
+      "response_status": {
+        "applied": 29,
+        "rejected": 2
+      },
+      "rejection_reasons": {
+        "transition_forecast_conflict": 1,
+        "invalid_adjacent_lane": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 489,
+      "original_endpoint_matches": false,
+      "steps_after_saved_requests_end": 0,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 16.8,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 19.1,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        }
+      ]
+    },
+    {
+      "replica": 0,
+      "seed": 128,
+      "managed": false,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.4961318874207768,
+      "response_status": {
+        "applied": 23,
+        "rejected": 44
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 2,
+        "transition_unfinished_or_off_center": 5,
+        "invalid_adjacent_lane": 37
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 9,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 0,
+      "seed": 128,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 834,
+      "route_completion": 0.9893166976973296,
+      "response_status": {
+        "applied": 27,
+        "rejected": 29
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 2,
+        "transition_forecast_conflict": 1,
+        "invalid_adjacent_lane": 22,
+        "transition_unfinished_or_off_center": 2,
+        "maneuver_in_progress": 1,
+        "front_or_rear_gap_too_small": 1
+      },
+      "caution_on_rejected_request": 2,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": false,
+      "steps_after_saved_requests_end": 0,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 18.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 20.6,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        },
+        {
+          "t": 37.8,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 39.9,
+          "phase": "idle",
+          "reason": "navigation_road_changed"
+        },
+        {
+          "t": 40.8,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 43.0,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        },
+        {
+          "t": 43.8,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 46.1,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        },
+        {
+          "t": 69.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 72.5,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        },
+        {
+          "t": 75.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 76.4,
+          "phase": "idle",
+          "reason": "navigation_road_changed"
+        }
+      ]
+    },
+    {
+      "replica": 0,
+      "seed": 138,
+      "managed": false,
+      "success": true,
+      "cost": 0.0,
+      "steps": 686,
+      "route_completion": 0.9902143155671937,
+      "response_status": {
+        "applied": 44,
+        "rejected": 2
+      },
+      "rejection_reasons": {
+        "front_or_rear_gap_too_small": 1,
+        "stale_lane_context": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 686,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 10,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 0,
+      "seed": 138,
+      "managed": true,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.7014383777503683,
+      "response_status": {
+        "applied": 43,
+        "rejected": 3
+      },
+      "rejection_reasons": {
+        "front_or_rear_gap_too_small": 1,
+        "stale_lane_context": 1,
+        "maneuver_in_progress": 1
+      },
+      "caution_on_rejected_request": 1,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 686,
+      "original_endpoint_matches": false,
+      "steps_after_saved_requests_end": 324,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 10.8,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 11.8,
+          "phase": "idle",
+          "reason": "navigation_road_changed"
+        },
+        {
+          "t": 27.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 29.6,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        },
+        {
+          "t": 45.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 48.8,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        }
+      ]
+    },
+    {
+      "replica": 0,
+      "seed": 140,
+      "managed": false,
+      "success": true,
+      "cost": 0.0,
+      "steps": 771,
+      "route_completion": 0.9914370673059322,
+      "response_status": {
+        "applied": 50,
+        "rejected": 2
+      },
+      "rejection_reasons": {
+        "transition_unfinished_or_off_center": 1,
+        "stale_lane_context": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 771,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 5,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 0,
+      "seed": 140,
+      "managed": true,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.7740071947202466,
+      "response_status": {
+        "applied": 49,
+        "rejected": 3
+      },
+      "rejection_reasons": {
+        "transition_forecast_conflict": 1,
+        "invalid_adjacent_lane": 1,
+        "stale_lane_context": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 771,
+      "original_endpoint_matches": false,
+      "steps_after_saved_requests_end": 234,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 18.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 20.6,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        }
+      ]
+    },
+    {
+      "replica": 1,
+      "seed": 100,
+      "managed": false,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.5206171746889822,
+      "response_status": {
+        "applied": 54,
+        "rejected": 13
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 2,
+        "invalid_adjacent_lane": 11
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 5,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 1,
+      "seed": 100,
+      "managed": true,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.5206171846580381,
+      "response_status": {
+        "applied": 54,
+        "rejected": 13
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 2,
+        "invalid_adjacent_lane": 11
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 5,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 9.5,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 11.5,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        },
+        {
+          "t": 38.1,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 39.8,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        }
+      ]
+    },
+    {
+      "replica": 1,
+      "seed": 103,
+      "managed": false,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.39215652986511845,
+      "response_status": {
+        "applied": 67
+      },
+      "rejection_reasons": {},
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 9,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 1,
+      "seed": 103,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 406,
+      "route_completion": 0.986895232531966,
+      "response_status": {
+        "applied": 24,
+        "rejected": 3
+      },
+      "rejection_reasons": {
+        "transition_forecast_conflict": 1,
+        "stale_lane_context": 2
+      },
+      "caution_on_rejected_request": 1,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": false,
+      "steps_after_saved_requests_end": 0,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 1,
+      "seed": 106,
+      "managed": false,
+      "success": true,
+      "cost": 0.0,
+      "steps": 554,
+      "route_completion": 0.9856696818222721,
+      "response_status": {
+        "applied": 34,
+        "rejected": 3
+      },
+      "rejection_reasons": {
+        "invalid_adjacent_lane": 3
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 554,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 13,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 1,
+      "seed": 106,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 554,
+      "route_completion": 0.9856695797278593,
+      "response_status": {
+        "applied": 34,
+        "rejected": 3
+      },
+      "rejection_reasons": {
+        "invalid_adjacent_lane": 3
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 554,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 13,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 24.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 27.3,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        },
+        {
+          "t": 52.8,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 54.5,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        }
+      ]
+    },
+    {
+      "replica": 1,
+      "seed": 112,
+      "managed": false,
+      "success": true,
+      "cost": 0.0,
+      "steps": 467,
+      "route_completion": 0.9871203282345035,
+      "response_status": {
+        "applied": 30,
+        "rejected": 1
+      },
+      "rejection_reasons": {
+        "invalid_adjacent_lane": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 467,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 1,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 1,
+      "seed": 112,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 467,
+      "route_completion": 0.9871044960388277,
+      "response_status": {
+        "applied": 30,
+        "rejected": 1
+      },
+      "rejection_reasons": {
+        "invalid_adjacent_lane": 1
+      },
+      "caution_on_rejected_request": 1,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 467,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 1,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 15.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 17.0,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        }
+      ]
+    },
+    {
+      "replica": 1,
+      "seed": 128,
+      "managed": false,
+      "success": true,
+      "cost": 0.0,
+      "steps": 656,
+      "route_completion": 0.9890532077204454,
+      "response_status": {
+        "applied": 43,
+        "rejected": 1
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 656,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 10,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 1,
+      "seed": 128,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 656,
+      "route_completion": 0.989053248278138,
+      "response_status": {
+        "applied": 43,
+        "rejected": 1
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 656,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 10,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 18.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 20.1,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        }
+      ]
+    },
+    {
+      "replica": 1,
+      "seed": 138,
+      "managed": false,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.16005813696662963,
+      "response_status": {
+        "applied": 27,
+        "rejected": 40
+      },
+      "rejection_reasons": {
+        "invalid_adjacent_lane": 40
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 9,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 1,
+      "seed": 138,
+      "managed": true,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.16011181552407877,
+      "response_status": {
+        "applied": 27,
+        "rejected": 40
+      },
+      "rejection_reasons": {
+        "invalid_adjacent_lane": 40
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 9,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 12.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 12.7,
+          "phase": "idle",
+          "reason": "navigation_road_changed"
+        }
+      ]
+    },
+    {
+      "replica": 1,
+      "seed": 140,
+      "managed": false,
+      "success": true,
+      "cost": 0.0,
+      "steps": 781,
+      "route_completion": 0.991647647900523,
+      "response_status": {
+        "applied": 50,
+        "rejected": 2
+      },
+      "rejection_reasons": {
+        "front_or_rear_gap_too_small": 2
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": false,
+      "steps_after_saved_requests_end": 0,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 1,
+      "seed": 140,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 780,
+      "route_completion": 0.9910240305038268,
+      "response_status": {
+        "applied": 50,
+        "rejected": 2
+      },
+      "rejection_reasons": {
+        "front_or_rear_gap_too_small": 2
+      },
+      "caution_on_rejected_request": 2,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": false,
+      "steps_after_saved_requests_end": 0,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 57.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 60.0,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        },
+        {
+          "t": 61.8,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 63.9,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        }
+      ]
+    },
+    {
+      "replica": 2,
+      "seed": 100,
+      "managed": false,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.1411705570691426,
+      "response_status": {
+        "applied": 59,
+        "rejected": 8
+      },
+      "rejection_reasons": {
+        "invalid_adjacent_lane": 8
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 5,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 2,
+      "seed": 100,
+      "managed": true,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.14117057168513267,
+      "response_status": {
+        "applied": 59,
+        "rejected": 8
+      },
+      "rejection_reasons": {
+        "invalid_adjacent_lane": 8
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 5,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 2,
+      "seed": 103,
+      "managed": false,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.3924840690329026,
+      "response_status": {
+        "applied": 66,
+        "rejected": 1
+      },
+      "rejection_reasons": {
+        "transition_unfinished_or_off_center": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 9,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 2,
+      "seed": 103,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 359,
+      "route_completion": 0.9878925872727536,
+      "response_status": {
+        "applied": 20,
+        "rejected": 4
+      },
+      "rejection_reasons": {
+        "transition_forecast_conflict": 1,
+        "front_or_rear_gap_too_small": 1,
+        "stale_lane_context": 2
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": false,
+      "steps_after_saved_requests_end": 0,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 2,
+      "seed": 106,
+      "managed": false,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.43536298859725253,
+      "response_status": {
+        "applied": 66,
+        "rejected": 1
+      },
+      "rejection_reasons": {
+        "invalid_adjacent_lane": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 9,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 2,
+      "seed": 106,
+      "managed": true,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.4353630339615391,
+      "response_status": {
+        "applied": 66,
+        "rejected": 1
+      },
+      "rejection_reasons": {
+        "invalid_adjacent_lane": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 9,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 2,
+      "seed": 112,
+      "managed": false,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.2856107490686904,
+      "response_status": {
+        "applied": 67
+      },
+      "rejection_reasons": {},
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 9,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 2,
+      "seed": 112,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 557,
+      "route_completion": 0.9848733300608649,
+      "response_status": {
+        "applied": 35,
+        "rejected": 2
+      },
+      "rejection_reasons": {
+        "transition_forecast_conflict": 1,
+        "stale_lane_context": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": false,
+      "steps_after_saved_requests_end": 0,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 2,
+      "seed": 128,
+      "managed": false,
+      "success": true,
+      "cost": 0.0,
+      "steps": 645,
+      "route_completion": 0.9889630203748581,
+      "response_status": {
+        "applied": 41,
+        "rejected": 2
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 2
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 645,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 14,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 2,
+      "seed": 128,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 645,
+      "route_completion": 0.9889631117400264,
+      "response_status": {
+        "applied": 41,
+        "rejected": 2
+      },
+      "rejection_reasons": {
+        "stale_lane_context": 2
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 645,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 14,
+      "recovery_aborts": 0,
+      "events": [
+        {
+          "t": 18.3,
+          "phase": "executing",
+          "reason": "lane_change_admitted"
+        },
+        {
+          "t": 20.2,
+          "phase": "completed",
+          "reason": "lane_center_reached"
+        }
+      ]
+    },
+    {
+      "replica": 2,
+      "seed": 138,
+      "managed": false,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.16002238977120872,
+      "response_status": {
+        "applied": 66,
+        "rejected": 1
+      },
+      "rejection_reasons": {
+        "invalid_adjacent_lane": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 9,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 2,
+      "seed": 138,
+      "managed": true,
+      "success": false,
+      "cost": 0.0,
+      "steps": 1000,
+      "route_completion": 0.15999436899392477,
+      "response_status": {
+        "applied": 66,
+        "rejected": 1
+      },
+      "rejection_reasons": {
+        "invalid_adjacent_lane": 1
+      },
+      "caution_on_rejected_request": 0,
+      "original_success": false,
+      "original_cost": 0.0,
+      "original_steps": 1000,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 9,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 2,
+      "seed": 140,
+      "managed": false,
+      "success": true,
+      "cost": 0.0,
+      "steps": 757,
+      "route_completion": 0.9922154611255269,
+      "response_status": {
+        "applied": 51
+      },
+      "rejection_reasons": {},
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 753,
+      "original_endpoint_matches": false,
+      "steps_after_saved_requests_end": 6,
+      "recovery_aborts": 0,
+      "events": []
+    },
+    {
+      "replica": 2,
+      "seed": 140,
+      "managed": true,
+      "success": true,
+      "cost": 0.0,
+      "steps": 753,
+      "route_completion": 0.9918476332980181,
+      "response_status": {
+        "applied": 50
+      },
+      "rejection_reasons": {},
+      "caution_on_rejected_request": 0,
+      "original_success": true,
+      "original_cost": 0.0,
+      "original_steps": 753,
+      "original_endpoint_matches": true,
+      "steps_after_saved_requests_end": 2,
+      "recovery_aborts": 0,
+      "events": []
+    }
+  ],
+  "source_sha256": {
+    "driving/safemetadrive/__init__.py": "7bcde39b18e055c94ed7cb34bbeb3f13a80cc8bd78e64c3ceb65d5ff95399238",
+    "driving/safemetadrive/camera_planner.py": "20ec0c1dc0461f50a4b5812f1e5363818694ce569c9cd5cea921838c3d92b085",
+    "driving/safemetadrive/campaign.py": "0cdb4f04bf5ddbc28bd1fdcdfbda5d1f6512f8ccd68d08c01ad40503d4cf34a8",
+    "driving/safemetadrive/maneuvers.py": "6326983c3845a6c3ce9aca256e94b48d5216de7b6ed364926443370025cf4524",
+    "driving/safemetadrive/omnisafe_env.py": "a00b935a5a452d1573e772a13a2274f1c39339a05e5c7048ceff390fa4a173cd",
+    "driving/safemetadrive/policies.py": "0e042013142776874f8ba677405dd09e8431674870898cd73db60921d5e71ddf",
+    "driving/safemetadrive/protocol.py": "1ee8d8f075a5d015c3f30c5cdf35a66874dd3b04022ab3bdf9ef23117acb05b9",
+    "driving/safemetadrive/selection.py": "244ee4a43a4f0a80c8f470130d7683d79fc17392ef49527566da7c3c6a294d10",
+    "driving/safemetadrive/skill_env.py": "d67209494cea6961da92703324cee444ee595140da9ea2fbcb6c13a649b65f72",
+    "driving/safemetadrive/training_state.py": "d52b6dc88b984f04ed12f47733db8bc26eb3f3b2c2327a981d851501ff87f5ec"
+  },
+  "summary": {
+    "False": {
+      "episodes": 21,
+      "successes": 10,
+      "cost": 11.0,
+      "aborts": 0
+    },
+    "True": {
+      "episodes": 21,
+      "successes": 13,
+      "cost": 0.0,
+      "aborts": 0
+    }
+  }
+}

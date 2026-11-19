@@ -41,6 +41,16 @@ def messages(image, state, previous_image=None):
         "D=continue target, careful; E=left, careful; F=right, careful. "
         "Return exactly one letter. A fast safety layer separately checks each command."
     )
+    if "maneuver_state" in state:
+        text += (
+            f" Execution status: {state['maneuver_state']}. "
+            f"Time without position progress: {state['no_progress_seconds']:.1f} seconds. "
+            f"Previous instruction result: {state['last_intent_reason']}. "
+            f"Previous caution update applied: {state['caution_applied']}. "
+            f"Recovery hold reason: {state.get('recovery_block_reason', 'none')}. "
+            "A blocked or returning maneuver is handled by checked recovery; "
+            "do not repeatedly request another lane change before it finishes."
+        )
     previous_image = image if previous_image is None else previous_image
     return [{"role": "user", "content": [{"type": "image", "image": previous_image},
                                           {"type": "image", "image": image},
@@ -72,6 +82,8 @@ def capture(env, driver):
     state = dict(speed_mps=float(env.agent.speed), current_lane=int(env.agent.lane.index[-1]),
                  target_lane=int(driver.lane.index[-1]) if driver.lane in lanes else int(env.agent.lane.index[-1]),
                  lane_count=len(lanes))
+    if hasattr(driver, "planner_feedback"):
+        state.update(driver.planner_feedback())
     return image, state
 
 
@@ -89,13 +101,20 @@ class PendingIntent:
         self.delta, self.careful = decode(letter)
         self.captured_at, self.ready_at = captured_at, captured_at+delay
         self.lane, self.ttl = lane, ttl
+        self.reason = None
 
     def apply(self, now, driver):
         if now < self.ready_at:
             return "pending"
         if now - self.captured_at > self.ttl:
+            self.reason = "expired"
+            if getattr(driver, "maneuvers", None) is not None:
+                driver.last_intent_reason = "expired"
+                driver.last_caution_applied = False
             return "expired"
-        return "applied" if driver.apply_intent(self.delta, self.careful, self.lane) else "rejected"
+        applied = driver.apply_intent(self.delta, self.careful, self.lane)
+        self.reason = getattr(driver, "last_intent_reason", None)
+        return "applied" if applied else "rejected"
 
 
 class QwenCameraPlanner:

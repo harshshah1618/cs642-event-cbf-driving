@@ -23,6 +23,9 @@ def teacher_recommendation(driver):
     if not driver.preview:
         raise ValueError("Teacher queries require side-effect-free preview control")
     oracle = copy(driver)
+    # This is the original rule reference, not another physical control tick.
+    # Never mutate a shared execution supervisor through the shallow copy.
+    oracle.maneuvers = None
     oracle.planner, oracle.tick, oracle.skill = "rule", 0, None
     oracle.act()
     lanes = driver.vehicle.navigation.current_ref_lanes

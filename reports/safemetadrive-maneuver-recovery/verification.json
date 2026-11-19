@@ -1,0 +1,32 @@
+{
+  "modal_jobs_launched": 0,
+  "new_training_runs": 0,
+  "camera_inference_runs": 0,
+  "test_maps_simulated": 0,
+  "repository_tests_passed": 271,
+  "new_maneuver_tests": 14,
+  "mypy_checked_files": 15,
+  "lint_passed": true,
+  "trained_tracker_fixture_runs": 12,
+  "managed_fixture_returns_completed": 6,
+  "all_fixture_costs_zero": true,
+  "final_recorded_input_runs": 42,
+  "development_maps": [
+    100,
+    103,
+    106,
+    112,
+    128,
+    138,
+    140
+  ],
+  "final_recorded_input_pairs": 21,
+  "improved_completion_pairs": 5,
+  "regressed_completion_pairs": 2,
+  "final_current_source_hashes_match": true,
+  "preliminary_runs": 300,
+  "preliminary_note": "Earlier candidate; two archived source files differ from final code. Final version includes rear-approaching traffic in transition checks and refuses recovery without active protection.",
+  "full_suite_log": "/home/harsh/Projects/cs642-event-cbf-driving/runs/safemetadrive/maneuver-tests-final.log",
+  "frozen_study_plan_file_sha256": "ca1ce844b985f74fa91e87bc4cd56087a9d103f4659f944ca21ed30c5b7984b2",
+  "scope": "Mechanism/physics and fixed-input development validation. No new closed-loop camera benchmark or formal safety certificate."
+}

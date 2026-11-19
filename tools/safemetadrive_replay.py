@@ -109,6 +109,7 @@ def replay(replica, seed, label="Camera-delay0"):
                 reason = rejection_reason(driver, pending) if now >= pending.ready_at else None
                 status = pending.apply(now, driver)
                 if status != "pending":
+                    assert pending_call is not None
                     responses.append(
                         dict(
                             captured_t=pending.captured_at,
@@ -147,6 +148,7 @@ def replay(replica, seed, label="Camera-delay0"):
             action = driver.act()
             position = list(map(float, env.agent.position))
             heading = float(env.agent.heading_theta)
+            assert driver.last_features is not None
             features = driver.last_features.tolist()
             stop_diagnostics = None
             if features[1] * 15 < 0.1 and features[2] * 15 < 0.1:
