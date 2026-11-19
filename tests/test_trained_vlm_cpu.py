@@ -40,7 +40,8 @@ def test_official_slow_processor_and_exact_placeholder_expansion():
     stream = io.BytesIO()
     image.save(stream, format="PNG")
     prompts = SimpleNamespace(
-        messages=lambda image, lab: {"lane": lab["ego_lane"], "skill": lab["current_skill"]}
+        messages=lambda image, lab: {"lane": lab["ego_lane"], "skill": lab["current_skill"]},
+        state_text=lambda lab: f"{lab['ego_lane']} {lab['current_skill']}",
     )
     inputs, metadata = cpu.prepare_inputs(
         stream.getvalue(),
