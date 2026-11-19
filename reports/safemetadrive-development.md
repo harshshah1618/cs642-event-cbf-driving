@@ -119,6 +119,17 @@ not the final three-seed comparison. Each episode uses a recorded policy RNG
 seed independent of the environment RNG. The remaining baseline models are
 still training or awaiting evaluation.
 
+The completed original three-seed checkpoint/mode sweep selected final1M-step
+stochastic PPO-Lag (54.7% mean development success, cost1.833) and final1M-step
+mean-action CPO (4.0%, cost7.607). The latter is too weak to serve as the only
+CPO configuration. The original shared critic rate5e-5 is20 times below
+[OmniSafe0.5's CPO default](https://github.com/PKU-Alignment/omnisafe/blob/v0.5.0/omnisafe/configs/on-policy/CPO.yaml).
+An additional three-seed1M-step CPO family uses the default1e-3 critic rate,
+with other study settings unchanged. All five checkpoints and both action
+modes are evaluated. A common configuration/epoch/mode is selected across its
+three seeds using development results, retaining the original family. This
+adds3M baseline-training transitions and must be included in compute accounting.
+
 ## Cloud accounting and interruptions
 
 Modal interrupted baseline workers during training. After the laptop disconnected,
@@ -136,12 +147,14 @@ mapped work and saves completion/failure status. A disconnect probe verified
 completion after the launching process exited. It can also wait for another
 remote run and launch its evaluation without a local parent.
 
-Further app deployments left queued calls tied to earlier function definitions
-without workers. A fresh call against the active deployment started immediately
-while30 older evaluation inputs remained queued. Those evaluations were
-replaced; running training was preserved. Phase launches now resolve deployed
-functions by name, and the deployment is held fixed while the study runs.
-Queue time must not be reported as inference or training compute time.
+Camera evaluations encountered a Modal L4 capacity shortage. A fresh call
+briefly obtained a worker while30 earlier inputs remained queued, initially
+leading to an incorrect deployment-routing diagnosis. Modal's system logs
+explicitly identified GPU_L4 capacity wait. Evaluations were moved to available
+A10G/L40S workers; actual GPU, Torch/CUDA and precision are stored in each
+camera report. Phase launches resolve deployed functions by name. Queue time
+must not be reported as inference or training compute time, and mixed hardware
+must be disclosed when interpreting measured latency.
 
 An environment parity audit on training maps0/1 matched initial nearby traffic
 and complete position/speed/action/reward/cost traces with and without cameras,

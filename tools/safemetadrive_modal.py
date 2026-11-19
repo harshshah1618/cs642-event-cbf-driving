@@ -146,14 +146,15 @@ def _train_baseline(spec):
     import subprocess
     import sys
 
-    run, algorithm, seed, steps = spec
+    run, algorithm, seed, steps, *options = spec
+    critic_lr = options[0] if options else 5e-5
     out = f"/results/{run}/{algorithm}-seed{seed}"
     Path(out).mkdir(parents=True, exist_ok=True)
     with open(f"{out}/train.log", "w") as log:
         proc = subprocess.Popen([
             sys.executable, "/workspace/tools/safemetadrive_train.py",
             "--algorithm", algorithm, "--seed", str(seed), "--steps", str(steps),
-            "--output", out], stdout=log, stderr=subprocess.STDOUT)
+            "--output", out,"--critic-lr",str(critic_lr)], stdout=log, stderr=subprocess.STDOUT)
         import time
         while proc.poll() is None:
             time.sleep(30)
@@ -370,7 +371,7 @@ def snapshot_camera_adapter(run, seed, through_step):
 
 
 @app.function(image=camera_training_image, volumes={"/results": volume, "/hf": hf_volume},
-              gpu="L4", cpu=4, memory=24576, timeout=4*3600, max_containers=6)
+              gpu=["A10G","L40S"], cpu=4, memory=24576, timeout=4*3600, max_containers=6)
 def evaluate_camera_shard(spec):
     import sys
     sys.path.insert(0, "/workspace/tools")
@@ -411,6 +412,27 @@ def run_stage(stage="pilot", run="pilot-v1", steps=1000000, camera_step=200, pre
     train_baseline = modal.Function.from_name(app.name,"train_baseline")
     train_skills = modal.Function.from_name(app.name,"train_skills")
     specs: list[Any]
+    if stage == "cpo-critic-campaign":
+        records = list(train_baseline_reserved.map([(run,"CPO",seed,steps,1e-3) for seed in range(3)]))
+        _save_summaries(run+"/training",records)
+        volume.reload()
+        specs = []
+        for seed in range(3):
+            root = Path(f"/results/{run}/CPO-seed{seed}")
+            for epoch in (50,100,150,200,250):
+                checkpoint = max(root.rglob(f"epoch-{epoch}.pt"),key=lambda p:p.stat().st_mtime)
+                for deterministic in (True,False):
+                    mode = "mean" if deterministic else "stochastic"
+                    specs.append((f"{run}/development/CPO-seed{seed}-epoch{epoch}-{mode}","native_learned",
+                        dict(checkpoint=str(checkpoint),deterministic=deterministic,policy_seed=1000003*seed),
+                        "validation",list(range(100,150))))
+        results = list(evaluate_learned_shard.map(specs))
+        _save_summaries(run+"/development",results)
+        volume.reload()
+        canonical = "native-baseline-checkpoints-development-v1"
+        combined = dict(json.loads(Path(f"/results/{canonical}/summaries.json").read_text()))
+        combined.update(dict(results))
+        return _save_summaries(canonical,list(combined.items()))
     if stage in ("resume-balanced-development","resume-recovery-development"):
         import time
         source, through = (("camera-balanced-v2",600) if stage == "resume-balanced-development"

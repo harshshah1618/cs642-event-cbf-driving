@@ -31,7 +31,10 @@ Development sequence:
    these prevent an equal-total-compute or equal-information claim. Compare
    mean and stochastic actions and checkpoints at200k,400k,600k,800k,1M using
    development maps. Select one common epoch and inference mode per algorithm
-   across its three seeds: maximize mean destination success, break ties by
+   across its three seeds. CPO additionally compares the shared5e-5 critic rate
+   against the library-default1e-3 rate, retaining all original runs. Select one
+   common training configuration, epoch and mode per algorithm: maximize mean
+   destination success, break ties by
    lower cost, higher return, earlier checkpoint, then mean actions.
 5. Freeze selection using development maps; evaluate all 50 final maps across
    independent training seeds; report paired intervals, cost and success jointly.

@@ -36,6 +36,10 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
                       extra_delay=extra_delay, protection=protection, speed=30.0,
                       delay_semantics="measured GPU inference time plus injected delay in simulation time"))
     result.update(episodes=[], seeds=seeds, calls=[])
+    if camera:
+        result["inference_hardware"] = dict(gpu=torch.cuda.get_device_name(0),
+                                             torch=torch.__version__,cuda=torch.version.cuda,
+                                             dtype=str(next(camera.model.parameters()).dtype))
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
     started = time.monotonic()

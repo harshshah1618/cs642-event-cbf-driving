@@ -12,8 +12,8 @@ from driving.safemetadrive.protocol import SPLITS, environment_config
 def select_baselines(reports):
     start, count = SPLITS["validation"]
     expected_maps = set(range(start, start+count))
-    candidates: dict[tuple[str,int,bool], dict[int,list[dict[str,Any]]]] = defaultdict(lambda: defaultdict(list))
-    checkpoints: dict[tuple[tuple[str,int,bool], int], str] = {}
+    candidates: dict[tuple[str,str,int,bool], dict[int,list[dict[str,Any]]]] = defaultdict(lambda: defaultdict(list))
+    checkpoints: dict[tuple[tuple[str,str,int,bool], int], str] = {}
     for report in reports:
         if report["split"] != "validation" or report["config"] != environment_config("validation"):
             raise ValueError("Baseline selection requires the reserved development configuration")
@@ -25,7 +25,8 @@ def select_baselines(reports):
         if not match:
             raise ValueError(f"Unrecognized baseline artifact: {checkpoint}")
         algorithm, seed, epoch = match.group(1), int(match.group(2)), int(match.group(3))
-        key = (algorithm, epoch, bool(parameters["deterministic"]))
+        family = "critic-lr1e-3" if "/cpo-critic-lr-v1/" in checkpoint else "original"
+        key = (algorithm,family,epoch,bool(parameters["deterministic"]))
         candidates[key][seed].extend(report["episodes"])
         if (key, seed) in checkpoints and checkpoints[key, seed] != checkpoint:
             raise ValueError("One candidate cannot combine different model artifacts")
@@ -34,8 +35,11 @@ def select_baselines(reports):
     selection: dict[str,Any] = {}
     table: list[dict[str,Any]] = []
     for algorithm in ("PPOLag", "CPO"):
-        required = {(algorithm, epoch, deterministic) for epoch in (50,100,150,200,250)
-                    for deterministic in (True,False)}
+        families = {key[1] for key in candidates if key[0] == algorithm}
+        if "original" not in families:
+            raise ValueError(f"{algorithm}: original family must remain in the comparison")
+        required = {(algorithm,family,epoch,deterministic) for family in families
+                    for epoch in (50,100,150,200,250) for deterministic in (True,False)}
         if {key for key in candidates if key[0] == algorithm} != required:
             raise ValueError(f"{algorithm}: expected all five checkpoints and both inference modes")
         choices: list[dict[str,Any]] = []
@@ -52,8 +56,8 @@ def select_baselines(reports):
                     success_rate=float(np.mean([row["success"] for row in rows])),
                     mean_cost=float(np.mean([row["cost"] for row in rows])),
                     mean_reward=float(np.mean([row["reward"] for row in rows]))))
-            row = dict(algorithm=algorithm, epoch=key[1], transitions=key[1]*4000,
-                       deterministic=key[2], replicas=metrics,
+            row = dict(algorithm=algorithm,training_family=key[1],epoch=key[2],transitions=key[2]*4000,
+                       deterministic=key[3],replicas=metrics,
                        checkpoints={str(seed): checkpoints[key, seed] for seed in range(3)},
                        **{metric: float(np.mean([m[metric] for m in metrics]))
                           for metric in ("success_rate", "mean_cost", "mean_reward")})
@@ -62,9 +66,9 @@ def select_baselines(reports):
         # favorable checkpoint/mode independently for every trained replica.
         selection[algorithm] = max(choices, key=lambda row: (
             row["success_rate"], -row["mean_cost"], row["mean_reward"],
-            -row["epoch"], row["deterministic"]))
+            -row["epoch"], row["deterministic"],row["training_family"] == "original"))
         table.extend(choices)
     return dict(split="validation", selection=selection, candidates=table,
                 criterion="Maximize mean destination success across three seeds; ties minimize "
                           "native cost, maximize return, prefer earlier checkpoints, then mean actions. "
-                          "Use one checkpoint epoch and inference mode per algorithm.")
+                          "Use one training family, checkpoint epoch and inference mode per algorithm.")
