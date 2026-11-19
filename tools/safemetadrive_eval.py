@@ -33,7 +33,7 @@ def evaluate(policy="lane_caution_rule", parameters=None, split="validation", se
     try:
         for seed in seeds:
             observation, _ = env.reset(seed=seed)
-            driver = make_driver(policy, env.agent, parameters, observation=observation)
+            driver = make_driver(policy, env.agent, parameters, observation=observation, episode_seed=seed)
             reward, cost = 0.0, 0.0
             crashes = set()
             brakes = 0
@@ -63,6 +63,8 @@ def evaluate(policy="lane_caution_rule", parameters=None, split="validation", se
                        lane_changes=getattr(driver, "changes", None),
                        interventions=getattr(driver, "interventions", None),
                        terminated=bool(terminated), truncated=bool(truncated))
+            if policy == "native_learned":
+                row["policy_seed"] = driver.policy_seed
             report["episodes"].append(row)
             print(json.dumps(row), flush=True)
             if hasattr(driver, "close"):

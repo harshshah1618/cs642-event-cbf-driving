@@ -1,20 +1,25 @@
 """Train a six-intent camera planner using frozen Qwen vision and language LoRA."""
 
 import json
-import math
 import random
 import sys
 import time
 from collections import Counter
 from pathlib import Path
+from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
-def train(data, output, steps=600, seed=0, commit=None):
+def train(data, output, steps=600, seed=0, commit=None, sampling="sqrt", resume_source=None):
     import numpy as np
     import torch
     from driving.safemetadrive.camera_planner import BASE_MODEL, LETTERS, messages
+    from driving.safemetadrive.training_state import (
+        checkpoint_location,
+        publish_checkpoint,
+        sampling_weights,
+    )
     from peft import LoraConfig, get_peft_model
     from PIL import Image
     from transformers import AutoProcessor, Qwen2_5_VLForConditionalGeneration
@@ -66,10 +71,16 @@ def train(data, output, steps=600, seed=0, commit=None):
 
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
         BASE_MODEL, torch_dtype=torch.bfloat16, attn_implementation="sdpa").cuda()
-    resume_path = output / "optimizer.pt"
-    if resume_path.exists():
+    resume_root = output
+    location = checkpoint_location(output)
+    if location is None and resume_source:
+        resume_root = Path(resume_source)
+        location = checkpoint_location(resume_root)
+        if location is None:
+            raise ValueError("Requested continuation has no optimizer checkpoint")
+    if location:
         from peft import PeftModel
-        model = PeftModel.from_pretrained(model, output / "last-adapter", is_trainable=True)
+        model = PeftModel.from_pretrained(model, location[0], is_trainable=True)
     else:
         model = get_peft_model(model, LoraConfig(
             r=16, lora_alpha=32, lora_dropout=0.05, bias="none",
@@ -79,10 +90,21 @@ def train(data, output, steps=600, seed=0, commit=None):
             parameter.data = parameter.data.float()
     model.print_trainable_parameters()
     counts = Counter(row["label"] for _, row in training)
-    weights = [min(10, math.sqrt(len(training)/max(counts[row["label"]], 1))) for _, row in training]
-    loader = torch.utils.data.DataLoader(training, batch_size=4, collate_fn=collate,
+    weights = sampling_weights([row["label"] for _, row in training], sampling)
+
+    class CameraDataset(torch.utils.data.Dataset):
+        def __init__(self, rows):
+            self.rows = rows
+
+        def __len__(self):
+            return len(self.rows)
+
+        def __getitem__(self, index):
+            return self.rows[index]
+
+    loader: torch.utils.data.DataLoader[Any] = torch.utils.data.DataLoader(CameraDataset(training), batch_size=4, collate_fn=collate,
         sampler=torch.utils.data.WeightedRandomSampler(weights, num_samples=len(training), replacement=True))
-    val_loader = torch.utils.data.DataLoader(validation, batch_size=4, collate_fn=collate)
+    val_loader: torch.utils.data.DataLoader[Any] = torch.utils.data.DataLoader(CameraDataset(validation), batch_size=4, collate_fn=collate)
     opt = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad], lr=1e-4)
     meta = dict(base_model=BASE_MODEL, seed=seed, steps=steps, train_maps=list(range(80)),
                 validation_maps=list(range(80, 100)), training_examples=len(training),
@@ -119,10 +141,25 @@ def train(data, output, steps=600, seed=0, commit=None):
         return result["balanced_accuracy"]
 
     output_path = output
-    resume = torch.load(resume_path, map_location="cuda", weights_only=False) if resume_path.exists() else None
+    resume = torch.load(location[1], map_location="cuda", weights_only=False) if location else None
     if resume:
         opt.load_state_dict(resume["optimizer"])
         meta = resume["metadata"]
+        # Legacy checkpoints were saved before validation. Recover completed
+        # validation rows from their sidecar without using future optimizer steps.
+        if (resume_root / "summary.json").exists():
+            sidecar = json.loads((resume_root / "summary.json").read_text())
+            history = {row["step"]: row for row in meta["history"]}
+            history.update({row["step"]: row for row in sidecar["history"] if row["step"] <= resume["step"]})
+            meta["history"] = [history[k] for k in sorted(history)]
+        trained = [row for row in meta["history"] if row["step"] > 0]
+        if trained:
+            best = max(trained, key=lambda row: row["balanced_accuracy"])
+            meta.update(best_step=best["step"], best_balanced_accuracy=best["balanced_accuracy"])
+        if resume_root != output:
+            meta["continued_from"] = str(resume_root)
+            meta["best_adapter"] = str(resume_root / "best-adapter")
+            meta["training_wall_seconds"] = 0.0
         meta["resumptions"] = meta.get("resumptions", 0)+1
         torch.set_rng_state(resume["cpu_rng"].cpu())
         torch.cuda.set_rng_state_all([x.cpu() for x in resume["cuda_rng"]])
@@ -132,12 +169,19 @@ def train(data, output, steps=600, seed=0, commit=None):
     else:
         best = evaluate(0)
         meta["base_balanced_accuracy"] = best
+    previous_sampling = meta.get("sampling", "sqrt")
+    if resume and previous_sampling != sampling:
+        meta.setdefault("sampling_changes", []).append(dict(step=resume["step"],
+                                                              previous=previous_sampling, current=sampling))
+    meta.update(sampling=sampling, status="running", steps=steps)
     # Always save a trained adapter, even when base classification is stronger.
     best_trained = meta.get("best_balanced_accuracy", -1.0)
     started = time.monotonic()
+    prior_wall_seconds = meta.get("training_wall_seconds", 0.0)
     model.train()
     opt.zero_grad(set_to_none=True)
     step = resume["step"] if resume else 0
+    initial_step = step
     micro = step*4
     while step < steps:
         for encoded, target in loader:
@@ -152,27 +196,25 @@ def train(data, output, steps=600, seed=0, commit=None):
             step += 1
             if step % 10 == 0:
                 print(json.dumps(dict(step=step, loss=float(loss)*4,
-                                      samples_per_second=micro*4/(time.monotonic()-started))), flush=True)
-            if step % 50 == 0 or step == steps:
-                model.save_pretrained(output / "last-adapter")
-                processor.save_pretrained(output / "last-adapter")
-                state = dict(step=step, optimizer=opt.state_dict(), metadata=meta,
-                             cpu_rng=torch.get_rng_state(), cuda_rng=torch.cuda.get_rng_state_all(),
-                             python_rng=random.getstate(), numpy_rng=np.random.get_state())
-                torch.save(state, output / "optimizer.tmp")
-                (output / "optimizer.tmp").replace(resume_path)
-                if commit:
-                    commit()
+                                      samples_per_second=(step-initial_step)*16/(time.monotonic()-started))), flush=True)
             if step % 200 == 0 or step == steps:
                 score = evaluate(step)
-                model.save_pretrained(output / "last-adapter")
-                processor.save_pretrained(output / "last-adapter")
                 if score > best_trained:
                     best_trained = score
-                    model.save_pretrained(output / "best-adapter")
-                    processor.save_pretrained(output / "best-adapter")
                     meta["best_step"] = step
                     meta["best_balanced_accuracy"] = best_trained
+                    meta["best_adapter"] = str(output / "checkpoints" / f"step-{step:06d}" / "adapter")
+            if step % 50 == 0 or step == steps:
+                meta["training_wall_seconds"] = prior_wall_seconds+time.monotonic()-started
+                def save(directory, step=step):
+                    model.save_pretrained(directory / "adapter")
+                    processor.save_pretrained(directory / "adapter")
+                    state = dict(step=step, optimizer=opt.state_dict(), metadata=meta,
+                                 cpu_rng=torch.get_rng_state(), cuda_rng=torch.cuda.get_rng_state_all(),
+                                 python_rng=random.getstate(), numpy_rng=np.random.get_state())
+                    torch.save(state, directory / "optimizer.pt")
+                publish_checkpoint(output, step, save)
+                (output / "summary.json").write_text(json.dumps(meta, indent=2))
                 if commit:
                     commit()
             if step >= steps:

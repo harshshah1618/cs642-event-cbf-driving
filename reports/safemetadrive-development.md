@@ -77,24 +77,58 @@ tokens using Qwen2.5-VL-3B with language LoRA and a frozen vision encoder.
 Training examples retain simulator-generated teacher labels; labels can depend
 on information absent from the images, so imitation targets are imperfect.
 
-Two-optimizer-step smoke tests validate the pipeline and are not trained-model
-performance results. Full camera training and closed-loop evaluation are pending.
+The original image-validation through optimizer step200 reached 89–92% overall
+accuracy but only 30–31% balanced accuracy, with zero recall for all four
+lane-change classes. A closed-loop pilot on maps100–104 completed 3/5, 2/5,
+and 2/5 drives for the three training seeds, respectively, with zero cost.
+This did not establish a useful camera planner. A continuation with equal
+sampling mass per class is running; its full driving evaluation is pending.
+
+## Reference actor evaluation
+
+The native checkpoint loader was checked against OmniSafe's own
+GaussianLearningActor at every visited state in a six-map audit. Deterministic
+actions matched exactly. The learned Gaussian policies have substantial action
+variance, and their mean actions perform much worse than stochastic actions.
+Both modes are therefore retained and compared on development maps before a
+common inference mode is selected per algorithm for final testing.
+
+On all50 development maps, completed PPO-Lag seed0 scored 4% success / cost1.54
+with mean actions and 42% / cost1.20 with stochastic actions. Seed2 scored
+2% / cost2.10 and 62% / cost2.48, respectively. These are two completed models,
+not the final three-seed comparison. Each episode uses a recorded policy RNG
+seed independent of the environment RNG. The remaining baseline models are
+still training or awaiting evaluation.
 
 ## Cloud accounting and interruptions
 
-Modal interrupted two baseline workers during training, restarting their inputs.
-Two replacement runs use non-preemptible CPU workers; their resource rates are
-three times the standard CPU/memory rates, with smaller resource reservations.
-Completed baselines will be selected by declared run/seed, not by test results.
-Wasted retry compute must not be mistaken for successful-run sample counts.
+Modal interrupted baseline workers during training. After the laptop disconnected,
+the original locally coordinated mapped jobs also stopped; detaching that
+launcher did not provide the durability originally assumed. PPO-Lag seeds0/2
+completed; the other four declared baseline models are being retrained from
+scratch on non-preemptible CPU workers. Their CPU/memory rates are three times
+standard rates, with smaller reservations. Partial baseline checkpoints did
+not contain optimizer state and are not treated as faithful resumptions.
+Completed baselines are selected by declared run/seed, not by test results.
+Wasted retry compute remains part of the compute accounting.
+
+The replacement launcher uses a deployed remote coordinator that owns all
+mapped work and saves completion/failure status. A disconnect probe verified
+completion after the launching process exited. It can also wait for another
+remote run and launch its evaluation without a local parent.
 
 The first camera check exposed slow per-image cloud-volume reads. Dataset shards
 were packed into archives and copied to each trainer's local disk. Camera
-training saves adapter, optimizer and random-generator states periodically so
-future interruptions can resume from a completed optimizer step. Environment
-state is not relevant to this supervised-training checkpoint.
+training saves adapter, optimizer and random-generator states periodically.
+New checkpoints are published as immutable directories before updating an
+atomic pointer, preserving the previous complete checkpoint on interruption.
+Resumed weighted sampling uses fresh IID draws; bit-exact batch replay is not
+claimed. Environment state is not relevant to this supervised checkpoint.
 
 At the first cost check, Modal reported $2.12 for these experiments and $0 billed
 after credits for the account. This is a delayed billing snapshot, not the final
-cost. The provisional estimate for the current training/evaluation round was
-$20–$35. Resource usage and final charges must be checked again at completion.
+cost. On Nov19, account-wide month-to-date gross usage reached $12.25, with $0
+billed after credits. This account total is not project-only spend. The project
+billing report showed $7.29 through its latest completed hourly bucket; current
+partial-hour usage is excluded. The provisional estimate for the current
+training/evaluation round was $20–$35. Final charges remain to be checked.

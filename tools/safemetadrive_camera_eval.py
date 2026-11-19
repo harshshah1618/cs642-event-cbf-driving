@@ -53,19 +53,16 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
             pending = None
             next_request = 0.0
             previous_frame, previous_capture = None, 0.0
-            statuses = Counter()
+            statuses: Counter[str] = Counter()
             latencies = []
             while True:
                 now = tick*dt
-                # Follow the previously admitted intent throughout inference.
-                action = driver.act()
+                driver.synchronize_lane()
                 if pending:
                     status = pending.apply(now, driver)
                     if status != "pending":
                         statuses[status] += 1
                         pending = None
-                        # Recompute after accepting a new intent, at this same state.
-                        action = driver.act()
                 if camera and pending is None and now >= next_request:
                     frame, state = capture(env, driver)
                     state["history_dt"] = now-previous_capture if previous_frame is not None else 0.0
@@ -77,6 +74,9 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
                     result["calls"].append(dict(seed=seed, captured_t=now, letter=letter,
                                                  ready_t=pending.ready_at, **metadata, **state))
                     next_request = now + 1.5
+                # One fast control calculation per physical command tick,
+                # including ticks that admit a newly returned planner answer.
+                action = driver.act()
                 _, r, terminated, truncated, info = env.step(action)
                 cost += float(info["cost"])
                 reward += float(r)

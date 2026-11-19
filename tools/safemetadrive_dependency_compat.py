@@ -26,7 +26,10 @@ def dataclass(cls=None, **kwargs):
 
 
 if __name__ == "__main__":
-    root = Path(importlib.util.find_spec("safety_gymnasium").origin).parent
+    spec = importlib.util.find_spec("safety_gymnasium")
+    if spec is None or spec.origin is None:
+        raise RuntimeError("Safety-Gymnasium must be installed before applying compatibility patch")
+    root = Path(spec.origin).parent
     (root / "_python311_compat.py").write_text(HELPER)
     count = 0
     for path in root.rglob("*.py"):

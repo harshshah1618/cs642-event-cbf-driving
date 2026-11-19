@@ -9,11 +9,43 @@ import torch
 from driving.safemetadrive.camera_planner import PendingIntent
 from driving.safemetadrive.policies import LaneCautionDriver, NativeLearnedDriver
 from driving.safemetadrive.protocol import SPLITS
+from driving.safemetadrive.training_state import (
+    checkpoint_location,
+    publish_checkpoint,
+    sampling_weights,
+)
 
 
 def test_training_development_and_test_maps_do_not_overlap():
     partitions = [set(range(start, start+count)) for start, count in SPLITS.values()]
     assert all(not left & right for i, left in enumerate(partitions) for right in partitions[i+1:])
+
+
+def test_balancing_gives_rare_maneuvers_equal_training_probability():
+    labels = ["A"]*1000+["D"]*500+["B"]*2+["C"]*3+["E"]+["F"]
+    weights = sampling_weights(labels, "balanced")
+    mass = {label: sum(w for y,w in zip(labels,weights,strict=True) if y == label) for label in set(labels)}
+    assert all(value == pytest.approx(1.0) for value in mass.values())
+
+
+def test_interrupted_checkpoint_does_not_replace_last_complete_state(tmp_path):
+    def save(directory):
+        (directory/"adapter").mkdir()
+        (directory/"optimizer.pt").write_bytes(b"complete")
+    first = publish_checkpoint(tmp_path, 50, save)
+    def interrupted(directory):
+        (directory/"adapter").mkdir()
+        raise RuntimeError("simulated interruption")
+    with pytest.raises(RuntimeError, match="simulated interruption"):
+        publish_checkpoint(tmp_path, 100, interrupted)
+    assert checkpoint_location(tmp_path) == (first/"adapter", first/"optimizer.pt")
+    assert not list((tmp_path/"checkpoints").glob(".writing-*"))
+
+
+def test_incomplete_checkpoint_cannot_be_published(tmp_path):
+    with pytest.raises(ValueError, match="both adapter and optimizer"):
+        publish_checkpoint(tmp_path, 50, lambda directory: (directory/"adapter").mkdir())
+    assert checkpoint_location(tmp_path) is None
 
 
 def test_delayed_relative_intent_cannot_retarget_after_another_lane_change():
@@ -73,3 +105,9 @@ def test_native_baseline_loader_preserves_deterministic_actor_output(tmp_path):
     with torch.inference_mode():
         expected = actor(torch.from_numpy(observation)).numpy()
     np.testing.assert_allclose(driver.act(), expected, rtol=1e-6, atol=1e-7)
+    left = NativeLearnedDriver(checkpoint, observation, deterministic=False, policy_seed=123)
+    right = NativeLearnedDriver(checkpoint, observation, deterministic=False, policy_seed=123)
+    first = left.act()
+    np.testing.assert_array_equal(first, right.act())
+    assert not np.allclose(first, expected)
+    assert not np.allclose(left.act(), first)

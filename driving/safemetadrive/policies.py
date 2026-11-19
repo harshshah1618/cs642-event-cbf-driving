@@ -141,7 +141,7 @@ class LaneCautionDriver:
                 rear = min(rear, max(0, -gap - half_length))
         return front, rear, front_v
 
-    def act(self):
+    def synchronize_lane(self):
         v = self.vehicle
         lanes = v.navigation.current_ref_lanes
         if not lanes:
@@ -154,6 +154,11 @@ class LaneCautionDriver:
             # Several parallel lanes can share a road-network connection. Taking
             # the first one makes an unintended multi-lane change at every seam.
             self.lane = min(candidates, key=lambda lane: abs(lane.local_coordinates(v.position)[1]))
+        return lanes
+
+    def act(self):
+        v = self.vehicle
+        lanes = self.synchronize_lane()
         objects = v.lidar.get_surrounding_objects(v)
         current = lanes.index(self.lane)
         ego_speed = v.speed
@@ -245,8 +250,8 @@ class LaneCautionDriver:
 
 
 class NativeLearnedDriver:
-    """Deterministic OmniSafe Gaussian actor on the unmodified native observation."""
-    def __init__(self, checkpoint, observation):
+    """OmniSafe Gaussian actor on the unmodified native observation."""
+    def __init__(self, checkpoint, observation, deterministic=True, policy_seed=0):
         import torch
 
         self.torch = torch
@@ -262,18 +267,27 @@ class NativeLearnedDriver:
         self.actor.load_state_dict(parameters)
         self.actor.eval()
         self.observation = observation
+        self.deterministic = deterministic
+        self.std = state["log_std"].exp()
+        self.generator = torch.Generator().manual_seed(policy_seed)
+        self.policy_seed = policy_seed
 
     def on_observation(self, observation):
         self.observation = observation
 
     def act(self):
         with self.torch.inference_mode():
-            return self.actor(self.torch.as_tensor(self.observation, dtype=self.torch.float32)).numpy()
+            action = self.actor(self.torch.as_tensor(self.observation, dtype=self.torch.float32))
+            if not self.deterministic:
+                action = action+self.torch.randn(action.shape, generator=self.generator)*self.std
+            return action.numpy()
 
 
-def make_driver(name, vehicle, parameters, observation=None):
+def make_driver(name, vehicle, parameters, observation=None, episode_seed=0):
     if name == "native_learned":
-        return NativeLearnedDriver(observation=observation, **parameters)
+        options = dict(parameters)
+        options["policy_seed"] = options.get("policy_seed", 0)+episode_seed
+        return NativeLearnedDriver(observation=observation, **options)
     if name == "lane_caution_rule":
         return LaneCautionDriver(vehicle, **parameters)
     if name == "idm":
