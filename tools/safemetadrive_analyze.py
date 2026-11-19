@@ -3,6 +3,7 @@
 import argparse
 import json
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 
@@ -15,7 +16,10 @@ def summarize(groups, split="test", bootstrap_samples=10000):
     matrices = {}
     summaries = {}
     for label, replicas in groups.items():
-        runs = []
+        runs: list[list[list[float]]] = []
+        failures: list[dict[str,Any]] = []
+        route_completion: list[float] = []
+        timeouts: list[bool] = []
         for paths in replicas:
             reports = [json.loads(Path(path).read_text()) for path in paths]
             if any(report["split"] != split for report in reports):
@@ -24,6 +28,9 @@ def summarize(groups, split="test", bootstrap_samples=10000):
             if {row["seed"] for row in episodes} != expected or len(episodes) != count:
                 raise ValueError(f"{label}: replica must cover each {split} map exactly once")
             rows = sorted(episodes, key=lambda row: row["seed"])
+            route_completion.extend(float(row["route_completion"]) for row in rows)
+            timeouts.extend(bool(row["truncated"]) for row in rows)
+            failures.extend(dict(replica=len(runs), **row) for row in rows if not row["success"])
             runs.append([[row["success"], row["cost"], row["collision_free_success"], row["reward"]]
                          for row in rows])
         array = np.asarray(runs, dtype=float)
@@ -35,6 +42,8 @@ def summarize(groups, split="test", bootstrap_samples=10000):
             mean_reward=float(array[:, :, 3].mean()),
             per_replica_success=array[:, :, 0].mean(1).tolist(),
             per_replica_cost=array[:, :, 1].mean(1).tolist(),
+            mean_route_completion=float(np.mean(route_completion)),
+            timeout_rate=float(np.mean(timeouts)), failed_episodes=failures,
         )
         if np.all(array[:, :, 0] == 1):
             summaries[label]["zero_failures_one_sided_95pct_failure_upper_bound"] = 1-0.05**(1/count)

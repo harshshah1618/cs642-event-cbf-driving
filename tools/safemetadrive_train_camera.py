@@ -1,5 +1,6 @@
 """Train a six-intent camera planner using frozen Qwen vision and language LoRA."""
 
+import hashlib
 import json
 import random
 import sys
@@ -11,17 +12,24 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
-def train(data, output, steps=600, seed=0, commit=None, sampling="sqrt", resume_source=None):
+def train(data, output, steps=600, seed=0, commit=None, sampling="sqrt", resume_source=None,
+          mirror_augmentation=False):
     import numpy as np
     import torch
-    from driving.safemetadrive.camera_planner import BASE_MODEL, LETTERS, messages
+    from driving.safemetadrive.camera_planner import (
+        BASE_MODEL,
+        BASE_MODEL_REVISION,
+        LETTERS,
+        messages,
+        reflect_example,
+    )
     from driving.safemetadrive.training_state import (
         checkpoint_location,
         publish_checkpoint,
         sampling_weights,
     )
     from peft import LoraConfig, get_peft_model
-    from PIL import Image
+    from PIL import Image, ImageOps
     from transformers import AutoProcessor, Qwen2_5_VLForConditionalGeneration
 
     random.seed(seed)
@@ -51,26 +59,32 @@ def train(data, output, steps=600, seed=0, commit=None, sampling="sqrt", resume_
         previous = by_time.get((row["map_seed"], row["step"]-15), path)
         row["history_file"] = str(previous)
         row["history_dt"] = 1.5 if previous != path else 0.0
-    processor = AutoProcessor.from_pretrained(BASE_MODEL, min_pixels=56*56, max_pixels=448*392)
+    processor = AutoProcessor.from_pretrained(BASE_MODEL, revision=BASE_MODEL_REVISION,
+                                              min_pixels=56*56, max_pixels=448*392)
     processor.tokenizer.padding_side = "right"
     ids = [processor.tokenizer.encode(c, add_special_tokens=False) for c in LETTERS]
     assert all(len(x) == 1 for x in ids)
     letter_ids = torch.tensor([x[0] for x in ids], device="cuda")
 
-    def collate(batch):
+    def collate(batch, augment=False):
         imgs, texts = [], []
+        targets = []
         for path, row in batch:
             previous = Image.open(row["history_file"]).convert("RGB")
             image = Image.open(path).convert("RGB")
+            if augment and random.random() < 0.5:
+                previous, image = ImageOps.mirror(previous), ImageOps.mirror(image)
+                row = reflect_example(row)
             imgs.extend([previous, image])
             texts.append(processor.apply_chat_template(messages(image, row, previous), tokenize=False,
                                                         add_generation_prompt=True))
+            targets.append(LETTERS.index(row["label"]))
         encoded = processor(text=texts, images=imgs, padding=True, return_tensors="pt")
-        target = torch.tensor([LETTERS.index(row["label"]) for _, row in batch])
+        target = torch.tensor(targets)
         return encoded, target
 
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-        BASE_MODEL, torch_dtype=torch.bfloat16, attn_implementation="sdpa").cuda()
+        BASE_MODEL, revision=BASE_MODEL_REVISION, torch_dtype=torch.bfloat16, attn_implementation="sdpa").cuda()
     resume_root = output
     location = checkpoint_location(output)
     if location is None and resume_source:
@@ -102,7 +116,9 @@ def train(data, output, steps=600, seed=0, commit=None, sampling="sqrt", resume_
         def __getitem__(self, index):
             return self.rows[index]
 
-    loader: torch.utils.data.DataLoader[Any] = torch.utils.data.DataLoader(CameraDataset(training), batch_size=4, collate_fn=collate,
+    from functools import partial
+    loader: torch.utils.data.DataLoader[Any] = torch.utils.data.DataLoader(CameraDataset(training), batch_size=4,
+        collate_fn=partial(collate, augment=mirror_augmentation),
         sampler=torch.utils.data.WeightedRandomSampler(weights, num_samples=len(training), replacement=True))
     val_loader: torch.utils.data.DataLoader[Any] = torch.utils.data.DataLoader(CameraDataset(validation), batch_size=4, collate_fn=collate)
     opt = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad], lr=1e-4)
@@ -113,6 +129,10 @@ def train(data, output, steps=600, seed=0, commit=None, sampling="sqrt", resume_
                 input="two front/rear RGB mosaics, 1.5 s history, and declared ego/navigation state",
                 base_model_revision=model.config._commit_hash,
                 history=[], status="running")
+    current_data = {key: meta[key] for key in ("train_maps", "validation_maps", "training_examples",
+                                              "validation_examples", "train_counts", "source_data_manifests")}
+    current_data["data_sha256"] = hashlib.sha256(json.dumps(manifests, sort_keys=True).encode()).hexdigest()
+    meta.update(current_data)
 
     def logits(encoded):
         encoded = {k: v.cuda() for k, v in encoded.items()}
@@ -166,6 +186,23 @@ def train(data, output, steps=600, seed=0, commit=None, sampling="sqrt", resume_
         random.setstate(resume["python_rng"])
         np.random.set_state(resume["numpy_rng"])
         print(f"Resuming camera training at optimizer step {resume['step']}", flush=True)
+        old_data_hash = hashlib.sha256(json.dumps(meta["source_data_manifests"], sort_keys=True).encode()).hexdigest()
+        if old_data_hash != current_data["data_sha256"]:
+            meta.setdefault("data_stages", []).append(dict(
+                through_step=resume["step"], data_sha256=old_data_hash,
+                history=meta["history"], best_step=meta.get("best_step"),
+                best_balanced_accuracy=meta.get("best_balanced_accuracy"),
+                best_adapter=meta.get("best_adapter"),
+                source_data_manifests=meta["source_data_manifests"]))
+            meta.update(current_data)
+            meta["history"] = []
+            # Evaluate the loaded optimizer checkpoint on the NEW image split.
+            # Scores from different datasets cannot compete for best adapter.
+            score = evaluate(resume["step"])
+            meta.update(best_step=resume["step"], best_balanced_accuracy=score,
+                        best_adapter=str(location[0]))
+        else:
+            meta.update(current_data)
     else:
         best = evaluate(0)
         meta["base_balanced_accuracy"] = best
@@ -174,6 +211,8 @@ def train(data, output, steps=600, seed=0, commit=None, sampling="sqrt", resume_
         meta.setdefault("sampling_changes", []).append(dict(step=resume["step"],
                                                               previous=previous_sampling, current=sampling))
     meta.update(sampling=sampling, status="running", steps=steps)
+    meta["augmentation"] = dict(horizontal_reflection_probability=0.5 if mirror_augmentation else 0.0,
+                                image_validation_reflected=False)
     # Always save a trained adapter, even when base classification is stronger.
     best_trained = meta.get("best_balanced_accuracy", -1.0)
     started = time.monotonic()

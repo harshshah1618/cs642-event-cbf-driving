@@ -6,7 +6,7 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 import torch
-from driving.safemetadrive.camera_planner import PendingIntent
+from driving.safemetadrive.camera_planner import PendingIntent, reflect_example
 from driving.safemetadrive.policies import LaneCautionDriver, NativeLearnedDriver
 from driving.safemetadrive.protocol import SPLITS
 from driving.safemetadrive.training_state import (
@@ -19,6 +19,13 @@ from driving.safemetadrive.training_state import (
 def test_training_development_and_test_maps_do_not_overlap():
     partitions = [set(range(start, start+count)) for start, count in SPLITS.values()]
     assert all(not left & right for i, left in enumerate(partitions) for right in partitions[i+1:])
+
+
+def test_reflected_camera_example_exchanges_lane_intent_and_preserves_caution():
+    row = dict(label="E", current_lane=0, target_lane=1, lane_count=3, speed_mps=5)
+    reflected = reflect_example(row)
+    assert reflected == dict(label="F", current_lane=2, target_lane=1, lane_count=3, speed_mps=5)
+    assert reflect_example(reflected) == row
 
 
 def test_balancing_gives_rare_maneuvers_equal_training_probability():
@@ -46,6 +53,24 @@ def test_incomplete_checkpoint_cannot_be_published(tmp_path):
     with pytest.raises(ValueError, match="both adapter and optimizer"):
         publish_checkpoint(tmp_path, 50, lambda directory: (directory/"adapter").mkdir())
     assert checkpoint_location(tmp_path) is None
+
+
+def test_complete_checkpoint_survives_interruption_before_pointer_publication(tmp_path, monkeypatch):
+    from pathlib import Path
+
+    def save(directory):
+        (directory/"adapter").mkdir()
+        (directory/"optimizer.pt").write_bytes(b"complete")
+    publish_checkpoint(tmp_path, 50, save)
+    def interrupted_replace(self, target):
+        raise RuntimeError("interrupted before pointer update")
+    monkeypatch.setattr(Path, "replace", interrupted_replace)
+    with pytest.raises(RuntimeError, match="before pointer update"):
+        publish_checkpoint(tmp_path, 100, save)
+    adapter, optimizer = checkpoint_location(tmp_path)
+    assert adapter.parent.name == "step-000100"
+    assert optimizer.is_file()
+    assert not list(tmp_path.glob("latest-*.tmp"))
 
 
 def test_delayed_relative_intent_cannot_retarget_after_another_lane_change():

@@ -31,6 +31,7 @@ def sources(img):
     return (img.add_local_dir(ROOT / "driving" / "safemetadrive", "/workspace/driving/safemetadrive",
                               ignore=["**/__pycache__", "**/*.pyc"])
             .add_local_file(ROOT / "tools" / "safemetadrive_eval.py", "/workspace/tools/safemetadrive_eval.py")
+            .add_local_file(ROOT / "tools" / "safemetadrive_analyze.py", "/workspace/tools/safemetadrive_analyze.py")
             .add_local_file(ROOT / "tools" / "safemetadrive_train_skills.py", "/workspace/tools/safemetadrive_train_skills.py")
             .add_local_file(ROOT / "tools" / "safemetadrive_camera_data.py", "/workspace/tools/safemetadrive_camera_data.py")
             .add_local_file(ROOT / "tools" / "safemetadrive_train_camera.py", "/workspace/tools/safemetadrive_train_camera.py")
@@ -213,6 +214,67 @@ def camera_data(spec):
     return result
 
 
+@app.function(image=sources(base_image.env({"NVIDIA_DRIVER_CAPABILITIES": "all", "P3D_DISPLAY": "p3headlessgl"})),
+              volumes={"/results": volume}, gpu="T4", cpu=2, memory=8192,
+              timeout=3600, max_containers=8)
+def camera_recovery_data(spec):
+    import sys
+    sys.path.insert(0, "/workspace/tools")
+    from safemetadrive_camera_data import generate_recovery
+
+    run, start, count, delay = spec
+    result = generate_recovery(list(range(start, start+count)),
+                               f"/results/{run}/data/shard-{start}", delay=delay)
+    volume.commit()
+    return result
+
+
+@app.function(image=sources(base_image.env({"NVIDIA_DRIVER_CAPABILITIES": "all", "P3D_DISPLAY": "p3headlessgl"})),
+              volumes={"/results": volume}, gpu="T4", cpu=2, memory=8192, timeout=900)
+def audit_camera_parity():
+    import sys
+    sys.path.insert(0,"/workspace")
+    import numpy as np
+    from driving.safemetadrive.camera_planner import camera_config
+    from driving.safemetadrive.policies import LaneCautionDriver
+    from driving.safemetadrive.protocol import environment_config
+    from metadrive import SafeMetaDriveEnv
+
+    traces: list[list[dict[str,Any]]] = []
+    for rendered in (False,True):
+        config = environment_config("train")
+        env = SafeMetaDriveEnv(camera_config(config) if rendered else config)
+        current = []
+        try:
+            for seed in (0,1):
+                env.reset(seed=seed)
+                driver = LaneCautionDriver(env.agent,speed=30.0)
+                objects = sorted([type(o).__name__,*np.asarray(o.position).tolist()]
+                                 for o in env.agent.lidar.get_surrounding_objects(env.agent))
+                trajectory = []
+                for _ in range(1000):
+                    action = driver.act()
+                    _,reward,terminated,truncated,info = env.step(action)
+                    trajectory.append([*env.agent.position.tolist(),float(env.agent.speed),
+                                       float(reward),float(info["cost"]),*map(float,action)])
+                    if terminated or truncated:
+                        break
+                current.append(dict(seed=seed,objects=objects,trajectory=trajectory))
+                driver.close()
+        finally:
+            env.close()
+        traces.append(current)
+    matched = all(a["objects"] == b["objects"] and len(a["trajectory"]) == len(b["trajectory"]) and
+                  np.allclose(a["trajectory"],b["trajectory"],rtol=0,atol=1e-6)
+                  for a,b in zip(*traces,strict=True))
+    result = dict(matched=bool(matched),seeds=[0,1],absolute_tolerance=1e-6,traces=traces)
+    Path("/results/camera-config-parity.json").write_text(json.dumps(result,indent=2))
+    volume.commit()
+    if not matched:
+        raise RuntimeError("Camera configuration changed scene or driving dynamics")
+    return dict(matched=True,seeds=[0,1],steps=[len(row["trajectory"]) for row in traces[0]])
+
+
 @app.function(image=image, volumes={"/results": volume}, cpu=2, memory=4096,
               timeout=1800, max_containers=8)
 def pack_camera_shard(start, dataset="camera-data-v1"):
@@ -243,7 +305,7 @@ def pack_camera_shard(start, dataset="camera-data-v1"):
 @app.function(image=camera_training_image, volumes={"/results": volume, "/hf": hf_volume},
               gpu="L40S", cpu=4, memory=16384, timeout=4*3600, max_containers=3)
 def train_camera(run, dataset="camera-data-v1", steps=600, seed=0,
-                 sampling="sqrt", resume_source_run=None):
+                 sampling="sqrt", resume_source_run=None, mirror_augmentation=False):
     import concurrent.futures
     import shutil
     import sys
@@ -266,7 +328,8 @@ def train_camera(run, dataset="camera-data-v1", steps=600, seed=0,
     print("Loaded packed camera dataset onto local disk", flush=True)
     source = f"/results/{resume_source_run}/camera-seed{seed}" if resume_source_run else None
     summary = train(str(local), f"/results/{run}/camera-seed{seed}", steps, seed,
-                    commit=volume.commit, sampling=sampling, resume_source=source)
+                    commit=volume.commit, sampling=sampling, resume_source=source,
+                    mirror_augmentation=mirror_augmentation)
     volume.commit()
     return {k: v for k, v in summary.items() if k != "source_data_manifests"}
 
@@ -316,7 +379,7 @@ def evaluate_camera_shard(spec):
     volume.reload()
     tag, adapter, checkpoint, split, seeds, delay, protection = spec
     result = evaluate_camera(adapter, f"/results/{tag}.json", seeds, checkpoint, delay,
-                             split, protection=protection)
+                             split, protection=protection, commit=volume.commit)
     volume.commit()
     return tag, result["summary"]
 
@@ -332,8 +395,103 @@ def _save_summaries(run, summaries):
     return summaries
 
 
-def run_stage(stage="pilot", run="pilot-v1", steps=1000000, camera_step=200):
+def run_stage(stage="pilot", run="pilot-v1", steps=1000000, camera_step=200, previous_call=""):
+    # Resolve the active deployment at phase launch. Captured handles can point
+    # to an older definition after a deployment while the coordinator waits.
+    assert app.name is not None
+    evaluate_shard = modal.Function.from_name(app.name,"evaluate_shard")
+    evaluate_learned_shard = modal.Function.from_name(app.name,"evaluate_learned_shard")
+    evaluate_camera_shard = modal.Function.from_name(app.name,"evaluate_camera_shard")
+    train_camera = modal.Function.from_name(app.name,"train_camera")
+    snapshot_camera_adapter = modal.Function.from_name(app.name,"snapshot_camera_adapter")
+    camera_recovery_data = modal.Function.from_name(app.name,"camera_recovery_data")
+    camera_data = modal.Function.from_name(app.name,"camera_data")
+    pack_camera_shard = modal.Function.from_name(app.name,"pack_camera_shard")
+    train_baseline_reserved = modal.Function.from_name(app.name,"train_baseline_reserved")
+    train_baseline = modal.Function.from_name(app.name,"train_baseline")
+    train_skills = modal.Function.from_name(app.name,"train_skills")
     specs: list[Any]
+    if stage in ("resume-balanced-development","resume-recovery-development"):
+        import time
+        source, through = (("camera-balanced-v2",600) if stage == "resume-balanced-development"
+                           else ("camera-recovery-v5",1000))
+        # Preserve in-flight training. Only replace its stale evaluation fan-out
+        # after all three final optimizer snapshots have been committed.
+        while True:
+            volume.reload()
+            records = []
+            for seed in range(3):
+                path = Path(f"/results/{source}/camera-seed{seed}/summary.json")
+                if path.exists():
+                    records.append(json.loads(path.read_text()))
+            if len(records) == 3 and all(record["status"] == "completed" for record in records):
+                break
+            time.sleep(15)
+        if previous_call:
+            call = modal.FunctionCall.from_id(previous_call)
+            stale = {child.function_call_id for parent in call.get_call_graph() for child in parent.children
+                     if child.function_name in ("snapshot_camera_adapter","evaluate_camera_shard")}
+            call.cancel(terminate_containers=True)
+            for identifier in stale:
+                modal.FunctionCall.from_id(identifier).cancel()
+        snapshots = list(snapshot_camera_adapter.starmap([(source,seed,through) for seed in range(3)]))
+        specs = [(f"{source}/development/camera-skill{seed}-{start}",snapshots[seed]["adapter"],
+                  f"/results/skills-1m-v1/skills-seed{seed}/ppo.zip","validation",
+                  list(range(start,start+25)),0.0,True)
+                 for seed in range(3) for start in (100,125)]
+        return _save_summaries(source+"/development",list(evaluate_camera_shard.map(specs)))
+    if stage == "final-study":
+        import sys
+        sys.path.insert(0,"/workspace")
+        sys.path.insert(0,"/workspace/tools")
+        from driving.safemetadrive.campaign import completed_spec, freeze_final
+
+        from safemetadrive_analyze import markdown, summarize
+
+        volume.reload()
+        plan = freeze_final("/results",run)
+        volume.commit()  # Freeze selection and artifact hashes BEFORE any test episode.
+        cpu = [spec for spec in plan["cpu_specs"] if not completed_spec("/results",spec)]
+        if cpu:
+            _save_summaries(run+"/cpu",list(evaluate_learned_shard.map(cpu)))
+        volume.reload()
+        camera = [spec for spec in plan["camera_specs"] if not completed_spec("/results",spec,camera=True)]
+        if camera:
+            _save_summaries(run+"/camera",list(evaluate_camera_shard.map(camera)))
+        volume.reload()
+        result = summarize(plan["groups"],split="test")
+        result["frozen_plan_sha256"] = plan["plan_sha256"]
+        out = Path("/results")/run
+        (out/"analysis.json").write_text(json.dumps(result,indent=2))
+        note = ("\nFast control uses privileged simulator geometry and object states. Camera planning uses RGB "
+                "and declared ego/navigation state. Teacher data and Qwen pretraining add resources beyond "
+                "the one-million-transition control training budget. These are matched-environment reruns, "
+                "not an equal-information or historical state-of-the-art claim.\n\n"
+                "Latency is simulated holding of the old intent for measured GPU inference plus injected delay; "
+                "this is not an asynchronous real-time hardware demonstration. The protection is a sampled "
+                "forecast and stopping cap, without a formal general-road safety certificate.\n")
+        (out/"results.md").write_text(markdown(result)+note)
+        volume.commit()
+        return result
+    if stage == "camera-recovery-data":
+        results = list(camera_recovery_data.map([(run, start, 5, 2.0) for start in range(0,100,5)]))
+        _save_summaries(run, results)
+        return _save_summaries(run+"/packing", list(pack_camera_shard.starmap(
+            [(start,run) for start in range(0,100,5)])))
+    if stage == "camera-recovery-campaign":
+        volume.reload()
+        previous = json.loads(Path("/results/camera-balanced-v2/training/summaries.json").read_text())
+        if len(previous) != 3 or any(record["status"] != "completed" for record in previous):
+            raise ValueError("All three source camera trainings must complete before continuation")
+        records = list(train_camera.starmap(
+            [(run, "camera-recovery-data-v1", 1000, seed, "balanced", "camera-balanced-v2", True) for seed in range(3)]))
+        _save_summaries(run+"/training", records)
+        snapshots = list(snapshot_camera_adapter.starmap([(run, seed, 1000) for seed in range(3)]))
+        specs = [(f"{run}/development/camera-skill{seed}-{start}", snapshots[seed]["adapter"],
+                  f"/results/skills-1m-v1/skills-seed{seed}/ppo.zip", "validation",
+                  list(range(start, start+25)), 0.0, True)
+                 for seed in range(3) for start in (100,125)]
+        return _save_summaries(run+"/development", list(evaluate_camera_shard.map(specs)))
     if stage == "disconnect-probe":
         import time
         time.sleep(15)
@@ -353,6 +511,27 @@ def run_stage(stage="pilot", run="pilot-v1", steps=1000000, camera_step=200):
         specs = [(run, alg, seed, steps) for alg, seed in
                  [("PPOLag", 1), ("CPO", 0), ("CPO", 1), ("CPO", 2)]]
         return _save_summaries(run, list(train_baseline_reserved.map(specs)))
+    if stage == "baseline-checkpoint-development":
+        volume.reload()
+        specs = []
+        for algorithm in ("PPOLag", "CPO"):
+            for seed in range(3):
+                source = ("baselines-1m-v1" if algorithm == "PPOLag" and seed in (0, 2)
+                          else "baselines-completion-v2")
+                root = Path(f"/results/{source}/{algorithm}-seed{seed}")
+                if json.loads((root/"manifest.json").read_text())["status"] != "completed":
+                    raise ValueError(f"{algorithm} seed {seed} has not completed")
+                for epoch in (50,100,150,200):
+                    checkpoint = max(root.rglob(f"epoch-{epoch}.pt"), key=lambda p: p.stat().st_mtime)
+                    for deterministic in (True,False):
+                        mode = "mean" if deterministic else "stochastic"
+                        specs.append((f"{run}/{algorithm}-seed{seed}-epoch{epoch}-{mode}", "native_learned",
+                                      dict(checkpoint=str(checkpoint), deterministic=deterministic,
+                                           policy_seed=1000003*seed), "validation", list(range(100,150))))
+        # Final epoch250 reports already cover all maps in the earlier run.
+        summaries = json.loads(Path("/results/native-baseline-all-development-v1/summaries.json").read_text())
+        summaries.extend(evaluate_learned_shard.map(specs))
+        return _save_summaries(run,summaries)
     if stage == "baseline-all-development":
         volume.reload()
         specs = []
@@ -489,28 +668,31 @@ def run_stage(stage="pilot", run="pilot-v1", steps=1000000, camera_step=200):
 @app.function(image=image, volumes={"/results": volume}, cpu=0.125, memory=512,
               timeout=6*3600, nonpreemptible=True)
 def cloud_run(stage: str = "pilot", run: str = "pilot-v1", steps: int = 1000000,
-              camera_step: int = 200, after_call: str = ""):
+              camera_step: int = 200, after_call: str = "", after_calls: list[str] | None = None,
+              previous_call: str = ""):
     """Own the entire fan-out remotely; a disconnected laptop is not the parent."""
     import datetime
     import traceback
 
     path = Path(f"/results/{run}/coordinator.json")
     path.parent.mkdir(parents=True, exist_ok=True)
-    record = dict(stage=stage, run=run, status="running",
+    record: dict[str, Any] = dict(stage=stage, run=run, status="running",
                   started_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
-    if after_call:
-        record.update(status="waiting", after_call=after_call)
+    dependencies = after_calls or ([after_call] if after_call else [])
+    if dependencies:
+        record.update(status="waiting", after_calls=dependencies)
     path.write_text(json.dumps(record, indent=2))
     volume.commit()
     try:
-        if after_call:
-            modal.FunctionCall.from_id(after_call).get()
+        if dependencies:
+            for dependency in dependencies:
+                modal.FunctionCall.from_id(dependency).get()
             volume.reload()
             record.update(status="running",
                           dependency_finished_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
             path.write_text(json.dumps(record, indent=2))
             volume.commit()
-        result = run_stage(stage, run, steps, camera_step)
+        result = run_stage(stage, run, steps, camera_step,previous_call)
         record["status"] = "completed"
         return result
     except Exception:

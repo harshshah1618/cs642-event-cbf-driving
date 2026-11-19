@@ -22,6 +22,8 @@ def sampling_weights(labels, scheme="sqrt"):
 
 def checkpoint_location(root):
     root = Path(root)
+    selected = None
+    selected_step = -1
     if (root / "latest.json").exists():
         pointer = json.loads((root / "latest.json").read_text())
         directory = (root / pointer["directory"]).resolve()
@@ -30,7 +32,16 @@ def checkpoint_location(root):
             raise ValueError("Checkpoint pointer does not reference a complete snapshot")
         if json.loads((directory / "checkpoint.json").read_text())["step"] != pointer["step"]:
             raise ValueError("Checkpoint pointer and snapshot disagree")
-        return directory / "adapter", directory / "optimizer.pt"
+        selected, selected_step = directory, pointer["step"]
+    # Recover an interruption after the immutable directory was completed but
+    # before the pointer was replaced. Otherwise retraining collides with it.
+    for marker in (root / "checkpoints").glob("step-*/checkpoint.json"):
+        step = json.loads(marker.read_text())["step"]
+        directory = marker.parent
+        if step > selected_step and (directory/"adapter").is_dir() and (directory/"optimizer.pt").is_file():
+            selected, selected_step = directory, step
+    if selected is not None:
+        return selected / "adapter", selected / "optimizer.pt"
     if (root / "optimizer.pt").exists():
         return root / "last-adapter", root / "optimizer.pt"
     return None
@@ -44,16 +55,17 @@ def publish_checkpoint(root, step, save):
     if directory.exists():
         raise FileExistsError(f"Refusing to overwrite immutable checkpoint {directory}")
     temporary = Path(tempfile.mkdtemp(prefix=f".writing-{step}-", dir=directory.parent))
+    pointer = root / f"latest-{uuid.uuid4().hex}.tmp"
     try:
         save(temporary)
         if not (temporary / "adapter").is_dir() or not (temporary / "optimizer.pt").is_file():
             raise ValueError("Snapshot must contain both adapter and optimizer state")
         (temporary / "checkpoint.json").write_text(json.dumps(dict(step=step)))
         temporary.rename(directory)
-        pointer = root / f"latest-{uuid.uuid4().hex}.tmp"
         pointer.write_text(json.dumps(dict(step=step, directory=str(directory.relative_to(root)))))
         pointer.replace(root / "latest.json")
     finally:
         if temporary.exists():
             shutil.rmtree(temporary)
+        pointer.unlink(missing_ok=True)
     return directory

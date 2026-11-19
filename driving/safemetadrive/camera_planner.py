@@ -5,6 +5,17 @@ import math
 LETTERS = "ABCDEF"
 INTENTS = [(0, False), (-1, False), (1, False), (0, True), (-1, True), (1, True)]
 BASE_MODEL = "Qwen/Qwen2.5-VL-3B-Instruct"
+BASE_MODEL_REVISION = "66285546d2b821cf421d4f5eb2576359d3770cd3"
+
+
+def reflect_example(state):
+    """Mirror camera-example lane indices and exchange left/right targets."""
+    reflected = dict(state)
+    for key in ("current_lane", "target_lane"):
+        reflected[key] = state["lane_count"]-1-state[key]
+    delta, careful = decode(state["label"])
+    reflected["label"] = LETTERS[INTENTS.index((-delta, careful))]
+    return reflected
 
 
 def messages(image, state, previous_image=None):
@@ -86,9 +97,10 @@ class QwenCameraPlanner:
         from peft import PeftModel
         from transformers import AutoProcessor, Qwen2_5_VLForConditionalGeneration
 
-        self.processor = AutoProcessor.from_pretrained(BASE_MODEL, min_pixels=56*56, max_pixels=448*392)
+        self.processor = AutoProcessor.from_pretrained(BASE_MODEL, revision=BASE_MODEL_REVISION,
+                                                       min_pixels=56*56, max_pixels=448*392)
         self.model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-            BASE_MODEL, torch_dtype=torch.bfloat16, attn_implementation="sdpa").cuda()
+            BASE_MODEL, revision=BASE_MODEL_REVISION, torch_dtype=torch.bfloat16, attn_implementation="sdpa").cuda()
         if adapter:
             self.model = PeftModel.from_pretrained(self.model, adapter)
         self.model.eval()

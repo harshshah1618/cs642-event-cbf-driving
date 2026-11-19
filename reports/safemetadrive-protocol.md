@@ -24,9 +24,15 @@ Development sequence:
 2. Establish curved-road control and a useful high-level action interface.
 3. Train learned controls and camera planning; compare against rules and fixed
    caution, with explicit observation privileges and full data accounting.
-4. Rerun PPO-Lag and CPO under the same configuration and training budget,
-   preserving their standard low-level observations and declaring any stronger
-   information supplied to the proposed system.
+4. Rerun PPO-Lag and CPO under the same benchmark configuration with one million
+   control-training transitions per seed, preserving their standard low-level
+   observations. Disclose the candidate's additional camera teacher rollouts,
+   supervised updates, external pretraining and stronger state information;
+   these prevent an equal-total-compute or equal-information claim. Compare
+   mean and stochastic actions and checkpoints at200k,400k,600k,800k,1M using
+   development maps. Select one common epoch and inference mode per algorithm
+   across its three seeds: maximize mean destination success, break ties by
+   lower cost, higher return, earlier checkpoint, then mean actions.
 5. Freeze selection using development maps; evaluate all 50 final maps across
    independent training seeds; report paired intervals, cost and success jointly.
 6. Evaluate image-to-application delay, including expired/rejected instructions,

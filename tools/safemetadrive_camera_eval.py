@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
 def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0.0,
-                    split="validation", planner_kind="camera", protection=True):
+                    split="validation", planner_kind="camera", protection=True, commit=None):
     import numpy as np
     import torch
     from driving.safemetadrive.camera_planner import (
@@ -94,6 +94,8 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
                        terminated=bool(terminated), truncated=bool(truncated))
             result["episodes"].append(row)
             output.write_text(json.dumps(result, indent=2))
+            if commit and len(result["episodes"]) % 5 == 0:
+                commit()
             print(json.dumps(row), flush=True)
             driver.close()
     finally:

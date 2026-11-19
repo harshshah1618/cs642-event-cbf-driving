@@ -82,7 +82,26 @@ accuracy but only 30–31% balanced accuracy, with zero recall for all four
 lane-change classes. A closed-loop pilot on maps100–104 completed 3/5, 2/5,
 and 2/5 drives for the three training seeds, respectively, with zero cost.
 This did not establish a useful camera planner. A continuation with equal
-sampling mass per class is running; its full driving evaluation is pending.
+sampling mass per class completed600 optimizer updates. Best image-validation
+macro recalls were0.476,0.340,0.342, all at400 updates. Its full driving
+evaluation is pending; classification improvement alone does not establish
+driving improvement.
+
+Recovery collection subsequently produced10,754 examples on the same100
+training maps. The rule is queried at every captured frame while execution is
+delayed2s, including states encountered after late decisions. The teacher reached
+100/100 destinations with total native cost5, all retained. Labels:
+A6228,B156,C142,D4126,E80,F22, including400 lane-change examples. This is
+additional teacher interaction beyond the original data and control-training
+budget. A three-seed continuation through1000 total updates is running.
+
+Recovery training uses equal class mass and random horizontal reflection of
+both time frames, together with mirrored lane indices and exchanged B/C,E/F
+labels. Image-validation frames remain unchanged. When the dataset changes,
+image-validation selection restarts on the new image split; earlier-stage
+metrics remain in metadata but do not compete with scores on a different set.
+Qwen weights are pinned to revision66285546d2b821cf421d4f5eb2576359d3770cd3,
+matching the original runs' recorded base revision.
 
 ## Reference actor evaluation
 
@@ -117,6 +136,18 @@ mapped work and saves completion/failure status. A disconnect probe verified
 completion after the launching process exited. It can also wait for another
 remote run and launch its evaluation without a local parent.
 
+Further app deployments left queued calls tied to earlier function definitions
+without workers. A fresh call against the active deployment started immediately
+while30 older evaluation inputs remained queued. Those evaluations were
+replaced; running training was preserved. Phase launches now resolve deployed
+functions by name, and the deployment is held fixed while the study runs.
+Queue time must not be reported as inference or training compute time.
+
+An environment parity audit on training maps0/1 matched initial nearby traffic
+and complete position/speed/action/reward/cost traces with and without cameras,
+within absolute tolerance1e-6 (613 and350 commands). This is a two-map empirical
+check of the configuration change, not a general safety guarantee.
+
 The first camera check exposed slow per-image cloud-volume reads. Dataset shards
 were packed into archives and copied to each trainer's local disk. Camera
 training saves adapter, optimizer and random-generator states periodically.
@@ -132,3 +163,13 @@ billed after credits. This account total is not project-only spend. The project
 billing report showed $7.29 through its latest completed hourly bucket; current
 partial-hour usage is excluded. The provisional estimate for the current
 training/evaluation round was $20–$35. Final charges remain to be checked.
+
+## Queued final study
+
+The remote final coordinator waits for complete development evaluations. It
+then selects one common camera family and native epoch/mode per algorithm,
+freezes artifact/source hashes, and evaluates seeds500–549. Comparisons include
+IDM, analytic rule, rule with PPO or cloning, fixed normal/careful, PPO-Lag,
+CPO, camera planning with extra0/.5/1/2/4s delay, and protection disabled at0s.
+The final maps have not yet been run at this point. A queue entry is not a
+benchmark result; held-out results and final accounting remain pending.
