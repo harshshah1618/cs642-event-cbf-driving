@@ -29,7 +29,7 @@ def test_final_plan_uses_development_selection_and_preserves_frozen_artifacts(tm
             (adapter/"adapter_model.safetensors").write_bytes(b"adapter")
             (adapter/"snapshot.json").write_text(json.dumps(dict(sha256=hashlib.sha256(b"adapter").hexdigest())))
             reports[run+"/development"].append(dict(split="validation",config=environment_config("validation"),
-                parameters=dict(adapter=str(adapter),extra_delay=0,protection=True),
+                parameters=dict(adapter=str(adapter),extra_delay=0,protection=True,lane_action_mask=True),
                 episodes=[dict(seed=100+i,success=i < successes,cost=0,reward=1) for i in range(50)]))
     for seed in range(3):
         directory = tmp_path/"skills-1m-v1"/f"skills-seed{seed}"

@@ -93,7 +93,7 @@ delayed2s, including states encountered after late decisions. The teacher reache
 100/100 destinations with total native cost5, all retained. Labels:
 A6228,B156,C142,D4126,E80,F22, including400 lane-change examples. This is
 additional teacher interaction beyond the original data and control-training
-budget. A three-seed continuation through1000 total updates is running.
+budget. A three-seed continuation through1000 total updates subsequently completed.
 
 Recovery training uses equal class mass and random horizontal reflection of
 both time frames, together with mirrored lane indices and exchanged B/C,E/F
@@ -102,6 +102,22 @@ image-validation selection restarts on the new image split; earlier-stage
 metrics remain in metadata but do not compete with scores on a different set.
 Qwen weights are pinned to revision66285546d2b821cf421d4f5eb2576359d3770cd3,
 matching the original runs' recorded base revision.
+
+All three recovery trainings completed 1,000 updates. Raw six-class
+image-validation macro recalls at 1,000 were 0.648, 0.572 and 0.590; per-seed
+best image checkpoints are retained even when an earlier step scored better.
+
+The complete balanced-family driving evaluation before lane masking scored
+45/50, 43/50 and 38/50 successes, with total costs 14, 0 and 0: 84.0% success
+and mean cost 0.093 across 150 episodes on 50 shared development maps.
+Traces contained 297 out-of-range lane requests among 6,054 calls; declared lane
+states were valid. Some failures repeatedly requested a nonexistent adjacent
+lane. The decoder now masks such choices using the already-declared target
+index and lane count, without object information. Fresh gap and stale-intent
+checks remain in the fast layer. Both camera families are being reevaluated
+with this common decoder before final-map selection. Original reports are
+retained; the unmasked recovery driving sweep stopped before completion and
+is not claimed as a complete result.
 
 ## Reference actor evaluation
 

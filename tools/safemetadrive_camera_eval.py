@@ -34,6 +34,7 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
     env = SafeMetaDriveEnv(camera_config(config) if camera else config)
     result = manifest(split, planner_kind, dict(adapter=adapter, skill_checkpoint=skill_checkpoint,
                       extra_delay=extra_delay, protection=protection, speed=30.0,
+                      lane_action_mask=True,
                       delay_semantics="measured GPU inference time plus injected delay in simulation time"))
     result.update(episodes=[], seeds=seeds, calls=[])
     if camera:
@@ -59,6 +60,8 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
             previous_frame, previous_capture = None, 0.0
             statuses: Counter[str] = Counter()
             latencies = []
+            violations: set[str] = set()
+            hard_brakes = 0
             while True:
                 now = tick*dt
                 driver.synchronize_lane()
@@ -66,6 +69,8 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
                     status = pending.apply(now, driver)
                     if status != "pending":
                         statuses[status] += 1
+                        result["calls"][-1].update(response_status=status,resolved_t=now,
+                                                   response_age=now-pending.captured_at)
                         pending = None
                 if camera and pending is None and now >= next_request:
                     frame, state = capture(env, driver)
@@ -82,6 +87,10 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
                 # including ticks that admit a newly returned planner answer.
                 action = driver.act()
                 _, r, terminated, truncated, info = env.step(action)
+                hard_brakes += int(action[1] < -0.8)
+                for kind in ("crash_vehicle","crash_object","out_of_road","crash_human"):
+                    if info.get(kind,False):
+                        violations.add(kind)
                 cost += float(info["cost"])
                 reward += float(r)
                 tick += 1
@@ -95,6 +104,7 @@ def evaluate_camera(adapter, output, seeds, skill_checkpoint=None, extra_delay=0
                        calls=len(latencies), response_status=dict(statuses),
                        mean_inference_seconds=float(np.mean(latencies)) if latencies else None,
                        lane_changes=driver.changes, interventions=driver.interventions,
+                       violations=sorted(violations),hard_brake_steps=hard_brakes,
                        terminated=bool(terminated), truncated=bool(truncated))
             result["episodes"].append(row)
             output.write_text(json.dumps(result, indent=2))

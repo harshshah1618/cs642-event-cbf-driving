@@ -8,6 +8,13 @@ BASE_MODEL = "Qwen/Qwen2.5-VL-3B-Instruct"
 BASE_MODEL_REVISION = "66285546d2b821cf421d4f5eb2576359d3770cd3"
 
 
+def valid_intents(state):
+    count, target = state["lane_count"], state["target_lane"]
+    if count < 1 or not 0 <= target < count:
+        raise ValueError("Invalid declared lane state")
+    return [0 <= target+delta < count for delta,_ in INTENTS]
+
+
 def reflect_example(state):
     """Mirror camera-example lane indices and exchange left/right targets."""
     reflected = dict(state)
@@ -121,7 +128,12 @@ class QwenCameraPlanner:
         x = self.processor(text=[text], images=[previous_image, image], return_tensors="pt").to("cuda")
         with torch.inference_mode(), torch.autocast("cuda", dtype=torch.bfloat16):
             logits = self.model(**x).logits[0, -1, self.ids].float()
+        unmasked = logits.softmax(-1).cpu().tolist()
+        valid = valid_intents(state)
+        logits = logits.masked_fill(~torch.tensor(valid,device="cuda"),float("-inf"))
         probabilities = logits.softmax(-1).cpu().tolist()
         predicted = max(range(6), key=lambda i: probabilities[i])
         return LETTERS[predicted], dict(probabilities=probabilities,
+                                       unmasked_probabilities=unmasked,
+                                       valid_labels="".join(letter for letter,allowed in zip(LETTERS,valid,strict=True) if allowed),
                                        inference_seconds=time.monotonic()-started)

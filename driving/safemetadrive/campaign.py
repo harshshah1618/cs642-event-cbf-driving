@@ -27,6 +27,8 @@ def camera_development(root, run, through_step):
             raise ValueError("Camera selection requires development maps only")
         if report["parameters"]["extra_delay"] != 0 or not report["parameters"]["protection"]:
             raise ValueError("Camera selection requires the standard protected configuration")
+        if not report["parameters"].get("lane_action_mask"):
+            raise ValueError("Camera selection requires the current lane-action decoder")
         match = re.fullmatch(r"seed([012])-through"+str(through_step), Path(report["parameters"]["adapter"]).name)
         if not match or Path(report["parameters"]["adapter"]).parent.parent.name != run:
             raise ValueError("Camera report does not use the declared immutable snapshot")

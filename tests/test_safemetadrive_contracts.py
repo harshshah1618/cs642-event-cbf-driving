@@ -6,7 +6,7 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 import torch
-from driving.safemetadrive.camera_planner import PendingIntent, reflect_example
+from driving.safemetadrive.camera_planner import PendingIntent, reflect_example, valid_intents
 from driving.safemetadrive.policies import LaneCautionDriver, NativeLearnedDriver
 from driving.safemetadrive.protocol import SPLITS
 from driving.safemetadrive.training_state import (
@@ -26,6 +26,13 @@ def test_reflected_camera_example_exchanges_lane_intent_and_preserves_caution():
     reflected = reflect_example(row)
     assert reflected == dict(label="F", current_lane=2, target_lane=1, lane_count=3, speed_mps=5)
     assert reflect_example(reflected) == row
+
+
+def test_camera_decoder_only_masks_physically_missing_adjacent_lanes():
+    assert valid_intents(dict(lane_count=1,target_lane=0)) == [True,False,False,True,False,False]
+    assert valid_intents(dict(lane_count=3,target_lane=0)) == [True,False,True,True,False,True]
+    assert valid_intents(dict(lane_count=3,target_lane=2)) == [True,True,False,True,True,False]
+    assert all(valid_intents(dict(lane_count=3,target_lane=1)))
 
 
 def test_balancing_gives_rare_maneuvers_equal_training_probability():

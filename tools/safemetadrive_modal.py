@@ -412,6 +412,44 @@ def run_stage(stage="pilot", run="pilot-v1", steps=1000000, camera_step=200, pre
     train_baseline = modal.Function.from_name(app.name,"train_baseline")
     train_skills = modal.Function.from_name(app.name,"train_skills")
     specs: list[Any]
+    if stage == "camera-masked-development":
+        import time
+        sources = [("camera-balanced-v2",600),("camera-recovery-v5",1000)]
+        while True:
+            volume.reload()
+            records = []
+            for source,_ in sources:
+                for seed in range(3):
+                    path = Path(f"/results/{source}/camera-seed{seed}/summary.json")
+                    if path.exists():
+                        records.append(json.loads(path.read_text()))
+            if len(records) == 6 and all(record["status"] == "completed" for record in records):
+                break
+            time.sleep(15)
+        if previous_call:
+            call = modal.FunctionCall.from_id(previous_call)
+            stale = {child.function_call_id for parent in call.get_call_graph() for child in parent.children
+                     if child.function_name in ("snapshot_camera_adapter","evaluate_camera_shard")}
+            call.cancel(terminate_containers=True)
+            for identifier in stale:
+                modal.FunctionCall.from_id(identifier).cancel()
+        specs = []
+        for source,through in sources:
+            snapshots = list(snapshot_camera_adapter.starmap([(source,seed,through) for seed in range(3)]))
+            specs.extend((f"{source}/masked-development/camera-skill{seed}-{start}",snapshots[seed]["adapter"],
+                          f"/results/skills-1m-v1/skills-seed{seed}/ppo.zip","validation",
+                          list(range(start,start+25)),0.0,True)
+                         for seed in range(3) for start in (100,125))
+        results = list(evaluate_camera_shard.map(specs))
+        volume.reload()
+        for source,_ in sources:
+            original = Path(f"/results/{source}/development/summaries.json")
+            backup = Path(f"/results/{source}/unmasked-development/summaries.json")
+            if original.exists() and not backup.exists():
+                backup.parent.mkdir(parents=True,exist_ok=True)
+                backup.write_bytes(original.read_bytes())
+            _save_summaries(source+"/development",[row for row in results if row[0].startswith(source+"/")])
+        return _save_summaries(run,results)
     if stage == "cpo-critic-campaign":
         records = list(train_baseline_reserved.map([(run,"CPO",seed,steps,1e-3) for seed in range(3)]))
         _save_summaries(run+"/training",records)
