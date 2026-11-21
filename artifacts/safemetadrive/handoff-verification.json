@@ -27,5 +27,8 @@
     "ci_run": "https://github.com/harshshah1618/cs642-event-cbf-driving/actions/runs/44843953096",
     "ci_conclusion": "success"
   },
-  "github_records_download_verified": true
+  "github_records_download_verified": true,
+  "github_published": true,
+  "github_bundle_sha256_verified": 7,
+  "github_release_url": "https://github.com/harshshah1618/cs642-event-cbf-driving/releases/tag/safemetadrive-handoff-2026-11-20"
 }
