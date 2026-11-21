@@ -7,7 +7,7 @@ every reset like the built-in accident objects.
 import math
 from dataclasses import asdict, dataclass
 
-KINDS = ("pedestrian", "cyclist", "cone", "warning", "barrier")
+KINDS = ("pedestrian", "cyclist", "cone", "warning", "barrier", "flagger", "sign")
 # Kinds the clean training maps already contain (accident_prob=0.8 places them).
 FAMILIAR_KINDS = ("cone", "warning", "barrier")
 
@@ -19,6 +19,8 @@ class Placement:
     where: str = "shoulder"   # "shoulder" (right of the rightmost lane) or "lane" (ego lane)
     offset: float | None = None  # metres beyond the lane edge ("shoulder", default 1.2)
                                  # or from the lane centre ("lane", default 0)
+    face: str | None = None      # "sign": its face (see props.FACES)
+    stop_seconds: float | None = None  # "flagger": STOP shown this long, then SLOW (None = always)
 
     def __post_init__(self):
         if self.kind not in KINDS:
@@ -27,6 +29,8 @@ class Placement:
             raise ValueError(f"Unknown placement {self.where!r}")
         if not self.ahead > 0:
             raise ValueError("Objects must be ahead of the ego")
+        if self.kind == "sign" and self.face is None:
+            raise ValueError("A sign needs a face")
 
 
 def route_lanes(agent, lane_index=None):
@@ -72,26 +76,61 @@ def make_manager_class():
     from metadrive.component.traffic_participants.pedestrian import Pedestrian
     from metadrive.manager.base_manager import BaseManager
 
+    from driving.irregular.props import make_sign_class
+
+    road_sign = make_sign_class()
     classes = dict(pedestrian=Pedestrian, cyclist=Cyclist, cone=TrafficCone,
                    warning=TrafficWarning, barrier=TrafficBarrier)
 
     class IrregularObjectManager(BaseManager):
         PRIORITY = 9
 
+        def __init__(self):
+            super().__init__()
+            self.schedule = []  # (episode step, sign, face) for mid-episode face swaps
+
+        def before_reset(self):
+            self.schedule = []
+            super().before_reset()
+
+        def after_step(self, *args, **kwargs):
+            due = [item for item in self.schedule if self.engine.episode_step >= item[0]]
+            for item in due:
+                item[1].set_face(item[2])
+                self.schedule.remove(item)
+            return {}
+
+        def _person(self, cls, position, heading):
+            obj = self.spawn_object(cls, position=position, heading_theta=heading)
+            # Stand still and cannot be shoved by traffic; collisions still register.
+            obj.set_velocity([math.cos(heading), math.sin(heading)], 0.0)
+            obj.set_static(True)
+            return obj
+
         def place(self, agent, placement: Placement):
             lane, s, lateral = locate(agent, placement.ahead, placement.where, placement.offset)
             position = lane.position(s, lateral)
             heading = lane.heading_theta_at(s)
+            if placement.kind == "flagger":
+                # Person faces oncoming traffic; the paddle is held on the road side.
+                self._person(Pedestrian, position, heading + math.pi)
+                # force_spawn: a recycled sign would keep its old face and collision box.
+                sign = self.spawn_object(road_sign, force_spawn=True,
+                                         position=lane.position(s, lateral - 0.45),
+                                         heading_theta=heading, lane=lane, face="stop")
+                if placement.stop_seconds is not None:
+                    dt = self.engine.global_config["physics_world_step_size"] * \
+                        self.engine.global_config["decision_repeat"]
+                    self.schedule.append((round(placement.stop_seconds / dt), sign, "slow"))
+                return sign
+            if placement.kind == "sign":
+                return self.spawn_object(road_sign, force_spawn=True, position=position,
+                                         heading_theta=heading, lane=lane, face=placement.face)
             cls = classes[placement.kind]
-            kwargs = dict(position=position, heading_theta=heading)
-            if placement.kind in FAMILIAR_KINDS:
-                kwargs.update(lane=lane, static=True)
-            obj = self.spawn_object(cls, **kwargs)
             if placement.kind in ("pedestrian", "cyclist"):
-                # Stand still and cannot be shoved by traffic; collisions still register.
-                obj.set_velocity([math.cos(heading), math.sin(heading)], 0.0)
-                obj.set_static(True)
-            return obj
+                return self._person(cls, position, heading)
+            return self.spawn_object(cls, position=position, heading_theta=heading, lane=lane,
+                                     static=True)
 
     return IrregularObjectManager
 
@@ -120,7 +159,7 @@ def relative(agent, obj, fov_degrees=65.0, max_range=120.0):
     bearing = math.degrees(math.atan2(lateral, forward)) if forward > 0 else 180.0
     visible = forward > 0 and abs(bearing) < fov_degrees / 2 and math.hypot(dx, dy) < max_range
     return dict(forward=forward, lateral=lateral, bearing=bearing, visible=visible,
-                distance=math.hypot(dx, dy))
+                distance=math.hypot(dx, dy), face=getattr(obj, "face_name", None))
 
 
 def placement_record(placement: Placement):

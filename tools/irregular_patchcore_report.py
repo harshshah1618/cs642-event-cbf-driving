@@ -17,6 +17,7 @@ import numpy as np
 SCENES = ["pedestrian-shoulder", "pedestrian-lane", "cyclist-shoulder", "cyclist-lane",
           "barrier-lane", "warning-lane"]
 NOVEL = SCENES[:4]
+FAMILIAR_PREFIXES = ("barrier", "warning", "sign-billboard")
 BINS = [(5, 15), (15, 30), (30, 45), (45, 60), (60, 80)]
 # Fixed categorical order (dataviz reference palette, light mode).
 COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#6250d6"]
@@ -50,7 +51,8 @@ def analyse(path):
     tau = float(np.percentile(neg, 99))
     out = dict(encoder=data["encoder"], frames=len(recs), clean_frames=len(neg), tau=tau,
                ms_per_frame=data["batched_ms_per_frame"], scenes={})
-    for scene in SCENES:
+    scenes = sorted({r["scene"] for r in recs} - {"clean"})
+    for scene in scenes:
         rows = [r for r in recs if r["scene"] == scene and r["truth"] and r["truth"]["visible"]]
         pos = np.array([r["score"] for r in rows if 5 <= r["truth"]["forward"] <= 60])
         by_bin = {}
@@ -72,7 +74,7 @@ def analyse(path):
             first.append(hit)
         found = [d for d in first if d is not None]
         out["scenes"][scene] = dict(
-            novel=scene in NOVEL, positive_frames=len(pos), auroc=auroc(pos, neg),
+            novel=not scene.startswith(FAMILIAR_PREFIXES), positive_frames=len(pos), auroc=auroc(pos, neg),
             detected_at_tau=float(np.mean(pos > tau)) if len(pos) else None,
             by_distance=by_bin, episodes=len(first), episodes_alarmed=len(found),
             median_first_alarm_m=float(np.median(found)) if found else None)
@@ -94,10 +96,11 @@ def plot(results, out_dir):
     fig, axes = plt.subplots(1, len(results), figsize=(6.2 * len(results), 4.2), squeeze=False)
     centres = [(lo + hi) / 2 for lo, hi in BINS]
     for ax, (res, _) in zip(axes[0], results, strict=True):
-        for scene, color in zip(SCENES, COLORS, strict=True):
-            ys = [res["scenes"][scene]["by_distance"][f"{lo}-{hi}"]["detected"] for lo, hi in BINS]
+        for scene, color in zip(res["scenes"], COLORS, strict=False):
+            info = res["scenes"][scene]
+            ys = [info["by_distance"][f"{lo}-{hi}"]["detected"] for lo, hi in BINS]
             ax.plot(centres, [np.nan if y is None else 100 * y for y in ys], color=color, lw=2,
-                    marker="o", ms=5, ls="-" if scene in NOVEL else "--", label=scene)
+                    marker="o", ms=5, ls="-" if info["novel"] else "--", label=scene)
         ax.set_title(f"{res['encoder']}: frames above τ (1% of clean frames)", fontsize=11)
         ax.set_xlabel("Object distance ahead (m)")
         ax.set_ylabel("Frames flagged (%)")
@@ -126,7 +129,7 @@ def contact_sheet(score_dir, recs, out_dir, volume_name="cs642-irregular", per_s
     vol = modal.Volume.from_name(volume_name)
     run = json.loads((Path(score_dir) / "scores.json").read_text())["run"]
     chosen = []
-    for scene in ["clean"] + SCENES:
+    for scene in ["clean"] + sorted({r["scene"] for r in recs} - {"clean"}):
         idx = [i for i, r in enumerate(recs) if r["scene"] == scene
                and (scene == "clean" or (r["truth"]["visible"] and 12 <= r["truth"]["forward"] <= 22))]
         chosen += [(scene, i) for i in idx[: per_scene * 7: 7][:per_scene]]
@@ -174,8 +177,7 @@ def main():
               f"clean false alarms/min={res['clean_false_alarms_per_minute']:.2f}")
         print("| scene | AUROC | frames flagged (5-60 m) | episodes alarmed | median first alarm (m) |")
         print("|---|---:|---:|---:|---:|")
-        for scene in SCENES:
-            s = res["scenes"][scene]
+        for scene, s in res["scenes"].items():
             print(f"| {scene} | {fmt(s['auroc'])} | {fmt(s['detected_at_tau'], '{:.0%}')} | "
                   f"{s['episodes_alarmed']}/{s['episodes']} | {fmt(s['median_first_alarm_m'], '{:.0f}')} |")
 

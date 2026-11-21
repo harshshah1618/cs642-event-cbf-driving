@@ -37,7 +37,8 @@ def collect(seeds, output, split, placements=None, every=5, max_steps=1000,
                 env.reset(seed=seed)
                 obj = place(env, placement) if placement else None
                 driver = LaneCautionDriver(env.agent, speed=30.0)
-                tag = "clean" if placement is None else f"{placement.kind}-{placement.where}"
+                tag = "clean" if placement is None else "-".join(
+                    x for x in (placement.kind, placement.face, placement.where) if x)
                 cost, steps, frames = 0.0, 0, 0
                 info = {}
                 while steps < max_steps:
@@ -84,4 +85,21 @@ EVAL_PLACEMENTS = [
     Placement("cyclist", 70, "lane"),
     Placement("barrier", 70, "lane"),
     Placement("warning", 70, "lane"),
+]
+
+
+# Custom-prop smoke set: flagger (STOP for 6 s, then SLOW), lane-closed sign, harmless board.
+SIGN_PLACEMENTS = [
+    Placement("flagger", 60, "shoulder", stop_seconds=6.0),
+    Placement("sign", 60, "shoulder", face="lane_closed"),
+    Placement("sign", 60, "shoulder", face="billboard"),
+]
+
+# Custom props on the development maps, same 70 m distance as EVAL_PLACEMENTS, with a
+# clean run per map as negatives.
+EVAL_SIGN_PLACEMENTS = [
+    None,
+    Placement("flagger", 70, "shoulder", stop_seconds=8.0),
+    Placement("sign", 70, "shoulder", face="lane_closed"),
+    Placement("sign", 70, "shoulder", face="billboard"),
 ]

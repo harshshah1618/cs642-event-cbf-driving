@@ -46,9 +46,15 @@ def _workspace():
               timeout=3 * 3600, max_containers=10)
 def collect_shard(spec):
     _workspace()
-    from driving.irregular.frames import EVAL_PLACEMENTS, collect
+    from driving.irregular.frames import (
+        EVAL_PLACEMENTS,
+        EVAL_SIGN_PLACEMENTS,
+        SIGN_PLACEMENTS,
+        collect,
+    )
 
-    placements = EVAL_PLACEMENTS if spec["placements"] == "eval" else None
+    placements = dict(eval=EVAL_PLACEMENTS, signs=SIGN_PLACEMENTS,
+                      evalsigns=EVAL_SIGN_PLACEMENTS).get(spec["placements"])
     out = f"{DATA}/frames/{spec['run']}/shard-{spec['seeds'][0]:03d}"
     summary = collect(spec["seeds"], out, spec["split"], placements=placements,
                       every=spec["every"], max_steps=spec["max_steps"])
@@ -196,7 +202,7 @@ def _shards(seeds, size):
 
 
 @app.local_entrypoint()
-def main(stage: str = "smoke", encoder: str = "dinov2_small"):
+def main(stage: str = "smoke", encoder: str = "dinov2_small", run: str = "eval-dev-v1"):
     if stage == "pack":
         shards = [f"{DATA}/frames/{run}/{entry.path.split('/')[-1]}"
                   for run in ("clean-train-v1", "eval-dev-v1")
@@ -208,6 +214,12 @@ def main(stage: str = "smoke", encoder: str = "dinov2_small"):
         specs = [dict(run="smoke-v1", split="train", seeds=[0], placements=None, every=10, max_steps=60),
                  dict(run="smoke-v1", split="validation", seeds=[100], placements="eval",
                       every=10, max_steps=120)]
+    elif stage == "signsmoke":
+        specs = [dict(run="signsmoke-v1", split="validation", seeds=[100, 101], placements="signs",
+                      every=5, max_steps=120)]
+    elif stage == "evalsigns":
+        specs = [dict(run="eval-signs-dev-v1", split="validation", seeds=s, placements="evalsigns",
+                      every=3, max_steps=300) for s in _shards(list(range(100, 130)), 5)]
     elif stage == "clean":
         specs = [dict(run="clean-train-v1", split="train", seeds=s, placements=None, every=5,
                       max_steps=1000) for s in _shards(list(range(100)), 10)]
@@ -218,7 +230,7 @@ def main(stage: str = "smoke", encoder: str = "dinov2_small"):
         print(json.dumps(build_bank.remote(encoder), indent=2))
         return
     elif stage == "score":
-        print(json.dumps(score_frames.remote(encoder), indent=2))
+        print(json.dumps(score_frames.remote(encoder, run=run), indent=2))
         return
     else:
         raise ValueError(f"Unknown stage {stage!r}")
