@@ -16,5 +16,16 @@
   "mypy_files_passed": 47,
   "modal_functions_started": 0,
   "base_model_included": false,
-  "note": "Artifacts restored into a different directory with no Modal access. Fresh remote clone verification follows upload."
+  "note": "All seven packages restored into a fresh clone of the pushed code; full tests, aggregate analysis and saved-PPO recovery checks passed there. The records bundle was also downloaded and restored through the GitHub release API.",
+  "remote_checkout": {
+    "remote_checkout_commit": "fdeec6e0a7f20c830419ac36e7112b7db7c991ea",
+    "remote_branch": "harsh-testing-further-runs",
+    "all_packages_restored_from_local_release_archives": true,
+    "full_suite_tests_passed": 275,
+    "aggregates_and_paired_intervals_match": true,
+    "saved_ppo_fixture_reproduced": true,
+    "ci_run": "https://github.com/harshshah1618/cs642-event-cbf-driving/actions/runs/44843953096",
+    "ci_conclusion": "success"
+  },
+  "github_records_download_verified": true
 }

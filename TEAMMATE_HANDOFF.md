@@ -81,7 +81,7 @@ CUDA_VISIBLE_DEVICES='' python tools/safemetadrive_maneuver_fixture.py \
   --output runs/safemetadrive/local-recovery-check.json
 ```
 
-The last command is a controlled training-map physics fixture using a saved PPO tracker. It is not new camera inference. The final recovery implementation passed 271 tests before handoff packaging; the handoff adds four restoration checks. All three saved PPO trackers recovered in the six managed fixtures with zero native cost. Fixed saved-input development checks improved five cases and worsened two; they are not fresh closed-loop camera evaluations.
+The last command is a controlled training-map physics fixture using a saved PPO tracker. It is not new camera inference. The handoff passes **275 tests**, including the four restoration checks, in both the original workspace and a fresh clone of the pushed branch. GitHub CI also passed. See [handoff verification](artifacts/safemetadrive/handoff-verification.json). All three saved PPO trackers recovered in the six managed fixtures with zero native cost. Fixed saved-input development checks improved five cases and worsened two; they are not fresh closed-loop camera evaluations.
 
 Next work should focus on development scenarios, live camera response to the new feedback interface, and a same-input small-image-model comparison. A new benchmark claim needs fresh unseen maps and actual camera inference. Camera training/inference requires appropriate hardware and an agreed compute budget.
 
