@@ -47,7 +47,12 @@ class ActualCPURouter(RouterBackend):
         started = time.perf_counter()
         try:
             camera = req.camera
-            prediction = self.policy.predict(camera.image_bytes, camera.lane, req.current_skill)
+            prediction = self.policy.predict(
+                camera.image_bytes,
+                camera.lane,
+                req.current_skill,
+                speed_mps=camera.speed_mps,
+            )
             if prediction["letter"] not in CHOICES or prediction.get("fallback_used"):
                 raise RouterError("invalid trained-model prediction; no substitution")
             latency = time.perf_counter() - started

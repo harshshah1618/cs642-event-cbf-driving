@@ -41,3 +41,6 @@ RESULTS.md
 
 # Verification summaries are regenerated; model weights and sidecars stay tracked.
 /models/*/validation.json
+
+# Generated camera recordings are exported in the private handoff release.
+/outputs/camera-views/

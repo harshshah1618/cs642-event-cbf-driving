@@ -4,7 +4,7 @@ The new maneuver mode can recover from the controlled “stopped halfway through
 
 No Modal jobs, camera inference or training were launched. Simulation was restricted to training map 0 for controlled fault injection and development maps 100–149 for saved-input diagnostics. The original final-test results and model weights were preserved.
 
-The implementation adds an explicit `manage_maneuvers=True` mode in [LaneCautionDriver](/home/harsh/Projects/cs642-event-cbf-driving/driving/safemetadrive/policies.py) and the camera evaluator. The existing behavior remains the default, so historical comparisons are not silently switched to a new controller. The new behavior is implemented in [maneuvers.py](/home/harsh/Projects/cs642-event-cbf-driving/driving/safemetadrive/maneuvers.py).
+The implementation adds an explicit `manage_maneuvers=True` mode in [LaneCautionDriver](../driving/safemetadrive/policies.py) and the camera evaluator. The existing behavior remains the default, so historical comparisons are not silently switched to a new controller. The new behavior is implemented in [maneuvers.py](../driving/safemetadrive/maneuvers.py).
 
 Before committing a lane change, the new mode checks current gaps, route continuity near lane endings and the sampled transition forecast. This check includes vehicles approaching from behind. The existing emergency-braking forecast intentionally ignores rear followers; reusing that behavior for lane entry would miss a different hazard. The forecast still assumes constant object velocities and a simplified ego path over three seconds; it is a heuristic screen, not a proof that the entire maneuver is feasible.
 
@@ -26,7 +26,7 @@ The physical fixtures create a deliberately blocked maneuver on training map 0 w
 
 With the return lane clear, the checked return began at controller time 2.1 s and completed at 5.2–5.8 s. With it blocked, the return began at 6.6 s and completed at 9.7–10.3 s. Every managed run advanced more than 5 m with final distance from its original lane center below0.35m. The original logic advanced less than 0.01 m over the fixture. These are simulation/controller times, not inference or wall-clock performance measurements.
 
-![Controlled recovery with three saved PPO controllers](/home/harsh/Projects/cs642-event-cbf-driving/reports/safemetadrive-maneuver-recovery/recovery-physics.png)
+![Controlled recovery with three saved PPO controllers](safemetadrive-maneuver-recovery/recovery-physics.png)
 
 The final code also ran 42 fixed-input development diagnostics: seven selected development maps × three trained controller replicas × original/managed logic. These replay camera letters and measured response times from the older balanced-training development runs, not the final 92%-success camera model; no new images are classified. Once the car takes a different path, the saved letters no longer correspond to its current views. Consequently, these runs exercise controller behavior under matched instruction streams and cannot measure the changed camera system's closed-loop performance.
 
@@ -44,7 +44,7 @@ Validation passed **271 repository tests**, including 14 new maneuver tests and 
 
 The remaining uncertainty is explicit: live camera response to feedback, performance with fresh camera inference, collision behavior outside these fixtures, and progress in scenes without a checked return path remain unverified. A new held-out benchmark score requires new inference and evaluation, and was not run. No Modal spending is required to inspect or reproduce the local mechanism checks.
 
-Evidence: [verification](/home/harsh/Projects/cs642-event-cbf-driving/reports/safemetadrive-maneuver-recovery/verification.json), [physical trajectories](/home/harsh/Projects/cs642-event-cbf-driving/reports/safemetadrive-maneuver-recovery/physics-fixtures.json), [final-code development diagnostics](/home/harsh/Projects/cs642-event-cbf-driving/reports/safemetadrive-maneuver-recovery/recorded-intent-final.json), and [preliminary diagnostics](/home/harsh/Projects/cs642-event-cbf-driving/reports/safemetadrive-maneuver-recovery/recorded-intent-preliminary.json).
+Evidence: [verification](safemetadrive-maneuver-recovery/verification.json), [physical trajectories](safemetadrive-maneuver-recovery/physics-fixtures.json), [final-code development diagnostics](safemetadrive-maneuver-recovery/recorded-intent-final.json), and [preliminary diagnostics](safemetadrive-maneuver-recovery/recorded-intent-preliminary.json).
 
 Reproduce the physics check locally with an existing tracker:
 
@@ -54,4 +54,4 @@ CUDA_VISIBLE_DEVICES='' .venv/bin/python tools/safemetadrive_maneuver_fixture.py
   --output runs/safemetadrive/recovery-check.json
 ```
 
-The [development diagnostic tool](/home/harsh/Projects/cs642-event-cbf-driving/tools/safemetadrive_maneuver_check.py) rejects maps outside 100–149. Both tools force CPU execution and never call Modal or run the camera model. Native-camera evaluation can explicitly enable `manage_maneuvers=True` in `evaluate_camera`; it remains an opt-in experiment requiring fresh evaluation.
+The [development diagnostic tool](../tools/safemetadrive_maneuver_check.py) rejects maps outside 100–149. Both tools force CPU execution and never call Modal or run the camera model. Native-camera evaluation can explicitly enable `manage_maneuvers=True` in `evaluate_camera`; it remains an opt-in experiment requiring fresh evaluation.

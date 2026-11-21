@@ -1,7 +1,7 @@
 # SafeMetaDrive development record
 
 This historical development record predates the final held-out evaluation.
-The completed [final study](/home/harsh/Projects/cs642-event-cbf-driving/reports/safemetadrive-results.md)
+The completed [final study](safemetadrive-results.md)
 now reports all 50 final maps (seeds 500–549). Pending statements below describe
 the state at the time of each development stage.
 
@@ -209,7 +209,7 @@ benchmark result; held-out results and final accounting remain pending.
 
 The final study completed on November 19, 2026. All 1,900 final drives and
 model/source/coverage audits are complete; Modal compute is stopped. The
-[final report](/home/harsh/Projects/cs642-event-cbf-driving/reports/safemetadrive-results.md)
+[final report](safemetadrive-results.md)
 supersedes pending status statements above and contains final selection, results,
 latency limitations and cost accounting. Rule plus cloning achieved 100% success
 and zero native cost on 50 held-out maps across three tracker seeds. Camera plus

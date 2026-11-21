@@ -54,7 +54,7 @@ def letter_token_ids(tokenizer):
     return [tokens[0] for tokens in ids]
 
 
-def prepare_inputs(png, lane, current_skill, *, tokenizer, image_processor, prompts):
+def prepare_inputs(png, lane, current_skill, *, tokenizer, image_processor, prompts, speed_mps=None):
     """Image-only equivalent of official Qwen2.5VLProcessor's expansion path."""
     from PIL import Image
 
@@ -62,9 +62,15 @@ def prepare_inputs(png, lane, current_skill, *, tokenizer, image_processor, prom
         raise ValueError("Invalid lane or current skill")
     if not isinstance(png, bytes) or not png:
         raise ValueError("Encoded image bytes required")
+    if speed_mps is not None and not math.isfinite(float(speed_mps)):
+        raise ValueError("Invalid ego speed")
     with Image.open(io.BytesIO(png)) as source:
         image = source.convert("RGB")
-    messages = prompts.messages(image, {"ego_lane": lane, "current_skill": current_skill})
+    lab = {"ego_lane": lane, "current_skill": current_skill}
+    if speed_mps is not None:
+        lab["ego_speed_mps"] = float(speed_mps)
+    rendered_state = prompts.state_text(lab)
+    messages = prompts.messages(image, lab)
     text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     image_inputs = image_processor(images=image, return_tensors="pt")
     grid = image_inputs["image_grid_thw"]
@@ -89,7 +95,13 @@ def prepare_inputs(png, lane, current_skill, *, tokenizer, image_processor, prom
         "prompt_hash": hashlib.sha256(text.encode()).hexdigest(),
         "expanded_prompt_hash": hashlib.sha256(expanded.encode()).hexdigest(),
         "image_hash": hashlib.sha256(png).hexdigest(),
-        "prompt_mode": "teammate-v1-current-skill-literal20",
+        "prompt_mode": (
+            "teammate-v1-current-skill-literal20"
+            if rendered_state.endswith("Ego speed: 20 m/s.")
+            else "teammate-v1-current-skill-measured-speed"
+        ),
+        "state_text": rendered_state,
+        "ego_speed_mps_supplied": None if speed_mps is None else float(speed_mps),
     }
     return inputs, metadata
 
@@ -237,7 +249,7 @@ class TrainedVLMCPU:
         )
         print("stage: trained model ready", flush=True)
 
-    def predict(self, png: bytes, lane: str, current_skill: str) -> dict:
+    def predict(self, png: bytes, lane: str, current_skill: str, speed_mps=None) -> dict:
         import torch
 
         if not self._lock.acquire(blocking=False):
@@ -251,6 +263,7 @@ class TrainedVLMCPU:
                 tokenizer=self.tokenizer,
                 image_processor=self.image_processor,
                 prompts=self.prompts,
+                speed_mps=speed_mps,
             )
             preprocess_s = time.perf_counter() - start
             print("stage: actual trained-model forward", flush=True)

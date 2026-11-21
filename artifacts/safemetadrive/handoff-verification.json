@@ -1,0 +1,20 @@
+{
+  "branch": "harsh-testing-further-runs",
+  "repository": "harshshah1618/cs642-event-cbf-driving",
+  "release_tag": "safemetadrive-handoff-2026-11-20",
+  "packages": 7,
+  "archived_files": 1512,
+  "compressed_bytes": 2791245373,
+  "clean_directory_restore_all_packages": true,
+  "expanded_camera_images": 20375,
+  "frozen_model_hashes_verified": 15,
+  "recovery_resume_states_loaded_on_cpu": 3,
+  "final_episode_aggregates_and_intervals_reproduced_exactly": true,
+  "final_episodes": 1900,
+  "tests_passed": 275,
+  "lint_passed": true,
+  "mypy_files_passed": 47,
+  "modal_functions_started": 0,
+  "base_model_included": false,
+  "note": "Artifacts restored into a different directory with no Modal access. Fresh remote clone verification follows upload."
+}

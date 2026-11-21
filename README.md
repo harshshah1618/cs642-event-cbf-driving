@@ -1,5 +1,12 @@
 # Driving project
 
+> **SafeMetaDrive handoff:** Start with [TEAMMATE_HANDOFF.md](TEAMMATE_HANDOFF.md).
+> Training records, datasets, resumable checkpoints and large weights are exported
+> as checksummed private-release bundles; restore them with
+> `python tools/restore_safemetadrive.py`. No Modal account is needed to inspect
+> the results or run the local checks. The older straight-road stack below is a
+> separate study.
+
 The project has one root with a few folders grouped by purpose.
 
 | Folder | What belongs here |

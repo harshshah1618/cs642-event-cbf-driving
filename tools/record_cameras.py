@@ -10,6 +10,7 @@ import numpy as np
 from driving.config import ScenarioConfig, load_config
 from driving.env_registry import make_env as real_make_env
 from driving.evaluation import run_episode
+from driving.planner import create_router
 
 OUT = Path("outputs/camera-views")
 FRONT_MOUNT = ((0.0, 0.8, 1.5), (0.0, -5.0, 0.0))
@@ -83,7 +84,7 @@ def main() -> None:
     cfg = load_config("configs/metadrive-study.yaml")
     cfg.stack.record_interactions = False
     skills, _info = runner.load_skill_bank(cfg.checkpoint_dir)
-    router = runner.create_router(cfg.router)
+    router = create_router(cfg.router)
     try:
         for scenario in ("two_trap", "merge", "dense_highway"):
             spec = ScenarioConfig(

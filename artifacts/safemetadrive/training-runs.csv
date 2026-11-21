@@ -1,0 +1,35 @@
+path,kind,seed,recorded_status,steps,best_image_step,state_note
+runs/safemetadrive/baseline-smoke-v5/CPO-seed0/manifest.json,CPO,0,running,4000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baseline-smoke-v5/PPOLag-seed0/manifest.json,PPOLag,0,running,4000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baseline-smoke-v6/CPO-seed0/manifest.json,CPO,0,completed,4000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baseline-smoke-v6/PPOLag-seed0/manifest.json,PPOLag,0,completed,4000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baselines-1m-reserved-v1/CPO-seed0/manifest.json,CPO,0,running,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baselines-1m-reserved-v1/PPOLag-seed1/manifest.json,PPOLag,1,running,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baselines-1m-v1/CPO-seed0/manifest.json,CPO,0,running,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baselines-1m-v1/CPO-seed1/manifest.json,CPO,1,running,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baselines-1m-v1/CPO-seed2/manifest.json,CPO,2,running,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baselines-1m-v1/PPOLag-seed0/manifest.json,PPOLag,0,completed,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baselines-1m-v1/PPOLag-seed1/manifest.json,PPOLag,1,running,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baselines-1m-v1/PPOLag-seed2/manifest.json,PPOLag,2,completed,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baselines-completion-v2/CPO-seed0/manifest.json,CPO,0,completed,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baselines-completion-v2/CPO-seed1/manifest.json,CPO,1,completed,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baselines-completion-v2/CPO-seed2/manifest.json,CPO,2,completed,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/baselines-completion-v2/PPOLag-seed1/manifest.json,PPOLag,1,completed,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/camera-balanced-v2/camera-seed0/summary.json,camera LoRA stage,0,completed,600,400,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/camera-balanced-v2/camera-seed1/summary.json,camera LoRA stage,1,completed,600,400,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/camera-balanced-v2/camera-seed2/summary.json,camera LoRA stage,2,completed,600,400,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/camera-history-smoke-v2/camera-seed0/summary.json,camera LoRA stage,0,completed,2,2,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/camera-lora-v1/camera-seed0/summary.json,camera LoRA stage,0,running,600,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/camera-lora-v1/camera-seed1/summary.json,camera LoRA stage,1,running,600,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/camera-lora-v1/camera-seed2/summary.json,camera LoRA stage,2,running,600,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/camera-recovery-v5/camera-seed0/summary.json,camera LoRA stage,0,completed,1000,1000,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/camera-recovery-v5/camera-seed1/summary.json,camera LoRA stage,1,completed,1000,800,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/camera-recovery-v5/camera-seed2/summary.json,camera LoRA stage,2,completed,1000,800,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/camera-training-smoke-v3/camera-seed0/summary.json,camera LoRA stage,0,completed,2,2,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/cpo-critic-lr-v1/CPO-seed0/manifest.json,CPO,0,completed,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/cpo-critic-lr-v1/CPO-seed1/manifest.json,CPO,1,completed,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/cpo-critic-lr-v1/CPO-seed2/manifest.json,CPO,2,completed,1000000,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/skills-1m-v1/skills-seed0/manifest.json,goal_conditioned_skill,0,completed,976896,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/skills-1m-v1/skills-seed1/manifest.json,goal_conditioned_skill,1,completed,976896,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/skills-1m-v1/skills-seed2/manifest.json,goal_conditioned_skill,2,completed,976896,,Historical metadata; app stopped. A recorded running status does not mean it is active.
+runs/safemetadrive/skills-smoke-v1/skills-seed0/manifest.json,goal_conditioned_skill,0,completed,4096,,Historical metadata; app stopped. A recorded running status does not mean it is active.
