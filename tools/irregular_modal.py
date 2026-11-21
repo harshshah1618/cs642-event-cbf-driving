@@ -52,23 +52,81 @@ def collect_shard(spec):
     out = f"{DATA}/frames/{spec['run']}/shard-{spec['seeds'][0]:03d}"
     summary = collect(spec["seeds"], out, spec["split"], placements=placements,
                       every=spec["every"], max_steps=spec["max_steps"])
+    _pack(out)
     volume.commit()
     return dict(out=out, frames=summary["frames"], wall_seconds=summary["wall_seconds"])
+
+
+def _pack(shard_dir):
+    """Bundle a shard's JPEGs into one uncompressed tar.
+
+    Reading thousands of small files from a Modal volume costs ~140 ms each;
+    one large sequential read is fast.
+    """
+    import io
+    import tarfile
+
+    shard = Path(shard_dir)
+    rows = json.loads((shard / "labels.json").read_text())
+    tmp = shard / "frames.tar.tmp"
+    with tarfile.open(tmp, "w") as tar:
+        for row in rows:
+            data = (shard / row["file"]).read_bytes()
+            info = tarfile.TarInfo(row["file"])
+            info.size = len(data)
+            tar.addfile(info, io.BytesIO(data))
+    tmp.rename(shard / "frames.tar")
+    return len(rows)
+
+
+@app.function(image=image, volumes={DATA: volume}, cpu=1, memory=2048, timeout=3600,
+              max_containers=16)
+def pack_shard(shard_dir):
+    import time
+    started = time.monotonic()
+    n = _pack(shard_dir)
+    volume.commit()
+    return dict(shard=shard_dir, frames=n, seconds=round(time.monotonic() - started))
 
 
 def _frame_rows(run):
     rows = []
     for shard in sorted(Path(f"{DATA}/frames/{run}").glob("shard-*")):
         for row in json.loads((shard / "labels.json").read_text()):
-            rows.append(dict(row, path=str(shard / row["file"])))
+            rows.append(dict(row, shard=str(shard)))
     return rows
 
 
-def _batches(rows, size):
+def _shard_bytes(shard):
+    import tarfile
+
+    path = Path(shard) / "frames.tar"
+    if not path.exists():
+        raise FileNotFoundError(f"{path} missing; run --stage pack first")
+    with tarfile.open(path) as tar:
+        return {m.name: tar.extractfile(m).read() for m in tar.getmembers()}
+
+
+def _batches(rows, size, label="frames", log_every=1000):
+    import io
+    import time
+
     from driving.irregular.patchcore import front_view
     from PIL import Image
-    for i in range(0, len(rows), size):
-        yield [front_view(Image.open(r["path"])) for r in rows[i:i + size]]
+
+    started, current, cache, batch = time.monotonic(), None, None, []
+    for n, row in enumerate(rows, 1):
+        if row["shard"] != current:
+            current, cache = row["shard"], _shard_bytes(row["shard"])
+        batch.append(front_view(Image.open(io.BytesIO(cache[row["file"]]))))
+        if len(batch) == size:
+            yield batch
+            batch = []
+        if n % log_every == 0 or n == len(rows):
+            print(f"[{label}] {n}/{len(rows)} frames encoded, {time.monotonic() - started:.0f} s",
+                  flush=True)
+    if batch:
+        yield batch
 
 
 @app.function(image=image, volumes={DATA: volume}, gpu=GPU, cpu=4, memory=16384, timeout=3 * 3600)
@@ -82,7 +140,11 @@ def build_bank(encoder_name, run="clean-train-v1", patches_per_image=64, coreset
     started = time.monotonic()
     rows = _frame_rows(run)
     encoder = Encoder(encoder_name)
-    model, pool = PatchCore.fit(encoder, _batches(rows, 32), patches_per_image, coreset_size)
+    print(f"[bank {encoder_name}] {len(rows)} clean frames", flush=True)
+    model, pool = PatchCore.fit(encoder, _batches(rows, 32, f"bank {encoder_name}"),
+                                patches_per_image, coreset_size)
+    print(f"[bank {encoder_name}] coreset {model.bank.shape[0]} of {pool} patches, "
+          f"{time.monotonic() - started:.0f} s total", flush=True)
     Path(f"{DATA}/banks").mkdir(parents=True, exist_ok=True)
     path = f"{DATA}/banks/{encoder_name}-{tag}.pt"
     model.save(path)
@@ -109,7 +171,7 @@ def score_frames(encoder_name, run="eval-dev-v1", tag="v1"):
     encoder = Encoder(encoder_name)
     model = PatchCore.load(f"{DATA}/banks/{encoder_name}-{tag}.pt", device="cuda")
     scores, maps, per_frame_ms = [], [], []
-    for images in _batches(rows, 32):
+    for images in _batches(rows, 32, f"score {encoder_name}"):
         torch.cuda.synchronize()
         t0 = time.monotonic()
         s, m = model.score(encoder(images))
@@ -135,6 +197,13 @@ def _shards(seeds, size):
 
 @app.local_entrypoint()
 def main(stage: str = "smoke", encoder: str = "dinov2_small"):
+    if stage == "pack":
+        shards = [f"{DATA}/frames/{run}/{entry.path.split('/')[-1]}"
+                  for run in ("clean-train-v1", "eval-dev-v1")
+                  for entry in volume.listdir(f"frames/{run}")]
+        for result in pack_shard.map(shards):
+            print(json.dumps(result), flush=True)
+        return
     if stage == "smoke":
         specs = [dict(run="smoke-v1", split="train", seeds=[0], placements=None, every=10, max_steps=60),
                  dict(run="smoke-v1", split="validation", seeds=[100], placements="eval",

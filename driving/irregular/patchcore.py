@@ -124,6 +124,7 @@ class PatchCore:
                 pick = torch.randperm(row.shape[0], generator=gen)[:patches_per_image]
                 pool.append(row[pick.to(row.device)].half())
         features = torch.cat(pool)
+        print(f"[coreset] selecting {coreset_size} of {features.shape[0]} patches", flush=True)
         keep = greedy_coreset(features, coreset_size, seed=seed)
         return cls(features[keep].float(), encoder.name, grid), features.shape[0]
 

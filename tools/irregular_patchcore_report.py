@@ -128,22 +128,26 @@ def contact_sheet(score_dir, recs, out_dir, volume_name="cs642-irregular", per_s
     chosen = []
     for scene in ["clean"] + SCENES:
         idx = [i for i, r in enumerate(recs) if r["scene"] == scene
-               and (scene == "clean" or (r["truth"]["visible"] and 20 <= r["truth"]["forward"] <= 35))]
+               and (scene == "clean" or (r["truth"]["visible"] and 12 <= r["truth"]["forward"] <= 22))]
         chosen += [(scene, i) for i in idx[: per_scene * 7: 7][:per_scene]]
-    vmax = float(np.percentile(maps, 99.9))
+    # Colour only the top patches: below the 99th percentile of all patch scores is left clear.
+    vmin, vmax = float(np.percentile(maps, 99)), float(np.percentile(maps, 99.97))
+    encoder = json.loads((Path(score_dir) / "scores.json").read_text())["encoder"]
     fig, axes = plt.subplots(len(chosen) // per_scene, per_scene, figsize=(5.2 * per_scene, 1.75 * len(chosen) // per_scene))
     for ax, (scene, i) in zip(axes.flat, chosen, strict=False):
         r = recs[i]
         path = f"frames/{run}/shard-{(r['map_seed'] // 5) * 5:03d}/{r['file']}"
         img = Image.open(io.BytesIO(b"".join(vol.read_file(path)))).crop((0, 0, 448, 252))
         ax.imshow(img)
-        ax.imshow(maps[i], cmap="Reds", alpha=0.45, vmin=0, vmax=vmax, extent=(0, 448, 252, 0),
-                  interpolation="bilinear")
+        ax.imshow(np.ma.masked_less(maps[i], vmin), cmap="Reds", alpha=0.6, vmin=vmin, vmax=vmax,
+                  extent=(0, 448, 252, 0), interpolation="nearest")
         dist = "" if scene == "clean" else f", {r['truth']['forward']:.0f} m"
         ax.set_title(f"{scene}{dist}: score {r['score']:.2f}", fontsize=8)
         ax.axis("off")
     fig.tight_layout()
-    fig.savefig(out_dir / "heatmaps.png", dpi=130)
+    fig.suptitle(f"{encoder}: patches above the 99th percentile of patch scores", fontsize=10)
+    fig.tight_layout()
+    fig.savefig(out_dir / f"heatmaps-{encoder}.png", dpi=130)
     plt.close(fig)
 
 
