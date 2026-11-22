@@ -7,7 +7,7 @@ every reset like the built-in accident objects.
 import math
 from dataclasses import asdict, dataclass
 
-KINDS = ("pedestrian", "cyclist", "cone", "warning", "barrier", "flagger", "sign")
+KINDS = ("pedestrian", "cyclist", "cone", "warning", "barrier", "flagger", "sign", "none")
 # Kinds the clean training maps already contain (accident_prob=0.8 places them).
 FAMILIAR_KINDS = ("cone", "warning", "barrier")
 
@@ -21,6 +21,8 @@ class Placement:
                                  # or from the lane centre ("lane", default 0)
     face: str | None = None      # "sign": its face (see props.FACES)
     stop_seconds: float | None = None  # "flagger": STOP shown this long, then SLOW (None = always)
+    brake_scale: float | None = None   # wet road: ego max brake force x this for the episode
+    overlay: str | None = None         # camera-only weather: "rain" or "fog" (see weather.py)
 
     def __post_init__(self):
         if self.kind not in KINDS:
@@ -91,7 +93,17 @@ def make_manager_class():
 
         def before_reset(self):
             self.schedule = []
+            # Undo a wet-road brake change so it never leaks into the next episode.
+            if getattr(self, "_brake_restore", None) is not None:
+                vehicle, force = self._brake_restore
+                vehicle.update_config({"max_brake_force": force})
+                self._brake_restore = None
             super().before_reset()
+
+        def set_brake_scale(self, agent, scale):
+            force = agent.config["max_brake_force"]
+            self._brake_restore = (agent, force)
+            agent.update_config({"max_brake_force": force * scale})
 
         def after_step(self, *args, **kwargs):
             due = [item for item in self.schedule if self.engine.episode_step >= item[0]]
@@ -108,6 +120,10 @@ def make_manager_class():
             return obj
 
         def place(self, agent, placement: Placement):
+            if placement.brake_scale is not None:
+                self.set_brake_scale(agent, placement.brake_scale)
+            if placement.kind == "none":
+                return None
             lane, s, lateral = locate(agent, placement.ahead, placement.where, placement.offset)
             position = lane.position(s, lateral)
             heading = lane.heading_theta_at(s)

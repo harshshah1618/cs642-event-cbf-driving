@@ -38,7 +38,10 @@ def collect(seeds, output, split, placements=None, every=5, max_steps=1000,
                 obj = place(env, placement) if placement else None
                 driver = LaneCautionDriver(env.agent, speed=30.0)
                 tag = "clean" if placement is None else "-".join(
-                    x for x in (placement.kind, placement.face, placement.where) if x)
+                    x for x in (placement.kind if placement.kind != "none" else None,
+                                placement.face, placement.where if placement.kind != "none" else None,
+                                f"wet{placement.brake_scale:g}" if placement.brake_scale else None,
+                                placement.overlay) if x)
                 cost, steps, frames = 0.0, 0, 0
                 info = {}
                 while steps < max_steps:
@@ -47,6 +50,11 @@ def collect(seeds, output, split, placements=None, every=5, max_steps=1000,
                         break
                     if steps % every == 0:
                         image, state = capture(env, driver)
+                        if placement is not None and placement.overlay:
+                            from driving.irregular.weather import OVERLAYS
+                            front = OVERLAYS[placement.overlay](
+                                image.crop((0, 0, image.width, 252)), seed=seed * 10000 + steps)
+                            image.paste(front, (0, 0))
                         name = f"map{seed:03d}-{tag}-step{steps:04d}.jpg"
                         image.save(output / name, quality=92)
                         rows.append(dict(file=name, map_seed=seed, step=steps, scene=tag,
