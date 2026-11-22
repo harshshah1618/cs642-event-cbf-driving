@@ -310,13 +310,17 @@ class PatchCoreDetector:
 class VLMCaller:
     """Zero-shot VLM answering with the canonical option order."""
 
-    def __init__(self, model_id, dtype="bfloat16"):
+    def __init__(self, model_id, dtype="bfloat16", speed=False):
         from driving.irregular.vlm import ZeroShotVLM
         self.vlm = ZeroShotVLM(model_id, dtype=dtype)
+        # Stating the current speed makes a stopped car keep answering "stop" (at 0 km/h
+        # Qwen3-VL-8B says stop on 90% of clean frames), so the closed loop omits it.
+        self.speed = speed
 
     def __call__(self, image, state, crop, truth):
         from driving.irregular.vlm import option_order
-        action, _, seconds = self.vlm.answer(image, state, option_order(state), crop=crop)
+        action, _, seconds = self.vlm.answer(image, state, option_order(state), crop=crop,
+                                             speed=self.speed)
         return action, seconds
 
 
