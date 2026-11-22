@@ -83,6 +83,7 @@ class Escalation:
         self.stall_steps = 0
         self.last_interventions = 0
         self.last_map = None
+        self.confirming = False
         self.calls = []
 
     # --- answers -------------------------------------------------------------
@@ -155,10 +156,16 @@ class Escalation:
         # 1. A pending answer becomes ready.
         if self.pending is not None and now >= self.pending["ready_at"]:
             call = self.pending
-            call["applied"] = self._apply(now, driver, call["action"])
-            call["applied_t"] = now
             self.pending = None
             self.recheck_due = False
+            if self.lease_action == "stop" and call["action"] != "stop" and not self.confirming:
+                # Stop is sticky: release only if an immediate second answer agrees.
+                self.confirming, self.recheck_due = True, True
+                call["applied"] = "confirming"
+            else:
+                self.confirming = False
+                call["applied"] = self._apply(now, driver, call["action"])
+            call["applied_t"] = now
         # 2. Lease expiry. An expired hold is re-asked (once) rather than released.
         if self.lease_action is not None and now >= self.lease_until and self.pending is None:
             still_flagged = "novelty" not in cfg.trigger or sum(self.above) >= cfg.k
@@ -310,18 +317,24 @@ class PatchCoreDetector:
 class VLMCaller:
     """Zero-shot VLM answering with the canonical option order."""
 
-    def __init__(self, model_id, dtype="bfloat16", speed=False):
+    def __init__(self, model_id, dtype="bfloat16", speed=False, orders=3):
         from driving.irregular.vlm import ZeroShotVLM
         self.vlm = ZeroShotVLM(model_id, dtype=dtype)
+        self.orders = orders  # average answer probabilities over this many option orders
         # Stating the current speed makes a stopped car keep answering "stop" (at 0 km/h
         # Qwen3-VL-8B says stop on 90% of clean frames), so the closed loop omits it.
         self.speed = speed
 
     def __call__(self, image, state, crop, truth):
         from driving.irregular.vlm import option_order
-        action, _, seconds = self.vlm.answer(image, state, option_order(state), crop=crop,
-                                             speed=self.speed)
-        return action, seconds
+        total, seconds = {}, 0.0
+        for k in range(self.orders):
+            order = option_order(state, None if k == 0 else k)
+            _, probs, t = self.vlm.answer(image, state, order, crop=crop, speed=self.speed)
+            seconds += t
+            for a, p in probs.items():
+                total[a] = total.get(a, 0.0) + p
+        return max(total, key=total.get), seconds
 
 
 def scene_placements(scene, seed):

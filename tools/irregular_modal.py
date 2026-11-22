@@ -417,12 +417,11 @@ def main(stage: str = "smoke", encoder: str = "dinov2_small", run: str = "eval-d
             trigger="novelty", seeds=[100]))))
         return
     elif stage in ("pilot-8b", "pilot-32b"):
-        fn, model, tag = ((closed_loop_l4, "Qwen/Qwen3-VL-8B-Instruct", "pilot2-qwen3vl-8b")
+        fn, model, tag = ((closed_loop_l4, "Qwen/Qwen3-VL-8B-Instruct", "pilot3-qwen3vl-8b")
                           if stage == "pilot-8b" else
-                          (closed_loop_a100, "Qwen/Qwen2.5-VL-32B-Instruct", "pilot2-qwen25vl-32b"))
-        specs = [dict(model=model, tag=tag, scene=scene, trigger=trigger, seeds=list(range(100, 110)))
-                 for scene in ("flagger", "billboard", "pedestrian-shoulder", "lane-closed", "clean")
-                 for trigger in ("novelty", "poll")]
+                          (closed_loop_a100, "Qwen/Qwen2.5-VL-32B-Instruct", "pilot3-qwen25vl-32b"))
+        specs = [dict(model=model, tag=tag, scene=scene, trigger="novelty", seeds=list(range(100, 110)))
+                 for scene in ("flagger", "billboard", "pedestrian-shoulder", "lane-closed", "clean")]
         for result in fn.map(specs, return_exceptions=True):
             print(json.dumps(result if isinstance(result, dict) else repr(result)), flush=True)
         return
