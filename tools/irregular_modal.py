@@ -197,6 +197,78 @@ def score_frames(encoder_name, run="eval-dev-v1", tag="v1"):
     return dict(out=str(out), frames=len(rows), ms_per_frame=float(np.median(per_frame_ms)))
 
 
+def _vlm_sample(per_episode=4, clean_frames=240, seed=0):
+    """Frames for offline VLM selection: visible objects 8-35 m ahead, plus clean frames."""
+    import random
+
+    from driving.irregular.vlm import ACCEPTABLE, scene_key
+
+    rng = random.Random(seed)
+    rows = [r for r in _frame_rows("eval-dev-v1") + _frame_rows("eval-signs-dev-v1")]
+    clean = [r for r in rows if r["scene"] == "clean" and "eval-dev-v1" in r["shard"]]
+    picked = rng.sample(clean, min(clean_frames, len(clean)))
+    episodes = {}
+    for r in rows:
+        t = r.get("truth")
+        if r["scene"] == "clean" or not t or not t["visible"] or not 8 <= t["forward"] <= 35:
+            continue
+        if scene_key(r) not in ACCEPTABLE:
+            continue
+        episodes.setdefault((scene_key(r), r["map_seed"]), []).append(r)
+    for _, eps in sorted(episodes.items()):
+        eps.sort(key=lambda r: r["truth"]["forward"])
+        step = max(1, len(eps) // per_episode)
+        picked += eps[::step][:per_episode]
+    return picked
+
+
+def _vlm_eval(spec):
+    import io
+    import time
+
+    from driving.irregular.patchcore import front_view
+    from driving.irregular.vlm import ZeroShotVLM, option_order, scene_key
+    from PIL import Image
+
+    rows = _vlm_sample()
+    model = ZeroShotVLM(spec["model"], dtype=spec.get("dtype", "float16"))
+    out = Path(f"{DATA}/vlm/{spec['tag']}")
+    out.mkdir(parents=True, exist_ok=True)
+    cache, current, results = None, None, []
+    started = time.monotonic()
+    blank_every = spec.get("blank_every", 4)
+    for n, r in enumerate(rows):
+        if r["shard"] != current:
+            current, cache = r["shard"], _shard_bytes(r["shard"])
+        image = front_view(Image.open(io.BytesIO(cache[r["file"]])).convert("RGB"))
+        state = dict(speed_mps=r.get("speed_mps", 0.0), current_lane=r.get("current_lane", 0),
+                     lane_count=r.get("lane_count", 1))
+        conditions = [("canonical", image, option_order(state)),
+                      ("shuffled", image, option_order(state, n))]
+        if n % blank_every == 0:
+            conditions.append(("blank", Image.new("RGB", image.size, (128, 128, 128)),
+                               option_order(state)))
+        for name, img, order in conditions:
+            action, probs, seconds = model.answer(img, state, order)
+            results.append(dict(file=r["file"], scene=scene_key(r), map_seed=r["map_seed"],
+                                forward=(r.get("truth") or {}).get("forward"), condition=name,
+                                order=order, action=action, probs=probs, seconds=seconds))
+        if (n + 1) % 100 == 0 or n + 1 == len(rows):
+            print(f"[vlm {spec['tag']}] {n + 1}/{len(rows)} frames, "
+                  f"{time.monotonic() - started:.0f} s", flush=True)
+    (out / "results.json").write_text(json.dumps(dict(model=spec["model"], dtype=spec.get("dtype"),
+                                                     frames=len(rows), results=results)))
+    volume.commit()
+    return dict(tag=spec["tag"], frames=len(rows), calls=len(results),
+                wall_seconds=round(time.monotonic() - started))
+
+
+@app.function(image=image, volumes={DATA: volume}, gpu="T4", cpu=4, memory=24576, timeout=3 * 3600)
+def vlm_eval_t4(spec):
+    _workspace()
+    return _vlm_eval(spec)
+
+
 def _shards(seeds, size):
     return [seeds[i:i + size] for i in range(0, len(seeds), size)]
 
@@ -226,6 +298,10 @@ def main(stage: str = "smoke", encoder: str = "dinov2_small", run: str = "eval-d
     elif stage == "evalset":
         specs = [dict(run="eval-dev-v1", split="validation", seeds=s, placements="eval", every=3,
                       max_steps=300) for s in _shards(list(range(100, 130)), 5)]
+    elif stage == "vlm3b":
+        print(json.dumps(vlm_eval_t4.remote(dict(model="Qwen/Qwen2.5-VL-3B-Instruct",
+                                                 dtype="float16", tag="qwen25vl-3b-fp16"))))
+        return
     elif stage == "bank":
         print(json.dumps(build_bank.remote(encoder), indent=2))
         return
