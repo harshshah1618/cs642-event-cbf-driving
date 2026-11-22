@@ -427,6 +427,13 @@ def main(stage: str = "smoke", encoder: str = "dinov2_small", run: str = "eval-d
             model="Qwen/Qwen3-VL-8B-Instruct", tag="pilot-smoke-hires", scene="flagger",
             trigger="novelty", hi_res=True, save_crops=True, seeds=[104]))))
         return
+    elif stage == "pilot5":
+        specs = [dict(model="Qwen/Qwen3-VL-8B-Instruct", tag="pilot5-qwen3vl-8b", scene=scene,
+                      trigger="novelty", hi_res=True, seeds=list(range(100, 110)))
+                 for scene in ("flagger", "billboard", "pedestrian-shoulder", "lane-closed", "clean")]
+        for result in closed_loop_l4.map(specs, return_exceptions=True):
+            print(json.dumps(result if isinstance(result, dict) else repr(result)), flush=True)
+        return
     elif stage in ("pilot-8b", "pilot-32b"):
         fn, model, tag = ((closed_loop_l4, "Qwen/Qwen3-VL-8B-Instruct", "pilot4-qwen3vl-8b")
                           if stage == "pilot-8b" else

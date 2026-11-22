@@ -43,6 +43,7 @@ class EscalationConfig:
     extra_delay: float = 0.0      # injected latency on top of the measured one
     pending: str = "nominal"      # behaviour while a call is pending: nominal | careful
     use_crop: bool = True
+    release_unflagged: bool = False  # release a hold when PatchCore stops flagging (pilot v2-v4)
 
     def __post_init__(self):
         if self.trigger not in TRIGGERS:
@@ -169,7 +170,8 @@ class Escalation:
             call["applied_t"] = now
         # 2. Lease expiry. An expired hold is re-asked (once) rather than released.
         if self.lease_action is not None and now >= self.lease_until and self.pending is None:
-            still_flagged = "novelty" not in cfg.trigger or sum(self.above) >= cfg.k
+            still_flagged = (not cfg.release_unflagged or "novelty" not in cfg.trigger
+                             or sum(self.above) >= cfg.k)
             if self.lease_action == "stop" and still_flagged:
                 self.recheck_due = True
             else:
