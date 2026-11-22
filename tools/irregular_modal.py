@@ -296,6 +296,63 @@ def vlm_eval_a100(spec):
     return _vlm_eval(spec)
 
 
+def _closed_loop(spec):
+    import time
+
+    from driving.irregular.escalation import (
+        EscalationConfig,
+        PatchCoreDetector,
+        VLMCaller,
+        run_episode,
+        scene_placements,
+    )
+    from driving.irregular.scene import make_env
+    from driving.safemetadrive.camera_planner import camera_config
+    from driving.safemetadrive.protocol import environment_config
+
+    started = time.monotonic()
+    vlm = VLMCaller(spec["model"], spec.get("dtype", "bfloat16"))
+    detector = PatchCoreDetector(f"{DATA}/banks/dinov2_small-v1.pt")
+    env = make_env(camera_config(environment_config(spec.get("split", "validation"))))
+    out = Path(f"{DATA}/closedloop/{spec['tag']}")
+    out.mkdir(parents=True, exist_ok=True)
+    rows = []
+    try:
+        for seed in spec["seeds"]:
+            cfg = EscalationConfig(trigger=spec["trigger"], **spec.get("config", {}))
+            row = run_episode(env, seed, scene_placements(spec["scene"], seed), cfg, vlm=vlm,
+                              detector=detector, render=True,
+                              max_steps=300 if spec["scene"] == "clean" else 700)
+            row.update(scene=spec["scene"], model=spec["model"])
+            rows.append(row)
+            print(json.dumps(dict(scene=spec["scene"], trigger=spec["trigger"], seed=seed,
+                                  passed_stop=row["passed_stop"], calls=len(row["calls"]),
+                                  stopped=row["seconds_stopped_near_object"],
+                                  crash=row["crash_object"] or row["crash_human"]
+                                  or row["crash_vehicle"], steps=row["steps"])), flush=True)
+            name = f"{spec['scene']}-{spec['trigger']}.json"
+            (out / name).write_text(json.dumps(rows, default=str))
+            volume.commit()
+    finally:
+        env.close()
+    return dict(tag=spec["tag"], scene=spec["scene"], trigger=spec["trigger"],
+                episodes=len(rows), wall_seconds=round(time.monotonic() - started))
+
+
+@app.function(image=image, volumes={DATA: volume}, gpu=["L4", "A10G"], cpu=4, memory=32768,
+              timeout=3 * 3600, max_containers=10)
+def closed_loop_l4(spec):
+    _workspace()
+    return _closed_loop(spec)
+
+
+@app.function(image=image, volumes={DATA: volume}, gpu="A100-80GB", cpu=8, memory=98304,
+              timeout=3 * 3600, max_containers=10)
+def closed_loop_a100(spec):
+    _workspace()
+    return _closed_loop(spec)
+
+
 ALL_CONDITIONS = ["canonical", "shuffled", "blank", "crop", "crop-shuffled"]
 VLM_RUNS = {
     "vlm7b": (vlm_eval_l4, dict(model="Qwen/Qwen2.5-VL-7B-Instruct", dtype="bfloat16",
@@ -339,6 +396,21 @@ def main(stage: str = "smoke", encoder: str = "dinov2_small", run: str = "eval-d
     elif stage == "vlm3b":
         print(json.dumps(vlm_eval_t4.remote(dict(model="Qwen/Qwen2.5-VL-3B-Instruct",
                                                  dtype="float16", tag="qwen25vl-3b-fp16"))))
+        return
+    elif stage == "pilot-smoke":
+        print(json.dumps(closed_loop_l4.remote(dict(
+            model="Qwen/Qwen3-VL-8B-Instruct", tag="pilot-smoke", scene="flagger",
+            trigger="novelty", seeds=[100]))))
+        return
+    elif stage in ("pilot-8b", "pilot-32b"):
+        fn, model, tag = ((closed_loop_l4, "Qwen/Qwen3-VL-8B-Instruct", "pilot-qwen3vl-8b")
+                          if stage == "pilot-8b" else
+                          (closed_loop_a100, "Qwen/Qwen2.5-VL-32B-Instruct", "pilot-qwen25vl-32b"))
+        specs = [dict(model=model, tag=tag, scene=scene, trigger=trigger, seeds=list(range(100, 110)))
+                 for scene in ("flagger", "billboard", "pedestrian-shoulder", "lane-closed", "clean")
+                 for trigger in ("novelty", "poll")]
+        for result in fn.map(specs, return_exceptions=True):
+            print(json.dumps(result if isinstance(result, dict) else repr(result)), flush=True)
         return
     elif stage in VLM_RUNS:
         fn, spec = VLM_RUNS[stage]

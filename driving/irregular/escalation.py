@@ -282,3 +282,50 @@ class OracleVLM:
         else:
             action = "careful"
         return action, self.latency
+
+
+# --- GPU components ----------------------------------------------------------
+
+class PatchCoreDetector:
+    """Live PatchCore score for one front-camera frame."""
+    needs_image = True
+
+    def __init__(self, bank_path, encoder="dinov2_small"):
+        from driving.irregular.patchcore import Encoder, PatchCore
+        self.encoder = Encoder(encoder)
+        self.model = PatchCore.load(bank_path, device="cuda")
+
+    def __call__(self, image, truth):
+        scores, maps = self.model.score(self.encoder([image]))
+        return float(scores[0]), maps[0].float().cpu().numpy()
+
+
+class VLMCaller:
+    """Zero-shot VLM answering with the canonical option order."""
+
+    def __init__(self, model_id, dtype="bfloat16"):
+        from driving.irregular.vlm import ZeroShotVLM
+        self.vlm = ZeroShotVLM(model_id, dtype=dtype)
+
+    def __call__(self, image, state, crop, truth):
+        from driving.irregular.vlm import option_order
+        action, _, seconds = self.vlm.answer(image, state, option_order(state), crop=crop)
+        return action, seconds
+
+
+def scene_placements(scene, seed):
+    """Pilot scenes: one object 60 m ahead (the flagger shows STOP for 15-30 s)."""
+    import random
+
+    from driving.irregular.scene import Placement
+    if scene == "flagger":
+        return [Placement("flagger", 60, "shoulder", stop_seconds=15 + 15 * random.Random(seed).random())]
+    if scene == "billboard":
+        return [Placement("sign", 60, "shoulder", face="billboard")]
+    if scene == "lane-closed":
+        return [Placement("sign", 60, "shoulder", face="lane_closed")]
+    if scene == "pedestrian-shoulder":
+        return [Placement("pedestrian", 60, "shoulder")]
+    if scene == "clean":
+        return []
+    raise ValueError(f"Unknown scene {scene!r}")
