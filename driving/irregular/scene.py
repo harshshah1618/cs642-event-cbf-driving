@@ -7,7 +7,8 @@ every reset like the built-in accident objects.
 import math
 from dataclasses import asdict, dataclass
 
-KINDS = ("pedestrian", "cyclist", "cone", "warning", "barrier", "flagger", "sign", "none")
+KINDS = ("pedestrian", "cyclist", "cone", "warning", "barrier", "flagger", "sign", "none",
+         "closure")
 # Kinds the clean training maps already contain (accident_prob=0.8 places them).
 FAMILIAR_KINDS = ("cone", "warning", "barrier")
 
@@ -139,6 +140,13 @@ def make_manager_class():
                         self.engine.global_config["decision_repeat"]
                     self.schedule.append((round(placement.stop_seconds / dt), sign, "slow"))
                 return sign
+            if placement.kind == "closure":
+                # A barrier in every lane of the road at this distance (road closed).
+                road = self.engine.current_map.road_network.graph[lane.index[0]][lane.index[1]]
+                objs = [self.spawn_object(classes["barrier"], position=ln.position(s, 0.0),
+                                          heading_theta=ln.heading_theta_at(s), lane=ln, static=True)
+                        for ln in road]
+                return objs[min(agent.lane.index[-1], len(objs) - 1)]
             if placement.kind == "sign":
                 return self.spawn_object(road_sign, force_spawn=True, position=position,
                                          heading_theta=heading, lane=lane, face=placement.face)

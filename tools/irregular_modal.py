@@ -25,7 +25,8 @@ image = (
     .pip_install("numpy==1.26.4", "gymnasium==0.29.1", "pillow",
                  "metadrive-simulator @ git+https://github.com/metadriverse/metadrive.git@fe54b03327b14bcfc17a9a04b60c8abbee4d7ab1")
     .run_commands("python -m metadrive.pull_asset")
-    .pip_install("torch==2.8.0", "torchvision==0.23.0", "transformers==4.57.1", "scikit-learn")
+    .pip_install("torch==2.8.0", "torchvision==0.23.0", "transformers==4.57.1", "scikit-learn",
+                 "stable-baselines3==2.3.2")
     .env({"OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1", "NVIDIA_DRIVER_CAPABILITIES": "all",
           "P3D_DISPLAY": "p3headlessgl", "HF_HOME": f"{DATA}/hf", "TORCH_HOME": f"{DATA}/torch"})
     .add_local_dir(ROOT / "driving" / "safemetadrive", "/workspace/driving/safemetadrive",
@@ -318,17 +319,18 @@ def _closed_loop(spec):
         PatchCoreDetector,
         VLMCaller,
         hi_res_camera_config,
+        irregular_config,
         run_episode,
         scene_placements,
     )
     from driving.irregular.scene import make_env
     from driving.safemetadrive.camera_planner import camera_config
-    from driving.safemetadrive.protocol import environment_config
 
     started = time.monotonic()
     vlm = VLMCaller(spec["model"], spec.get("dtype", "bfloat16"))
     detector = PatchCoreDetector(f"{DATA}/banks/dinov2_small-v1.pt")
-    base = environment_config(spec.get("split", "validation"))
+    base = irregular_config(spec.get("split", "validation"))
+    driver_kwargs = dict(skill_checkpoint=f"{DATA}/ppo/{spec['ppo']}") if spec.get("ppo") else None
     env = make_env(hi_res_camera_config(base) if spec.get("hi_res") else camera_config(base))
     out = Path(f"{DATA}/closedloop/{spec['tag']}")
     out.mkdir(parents=True, exist_ok=True)
@@ -338,8 +340,8 @@ def _closed_loop(spec):
             cfg = EscalationConfig(trigger=spec["trigger"], **spec.get("config", {}))
             row = run_episode(env, seed, scene_placements(spec["scene"], seed), cfg, vlm=vlm,
                               detector=detector, render=True, hi_res=spec.get("hi_res", False),
-                              debug_dir=_debug_dir(out, spec, seed),
-                              max_steps=300 if spec["scene"] == "clean" else 700)
+                              debug_dir=_debug_dir(out, spec, seed), driver_kwargs=driver_kwargs,
+                              max_steps=300 if spec["scene"] in ("clean", "rain-clean") else 600)
             row.update(scene=spec["scene"], model=spec["model"])
             rows.append(row)
             print(json.dumps(dict(scene=spec["scene"], trigger=spec["trigger"], seed=seed,
@@ -347,7 +349,7 @@ def _closed_loop(spec):
                                   stopped=row["seconds_stopped_near_object"],
                                   crash=row["crash_object"] or row["crash_human"]
                                   or row["crash_vehicle"], steps=row["steps"])), flush=True)
-            name = f"{spec['scene']}-{spec['trigger']}.json"
+            name = f"{spec['scene']}-{spec['trigger']}-{spec['seeds'][0]}.json"
             (out / name).write_text(json.dumps(rows, default=str))
             volume.commit()
     finally:
@@ -424,8 +426,21 @@ def main(stage: str = "smoke", encoder: str = "dinov2_small", run: str = "eval-d
         return
     elif stage == "pilot-smoke":
         print(json.dumps(closed_loop_l4.remote(dict(
-            model="Qwen/Qwen3-VL-8B-Instruct", tag="pilot-smoke-hires", scene="flagger",
-            trigger="novelty", hi_res=True, save_crops=True, seeds=[104]))))
+            model="Qwen/Qwen3-VL-8B-Instruct", tag="final-smoke", scene="flagger",
+            trigger="novelty", hi_res=True, ppo="skills-seed0-ppo.zip", split="irregular-test",
+            seeds=[1000]))))
+        return
+    elif stage == "final":
+        # Final test: Harsh's rule + PPO + protection under our novelty-triggered Qwen3-VL-8B,
+        # 8 irregular scenes x 50 fresh maps, 2 shards per scene.
+        scenes = ("flagger", "billboard", "pedestrian-shoulder", "pedestrian-lane", "lane-closed",
+                  "wet-closed", "rain-clean", "clean")
+        specs = [dict(model="Qwen/Qwen3-VL-8B-Instruct", tag="final-qwen3vl-8b", scene=scene,
+                      trigger="novelty", hi_res=True, ppo="skills-seed0-ppo.zip",
+                      split="irregular-test", seeds=list(range(start, start + 25)))
+                 for scene in scenes for start in (1000, 1025)]
+        for result in closed_loop_l4.map(specs, return_exceptions=True):
+            print(json.dumps(result if isinstance(result, dict) else repr(result)), flush=True)
         return
     elif stage == "pilot5":
         specs = [dict(model="Qwen/Qwen3-VL-8B-Instruct", tag="pilot5-qwen3vl-8b", scene=scene,

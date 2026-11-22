@@ -219,15 +219,24 @@ def run_episode(env, seed, placements, cfg, vlm=None, detector=None, render=Fals
     primary = next((o for o in objs if o is not None), None)
     driver = EscalatingDriver(env.agent, speed=30, **(driver_kwargs or {}))
     esc = Escalation(cfg, vlm, detector,
-                     hi_capture=(lambda: capture_front_hi(env)) if render and hi_res else None)
+                     hi_capture=(lambda: weather(capture_front_hi(env), salt=env.engine.episode_step))
+                     if render and hi_res else None)
     esc.debug_dir = debug_dir
+
+    overlay = next((p.overlay for p in placements if p.overlay), None)
+
+    def weather(image, salt=0):
+        if overlay is None:
+            return image
+        from driving.irregular.weather import OVERLAYS
+        return OVERLAYS[overlay](image, seed=seed * 100000 + salt)
 
     def capture():
         if render:
             from driving.irregular.patchcore import front_view
             from driving.safemetadrive.camera_planner import capture as cam
             image, state = cam(env, driver)
-            return front_view(image), state
+            return weather(front_view(image), salt=env.engine.episode_step), state
         lanes = env.agent.navigation.current_ref_lanes
         return None, dict(speed_mps=float(env.agent.speed), lane_count=len(lanes),
                           current_lane=int(env.agent.lane.index[-1]))
@@ -358,6 +367,13 @@ def scene_placements(scene, seed):
         return [Placement("sign", 60, "shoulder", face="lane_closed")]
     if scene == "pedestrian-shoulder":
         return [Placement("pedestrian", 60, "shoulder")]
+    if scene == "pedestrian-lane":
+        return [Placement("pedestrian", 60, "lane")]
+    if scene == "wet-closed":
+        # Road closed 60 m ahead, braking ~2 m/s^2 (below protection's 4 m/s^2), rain on camera.
+        return [Placement("closure", 60, "lane", brake_scale=0.10, overlay="rain")]
+    if scene == "rain-clean":
+        return [Placement("none", 60, overlay="rain")]
     if scene == "clean":
         return []
     raise ValueError(f"Unknown scene {scene!r}")
@@ -382,3 +398,16 @@ def capture_front_hi(env):
     front = env.engine.get_sensor("rgb_front_hi").perceive(False, env.agent.origin,
                                                            (0, 0.8, 1.5), (0, -5, 0))
     return Image.fromarray(front[..., :3][..., ::-1].astype(np.uint8), "RGB")
+
+
+IRREGULAR_TEST = (1000, 50)  # fresh maps for the final test, never used in development
+
+
+def irregular_config(split):
+    """Environment config: Harsh's partitions plus the fresh irregular test maps."""
+    from driving.safemetadrive.protocol import environment_config
+    if split == "irregular-test":
+        config = environment_config("validation")
+        config.update(start_seed=IRREGULAR_TEST[0], num_scenarios=IRREGULAR_TEST[1])
+        return config
+    return environment_config(split)
