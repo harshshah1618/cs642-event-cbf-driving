@@ -57,8 +57,12 @@ def option_order(state, seed=None):
     return order
 
 
-def anomaly_crop(image, patch_map, patch=14, size=(128, 72)):
-    """Enlarge the region around the highest-scoring PatchCore patch (same aspect as the frame)."""
+def anomaly_crop(image, patch_map, patch=14, size=(128, 72), hi=None):
+    """Enlarge the region around the highest-scoring PatchCore patch (same aspect as the frame).
+
+    With `hi` (the same view rendered at higher resolution) the crop is cut from it,
+    so the VLM sees real detail instead of upscaled pixels.
+    """
     import numpy as np
     from PIL import Image
 
@@ -67,6 +71,10 @@ def anomaly_crop(image, patch_map, patch=14, size=(128, 72)):
     w, h = size
     x0 = int(min(max(cx - w / 2, 0), image.width - w))
     y0 = int(min(max(cy - h / 2, 0), image.height - h))
+    if hi is not None:
+        k = hi.width / image.width
+        return hi.crop((int(x0 * k), int(y0 * k), int((x0 + w) * k), int((y0 + h) * k))).resize(
+            image.size, Image.LANCZOS)
     return image.crop((x0, y0, x0 + w, y0 + h)).resize(image.size, Image.LANCZOS)
 
 

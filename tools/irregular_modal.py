@@ -302,6 +302,14 @@ def vlm_eval_a100(spec):
     return _vlm_eval(spec)
 
 
+def _debug_dir(out, spec, seed):
+    if not spec.get("save_crops"):
+        return None
+    d = out / f"crops-{spec['scene']}-{seed}"
+    d.mkdir(parents=True, exist_ok=True)
+    return str(d)
+
+
 def _closed_loop(spec):
     import time
 
@@ -309,6 +317,7 @@ def _closed_loop(spec):
         EscalationConfig,
         PatchCoreDetector,
         VLMCaller,
+        hi_res_camera_config,
         run_episode,
         scene_placements,
     )
@@ -319,7 +328,8 @@ def _closed_loop(spec):
     started = time.monotonic()
     vlm = VLMCaller(spec["model"], spec.get("dtype", "bfloat16"))
     detector = PatchCoreDetector(f"{DATA}/banks/dinov2_small-v1.pt")
-    env = make_env(camera_config(environment_config(spec.get("split", "validation"))))
+    base = environment_config(spec.get("split", "validation"))
+    env = make_env(hi_res_camera_config(base) if spec.get("hi_res") else camera_config(base))
     out = Path(f"{DATA}/closedloop/{spec['tag']}")
     out.mkdir(parents=True, exist_ok=True)
     rows = []
@@ -327,7 +337,8 @@ def _closed_loop(spec):
         for seed in spec["seeds"]:
             cfg = EscalationConfig(trigger=spec["trigger"], **spec.get("config", {}))
             row = run_episode(env, seed, scene_placements(spec["scene"], seed), cfg, vlm=vlm,
-                              detector=detector, render=True,
+                              detector=detector, render=True, hi_res=spec.get("hi_res", False),
+                              debug_dir=_debug_dir(out, spec, seed),
                               max_steps=300 if spec["scene"] == "clean" else 700)
             row.update(scene=spec["scene"], model=spec["model"])
             rows.append(row)
@@ -413,14 +424,15 @@ def main(stage: str = "smoke", encoder: str = "dinov2_small", run: str = "eval-d
         return
     elif stage == "pilot-smoke":
         print(json.dumps(closed_loop_l4.remote(dict(
-            model="Qwen/Qwen3-VL-8B-Instruct", tag="pilot-smoke", scene="flagger",
-            trigger="novelty", seeds=[100]))))
+            model="Qwen/Qwen3-VL-8B-Instruct", tag="pilot-smoke-hires", scene="flagger",
+            trigger="novelty", hi_res=True, save_crops=True, seeds=[104]))))
         return
     elif stage in ("pilot-8b", "pilot-32b"):
-        fn, model, tag = ((closed_loop_l4, "Qwen/Qwen3-VL-8B-Instruct", "pilot3-qwen3vl-8b")
+        fn, model, tag = ((closed_loop_l4, "Qwen/Qwen3-VL-8B-Instruct", "pilot4-qwen3vl-8b")
                           if stage == "pilot-8b" else
-                          (closed_loop_a100, "Qwen/Qwen2.5-VL-32B-Instruct", "pilot3-qwen25vl-32b"))
-        specs = [dict(model=model, tag=tag, scene=scene, trigger="novelty", seeds=list(range(100, 110)))
+                          (closed_loop_a100, "Qwen/Qwen2.5-VL-32B-Instruct", "pilot4-qwen25vl-32b"))
+        specs = [dict(model=model, tag=tag, scene=scene, trigger="novelty", hi_res=True,
+                      seeds=list(range(100, 110)))
                  for scene in ("flagger", "billboard", "pedestrian-shoulder", "lane-closed", "clean")]
         for result in fn.map(specs, return_exceptions=True):
             print(json.dumps(result if isinstance(result, dict) else repr(result)), flush=True)

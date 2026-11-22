@@ -66,12 +66,13 @@ class EscalatingDriver(LaneCautionDriver):
 
 
 class Escalation:
-    def __init__(self, cfg: EscalationConfig, vlm=None, detector=None):
+    def __init__(self, cfg: EscalationConfig, vlm=None, detector=None, hi_capture=None):
         if cfg.trigger != "none" and vlm is None:
             raise ValueError("A trigger needs a VLM")
         if "novelty" in cfg.trigger and detector is None:
             raise ValueError("The novelty trigger needs a detector")
         self.cfg, self.vlm, self.detector = cfg, vlm, detector
+        self.hi_capture = hi_capture  # renders the high-resolution front view on demand
         self.above = deque(maxlen=cfg.n)
         self.pending = None
         self.last_call = -math.inf
@@ -188,7 +189,10 @@ class Escalation:
         crop = None
         if cfg.use_crop and image is not None and self.last_map is not None:
             from driving.irregular.vlm import anomaly_crop
-            crop = anomaly_crop(image, self.last_map)
+            hi = self.hi_capture() if self.hi_capture is not None else None
+            crop = anomaly_crop(image, self.last_map, hi=hi)
+        if getattr(self, "debug_dir", None) and crop is not None:
+            crop.save(f"{self.debug_dir}/crop-t{now:05.1f}.jpg", quality=92)
         action, seconds = self.vlm(image, state, crop, truth)
         if self.lease_action == "stop":
             self.lease_until = math.inf  # keep holding until the re-check answer arrives
@@ -204,7 +208,7 @@ class Escalation:
 
 
 def run_episode(env, seed, placements, cfg, vlm=None, detector=None, render=False,
-                driver_kwargs=None, max_steps=700, after_pass=20.0):
+                driver_kwargs=None, max_steps=700, after_pass=20.0, hi_res=False, debug_dir=None):
     """One closed-loop episode; returns a result row."""
     from driving.irregular.scene import place, placement_record, relative
 
@@ -212,7 +216,9 @@ def run_episode(env, seed, placements, cfg, vlm=None, detector=None, render=Fals
     objs = [place(env, p) for p in placements]
     primary = next((o for o in objs if o is not None), None)
     driver = EscalatingDriver(env.agent, speed=30, **(driver_kwargs or {}))
-    esc = Escalation(cfg, vlm, detector)
+    esc = Escalation(cfg, vlm, detector,
+                     hi_capture=(lambda: capture_front_hi(env)) if render and hi_res else None)
+    esc.debug_dir = debug_dir
 
     def capture():
         if render:
@@ -353,3 +359,24 @@ def scene_placements(scene, seed):
     if scene == "clean":
         return []
     raise ValueError(f"Unknown scene {scene!r}")
+
+
+HI_RES = (1344, 756)  # 3x the 448 x 252 front camera
+
+
+def hi_res_camera_config(config):
+    """Harsh's camera setup plus a high-resolution copy of the front camera."""
+    from metadrive.component.sensors.rgb_camera import RGBCamera
+
+    from driving.safemetadrive.camera_planner import camera_config
+    config = camera_config(config)
+    config["sensors"] = dict(config["sensors"], rgb_front_hi=(RGBCamera, *HI_RES))
+    return config
+
+
+def capture_front_hi(env):
+    """Render the front view at HI_RES with the same pose as Harsh's front camera."""
+    from PIL import Image
+    front = env.engine.get_sensor("rgb_front_hi").perceive(False, env.agent.origin,
+                                                           (0, 0.8, 1.5), (0, -5, 0))
+    return Image.fromarray(front[..., :3][..., ::-1].astype(np.uint8), "RGB")
