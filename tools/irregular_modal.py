@@ -232,6 +232,8 @@ def _vlm_eval(spec):
     from PIL import Image
 
     rows = _vlm_sample()
+    if spec.get("scenes"):
+        rows = [r for r in rows if scene_key(r) in spec["scenes"]]
     model = ZeroShotVLM(spec["model"], dtype=spec.get("dtype", "float16"))
     conditions_wanted = spec.get("conditions", ["canonical", "shuffled", "blank"])
     maps = {}
@@ -256,13 +258,17 @@ def _vlm_eval(spec):
         conditions = [("canonical", image, option_order(state), None),
                       ("shuffled", image, option_order(state, n), None),
                       ("crop", image, option_order(state), crop),
-                      ("crop-shuffled", image, option_order(state, n), crop)]
+                      ("crop-shuffled", image, option_order(state, n), crop),
+                      ("crop-speed0", image, option_order(state), crop),
+                      ("crop-nospeed", image, option_order(state), crop)]
         if n % blank_every == 0:
             conditions.append(("blank", Image.new("RGB", image.size, (128, 128, 128)),
                                option_order(state), None))
         conditions = [c for c in conditions if c[0] in conditions_wanted]
         for name, img, order, extra in conditions:
-            action, probs, seconds = model.answer(img, state, order, crop=extra)
+            st = dict(state, speed_mps=0.0) if name == "crop-speed0" else state
+            action, probs, seconds = model.answer(img, st, order, crop=extra,
+                                                  speed=name != "crop-nospeed")
             results.append(dict(file=r["file"], scene=scene_key(r), map_seed=r["map_seed"],
                                 forward=(r.get("truth") or {}).get("forward"), condition=name,
                                 order=order, action=action, probs=probs, seconds=seconds))
@@ -354,11 +360,19 @@ def closed_loop_a100(spec):
 
 
 ALL_CONDITIONS = ["canonical", "shuffled", "blank", "crop", "crop-shuffled"]
+SPEED_SCENES = ["clean", "sign-billboard-shoulder", "flagger-shoulder:stop", "flagger-shoulder:slow",
+                "pedestrian-shoulder", "sign-lane_closed-shoulder"]
 VLM_RUNS = {
     "vlm7b": (vlm_eval_l4, dict(model="Qwen/Qwen2.5-VL-7B-Instruct", dtype="bfloat16",
                                 tag="qwen25vl-7b-bf16", conditions=ALL_CONDITIONS)),
     "vlm8b-qwen3": (vlm_eval_l4, dict(model="Qwen/Qwen3-VL-8B-Instruct", dtype="bfloat16",
                                       tag="qwen3vl-8b-bf16", conditions=ALL_CONDITIONS)),
+    "speedtest-32b": (vlm_eval_a100, dict(
+        model="Qwen/Qwen2.5-VL-32B-Instruct", dtype="bfloat16", tag="speedtest-qwen25vl-32b",
+        conditions=["crop", "crop-speed0", "crop-nospeed"], scenes=SPEED_SCENES)),
+    "speedtest-8b": (vlm_eval_l4, dict(
+        model="Qwen/Qwen3-VL-8B-Instruct", dtype="bfloat16", tag="speedtest-qwen3vl-8b",
+        conditions=["crop", "crop-speed0", "crop-nospeed"], scenes=SPEED_SCENES)),
     "vlm32b": (vlm_eval_a100, dict(model="Qwen/Qwen2.5-VL-32B-Instruct", dtype="bfloat16",
                                    tag="qwen25vl-32b-bf16", conditions=ALL_CONDITIONS)),
 }

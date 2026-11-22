@@ -70,7 +70,7 @@ def anomaly_crop(image, patch_map, patch=14, size=(128, 72)):
     return image.crop((x0, y0, x0 + w, y0 + h)).resize(image.size, Image.LANCZOS)
 
 
-def prompt(state, order, crop=False):
+def prompt(state, order, crop=False, speed=True):
     lane = state.get("current_lane", 0)
     count = state.get("lane_count", 1)
     side = ("the rightmost lane" if lane == count - 1 else
@@ -80,10 +80,9 @@ def prompt(state, order, crop=False):
         "You are assisting the driver of a car. The image is the view from the car's "
         "forward-facing camera.\n"
         + ("The second image is an enlarged view of one region of the first image.\n" if crop else "")
-        +
-        f"The car is travelling at {state.get('speed_mps', 0.0) * 3.6:.0f} km/h in {side} "
-        f"of a {count}-lane road.\n"
-        "Look carefully at the road and its surroundings, including anything at the side "
+        + (f"The car is travelling at {state.get('speed_mps', 0.0) * 3.6:.0f} km/h in {side} "
+           f"of a {count}-lane road.\n" if speed else f"The car is in {side} of a {count}-lane road.\n")
+        + "Look carefully at the road and its surroundings, including anything at the side "
         "of the road, and choose the best action for the next few seconds.\n"
         f"{options}\n"
         "Answer with the single letter of the best option."
@@ -108,7 +107,7 @@ class ZeroShotVLM:
             raise RuntimeError("Option letters must be single tokens")
         self.letter_ids = torch.tensor([x[0] for x in ids], device="cuda")
 
-    def answer(self, image, state, order, crop=None):
+    def answer(self, image, state, order, crop=None, speed=True):
         """Return (action, probabilities by action, seconds). `crop` adds an enlarged view."""
         import time
 
@@ -117,7 +116,7 @@ class ZeroShotVLM:
         started = time.monotonic()
         images = [image] if crop is None else [image, crop]
         content = [{"type": "image", "image": im} for im in images]
-        content.append({"type": "text", "text": prompt(state, order, crop is not None)})
+        content.append({"type": "text", "text": prompt(state, order, crop is not None, speed)})
         messages = [{"role": "user", "content": content}]
         text = self.processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
         inputs = self.processor(text=[text], images=images, return_tensors="pt").to("cuda")

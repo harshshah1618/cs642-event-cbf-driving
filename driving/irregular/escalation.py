@@ -158,12 +158,14 @@ class Escalation:
             call["applied"] = self._apply(now, driver, call["action"])
             call["applied_t"] = now
             self.pending = None
-        # 2. Lease expiry. An expired hold is re-asked rather than released.
-        if self.lease_action is not None and now >= self.lease_until:
-            if self.lease_action == "stop":
+            self.recheck_due = False
+        # 2. Lease expiry. An expired hold is re-asked (once) rather than released.
+        if self.lease_action is not None and now >= self.lease_until and self.pending is None:
+            still_flagged = "novelty" not in cfg.trigger or sum(self.above) >= cfg.k
+            if self.lease_action == "stop" and still_flagged:
                 self.recheck_due = True
             else:
-                self._clear(driver)
+                self._clear(driver)  # nothing flagged any more: release the hold
         # 3. Triggers.
         image, state = capture() if frame_step or self.recheck_due else (None, None)
         fired = self._triggers(now, driver, truth, frame_step, image)
@@ -181,6 +183,8 @@ class Escalation:
             from driving.irregular.vlm import anomaly_crop
             crop = anomaly_crop(image, self.last_map)
         action, seconds = self.vlm(image, state, crop, truth)
+        if self.lease_action == "stop":
+            self.lease_until = math.inf  # keep holding until the re-check answer arrives
         self.recheck_due = False
         self.last_call = now
         self.pending = dict(t=now, triggers=fired, action=action, seconds=seconds,
@@ -218,6 +222,7 @@ def run_episode(env, seed, placements, cfg, vlm=None, detector=None, render=Fals
     passed_while_stop = False
     min_gap = math.inf
     prev = None
+    pass_speed = None
     step = 0
     for step in range(max_steps):
         now = step * 0.1
@@ -230,8 +235,9 @@ def run_episode(env, seed, placements, cfg, vlm=None, detector=None, render=Fals
             after = relative(env.agent, primary)
             if abs(after["lateral"]) < 6:
                 min_gap = min(min_gap, after["forward"]) if after["forward"] > -2 else min_gap
-            if prev is not None and prev["forward"] > 0 >= after["forward"] and after["face"] == "stop":
-                passed_while_stop = True
+            if prev is not None and prev["forward"] > 0 >= after["forward"]:
+                pass_speed = float(env.agent.speed)
+                passed_while_stop = passed_while_stop or after["face"] == "stop"
             if 0 < after["forward"] < 40 and env.agent.speed < 0.5:
                 stopped_near += 1
             prev = after
@@ -244,6 +250,7 @@ def run_episode(env, seed, placements, cfg, vlm=None, detector=None, render=Fals
         steps=step + 1, cost=cost, crash_vehicle=bool(info.get("crash_vehicle")),
         crash_object=bool(info.get("crash_object")), crash_human=bool(info.get("crash_human")),
         arrive=bool(info.get("arrive_dest")), passed_stop=passed_while_stop,
+        route_completion=float(info.get("route_completion", 0.0)), pass_speed=pass_speed,
         seconds_stopped_near_object=stopped_near * 0.1,
         min_gap=None if math.isinf(min_gap) else min_gap,
         calls=[{k: v for k, v in c.items() if k != "ready_at"} for c in esc.calls],
