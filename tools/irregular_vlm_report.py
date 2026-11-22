@@ -50,6 +50,21 @@ def summarise(path):
             pair[r["file"]]["canonical" if r["condition"] == main else "shuffled"] = r["action"]
     same = [p["canonical"] == p["shuffled"] for p in pair.values() if len(p) == 2]
     print(f"Same answer when only the option order changes: {np.mean(same):.0%} of {len(same)} frames")
+    # Order-debiased answer: average each action's probability over both option orders.
+    probs = defaultdict(dict)
+    scene_of = {}
+    for r in res:
+        if r["condition"] in (main, alt):
+            probs[r["file"]][r["condition"]] = r["probs"]
+            scene_of[r["file"]] = r["scene"]
+    debiased = defaultdict(list)
+    for f, pp in probs.items():
+        if len(pp) == 2:
+            mean = {a: (pp[main].get(a, 0) + pp[alt].get(a, 0)) / 2 for a in pp[main]}
+            debiased[scene_of[f]].append(max(mean, key=mean.get))
+    print("Order-debiased (mean of both orders): " + ", ".join(
+        f"{s} {np.mean([x in ACCEPTABLE[s] for x in debiased[s]]):.0%}" for s in scenes)
+        + f"; all {np.mean([x in ACCEPTABLE[s] for s in scenes for x in debiased[s]]):.0%}")
     blank = Counter(r["action"] for r in res if r["condition"] == "blank")
     real = Counter(r["action"] for r in res if r["condition"] == main)
     print(f"Conditions: {main} / {alt}")
