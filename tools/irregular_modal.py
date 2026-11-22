@@ -226,12 +226,21 @@ def _vlm_eval(spec):
     import io
     import time
 
+    import numpy as np
     from driving.irregular.patchcore import front_view
-    from driving.irregular.vlm import ZeroShotVLM, option_order, scene_key
+    from driving.irregular.vlm import ZeroShotVLM, anomaly_crop, option_order, scene_key
     from PIL import Image
 
     rows = _vlm_sample()
     model = ZeroShotVLM(spec["model"], dtype=spec.get("dtype", "float16"))
+    conditions_wanted = spec.get("conditions", ["canonical", "shuffled", "blank"])
+    maps = {}
+    if any(c.startswith("crop") for c in conditions_wanted):
+        for run in ("eval-dev-v1", "eval-signs-dev-v1"):
+            d = Path(f"{DATA}/scores/dinov2_small-v1-{run}")
+            recs = json.loads((d / "scores.json").read_text())["records"]
+            arr = np.load(d / "maps.npy")
+            maps.update({rec["file"]: arr[i] for i, rec in enumerate(recs)})
     out = Path(f"{DATA}/vlm/{spec['tag']}")
     out.mkdir(parents=True, exist_ok=True)
     cache, current, results = None, None, []
@@ -243,13 +252,17 @@ def _vlm_eval(spec):
         image = front_view(Image.open(io.BytesIO(cache[r["file"]])).convert("RGB"))
         state = dict(speed_mps=r.get("speed_mps", 0.0), current_lane=r.get("current_lane", 0),
                      lane_count=r.get("lane_count", 1))
-        conditions = [("canonical", image, option_order(state)),
-                      ("shuffled", image, option_order(state, n))]
+        crop = anomaly_crop(image, maps[r["file"]].astype(np.float32)) if maps else None
+        conditions = [("canonical", image, option_order(state), None),
+                      ("shuffled", image, option_order(state, n), None),
+                      ("crop", image, option_order(state), crop),
+                      ("crop-shuffled", image, option_order(state, n), crop)]
         if n % blank_every == 0:
             conditions.append(("blank", Image.new("RGB", image.size, (128, 128, 128)),
-                               option_order(state)))
-        for name, img, order in conditions:
-            action, probs, seconds = model.answer(img, state, order)
+                               option_order(state), None))
+        conditions = [c for c in conditions if c[0] in conditions_wanted]
+        for name, img, order, extra in conditions:
+            action, probs, seconds = model.answer(img, state, order, crop=extra)
             results.append(dict(file=r["file"], scene=scene_key(r), map_seed=r["map_seed"],
                                 forward=(r.get("truth") or {}).get("forward"), condition=name,
                                 order=order, action=action, probs=probs, seconds=seconds))
@@ -267,6 +280,31 @@ def _vlm_eval(spec):
 def vlm_eval_t4(spec):
     _workspace()
     return _vlm_eval(spec)
+
+
+@app.function(image=image, volumes={DATA: volume}, gpu=["L4", "A10G"], cpu=4, memory=32768,
+              timeout=4 * 3600)
+def vlm_eval_l4(spec):
+    _workspace()
+    return _vlm_eval(spec)
+
+
+@app.function(image=image, volumes={DATA: volume}, gpu="A100-80GB", cpu=8, memory=98304,
+              timeout=4 * 3600)
+def vlm_eval_a100(spec):
+    _workspace()
+    return _vlm_eval(spec)
+
+
+ALL_CONDITIONS = ["canonical", "shuffled", "blank", "crop", "crop-shuffled"]
+VLM_RUNS = {
+    "vlm7b": (vlm_eval_l4, dict(model="Qwen/Qwen2.5-VL-7B-Instruct", dtype="bfloat16",
+                                tag="qwen25vl-7b-bf16", conditions=ALL_CONDITIONS)),
+    "vlm8b-qwen3": (vlm_eval_l4, dict(model="Qwen/Qwen3-VL-8B-Instruct", dtype="bfloat16",
+                                      tag="qwen3vl-8b-bf16", conditions=ALL_CONDITIONS)),
+    "vlm32b": (vlm_eval_a100, dict(model="Qwen/Qwen2.5-VL-32B-Instruct", dtype="bfloat16",
+                                   tag="qwen25vl-32b-bf16", conditions=ALL_CONDITIONS)),
+}
 
 
 def _shards(seeds, size):
@@ -301,6 +339,15 @@ def main(stage: str = "smoke", encoder: str = "dinov2_small", run: str = "eval-d
     elif stage == "vlm3b":
         print(json.dumps(vlm_eval_t4.remote(dict(model="Qwen/Qwen2.5-VL-3B-Instruct",
                                                  dtype="float16", tag="qwen25vl-3b-fp16"))))
+        return
+    elif stage in VLM_RUNS:
+        fn, spec = VLM_RUNS[stage]
+        print(json.dumps(fn.remote(spec)))
+        return
+    elif stage == "vlm3b-crop":
+        print(json.dumps(vlm_eval_t4.remote(dict(
+            model="Qwen/Qwen2.5-VL-3B-Instruct", dtype="float16", tag="qwen25vl-3b-fp16-crop",
+            conditions=["crop", "crop-shuffled"]))))
         return
     elif stage == "bank":
         print(json.dumps(build_bank.remote(encoder), indent=2))

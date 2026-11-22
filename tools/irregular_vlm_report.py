@@ -19,14 +19,16 @@ def summarise(path):
     by = defaultdict(list)
     for r in res:
         by[(r["condition"], r["scene"])].append(r)
-    scenes = [s for s in ACCEPTABLE if ("canonical", s) in by]
+    conds = sorted({c for c, _ in by})
+    main, alt = ("canonical", "shuffled") if "canonical" in conds else ("crop", "crop-shuffled")
+    scenes = [s for s in ACCEPTABLE if (main, s) in by]
     print(f"\n## {data['model']} ({data.get('dtype')}), {data['frames']} frames, "
           f"median {np.median([r['seconds'] for r in res]):.3f} s per call")
     print("| scene | acceptable | n | correct (canonical) | correct (shuffled) | answers (canonical) |")
     print("|---|---|---:|---:|---:|---|")
     overall = defaultdict(list)
     for s in scenes:
-        rows = {c: by[(c, s)] for c in ("canonical", "shuffled")}
+        rows = {"canonical": by[(main, s)], "shuffled": by[(alt, s)]}
         acc = {c: np.mean([r["action"] in ACCEPTABLE[s] for r in rows[c]]) for c in rows}
         for c in rows:
             overall[c] += [r["action"] in ACCEPTABLE[s] for r in rows[c]]
@@ -38,18 +40,19 @@ def summarise(path):
     # Per-action recall on frames whose acceptable set is a single action.
     print("\nRecall by required action (single-answer scenes, canonical order):")
     for a in ACTIONS:
-        rows = [r for s in scenes if ACCEPTABLE[s] == {a} for r in by[("canonical", s)]]
+        rows = [r for s in scenes if ACCEPTABLE[s] == {a} for r in by[(main, s)]]
         if rows:
             print(f"  {a}: {np.mean([r['action'] == a for r in rows]):.0%} of {len(rows)}")
     # Order sensitivity: same frame, canonical vs shuffled.
     pair = defaultdict(dict)
     for r in res:
-        if r["condition"] in ("canonical", "shuffled"):
-            pair[r["file"]][r["condition"]] = r["action"]
+        if r["condition"] in (main, alt):
+            pair[r["file"]]["canonical" if r["condition"] == main else "shuffled"] = r["action"]
     same = [p["canonical"] == p["shuffled"] for p in pair.values() if len(p) == 2]
     print(f"Same answer when only the option order changes: {np.mean(same):.0%} of {len(same)} frames")
     blank = Counter(r["action"] for r in res if r["condition"] == "blank")
-    real = Counter(r["action"] for r in res if r["condition"] == "canonical")
+    real = Counter(r["action"] for r in res if r["condition"] == main)
+    print(f"Conditions: {main} / {alt}")
     print("Blank grey image answers: " + ", ".join(f"{a} {blank[a]}" for a in ACTIONS if blank[a]))
     print("Real image answers:       " + ", ".join(f"{a} {real[a]}" for a in ACTIONS if real[a]))
 

@@ -57,7 +57,20 @@ def option_order(state, seed=None):
     return order
 
 
-def prompt(state, order):
+def anomaly_crop(image, patch_map, patch=14, size=(128, 72)):
+    """Enlarge the region around the highest-scoring PatchCore patch (same aspect as the frame)."""
+    import numpy as np
+    from PIL import Image
+
+    r, c = np.unravel_index(int(np.argmax(patch_map)), patch_map.shape)
+    cx, cy = (c + 0.5) * patch, (r + 0.5) * patch
+    w, h = size
+    x0 = int(min(max(cx - w / 2, 0), image.width - w))
+    y0 = int(min(max(cy - h / 2, 0), image.height - h))
+    return image.crop((x0, y0, x0 + w, y0 + h)).resize(image.size, Image.LANCZOS)
+
+
+def prompt(state, order, crop=False):
     lane = state.get("current_lane", 0)
     count = state.get("lane_count", 1)
     side = ("the rightmost lane" if lane == count - 1 else
@@ -66,6 +79,8 @@ def prompt(state, order):
     return (
         "You are assisting the driver of a car. The image is the view from the car's "
         "forward-facing camera.\n"
+        + ("The second image is an enlarged view of one region of the first image.\n" if crop else "")
+        +
         f"The car is travelling at {state.get('speed_mps', 0.0) * 3.6:.0f} km/h in {side} "
         f"of a {count}-lane road.\n"
         "Look carefully at the road and its surroundings, including anything at the side "
@@ -83,7 +98,9 @@ class ZeroShotVLM:
         from transformers import AutoModelForImageTextToText, AutoProcessor
 
         self.model_id = model_id
-        self.processor = AutoProcessor.from_pretrained(model_id, min_pixels=56 * 56, max_pixels=max_pixels)
+        # Qwen3-VL uses a different image-size interface; our 448x252 frames are within its defaults.
+        kwargs = {} if "Qwen3" in model_id else dict(min_pixels=56 * 56, max_pixels=max_pixels)
+        self.processor = AutoProcessor.from_pretrained(model_id, **kwargs)
         self.model = AutoModelForImageTextToText.from_pretrained(
             model_id, torch_dtype=getattr(torch, dtype), attn_implementation="sdpa").cuda().eval()
         ids = [self.processor.tokenizer.encode(c, add_special_tokens=False) for c in LETTERS]
@@ -91,17 +108,19 @@ class ZeroShotVLM:
             raise RuntimeError("Option letters must be single tokens")
         self.letter_ids = torch.tensor([x[0] for x in ids], device="cuda")
 
-    def answer(self, image, state, order):
-        """Return (action, probabilities by action, seconds)."""
+    def answer(self, image, state, order, crop=None):
+        """Return (action, probabilities by action, seconds). `crop` adds an enlarged view."""
         import time
 
         import torch
 
         started = time.monotonic()
-        messages = [{"role": "user", "content": [{"type": "image", "image": image},
-                                                 {"type": "text", "text": prompt(state, order)}]}]
+        images = [image] if crop is None else [image, crop]
+        content = [{"type": "image", "image": im} for im in images]
+        content.append({"type": "text", "text": prompt(state, order, crop is not None)})
+        messages = [{"role": "user", "content": content}]
         text = self.processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-        inputs = self.processor(text=[text], images=[image], return_tensors="pt").to("cuda")
+        inputs = self.processor(text=[text], images=images, return_tensors="pt").to("cuda")
         with torch.inference_mode():
             logits = self.model(**inputs).logits[0, -1, self.letter_ids[:len(order)]].float()
         probs = logits.softmax(-1).cpu().tolist()
