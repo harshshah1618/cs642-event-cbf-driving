@@ -19,9 +19,9 @@ the protocol, every final table that exists so far, and the limitations. Older r
 | Crossing-traffic guard (LiDAR tracking, yields to converging traffic) | Done, frozen ([lidar_driver.py](driving/safemetadrive/lidar_driver.py) `CrossingTrafficGuard`) |
 | SafeMetaDrive final, 200 maps, all methods + ablations + delay sweep | **Done** (Table 1, Figure 1, Table 2) |
 | highway-env final, 600 episodes per method | **Done** (Table 4) |
-| PPO-Lag / CPO retrained 5M steps, OmniSafe defaults | **Training on Modal** (started 2026-11-25 ~20:10 PT; CPO ~1.5 h, PPO-Lag ~3.5 h) |
-| VLM v3 (LiDAR backup trigger, second look at 20 m, verified hold release) | Dev pilots done; **final run not started** |
-| Irregular final (VLM + 5 no-VLM arms on 3000–3099) | **Not started** (Table 3 is a placeholder) |
+| PPO-Lag / CPO retrained 5M steps, OmniSafe defaults | **Done** (Table 1) |
+| VLM v3 (LiDAR backup trigger, second look at 20 m, verified hold release) | **Done**: frozen at `68dd2b2`, final run on 3000–3099 on 2026-11-26 (Ved's Modal) |
+| Irregular final (VLM + 5 no-VLM arms on 3000–3099) | **Done** (Table 3; evidence `irregular-vlm-3000-3099.json.gz`, `irregular-arms-3000-3099.json.gz`) |
 | Project site [site/index.html](site/index.html) | **Still shows old numbers** |
 
 Raw evidence for finished tables is in [reports/final/evidence/](reports/final/evidence/) (gzipped JSON +

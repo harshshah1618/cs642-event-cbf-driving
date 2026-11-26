@@ -78,16 +78,51 @@ All methods see the same 259-float LiDAR + ego-state observation except IDM (pri
 
 ## Table 3. Irregular Visual Scenes (`3000–3099`, 100 Untouched Maps × 8 Scenes)
 
-All 5 non-VLM control arms on the 100 untouched final maps (`3000–3099`, 4,000 episodes) are complete:
+Every arm uses the same Layers 1–2 (LiDAR safety filter + crossing guard, analytic tracker) on the
+same 100 untouched maps × 8 scenes (800 episodes per arm). Only Layer 3 differs. The VLM arm is
+v3 frozen at commit `68dd2b2` (Qwen3-VL-8B, PatchCore + LiDAR backup trigger, verified hold release),
+run once on 2026-11-26. "Violation" = any collision, or passing the flagger while it shows STOP.
+"Needless stop" = stopped > 3 s near an object that does not require stopping. "Deadlock" = never
+got past the flagger within the step budget. Paired column: exact McNemar test on violations over
+identical (scene, map) pairs, VLM vs that arm.
 
-| Arm (maps 3000–3099, n=100/scene) | Flagger STOP passed | Wet-closed crashes | Decoy wait (billboard / shoulder) | Clean route % |
-|---|---:|---:|---:|---:|
-| Normal (no VLM) | 99/100 | 8/100 | 0.4 s / 0.4 s | 52% |
-| Always-Careful (no VLM) | 98/100 | 2/100 | 0.4 s / 0.3 s | 44% |
-| LiDAR → Careful (no VLM) | 98/100 | 1/100 | 0.4 s / 0.4 s | 49% |
-| LiDAR → Stop (no VLM) | 0/100 | 0/100 | **51.2 s / 51.5 s** *(freezes)* | 30% |
-| Oracle (ground-truth label) | 0/100 | 1/100 | 0.4 s / 0.4 s | 52% |
-| **Ours + Qwen3-VL-8B (Layer 3b)** | *Pending on 3000–3099 (dev 1000–1049: **12/49** passed, 8/49 stuck, decoys clean)* | *Pending* | *Pending* | *Pending* |
+| Arm | Violations | Flagger STOP passed | Needless stops | Flagger deadlocks | Route % | Slow calls/ep | Paired violations (only-VLM-safe / only-arm-safe) |
+|---|---:|---:|---:|---:|---:|---:|---|
+| **Ours + Qwen3-VL-8B** | **2.9% [1.9, 4.3]** | **18/100** | **1.4% [0.8, 2.4]** | 13/100 | 29.0 | 7.3 | – |
+| Normal (no VLM) | 14.1% [11.9, 16.7] | 99/100 | 0.9% [0.4, 1.8] | 0/100 | 30.7 | 0 | 93 / 3, p=3.7e-24 |
+| Always careful (no VLM) | 12.8% [10.6, 15.2] | 98/100 | 1.0% [0.5, 2.0] | 0/100 | 28.7 | 0 | 82 / 3, p=5.3e-21 |
+| LiDAR → careful (no VLM) | 12.9% [10.7, 15.4] | 98/100 | 0.8% [0.3, 1.6] | 0/100 | 30.1 | 3.2 | 83 / 3, p=2.7e-21 |
+| LiDAR → stop (no VLM) | 0.2% [0.1, 0.9] | 0/100 | 35.1% [31.9, 38.5] | 100/100 | 14.6 | 14.7 | 1 / 22, p=5.7e-06 |
+| Oracle (ground-truth label) | 0.8% [0.3, 1.6] | 0/100 | 0.9% [0.4, 1.8] | 0/100 | 28.4 | 5.9 | 4 / 21, p=0.00091 |
+
+Per scene (violations · needless stops · route %):
+
+| Scene | VLM | Normal | Careful | Oracle | LiDAR → careful | LiDAR → stop |
+|---|---:|---:|---:|---:|---:|---:|
+| Flagger | 18/100 · 0 · 23% | 99/100 · 0 · 25% | 98/100 · 0 · 25% | 0/100 · 0 · 25% | 98/100 · 0 · 25% | 0/100 · 0 · 9% |
+| Wet road closure | 2/100 · 0 · 16% | 8/100 · 0 · 17% | 2/100 · 0 · 16% | 1/100 · 0 · 17% | 1/100 · 0 · 17% | 0/100 · 0 · 12% |
+| Pedestrian in lane | 0/100 · 0 · 24% | 0/100 · 0 · 25% | 0/100 · 0 · 25% | 0/100 · 0 · 9% | 0/100 · 0 · 25% | 0/100 · 0 · 9% |
+| Lane-closed sign | 0/100 · 3 · 25% | 2/100 · 2 · 25% | 0/100 · 3 · 25% | 0/100 · 2 · 25% | 0/100 · 2 · 25% | 0/100 · 93 · 9% |
+| Billboard | 0/100 · 3 · 25% | 2/100 · 2 · 25% | 0/100 · 2 · 25% | 2/100 · 2 · 25% | 0/100 · 1 · 25% | 0/100 · 93 · 8% |
+| Pedestrian on shoulder | 0/100 · 5 · 25% | 0/100 · 3 · 25% | 0/100 · 3 · 25% | 0/100 · 3 · 25% | 0/100 · 3 · 25% | 0/100 · 95 · 10% |
+| Rain, no obstacle | 1/100 · 0 · 43% | 1/100 · 0 · 52% | 1/100 · 0 · 44% | 2/100 · 0 · 49% | 2/100 · 0 · 49% | 1/100 · 0 · 30% |
+| Clean road | 2/100 · 0 · 50% | 1/100 · 0 · 52% | 1/100 · 0 · 44% | 1/100 · 0 · 52% | 2/100 · 0 · 49% | 1/100 · 0 · 30% |
+
+Route % is partial by design: object scenes end shortly after the object is passed or at the step limit.
+
+**Reading.** Without the VLM, every arm that can move on also drives past the STOP sign (98–99/100),
+because nothing in the LiDAR picture says what the sign reads. The only no-VLM arm that obeys it,
+LiDAR → stop, does so by freezing at every object: 35% needless stops and a deadlock on all 100
+flagger maps. The VLM arm obeys STOP on 82/100 maps (it waits a median 17 s and then goes once the sign
+turns to SLOW on 69/100), with needless stops at the level of the no-VLM arms (1.4% vs 0.8–1.0%).
+Overall violations fall from 12.8–14.1% to 2.9% (p < 1e-20 against every arm that keeps moving). The
+gap to the ground-truth oracle (0.8%) is 18 STOP misreads plus 13 deadlocks where the release never
+accepted "proceed". The VLM costs 7.3 slow calls per episode, 2.8 of them on the clean road (LiDAR
+backup trigger on roadside objects).
+
+**Model choice.** An offline check on development frames compared Qwen3-VL-8B with Qwen3-VL-30B-A3B
+and Qwen3-VL-32B ([vlm-screen.md](irregular/vlm-screen.md)). Neither larger model reads the STOP sign
+better at 15–25 m (8B 82%, 32B 61%, 30B-A3B 33%), so the 8B was kept.
 
 ---
 
@@ -126,4 +161,5 @@ Same observation (`Kinematics`, 10 vehicles) for every method; 10 Hz control; 1.
 - **Simulated perception:** The VLM sees MetaDrive camera renders with synthetic props and weather.
 - **VLM release threshold:** The hold-release threshold (`P(proceed) ≥ 0.47`) operates in a narrow band and may need recalibration for a different VLM.
 - **Remaining edge cases:** ~1–2% of SafeMetaDrive maps still end off-road on tight outer-lane roundabout entries.
-- **Final VLM test:** Table 3's `Qwen3-VL-8B` row on `3000–3099` awaits the final Modal GPU run (`tools/irregular_modal.py --stage final-v3`).
+- **VLM residual errors:** On the final maps the VLM still passes the flagger's STOP sign on 18/100 maps (first-look misreads) and deadlocks on 13/100 (the release never accepts "proceed").
+- **Table 3 tracker:** The irregular scenes use the analytic Layer 2 tracker for every arm; the shielded PPO tracker of Table 1 was not run there.
