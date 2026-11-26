@@ -261,7 +261,8 @@ def _vlm_eval(spec):
                       ("crop", image, option_order(state), crop),
                       ("crop-shuffled", image, option_order(state, n), crop),
                       ("crop-speed0", image, option_order(state), crop),
-                      ("crop-nospeed", image, option_order(state), crop)]
+                      ("crop-nospeed", image, option_order(state), crop),
+                      ("crop-nospeed-shuffled", image, option_order(state, n), crop)]
         if n % blank_every == 0:
             conditions.append(("blank", Image.new("RGB", image.size, (128, 128, 128)),
                                option_order(state), None))
@@ -269,10 +270,19 @@ def _vlm_eval(spec):
         for name, img, order, extra in conditions:
             st = dict(state, speed_mps=0.0) if name == "crop-speed0" else state
             action, probs, seconds = model.answer(img, st, order, crop=extra,
-                                                  speed=name != "crop-nospeed")
+                                                  speed="nospeed" not in name)
             results.append(dict(file=r["file"], scene=scene_key(r), map_seed=r["map_seed"],
                                 forward=(r.get("truth") or {}).get("forward"), condition=name,
                                 order=order, action=action, probs=probs, seconds=seconds))
+        # Hold-release question (v3 verified release) on flagger frames, both option orders.
+        if "hold" in conditions_wanted and scene_key(r).startswith("flagger"):
+            for name, order in (("hold", ["keep", "proceed"]), ("hold-swapped", ["proceed", "keep"])):
+                t0 = time.monotonic()
+                probs = model.hold_answer(image, order, crop=crop)
+                results.append(dict(file=r["file"], scene=scene_key(r), map_seed=r["map_seed"],
+                                    forward=(r.get("truth") or {}).get("forward"), condition=name,
+                                    order=order, action=max(probs, key=probs.get), probs=probs,
+                                    seconds=time.monotonic() - t0))
         if (n + 1) % 100 == 0 or n + 1 == len(rows):
             print(f"[vlm {spec['tag']}] {n + 1}/{len(rows)} frames, "
                   f"{time.monotonic() - started:.0f} s", flush=True)
@@ -394,6 +404,19 @@ VLM_RUNS = {
         conditions=["crop", "crop-speed0", "crop-nospeed"], scenes=SPEED_SCENES)),
     "vlm32b": (vlm_eval_a100, dict(model="Qwen/Qwen2.5-VL-32B-Instruct", dtype="bfloat16",
                                    tag="qwen25vl-32b-bf16", conditions=ALL_CONDITIONS)),
+}
+# Bigger-model screen for the v3 first look (speed-free crop prompt, two orders) and hold release.
+SCREEN_CONDITIONS = ["crop-nospeed", "crop-nospeed-shuffled", "hold"]
+SCREEN_RUNS = {
+    "screen-8b": (vlm_eval_l4, dict(model="Qwen/Qwen3-VL-8B-Instruct", dtype="bfloat16",
+                                    tag="screen-qwen3vl-8b", conditions=SCREEN_CONDITIONS,
+                                    scenes=SPEED_SCENES)),
+    "screen-30b-a3b": (vlm_eval_a100, dict(model="Qwen/Qwen3-VL-30B-A3B-Instruct", dtype="bfloat16",
+                                           tag="screen-qwen3vl-30b-a3b", conditions=SCREEN_CONDITIONS,
+                                           scenes=SPEED_SCENES)),
+    "screen-32b": (vlm_eval_a100, dict(model="Qwen/Qwen3-VL-32B-Instruct", dtype="bfloat16",
+                                       tag="screen-qwen3vl-32b", conditions=SCREEN_CONDITIONS,
+                                       scenes=SPEED_SCENES)),
 }
 
 
@@ -519,6 +542,14 @@ def main(stage: str = "smoke", encoder: str = "dinov2_small", run: str = "eval-d
     elif stage in VLM_RUNS:
         fn, spec = VLM_RUNS[stage]
         print(json.dumps(fn.remote(spec)))
+        return
+    elif stage == "screen":
+        calls = [fn.spawn(spec) for fn, spec in SCREEN_RUNS.values()]
+        for call in calls:
+            try:
+                print(json.dumps(call.get()), flush=True)
+            except Exception as exc:  # one model failing must not hide the others
+                print(repr(exc), flush=True)
         return
     elif stage == "vlm3b-crop":
         print(json.dumps(vlm_eval_t4.remote(dict(
