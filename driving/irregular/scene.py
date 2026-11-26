@@ -6,6 +6,7 @@ every reset like the built-in accident objects.
 
 import math
 from dataclasses import asdict, dataclass
+from typing import Any
 
 KINDS = ("pedestrian", "cyclist", "cone", "warning", "barrier", "flagger", "sign", "none",
          "closure")
@@ -91,11 +92,12 @@ def make_manager_class():
         def __init__(self):
             super().__init__()
             self.schedule = []  # (episode step, sign, face) for mid-episode face swaps
+            self._brake_restore: tuple[Any, float] | None = None
 
         def before_reset(self):
             self.schedule = []
             # Undo a wet-road brake change so it never leaks into the next episode.
-            if getattr(self, "_brake_restore", None) is not None:
+            if self._brake_restore is not None:
                 vehicle, force = self._brake_restore
                 vehicle.update_config({"max_brake_force": force})
                 self._brake_restore = None

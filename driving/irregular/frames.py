@@ -46,7 +46,7 @@ def collect(seeds, output, split, placements=None, every=5, max_steps=1000,
                 info = {}
                 while steps < max_steps:
                     truth = relative(env.agent, obj) if obj is not None else None
-                    if obj is not None and stop_after_passing and truth["forward"] < -5:
+                    if truth is not None and stop_after_passing and truth["forward"] < -5:
                         break
                     if steps % every == 0:
                         image, state = capture(env, driver)

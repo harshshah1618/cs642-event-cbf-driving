@@ -1,0 +1,499 @@
+[
+  {
+    "model": "local-PPO-careful",
+    "scene": "billboard",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 0,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 0.0,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.026000000000000002,
+    "mean_episode_seconds": 15.434000000000001,
+    "mean_route_completion": 0.251820854480331,
+    "mean_pass_speed": 5.701482229090868,
+    "control": "careful",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 0,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [],
+    "end_reasons": {
+      "passed_object": 50
+    }
+  },
+  {
+    "model": "local-PPO-none",
+    "scene": "billboard",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 1,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 1.24,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.002,
+    "mean_episode_seconds": 12.08,
+    "mean_route_completion": 0.25077608145657054,
+    "mean_pass_speed": 7.693393403867194,
+    "control": "none",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 1,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [
+      1040
+    ],
+    "end_reasons": {
+      "passed_object": 49,
+      "terminated": 1
+    }
+  },
+  {
+    "model": "local-PPO-careful",
+    "scene": "clean",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 1,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 0.04,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.0,
+    "mean_episode_seconds": 30.0,
+    "mean_route_completion": 0.49081867327488815,
+    "mean_pass_speed": null,
+    "control": "careful",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 1,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [
+      1029
+    ],
+    "end_reasons": {
+      "step_budget": 50
+    }
+  },
+  {
+    "model": "local-PPO-none",
+    "scene": "clean",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 1,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 1.3,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.0,
+    "mean_episode_seconds": 29.907999999999998,
+    "mean_route_completion": 0.6513600703465587,
+    "mean_pass_speed": null,
+    "control": "none",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 1,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [
+      1040
+    ],
+    "end_reasons": {
+      "step_budget": 47,
+      "terminated": 3
+    }
+  },
+  {
+    "model": "local-PPO-careful",
+    "scene": "flagger",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 0,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 50,
+    "mean_cost": 0.0,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.026000000000000002,
+    "mean_episode_seconds": 15.38,
+    "mean_route_completion": 0.2515481436380496,
+    "mean_pass_speed": 5.704445142797389,
+    "control": "careful",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 0,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [],
+    "end_reasons": {
+      "passed_object": 50
+    }
+  },
+  {
+    "model": "local-PPO-none",
+    "scene": "flagger",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 1,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 50,
+    "mean_cost": 1.28,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.002,
+    "mean_episode_seconds": 11.954,
+    "mean_route_completion": 0.2504472238977472,
+    "mean_pass_speed": 7.753754036762186,
+    "control": "none",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 1,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [
+      1040
+    ],
+    "end_reasons": {
+      "passed_object": 49,
+      "terminated": 1
+    }
+  },
+  {
+    "model": "local-PPO-careful",
+    "scene": "lane-closed",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 0,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 0.0,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.026000000000000002,
+    "mean_episode_seconds": 15.434000000000001,
+    "mean_route_completion": 0.251820854480331,
+    "mean_pass_speed": 5.701482229090868,
+    "control": "careful",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 0,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [],
+    "end_reasons": {
+      "passed_object": 50
+    }
+  },
+  {
+    "model": "local-PPO-none",
+    "scene": "lane-closed",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 1,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 1.24,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.002,
+    "mean_episode_seconds": 12.08,
+    "mean_route_completion": 0.25077608145657054,
+    "mean_pass_speed": 7.693393403867194,
+    "control": "none",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 1,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [
+      1040
+    ],
+    "end_reasons": {
+      "passed_object": 49,
+      "terminated": 1
+    }
+  },
+  {
+    "model": "local-PPO-careful",
+    "scene": "pedestrian-lane",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 1,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 0.0,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.97,
+    "mean_episode_seconds": 17.206,
+    "mean_route_completion": 0.24807118291938168,
+    "mean_pass_speed": 5.607047631942966,
+    "control": "careful",
+    "legacy_final_step_collision_count": 1,
+    "collision_counts_by_type": {
+      "crash_vehicle": 0,
+      "crash_object": 0,
+      "crash_human": 1
+    },
+    "zero_cost_human_collision_episodes": 1,
+    "collision_seeds": [
+      1036
+    ],
+    "end_reasons": {
+      "passed_object": 48,
+      "step_budget": 1,
+      "terminated": 1
+    }
+  },
+  {
+    "model": "local-PPO-none",
+    "scene": "pedestrian-lane",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 0,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 0.0,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 1.006,
+    "mean_episode_seconds": 14.322,
+    "mean_route_completion": 0.2499082597746417,
+    "mean_pass_speed": 7.390686093408135,
+    "control": "none",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 0,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [],
+    "end_reasons": {
+      "passed_object": 49,
+      "step_budget": 1
+    }
+  },
+  {
+    "model": "local-PPO-careful",
+    "scene": "pedestrian-shoulder",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 0,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 0.0,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.026000000000000002,
+    "mean_episode_seconds": 15.39,
+    "mean_route_completion": 0.25157788253759866,
+    "mean_pass_speed": 5.70313641479579,
+    "control": "careful",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 0,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [],
+    "end_reasons": {
+      "passed_object": 50
+    }
+  },
+  {
+    "model": "local-PPO-none",
+    "scene": "pedestrian-shoulder",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 1,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 1.26,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.002,
+    "mean_episode_seconds": 11.958,
+    "mean_route_completion": 0.2505324154406193,
+    "mean_pass_speed": 7.736889002097424,
+    "control": "none",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 1,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [
+      1040
+    ],
+    "end_reasons": {
+      "passed_object": 49,
+      "terminated": 1
+    }
+  },
+  {
+    "model": "local-PPO-careful",
+    "scene": "rain-clean",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 1,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 0.04,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.0,
+    "mean_episode_seconds": 30.0,
+    "mean_route_completion": 0.49081867327488815,
+    "mean_pass_speed": null,
+    "control": "careful",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 1,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [
+      1029
+    ],
+    "end_reasons": {
+      "step_budget": 50
+    }
+  },
+  {
+    "model": "local-PPO-none",
+    "scene": "rain-clean",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 1,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 1.3,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 0.0,
+    "mean_episode_seconds": 29.907999999999998,
+    "mean_route_completion": 0.6513600703465587,
+    "mean_pass_speed": null,
+    "control": "none",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 1,
+      "crash_object": 0,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [
+      1040
+    ],
+    "end_reasons": {
+      "step_budget": 47,
+      "terminated": 3
+    }
+  },
+  {
+    "model": "local-PPO-careful",
+    "scene": "wet-closed",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 2,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 1.0,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 45.956,
+    "mean_episode_seconds": 58.382000000000005,
+    "mean_route_completion": 0.17280633380881558,
+    "mean_pass_speed": 2.8538954712925357,
+    "control": "careful",
+    "legacy_final_step_collision_count": 0,
+    "collision_counts_by_type": {
+      "crash_vehicle": 0,
+      "crash_object": 2,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [
+      1027,
+      1030
+    ],
+    "end_reasons": {
+      "passed_object": 2,
+      "step_budget": 48
+    }
+  },
+  {
+    "model": "local-PPO-none",
+    "scene": "wet-closed",
+    "trigger": "none",
+    "episodes": 50,
+    "collision_verified_episodes": 50,
+    "collision_episodes": 16,
+    "legacy_nonzero_cost_without_final_crash": 0,
+    "passed_stop": 0,
+    "mean_cost": 90.96,
+    "mean_calls": 0.0,
+    "mean_stopped_seconds": 40.910000000000004,
+    "mean_episode_seconds": 54.275999999999996,
+    "mean_route_completion": 0.17893337298303946,
+    "mean_pass_speed": 4.742336480767204,
+    "control": "none",
+    "legacy_final_step_collision_count": 9,
+    "collision_counts_by_type": {
+      "crash_vehicle": 1,
+      "crash_object": 15,
+      "crash_human": 0
+    },
+    "zero_cost_human_collision_episodes": 0,
+    "collision_seeds": [
+      1002,
+      1005,
+      1018,
+      1026,
+      1028,
+      1029,
+      1031,
+      1032,
+      1033,
+      1035,
+      1040,
+      1043,
+      1044,
+      1045,
+      1046,
+      1049
+    ],
+    "end_reasons": {
+      "passed_object": 6,
+      "step_budget": 44
+    }
+  }
+]

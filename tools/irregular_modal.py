@@ -316,6 +316,7 @@ def _closed_loop(spec):
 
     from driving.irregular.escalation import (
         EscalationConfig,
+        GroundedVLMCaller,
         PatchCoreDetector,
         VLMCaller,
         hi_res_camera_config,
@@ -327,7 +328,11 @@ def _closed_loop(spec):
     from driving.safemetadrive.camera_planner import camera_config
 
     started = time.monotonic()
-    vlm = VLMCaller(spec["model"], spec.get("dtype", "bfloat16"))
+    if spec.get("grounded"):
+        vlm = GroundedVLMCaller(spec["model"], spec.get("dtype", "bfloat16"),
+                                orders=spec.get("orders", 2))
+    else:
+        vlm = VLMCaller(spec["model"], spec.get("dtype", "bfloat16"))
     detector = PatchCoreDetector(f"{DATA}/banks/dinov2_small-v1.pt")
     base = irregular_config(spec.get("split", "validation"))
     driver_kwargs = dict(skill_checkpoint=f"{DATA}/ppo/{spec['ppo']}") if spec.get("ppo") else None
@@ -341,7 +346,8 @@ def _closed_loop(spec):
             row = run_episode(env, seed, scene_placements(spec["scene"], seed), cfg, vlm=vlm,
                               detector=detector, render=True, hi_res=spec.get("hi_res", False),
                               debug_dir=_debug_dir(out, spec, seed), driver_kwargs=driver_kwargs,
-                              max_steps=300 if spec["scene"] in ("clean", "rain-clean") else 600)
+                              max_steps=300 if spec["scene"] in ("clean", "rain-clean") else 600,
+                              driver_kind=spec.get("driver_kind", "legacy"))
             row.update(scene=spec["scene"], model=spec["model"])
             rows.append(row)
             print(json.dumps(dict(scene=spec["scene"], trigger=spec["trigger"], seed=seed,
@@ -429,6 +435,38 @@ def main(stage: str = "smoke", encoder: str = "dinov2_small", run: str = "eval-d
             model="Qwen/Qwen3-VL-8B-Instruct", tag="final-smoke", scene="flagger",
             trigger="novelty", hi_res=True, ppo="skills-seed0-ppo.zip", split="irregular-test",
             seeds=[1000]))))
+        return
+    elif stage in ("final-upgraded", "final-upgraded-pilot"):
+        # Upgrades #1 + #2 + #3 on UnifiedDrivingSystem:
+        # Fast trigger (capture_every=2, k=2, pending=careful) + Grounded 5-class VLM + rain-invariant contrast
+        scenes = (("flagger", "wet-closed", "rain-clean") if stage == "final-upgraded-pilot"
+                  else ("flagger", "billboard", "pedestrian-shoulder", "pedestrian-lane",
+                        "lane-closed", "wet-closed", "rain-clean", "clean"))
+        tag = "final-upgraded-pilot" if stage == "final-upgraded-pilot" else "final-upgraded-qwen3vl-8b"
+        specs = [dict(model="Qwen/Qwen3-VL-8B-Instruct", tag=tag, scene=scene,
+                      trigger="novelty", hi_res=True, ppo="skills-seed0-ppo.zip",
+                      driver_kind="unified", grounded=True, orders=2,
+                      config=dict(
+                          capture_every=2, k=2, n=4, pending="careful",
+                          weather_invariant=True, grounded_constraints=True,
+                      ),
+                      split="irregular-test", seeds=list(range(start, start + 25)))
+                 for scene in scenes for start in (1000, 1025)]
+        for result in closed_loop_l4.map(specs, return_exceptions=True):
+            print(json.dumps(result if isinstance(result, dict) else repr(result)), flush=True)
+        return
+    elif stage == "final-unified":
+        # Unified 3-layer zero-peeking stack (LiDAR Layer 1 + PPO Layer 2 + PatchCore/Qwen3-VL-8B Layer 3)
+        # 8 irregular scenes x 50 fresh maps (1000-1049), 2 shards per scene, irregular-episode-v2 logger.
+        scenes = ("flagger", "billboard", "pedestrian-shoulder", "pedestrian-lane", "lane-closed",
+                  "wet-closed", "rain-clean", "clean")
+        specs = [dict(model="Qwen/Qwen3-VL-8B-Instruct", tag="final-unified-qwen3vl-8b", scene=scene,
+                      trigger="novelty", hi_res=True, ppo="skills-seed0-ppo.zip",
+                      driver_kind="unified", split="irregular-test",
+                      seeds=list(range(start, start + 25)))
+                 for scene in scenes for start in (1000, 1025)]
+        for result in closed_loop_l4.map(specs, return_exceptions=True):
+            print(json.dumps(result if isinstance(result, dict) else repr(result)), flush=True)
         return
     elif stage == "final":
         # Final test: Harsh's rule + PPO + protection under our novelty-triggered Qwen3-VL-8B,

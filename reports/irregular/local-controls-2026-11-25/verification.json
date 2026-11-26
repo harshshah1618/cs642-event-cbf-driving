@@ -1,0 +1,22 @@
+{
+  "episodes": 800,
+  "groups": 16,
+  "unique_maps": 50,
+  "complete_map_coverage": true,
+  "event_flag_consistency": true,
+  "main_safemetadrive_reanalysis": {
+    "episodes": 1900,
+    "groups": 14,
+    "group_summaries_match_exactly": true,
+    "paired_bootstrap_results_match_exactly": true
+  },
+  "no_cloud_jobs": true,
+  "no_training": true,
+  "source_sha256": "7892a4633aa8e18e1fd25b7d99a2b272262fb87e46c10ad3b2bc348309c700c7",
+  "repository_validation": {
+    "pytest_passed": 287,
+    "ruff": "passed",
+    "mypy": "passed, 55 source files",
+    "diff_whitespace": "passed"
+  }
+}

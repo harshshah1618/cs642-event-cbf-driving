@@ -1,5 +1,24 @@
 # Irregular-situation escalation: final test (2026-11-21)
 
+**Workspace access restored November 25:** all 400 original Qwen episode rows
+are now downloaded and audited. Under the pinned native cost/termination rules,
+the historical run contains six collision episodes, including zero in wet-closed;
+the original final-step flag table missed all six. The directly recorded 23/50
+STOP violations are verified. See the [saved-run audit and comparison with local
+controls](ved-saved-audit-2026-11-25/README.md) for derivation and limitations.
+This audit does not run new model inference.
+
+**Initial November 25 audit, before workspace access:** the historical evaluator recorded collision flags only
+from the final timestep. MetaDrive clears those flags each step and vehicle/object
+collisions do not immediately end these episodes. The crash column below is
+therefore an unvalidated final-step count, not an episode collision count. In
+particular, the wet-road 9-to-0 comparison cannot yet support a collision-reduction
+claim. The original table is preserved as reported. The corrected evaluator marks
+new rows `irregular-episode-v2`, accumulates all collision flags, and saves contact
+timesteps. Historical rows cannot recover earlier contact types from final flags;
+raw timestep traces or a separately labeled rerun are needed. The other numbers
+remain author-reported aggregates until the underlying episodes are available.
+
 Fresh test maps 1000-1049, 8 scenes x 50 maps. Row 3 = Harsh's rule + PPO (skills-seed0) + protection; row 5 = the same stack with Qwen3-VL-8B called on PatchCore novelty (high-resolution crop, no speed in the prompt, 3 option orders, sticky stop). Raw episode rows: Modal volume cs642-irregular, closedloop/final-qwen3vl-8b, and runs/irregular/closedloop/final-none (local). Regenerate with tools/irregular_closedloop_report.py. Full write-up: https://claude.ai/artifact/2qcT24NJ8SsRStgfwjpE8q
 
 | model | scene | trigger | n | passed STOP | crashes | calls/episode | s stopped near object | episode s | route % | pass speed m/s | VLM answers |

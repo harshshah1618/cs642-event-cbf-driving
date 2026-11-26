@@ -1,0 +1,13 @@
+{
+  "encoder": "dinov2_small",
+  "frames": 9622,
+  "pooled_patches": 615808,
+  "bank_size": 20000,
+  "grid": [
+    18,
+    32
+  ],
+  "patches_per_image": 64,
+  "source_run": "clean-train-v1",
+  "wall_seconds": 145.16180940200002
+}

@@ -142,3 +142,28 @@ class PatchCore:
     def load(cls, path, device="cpu"):
         state = torch.load(path, map_location=device)
         return cls(state["bank"].to(device), state["encoder"], state["grid"])
+
+
+def local_contrast_metrics(patch_map):
+    """Separate localized physical hazards from uniform global weather shifts (rain/fog).
+
+    Returns:
+        dict with keys: max_score, median_score, contrast_ratio, cx_norm, cy_norm.
+    """
+    import numpy as np
+
+    arr = np.asarray(patch_map, dtype=np.float64)
+    if arr.size == 0:
+        return dict(max_score=0.0, median_score=0.0, contrast_ratio=1.0, cx_norm=0.5, cy_norm=0.5)
+    max_s = float(np.max(arr))
+    med_s = float(np.median(arr))
+    contrast = max_s / max(med_s, 1e-6)
+    r, c = np.unravel_index(int(np.argmax(arr)), arr.shape)
+    h, w = arr.shape
+    return dict(
+        max_score=max_s,
+        median_score=med_s,
+        contrast_ratio=float(contrast),
+        cx_norm=float((c + 0.5) / max(w, 1)),
+        cy_norm=float((r + 0.5) / max(h, 1)),
+    )

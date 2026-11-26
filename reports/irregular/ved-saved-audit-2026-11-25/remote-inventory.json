@@ -1,0 +1,98 @@
+[
+  {
+    "filename": "closedloop/final-qwen3vl-8b/wet-closed-novelty-1025.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:59:25-08:00",
+    "size": 122797
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/wet-closed-novelty-1000.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:59:26-08:00",
+    "size": 124463
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/rain-clean-novelty-1000.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:54:01-08:00",
+    "size": 64380
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/rain-clean-novelty-1025.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:53:48-08:00",
+    "size": 64395
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/clean-novelty-1000.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:51:41-08:00",
+    "size": 17094
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/clean-novelty-1025.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:51:27-08:00",
+    "size": 17786
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/flagger-novelty-1000.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:47:34-08:00",
+    "size": 48341
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/flagger-novelty-1025.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:46:40-08:00",
+    "size": 45262
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/lane-closed-novelty-1025.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:46:34-08:00",
+    "size": 30040
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/pedestrian-lane-novelty-1025.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:45:53-08:00",
+    "size": 32901
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/lane-closed-novelty-1000.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:45:39-08:00",
+    "size": 28974
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/pedestrian-lane-novelty-1000.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:45:32-08:00",
+    "size": 28721
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/billboard-novelty-1025.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:45:25-08:00",
+    "size": 28565
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/pedestrian-shoulder-novelty-1000.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:45:22-08:00",
+    "size": 25424
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/pedestrian-shoulder-novelty-1025.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:45:12-08:00",
+    "size": 25733
+  },
+  {
+    "filename": "closedloop/final-qwen3vl-8b/billboard-novelty-1000.json",
+    "type": "file",
+    "created_modified": "2026-11-21 18:45:03-08:00",
+    "size": 27058
+  }
+]

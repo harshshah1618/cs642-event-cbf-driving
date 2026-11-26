@@ -1,0 +1,9 @@
+{
+  "pytest_passed": 295,
+  "ruff": "passed",
+  "mypy": "passed, 55 source files",
+  "raw_episodes": 400,
+  "scene_map_coverage": true,
+  "all_collision_bounds_resolved": true,
+  "compute_started": false
+}

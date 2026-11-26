@@ -1,0 +1,172 @@
+{
+  "scope": "Audit of saved historical Qwen episodes, not new inference or replay",
+  "native_contract": {
+    "simulator_revision": "fe54b03327b14bcfc17a9a04b60c8abbee4d7ab1",
+    "config": {
+      "out_of_road_done": true,
+      "crash_human_done": true,
+      "out_of_road_cost": 1.0,
+      "crash_vehicle_cost": 1.0,
+      "crash_object_cost": 1.0,
+      "crash_vehicle_done": false,
+      "crash_object_done": false
+    },
+    "native_environment_source_sha256": "1b2903c5172ff7a432b10b437bd74092be388805d64e5846e807cf60eb6c0f9a",
+    "assumption": "Historical runs used the pinned published environment recipe; their records do not contain independent runtime config dumps."
+  },
+  "episodes": 400,
+  "groups": [
+    {
+      "scene": "billboard",
+      "episodes": 50,
+      "collision_lower_bound": 1,
+      "collision_upper_bound": 1,
+      "collision_episodes": 1,
+      "collision_inference": "native-cost-and-terminal-human-flag",
+      "legacy_final_step_collisions": 0,
+      "collision_seeds": [
+        1040
+      ],
+      "ambiguous_seeds": [],
+      "passed_stop": 0,
+      "mean_cost": 1.28,
+      "mean_calls": 1.32,
+      "mean_route_completion": 0.2503167752100024
+    },
+    {
+      "scene": "clean",
+      "episodes": 50,
+      "collision_lower_bound": 1,
+      "collision_upper_bound": 1,
+      "collision_episodes": 1,
+      "collision_inference": "native-cost-and-terminal-human-flag",
+      "legacy_final_step_collisions": 0,
+      "collision_seeds": [
+        1040
+      ],
+      "ambiguous_seeds": [],
+      "passed_stop": 0,
+      "mean_cost": 1.36,
+      "mean_calls": 0.08,
+      "mean_route_completion": 0.6512336972147145
+    },
+    {
+      "scene": "flagger",
+      "episodes": 50,
+      "collision_lower_bound": 1,
+      "collision_upper_bound": 1,
+      "collision_episodes": 1,
+      "collision_inference": "native-cost-and-terminal-human-flag",
+      "legacy_final_step_collisions": 0,
+      "collision_seeds": [
+        1040
+      ],
+      "ambiguous_seeds": [],
+      "passed_stop": 23,
+      "mean_cost": 1.26,
+      "mean_calls": 5.48,
+      "mean_route_completion": 0.2502394144031044
+    },
+    {
+      "scene": "lane-closed",
+      "episodes": 50,
+      "collision_lower_bound": 1,
+      "collision_upper_bound": 1,
+      "collision_episodes": 1,
+      "collision_inference": "native-cost-and-terminal-human-flag",
+      "legacy_final_step_collisions": 0,
+      "collision_seeds": [
+        1040
+      ],
+      "ambiguous_seeds": [],
+      "passed_stop": 0,
+      "mean_cost": 1.52,
+      "mean_calls": 1.68,
+      "mean_route_completion": 0.2503537341344197
+    },
+    {
+      "scene": "pedestrian-lane",
+      "episodes": 50,
+      "collision_lower_bound": 0,
+      "collision_upper_bound": 0,
+      "collision_episodes": 0,
+      "collision_inference": "native-cost-and-terminal-human-flag",
+      "legacy_final_step_collisions": 0,
+      "collision_seeds": [],
+      "ambiguous_seeds": [],
+      "passed_stop": 0,
+      "mean_cost": 0.0,
+      "mean_calls": 2.0,
+      "mean_route_completion": 0.24971035908823913
+    },
+    {
+      "scene": "pedestrian-shoulder",
+      "episodes": 50,
+      "collision_lower_bound": 1,
+      "collision_upper_bound": 1,
+      "collision_episodes": 1,
+      "collision_inference": "native-cost-and-terminal-human-flag",
+      "legacy_final_step_collisions": 0,
+      "collision_seeds": [
+        1040
+      ],
+      "ambiguous_seeds": [],
+      "passed_stop": 0,
+      "mean_cost": 1.52,
+      "mean_calls": 0.84,
+      "mean_route_completion": 0.25013472489798194
+    },
+    {
+      "scene": "rain-clean",
+      "episodes": 50,
+      "collision_lower_bound": 1,
+      "collision_upper_bound": 1,
+      "collision_episodes": 1,
+      "collision_inference": "native-cost-and-terminal-human-flag",
+      "legacy_final_step_collisions": 0,
+      "collision_seeds": [
+        1029
+      ],
+      "ambiguous_seeds": [],
+      "passed_stop": 0,
+      "mean_cost": 0.04,
+      "mean_calls": 10.0,
+      "mean_route_completion": 0.49082969571633617
+    },
+    {
+      "scene": "wet-closed",
+      "episodes": 50,
+      "collision_lower_bound": 0,
+      "collision_upper_bound": 0,
+      "collision_episodes": 0,
+      "collision_inference": "native-cost-and-terminal-human-flag",
+      "legacy_final_step_collisions": 0,
+      "collision_seeds": [],
+      "ambiguous_seeds": [],
+      "passed_stop": 0,
+      "mean_cost": 0.0,
+      "mean_calls": 21.96,
+      "mean_route_completion": 0.16967554058924203
+    }
+  ],
+  "no_cloud_jobs": true,
+  "no_new_inference": true,
+  "input_sha256": {
+    "billboard-novelty-1000.json": "a4d60c61b6d40862c10144bf4e58d4a19f01236fa51ecd3bacc01f6cf06a6842",
+    "billboard-novelty-1025.json": "a591aeefd2fe29e7a4b0083bfeea0be971987eec521ddc4e9429346b66a38a50",
+    "clean-novelty-1000.json": "34daa4de01c18f3c8a064de34154756d2bb720b23e23a2d0cc020b04e35d1a8d",
+    "clean-novelty-1025.json": "60be60d2ba4e15cc6638a437e6e26bbea5772db34c86c169e8c8129a9724d972",
+    "flagger-novelty-1000.json": "873a09cadc87c005bac3aec9a6ea962c15fc2f10ddab68c8caec8ddef36d1fc6",
+    "flagger-novelty-1025.json": "97c7c2a56b971daf3630bc9ce4ebfc6417877739cb62e27de4a3fb87c55eb60c",
+    "lane-closed-novelty-1000.json": "8973052a265be7517fea92a81d457c97a2572a7fc15bbde53f7719375f7a93ec",
+    "lane-closed-novelty-1025.json": "3a1454d786aeb681f250a06371b1ef11df518f76b96fec710380a2193dc9f5e3",
+    "pedestrian-lane-novelty-1000.json": "5ca9048c816c5c39191f1cb5c241dce3d08190b19a1878399f84c78d97e716a0",
+    "pedestrian-lane-novelty-1025.json": "72b3cd3184284eab5a4e90528140c682f7f24f0c6678fc8231f980a800619b6e",
+    "pedestrian-shoulder-novelty-1000.json": "5c74ae00c4e7240d922c86bf27f59c354b61871c1dc5cc2e78e714efa6ad2aab",
+    "pedestrian-shoulder-novelty-1025.json": "dfd5018f55d279f0d229b74f7643bcf164a34bab3b1470a94bc210eab9b55fd1",
+    "rain-clean-novelty-1000.json": "ba907d1f29adcc76cc75301beba8a5dd1b0141d9ff4d46d7365a7600d0b61847",
+    "rain-clean-novelty-1025.json": "a4cb6d9b05bf06c911ff888323d4de1b047c3628a2db74a93b39c08f20977590",
+    "wet-closed-novelty-1000.json": "831f19be9df3fe1524198e622749ebec373ba492656ecbf354db36659417b1e1",
+    "wet-closed-novelty-1025.json": "e467d8f797f1da0253b5c804222eafe2ace5d0395068779217e09238dfff32c2"
+  }
+}

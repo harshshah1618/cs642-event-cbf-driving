@@ -9,15 +9,16 @@ protection). A trigger asks the VLM one question; its answer becomes a lease:
 - left/right: one checked lane change (Harsh's gap checks), rule lane changes
             paused for `lease` seconds; a rejected change becomes careful.
 
-Every answer still passes through protection: a hold only lowers throttle and a
-lane change uses the normal admission checks, so a wrong answer cannot make the
-car less safe than the fast layer alone. The answer arrives after the measured
-VLM latency plus any injected delay, in simulation time.
+The existing protection remains active: a hold only lowers throttle and a lane
+change uses the normal admission checks. These are heuristic checks, not a
+guarantee that an incorrect answer cannot increase risk. The answer arrives
+after the measured VLM latency plus any injected delay, in simulation time.
 """
 
 import math
 from collections import deque
 from dataclasses import asdict, dataclass
+from typing import Any
 
 import numpy as np
 
@@ -44,6 +45,12 @@ class EscalationConfig:
     pending: str = "nominal"      # behaviour while a call is pending: nominal | careful
     use_crop: bool = True
     release_unflagged: bool = False  # release a hold when PatchCore stops flagging (pilot v2-v4)
+    # Upgrade #2: Weather-invariant local contrast trigger (suppresses uniform rain false alarms)
+    weather_invariant: bool = False
+    contrast_min: float = 1.50       # max_patch / median_patch required for localized hazard trigger
+    median_weather_tau: float = 24.0 # median_patch above this without local spike -> 1-shot weather check
+    # Upgrade #1: Grounded 3D constraint compilation (VLM hazard -> 3D stop wall / wet friction / detour)
+    grounded_constraints: bool = False
 
     def __post_init__(self):
         if self.trigger not in TRIGGERS:
@@ -66,6 +73,68 @@ class EscalatingDriver(LaneCautionDriver):
         return [steer, throttle]
 
 
+class UnifiedEscalatingDriver:
+    """Adapter connecting Escalation (Layer 3 VLM) to UnifiedDrivingSystem (Layers 1-2).
+
+    Strictly observation-only: UnifiedDrivingSystem receives ONLY the 259-dim
+    LidarStateObservation vector (zero access to simulator object lists or road graphs).
+    """
+
+    def __init__(self, observation, *, skill_checkpoint=None, initial_careful=False,
+                 max_speed_kmh=30.0, **kwargs):
+        from driving.safemetadrive.unified import UnifiedDrivingSystem
+        tracker = "ppo" if skill_checkpoint else "analytic"
+        self.system = UnifiedDrivingSystem(
+            observation,
+            tracker=tracker,
+            skill_checkpoint=skill_checkpoint,
+            max_speed_kmh=max_speed_kmh,
+            **kwargs,
+        )
+        self.hold = False
+        self.careful = bool(initial_careful)
+        self.planner = "rule"
+        self.lane = None
+
+    @property
+    def interventions(self):
+        return self.system.interventions
+
+    def synchronize_lane(self):
+        pass
+
+    def on_observation(self, obs):
+        self.system.on_observation(obs)
+
+    def apply_intent(self, delta, careful, capture_lane):
+        from driving.safemetadrive.lidar_driver import decode_observation
+        d = decode_observation(self.system.observation)
+        centers = self.system._core._lane_centers_from_left(d)
+        cur = self.system._core.target_lane_idx
+        if cur is None:
+            cur = self.system._core._current_lane_idx(d, centers)
+        target = cur + int(delta)
+        if not (0 <= target < d.n_lanes):
+            return False
+        if delta:
+            _, _, s_lane, d_right = self.system._core._lidar_to_road_points(d)
+            gaps = self.system._core._lane_gaps(d, centers, s_lane, d_right)
+            if not self.system._core._can_admit_lane(target, gaps, d.speed_mps):
+                return False
+            self.system._core.target_lane_idx = target
+            self.system._core.changes += 1
+        self.careful = bool(careful)
+        return True
+
+    def act(self):
+        self.system._core.allow_lane_change = (self.planner == "rule")
+        self.system.set_semantic_lease(stop=self.hold, careful=self.careful)
+        return self.system.act()
+
+    def close(self):
+        pass
+
+
 class Escalation:
     def __init__(self, cfg: EscalationConfig, vlm=None, detector=None, hi_capture=None):
         if cfg.trigger != "none" and vlm is None:
@@ -74,30 +143,66 @@ class Escalation:
             raise ValueError("The novelty trigger needs a detector")
         self.cfg, self.vlm, self.detector = cfg, vlm, detector
         self.hi_capture = hi_capture  # renders the high-resolution front view on demand
-        self.above = deque(maxlen=cfg.n)
-        self.pending = None
+        self.above: deque[bool] = deque(maxlen=cfg.n)
+        self.pending: dict[str, Any] | None = None
         self.last_call = -math.inf
         self.last_poll = -math.inf
         self.lease_until = -math.inf
-        self.lease_action = None
+        self.lease_action: str | None = None
         self.recheck_due = False
         self.override_steps = 0
         self.stall_steps = 0
         self.last_interventions = 0
         self.last_map = None
+        self.last_cx_norm = 0.5
+        self.weather_checked = False
         self.confirming = False
-        self.calls = []
+        self.calls: list[dict[str, Any]] = []
+        self.debug_dir: str | None = None
 
     # --- answers -------------------------------------------------------------
     def _clear(self, driver):
         driver.hold = False
         driver.careful = False
         driver.planner = "rule"
+        if hasattr(driver, "system") and hasattr(driver.system, "set_grounded_constraints"):
+            driver.system.set_grounded_constraints(clear_stop_wall=True, force_detour=False)
         self.lease_action = None
         self.lease_until = -math.inf
 
     def _apply(self, now, driver, action):
         cfg = self.cfg
+        # Upgrade #1: Grounded 3D semantic constraint compilation into Layer 1
+        if cfg.grounded_constraints and hasattr(driver, "system"):
+            from driving.safemetadrive.viability import project_patch_to_lidar_distance
+
+            if action == "benign_clear" or action == "continue":
+                self._clear(driver)
+                return "continue"
+            if action == "wet_weather_only":
+                self._clear(driver)
+                driver.system.set_grounded_constraints(friction_scale=0.70)
+                self.weather_checked = True
+                self.lease_action, self.lease_until = "wet_weather_only", now + 60.0
+                return "wet_weather_only"
+            if action in ("stop_flagger", "pedestrian_lane", "stop"):
+                # Immediately hold full brake so a thin shoulder flagger is never passed
+                # while waiting on an uncertain LiDAR return; release only on VLM re-check.
+                driver.hold = True
+                driver.careful = True
+                driver.system.set_grounded_constraints(clear_stop_wall=True, force_detour=False)
+                self.lease_action, self.lease_until = "stop", now + cfg.hold_recheck
+                return action
+            if action == "road_closure":
+                # Keep lane-change replanning active to detour around the closure at safe wet friction!
+                driver.hold = False
+                driver.careful = False
+                driver.planner = "rule"
+                driver.system.set_grounded_constraints(
+                    clear_stop_wall=True, friction_scale=0.40, force_detour=True
+                )
+                self.lease_action, self.lease_until = "road_closure", now + cfg.lease
+                return "road_closure"
         self._clear(driver)
         if action == "continue":
             return "continue"
@@ -124,9 +229,29 @@ class Escalation:
         if "novelty" in cfg.trigger and frame_step and detector_ready:
             score, patch_map = self.detector(image, truth)
             self.last_map = patch_map
-            self.above.append(score > cfg.tau)
-            if sum(self.above) >= cfg.k:
-                fired.append("novelty")
+            if cfg.weather_invariant and patch_map is not None:
+                from driving.irregular.patchcore import local_contrast_metrics
+                m = local_contrast_metrics(patch_map)
+                self.last_cx_norm = m["cx_norm"]
+                is_local = (m["max_score"] > cfg.tau) and (m["contrast_ratio"] >= cfg.contrast_min)
+                is_global_weather = (
+                    (not is_local)
+                    and (not self.weather_checked)
+                    and (m["median_score"] >= cfg.median_weather_tau)
+                )
+                self.above.append(is_local)
+                if sum(self.above) >= cfg.k:
+                    fired.append("novelty-local")
+                elif is_global_weather:
+                    self.weather_checked = True
+                    fired.append("weather-global")
+            else:
+                if patch_map is not None:
+                    from driving.irregular.patchcore import local_contrast_metrics
+                    self.last_cx_norm = local_contrast_metrics(patch_map)["cx_norm"]
+                self.above.append(score > cfg.tau)
+                if sum(self.above) >= cfg.k:
+                    fired.append("novelty")
         if "cbf" in cfg.trigger:
             overridden = driver.interventions > self.last_interventions
             self.override_steps = self.override_steps + 1 if overridden else 0
@@ -210,14 +335,28 @@ class Escalation:
 
 
 def run_episode(env, seed, placements, cfg, vlm=None, detector=None, render=False,
-                driver_kwargs=None, max_steps=700, after_pass=20.0, hi_res=False, debug_dir=None):
+                driver_kwargs=None, max_steps=700, after_pass=20.0, hi_res=False, debug_dir=None,
+                driver_kind="legacy"):
     """One closed-loop episode; returns a result row."""
     from driving.irregular.scene import place, placement_record, relative
 
-    env.reset(seed=seed)
+    if max_steps < 1:
+        raise ValueError("max_steps must be positive")
+    reset_out = env.reset(seed=seed)
+    obs = reset_out[0] if isinstance(reset_out, tuple) else reset_out
     objs = [place(env, p) for p in placements]
     primary = next((o for o in objs if o is not None), None)
-    driver = EscalatingDriver(env.agent, speed=30, **(driver_kwargs or {}))
+    lidar_obs = None
+    if driver_kind == "unified":
+        if isinstance(obs, dict) or np.asarray(obs).shape != (259,):
+            from metadrive.obs.state_obs import LidarStateObservation
+            lidar_obs = LidarStateObservation(env.config)
+            obs_259 = lidar_obs.observe(env.agent)
+        else:
+            obs_259 = obs
+        driver = UnifiedEscalatingDriver(obs_259, **(driver_kwargs or {}))
+    else:
+        driver = EscalatingDriver(env.agent, speed=30, **(driver_kwargs or {}))
     esc = Escalation(cfg, vlm, detector,
                      hi_capture=(lambda: weather(capture_front_hi(env), salt=env.engine.episode_step))
                      if render and hi_res else None)
@@ -242,37 +381,57 @@ def run_episode(env, seed, placements, cfg, vlm=None, detector=None, render=Fals
                           current_lane=int(env.agent.lane.index[-1]))
 
     cost, info = 0.0, {}
+    crash_keys = ("crash_vehicle", "crash_object", "crash_human")
+    crash_steps = dict.fromkeys(crash_keys, 0)
+    collision_events = []
+    end_reason = "step_budget"
     stopped_near = 0
     passed_while_stop = False
     min_gap = math.inf
     prev = None
     pass_speed = None
     step = 0
-    for step in range(max_steps):
-        now = step * 0.1
-        driver.synchronize_lane()
-        truth = relative(env.agent, primary) if primary is not None else None
-        esc.step(now, driver, truth, capture, step % cfg.capture_every == 0)
-        _, _, terminated, truncated, info = env.step(driver.act())
-        cost += float(info["cost"])
-        if truth is not None:
-            after = relative(env.agent, primary)
-            if abs(after["lateral"]) < 6:
-                min_gap = min(min_gap, after["forward"]) if after["forward"] > -2 else min_gap
-            if prev is not None and prev["forward"] > 0 >= after["forward"]:
-                pass_speed = float(env.agent.speed)
-                passed_while_stop = passed_while_stop or after["face"] == "stop"
-            if 0 < after["forward"] < 40 and env.agent.speed < 0.5:
-                stopped_near += 1
-            prev = after
-            if after["forward"] < -after_pass:
+    try:
+        for step in range(max_steps):
+            now = step * 0.1
+            driver.synchronize_lane()
+            truth = relative(env.agent, primary) if primary is not None else None
+            esc.step(now, driver, truth, capture, step % cfg.capture_every == 0)
+            obs, _, terminated, truncated, info = env.step(driver.act())
+            if driver_kind == "unified":
+                obs_259 = lidar_obs.observe(env.agent) if lidar_obs is not None else obs
+                driver.on_observation(obs_259)
+            cost += float(info["cost"])
+            # MetaDrive resets crash flags before every step; final-step flags alone
+            # miss collisions when the episode continues after contact.
+            hits = [key for key in crash_keys if info.get(key, False)]
+            for key in hits:
+                crash_steps[key] += 1
+            if hits:
+                collision_events.append(dict(step=step + 1, seconds=(step + 1) * 0.1, kinds=hits))
+            if truth is not None:
+                after = relative(env.agent, primary)
+                if abs(after["lateral"]) < 6:
+                    min_gap = min(min_gap, after["forward"]) if after["forward"] > -2 else min_gap
+                if prev is not None and prev["forward"] > 0 >= after["forward"]:
+                    pass_speed = float(env.agent.speed)
+                    passed_while_stop = passed_while_stop or after["face"] == "stop"
+                if 0 < after["forward"] < 40 and env.agent.speed < 0.5:
+                    stopped_near += 1
+                prev = after
+                if after["forward"] < -after_pass:
+                    end_reason = "passed_object"
+                    break
+            if terminated or truncated:
+                end_reason = "terminated" if terminated else "truncated"
                 break
-        if terminated or truncated:
-            break
+    finally:
+        driver.close()
     return dict(
+        metrics_schema="irregular-episode-v2", end_reason=end_reason,
         seed=seed, placements=[placement_record(p) for p in placements], config=asdict(cfg),
-        steps=step + 1, cost=cost, crash_vehicle=bool(info.get("crash_vehicle")),
-        crash_object=bool(info.get("crash_object")), crash_human=bool(info.get("crash_human")),
+        steps=step + 1, cost=cost, **{key: count > 0 for key, count in crash_steps.items()},
+        crash_steps=crash_steps, collision_events=collision_events,
         arrive=bool(info.get("arrive_dest")), passed_stop=passed_while_stop,
         route_completion=float(info.get("route_completion", 0.0)), pass_speed=pass_speed,
         seconds_stopped_near_object=stopped_near * 0.1,
@@ -344,14 +503,40 @@ class VLMCaller:
 
     def __call__(self, image, state, crop, truth):
         from driving.irregular.vlm import option_order
-        total, seconds = {}, 0.0
+        total: dict[str, float] = {}
+        seconds = 0.0
         for k in range(self.orders):
             order = option_order(state, None if k == 0 else k)
             _, probs, t = self.vlm.answer(image, state, order, crop=crop, speed=self.speed)
             seconds += t
             for a, p in probs.items():
                 total[a] = total.get(a, 0.0) + p
-        return max(total, key=total.get), seconds
+        return max(total, key=lambda action: total[action]), seconds
+
+
+class GroundedVLMCaller:
+    """Upgrade #1: Order-debiased 5-class semantic hazard classifier for 3D constraint compilation."""
+
+    def __init__(self, model_id, dtype="bfloat16", orders=3):
+        from driving.irregular.vlm import GroundedConstraintVLM
+        self.vlm = GroundedConstraintVLM(model_id, dtype=dtype)
+        self.orders = orders
+
+    def __call__(self, image, state, crop, truth):
+        import random
+        from driving.irregular.vlm import HAZARD_CLASSES
+
+        total: dict[str, float] = {}
+        seconds = 0.0
+        for k in range(self.orders):
+            order = list(HAZARD_CLASSES)
+            if k > 0:
+                random.Random(k).shuffle(order)
+            _, probs, t = self.vlm.classify_hazard(image, state, order, crop=crop)
+            seconds += t
+            for h, p in probs.items():
+                total[h] = total.get(h, 0.0) + p
+        return max(total, key=lambda h: total[h]), seconds
 
 
 def scene_placements(scene, seed):

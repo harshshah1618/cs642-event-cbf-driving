@@ -331,6 +331,12 @@ class NativeLearnedDriver:
 
 
 def make_driver(name, vehicle, parameters, observation=None, episode_seed=0):
+    if name == "unified_system":
+        from driving.safemetadrive.unified import UnifiedDrivingSystem
+        return UnifiedDrivingSystem(observation=observation, **parameters)
+    if name == "lidar_option_reserve":
+        from driving.safemetadrive.lidar_driver import LidarOptionReserveDriver
+        return LidarOptionReserveDriver(observation=observation, **parameters)
     if name == "native_learned":
         options = dict(parameters)
         options["policy_seed"] = options.get("policy_seed", 0)+episode_seed

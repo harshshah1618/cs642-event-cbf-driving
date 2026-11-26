@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safe Fast Control While a Slow Language Model Thinks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fbfbfa;
+      --surface: #ffffff;
+      --surface-muted: #f3f4f6;
+      --ink: #111827;
+      --ink-soft: #4b5563;
+      --ink-faint: #6b7280;
+      --line: #e5e7eb;
+      --line-strong: #d1d5db;
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --green: #059669;
+      --green-soft: #ecfdf5;
+      --amber: #d97706;
+      --amber-soft: #fffbeb;
+      --red: #dc2626;
+      --red-soft: #fef2f2;
+      --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.04);
+      --shadow-md: 0 8px 24px -6px rgba(17, 24, 39, 0.07), 0 2px 6px -1px rgba(17, 24, 39, 0.04);
+      --radius: 14px;
+      --radius-sm: 9px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.68;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .col-text { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    .col-wide { max-width: 1020px; margin: 0 auto; padding: 0 24px; }
+
+    /* Top Nav */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(251, 251, 250, 0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topnav-inner {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 11px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 0.86rem;
+    }
+
+    .topnav-brand {
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .topnav-links { display: flex; gap: 18px; flex-wrap: wrap; }
+    .topnav-links a { color: var(--ink-soft); text-decoration: none; font-weight: 500; }
+    .topnav-links a:hover { color: var(--ink); }
+
+    @media (max-width: 680px) { .topnav-links { display: none; } }
+
+    /* Hero */
+    header { padding: 68px 0 40px; text-align: center; }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 5px 13px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    h1 {
+      margin: 0 auto 18px;
+      max-width: 820px;
+      font-size: clamp(2.05rem, 4.2vw, 3.05rem);
+      font-weight: 800;
+      line-height: 1.14;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-sub {
+      max-width: 660px;
+      margin: 0 auto 24px;
+      font-size: 1.12rem;
+      line-height: 1.58;
+      color: var(--ink-soft);
+    }
+
+    .authors { font-size: 1rem; font-weight: 600; margin-bottom: 24px; }
+    .authors span { margin: 0 10px; display: inline-block; }
+
+    .btn-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.12s ease, background 0.15s ease;
+    }
+
+    .btn-dark { background: var(--ink); color: #ffffff; box-shadow: var(--shadow-sm); }
+    .btn-dark:hover { background: #000000; transform: translateY(-1px); }
+
+    .btn-light { background: var(--surface); color: var(--ink); border: 1px solid var(--line-strong); }
+    .btn-light:hover { background: var(--surface-muted); transform: translateY(-1px); }
+
+    /* Video Showcase */
+    .showcase { margin: 12px auto 64px; }
+
+    .showcase-frame {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .showcase-video-wrap {
+      border-radius: 10px;
+      overflow: hidden;
+      background: #0b1120;
+      aspect-ratio: 16 / 9;
+    }
+
+    .showcase-video-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .video-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 720px) { .video-tabs { grid-template-columns: 1fr; } }
+
+    .vtab {
+      text-align: left;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      background: var(--bg);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+
+    .vtab:hover { border-color: var(--line-strong); background: #f5f6f8; }
+    .vtab.active { background: var(--blue-soft); border-color: #93c5fd; }
+
+    .vtab-title { display: block; font-size: 0.92rem; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+    .vtab.active .vtab-title { color: #1d4ed8; }
+    .vtab-desc { display: block; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.4; }
+
+    /* Sections */
+    section.block { padding: 64px 0; border-top: 1px solid var(--line); }
+
+    .kicker {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: clamp(1.5rem, 2.6vw, 1.95rem);
+      font-weight: 800;
+      line-height: 1.22;
+      letter-spacing: -0.025em;
+    }
+
+    .section-lead {
+      margin: 0 0 28px;
+      color: var(--ink-soft);
+      font-size: 1.04rem;
+      line-height: 1.65;
+    }
+
+    /* 3-card problem visual */
+    .tri-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 780px) { .tri-cards { grid-template-columns: 1fr; } }
+
+    .pcard {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pcard.good {
+      border-color: #6ee7b7;
+      background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 65%);
+    }
+
+    .pcard-tag {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .tag-bad { background: var(--red-soft); color: var(--red); }
+    .tag-warn { background: var(--amber-soft); color: var(--amber); }
+    .tag-good { background: var(--green-soft); color: var(--green); }
+
+    .pcard h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 700; }
+    .pcard p { margin: 0; font-size: 0.92rem; color: var(--ink-soft); line-height: 1.55; }
+
+    /* 3-Layer Stack */
+    .layers-stack { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 24px; }
+
+    .layer-row {
+      display: grid;
+      grid-template-columns: 230px 1fr 145px;
+      align-items: center;
+      gap: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    @media (max-width: 740px) { .layer-row { grid-template-columns: 1fr; gap: 6px; } }
+
+    .layer-badge { font-weight: 800; font-size: 0.96rem; display: flex; align-items: center; gap: 9px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .layer-desc { font-size: 0.94rem; color: var(--ink-soft); line-height: 1.5; }
+
+    .layer-speed {
+      text-align: right;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink);
+      background: var(--surface-muted);
+      padding: 6px 10px;
+      border-radius: 7px;
+    }
+
+    @media (max-width: 740px) { .layer-speed { text-align: left; width: fit-content; } }
+
+    /* Interactive Playground */
+    .playground {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      margin-top: 20px;
+    }
+
+    .sim-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 18px;
+    }
+
+    .slider-group { flex: 1; min-width: 240px; }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .slider-val { font-family: "JetBrains Mono", monospace; color: var(--blue); font-weight: 700; }
+    input[type="range"] { width: 100%; accent-color: var(--blue); cursor: pointer; }
+
+    .mode-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .mpill {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: var(--bg);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--ink-soft);
+      transition: all 0.15s;
+    }
+
+    .mpill.active-good { background: var(--green); border-color: var(--green); color: #ffffff; }
+    .mpill.active-bad { background: #e11d48; border-color: #e11d48; color: #ffffff; }
+
+    .sim-canvas-wrap {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #1e293b;
+      background: #0f172a;
+    }
+
+    canvas#roadSim { width: 100%; height: 210px; display: block; }
+
+    .sim-status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      font-size: 0.9rem;
+    }
+
+    .replay-btn {
+      padding: 6px 14px;
+      border-radius: 7px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .replay-btn:hover { background: var(--surface-muted); }
+
+    .figure-embed { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .figure-embed img { width: 100%; height: auto; display: block; border-radius: 8px; }
+    .figure-cap { margin-top: 10px; font-size: 0.85rem; color: var(--ink-faint); text-align: center; }
+
+    /* Visual Bar Table */
+    .vtable-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      margin-top: 20px;
+    }
+
+    .vtable { width: 100%; border-collapse: collapse; font-size: 0.94rem; }
+
+    .vtable th {
+      background: #f8fafc;
+      padding: 13px 18px;
+      text-align: left;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-faint);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .vtable td { padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    .vtable tr:last-child td { border-bottom: none; }
+    .vtable tr.ours td { background: #f0fdf4; }
+
+    .bar-cell { min-width: 190px; }
+    .bar-row { display: flex; align-items: center; gap: 10px; }
+    .bar-track { flex: 1; height: 9px; background: #e5e7eb; border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; }
+
+    .bar-num {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.88rem;
+      font-weight: 700;
+      min-width: 48px;
+      text-align: right;
+    }
+
+    .mono { font-family: "JetBrains Mono", monospace; font-size: 0.88rem; }
+
+    /* Ablation Switchboard */
+    .switch-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    @media (max-width: 780px) { .switch-grid { grid-template-columns: 1fr; } }
+
+    .toggle-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .titem {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      background: var(--bg);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+    }
+
+    .titem:hover { border-color: var(--line-strong); }
+    .titem.off { background: var(--red-soft); border-color: #fecaca; }
+
+    .titem-name { font-weight: 600; font-size: 0.93rem; }
+    .titem-sub { display: block; font-size: 0.8rem; color: var(--ink-faint); }
+
+    .switch-pill {
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .switch-on { background: var(--green); color: #ffffff; }
+    .switch-off { background: var(--red); color: #ffffff; }
+
+    .readout-box {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+
+    .metric-row { margin-bottom: 16px; }
+    .metric-row:last-of-type { margin-bottom: 12px; }
+
+    .metric-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .verdict-banner {
+      padding: 11px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .chip-red { background: var(--red-soft); color: var(--red); }
+    .chip-green { background: var(--green-soft); color: var(--green); }
+    .chip-amber { background: var(--amber-soft); color: var(--amber); }
+    .chip-gray { background: var(--surface-muted); color: var(--ink-soft); }
+
+    /* Extra simulators */
+    .sim-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px; }
+    @media (max-width: 720px) { .sim-pair { grid-template-columns: 1fr; } }
+
+    .sim-mini {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sim-mini h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .kpi-row { display: flex; gap: 24px; margin: 12px 0; }
+    .kpi strong { display: block; font-size: 1.55rem; font-weight: 800; color: var(--green); line-height: 1.1; }
+    .kpi span { font-size: 0.8rem; color: var(--ink-faint); }
+
+    /* Limitations */
+    .limits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
+    @media (max-width: 720px) { .limits-grid { grid-template-columns: 1fr; } }
+
+    .limit-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+    }
+
+    .limit-card strong { display: block; font-size: 0.95rem; margin-bottom: 4px; }
+    .limit-card p { margin: 0; font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5; }
+
+    /* Footer */
+    footer { background: var(--surface); border-top: 1px solid var(--line); padding: 52px 0 64px; }
+
+    .bib-box {
+      position: relative;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      margin-top: 12px;
+    }
+
+    pre {
+      margin: 0;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      color: #1f2937;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 5px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: inherit;
+      background: var(--surface);
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .copy-btn:hover { background: var(--surface-muted); }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Navigation -->
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <a class="topnav-brand" href="#">Safe Fast Control · CS 642</a>
+      <div class="topnav-links">
+        <a href="#method">Architecture</a>
+        <a href="#delay-demo">Delay Demo</a>
+        <a href="#benchmark">SafeMetaDrive</a>
+        <a href="#ablations">Ablations</a>
+        <a href="#vlm-scenes">VLM Evaluation</a>
+        <a href="#limits">Limitations</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="col-wide">
+    <div class="eyebrow">CS 642 · Robotics &amp; Machine Learning · Fall 2026</div>
+    <h1>Safe Fast Control While a Slow Language Model Thinks</h1>
+    <p class="hero-sub">
+      A vision-language model (VLM) can read signs and road workers, but takes hundreds of milliseconds to reply.
+      We combine an event-triggered VLM, a fast controller, and a LiDAR safety filter—so the vehicle stays safe without getting stuck.
+    </p>
+    <div class="authors">
+      <span>Akash Ravi</span>
+      <span>Harsh Shah</span>
+      <span>Ved Chadderwala</span>
+    </div>
+    <div class="btn-row">
+      <a class="btn btn-dark" href="assets/proposal.pdf">Proposal PDF</a>
+      <a class="btn btn-light" href="assets/milestone-report.pdf">Milestone Report PDF</a>
+      <a class="btn btn-light" href="#delay-demo">Interactive Delay Demo ↓</a>
+    </div>
+  </header>
+
+  <!-- Video Switcher -->
+  <div class="col-wide showcase">
+    <div class="showcase-frame">
+      <div class="showcase-video-wrap">
+        <video id="heroVideo" autoplay loop muted playsinline controls poster="assets/stall-final-frame.png">
+          <source id="heroSource" src="assets/stall-final.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="video-tabs">
+        <button class="vtab active" onclick="switchVideo(0)">
+          <span class="vtab-title">1. Stopped Vehicle Ahead</span>
+          <span class="vtab-desc">Braking alone freezes behind the obstacle; replanning overtakes safely.</span>
+        </button>
+        <button class="vtab" onclick="switchVideo(1)">
+          <span class="vtab-title">2. Cut-In During VLM Delay</span>
+          <span class="vtab-desc">The safety filter prevents a rear-end while a VLM call is still in flight.</span>
+        </button>
+        <button class="vtab" onclick="switchVideo(2)">
+          <span class="vtab-title">3. Dense Highway Traffic</span>
+          <span class="vtab-desc">Event-triggered routing skips routine frames and blends lane changes.</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 01. Architecture -->
+  <section id="method" class="block">
+    <div class="col-wide">
+      <div class="col-text" style="padding:0;">
+        <div class="kicker">01 · Problem &amp; Architecture</div>
+        <h2>Three components, one closed-loop stack</h2>
+        <p class="section-lead">
+          A VLM call takes ~230 ms on a GPU (and seconds over a network), while steering and braking run at 10–50 Hz.
+          Each of our three components solves one failure mode:
+        </p>
+      </div>
+
+      <div class="tri-cards">
+        <div class="pcard">
+          <span class="pcard-tag tag-bad">Failure Mode 1: Crash</span>
+          <h3>VLM Alone</h3>
+          <p>Waiting hundreds of milliseconds between control updates leaves the vehicle unprotected when a car cuts in or stops ahead.</p>
+        </div>
+        <div class="pcard">
+          <span class="pcard-tag tag-warn">Failure Mode 2: Freeze</span>
+          <h3>Fast Controller + Static Filter</h3>
+          <p>Braking prevents the crash, but without changing the high-level maneuver, the vehicle sits at zero speed behind a blocked lane forever.</p>
+        </div>
+        <div class="pcard good">
+          <span class="pcard-tag tag-good">Ours</span>
+          <h3>Event-Triggered VLM + Safety Filter</h3>
+          <p>The safety filter protects every step and reserves 8 m of stopping room while waiting; the VLM wakes only when needed to change maneuvers.</p>
+        </div>
+      </div>
+
+      <div class="layers-stack">
+        <div class="layer-row">
+          <div class="layer-badge"><span class="dot" style="background:#2563eb;"></span>1. Event-Triggered VLM</div>
+          <div class="layer-desc">Queries Qwen3-VL-8B only when the lane is blocked or camera features look unfamiliar. Outputs a discrete maneuver: <em>Stay, Pass, Careful,</em> or <em>Stop</em>.</div>
+          <div class="layer-speed">~230 ms / call</div>
+        </div>
+        <div class="layer-row">
+          <div class="layer-badge"><span class="dot" style="background:#475569;"></span>2. Fast Controller</div>
+          <div class="layer-desc">Executes the current maneuver at control rate (trained PPO policy or analytic lane controller) and blends steering across maneuver changes.</div>
+          <div class="layer-speed">10–50 Hz</div>
+        </div>
+        <div class="layer-row">
+          <div class="layer-badge"><span class="dot" style="background:#059669;"></span>3. Safety Filter</div>
+          <div class="layer-desc">Uses LiDAR distances to cap speed, guard road boundaries, check late VLM replies against current gaps, and hold an <strong>8 m stopping reserve</strong> while a reply is pending.</div>
+          <div class="layer-speed">0.13 ms / step</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02. Interactive Delay Demo -->
+  <section id="delay-demo" class="block">
+    <div class="col-wide">
+      <div class="col-text" style="padding:0;">
+        <div class="kicker">02 · Controlled Delay Sweep (576 Runs)</div>
+        <h2>Why the 8 m stopping reserve matters at 4–5 seconds</h2>
+        <p class="section-lead">
+          Drag the delay slider below. When a reply takes <strong>5+ seconds</strong>, a standard safety filter stops
+          right behind the obstacle's bumper—it avoids a crash, but leaves too little room to steer out when the pass
+          command arrives. Holding an 8 m reserve while waiting prevents this trap.
+        </p>
+      </div>
+
+      <div class="playground">
+        <div class="sim-controls">
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Simulated Planner Delay</span>
+              <span class="slider-val" id="delayReadout">6.0 seconds</span>
+            </div>
+            <input type="range" id="delaySlider" min="1" max="18" step="1" value="6" oninput="updateSimParams()" />
+          </div>
+
+          <div class="mode-pills">
+            <button id="btnReserveOn" class="mpill active-good" onclick="setReserve(true)">With 8 m Reserve (Ours)</button>
+            <button id="btnReserveOff" class="mpill" onclick="setReserve(false)">Without Reserve (0 m)</button>
+          </div>
+        </div>
+
+        <div class="sim-canvas-wrap">
+          <canvas id="roadSim" width="960" height="210"></canvas>
+        </div>
+
+        <div class="sim-status-bar">
+          <div id="simOutcomeText">
+            <strong>Measured at 6 s delay:</strong> 100% completed (24/24) with 8 m reserve vs. 33% completed (8/24, 16 stalled) without it.
+          </div>
+          <button class="replay-btn" onclick="resetSim()">↻ Replay</button>
+        </div>
+
+        <div class="figure-embed">
+          <img src="assets/delay-tipping-point.png" alt="Route completion and stalled runs across 576 simulated drives from 0 to 18 seconds of delay" />
+          <div class="figure-cap">
+            Measured across 576 physical MetaDrive runs (24 runs per delay point, 0 crashes). On curved SafeMetaDrive roads at a 4 s delay, the same reserve lifts completion from 72% to 92%.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03. SafeMetaDrive Benchmark -->
+  <section id="benchmark" class="block">
+    <div class="col-wide">
+      <div class="col-text" style="padding:0;">
+        <div class="kicker">03 · Routine Traffic Benchmark (SafeMetaDrive)</div>
+        <h2>In routine traffic, LiDAR + replanning beats Safe-RL without a VLM</h2>
+        <p class="section-lead">
+          Evaluated on 50 unseen procedural curved roads with intersections, roundabouts, and traffic accidents, using
+          identical LiDAR and vehicle-state inputs across methods (no VLM calls).
+        </p>
+      </div>
+
+      <div class="vtable-card">
+        <table class="vtable">
+          <thead>
+            <tr>
+              <th>Method (50 unseen maps)</th>
+              <th class="bar-cell">Route Completion ↑</th>
+              <th>Safety Cost ↓</th>
+              <th>Step Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="ours">
+              <td><strong>Ours (Rule Controller + Safety Filter)</strong></td>
+              <td class="bar-cell">
+                <div class="bar-row">
+                  <div class="bar-track"><div class="bar-fill" style="width:98%; background:#2563eb;"></div></div>
+                  <span class="bar-num" style="color:#1d4ed8;">98.0%</span>
+                </div>
+              </td>
+              <td class="mono">1.40</td>
+              <td class="mono">0.07 ms</td>
+            </tr>
+            <tr class="ours">
+              <td><strong>Ours (PPO Controller + Safety Filter, 3 seeds)</strong></td>
+              <td class="bar-cell">
+                <div class="bar-row">
+                  <div class="bar-track"><div class="bar-fill" style="width:89.3%; background:#059669;"></div></div>
+                  <span class="bar-num" style="color:#059669;">89.3%</span>
+                </div>
+              </td>
+              <td class="mono"><strong>0.75</strong></td>
+              <td class="mono">0.13 ms</td>
+            </tr>
+            <tr>
+              <td>IDM (MetaDrive built-in rule)</td>
+              <td class="bar-cell">
+                <div class="bar-row">
+                  <div class="bar-track"><div class="bar-fill" style="width:84%; background:#9ca3af;"></div></div>
+                  <span class="bar-num">84.0%</span>
+                </div>
+              </td>
+              <td class="mono">1.28</td>
+              <td class="mono">0.05 ms</td>
+            </tr>
+            <tr>
+              <td>PPO-Lag (Safe-RL baseline, 3 seeds)</td>
+              <td class="bar-cell">
+                <div class="bar-row">
+                  <div class="bar-track"><div class="bar-fill" style="width:59.3%; background:#9ca3af;"></div></div>
+                  <span class="bar-num">59.3%</span>
+                </div>
+              </td>
+              <td class="mono">2.20</td>
+              <td class="mono">0.07 ms</td>
+            </tr>
+            <tr>
+              <td>MetaDrive Pretrained PPO Expert</td>
+              <td class="bar-cell">
+                <div class="bar-row">
+                  <div class="bar-track"><div class="bar-fill" style="width:56%; background:#9ca3af;"></div></div>
+                  <span class="bar-num">56.0%</span>
+                </div>
+              </td>
+              <td class="mono">190.84</td>
+              <td class="mono">2.18 ms</td>
+            </tr>
+            <tr>
+              <td>CPO (Safe-RL baseline, 3 seeds)</td>
+              <td class="bar-cell">
+                <div class="bar-row">
+                  <div class="bar-track"><div class="bar-fill" style="width:1%; background:#d1d5db;"></div></div>
+                  <span class="bar-num">0.0%</span>
+                </div>
+              </td>
+              <td class="mono">9.19</td>
+              <td class="mono">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04. Ablations -->
+  <section id="ablations" class="block">
+    <div class="col-wide">
+      <div class="col-text" style="padding:0;">
+        <div class="kicker">04 · Single-Component Ablations (50 Held-Out Maps)</div>
+        <h2>Toggle any component OFF to inspect its effect</h2>
+        <p class="section-lead">
+          All measurements below come from the same system (PPO controller + Safety Filter) with one component disabled at a time.
+        </p>
+      </div>
+
+      <div class="playground switch-grid">
+        <div class="toggle-list">
+          <div class="titem" id="tog-safety" onclick="selectAblation('safety')">
+            <div>
+              <span class="titem-name">Safety Filter</span>
+              <span class="titem-sub">LiDAR speed cap &amp; road-boundary guard</span>
+            </div>
+            <span class="switch-pill switch-on" id="pill-safety">ON</span>
+          </div>
+
+          <div class="titem" id="tog-replan" onclick="selectAblation('replan')">
+            <div>
+              <span class="titem-name">Maneuver Replanning</span>
+              <span class="titem-sub">Allow lane changes around blocked lanes</span>
+            </div>
+            <span class="switch-pill switch-on" id="pill-replan">ON</span>
+          </div>
+
+          <div class="titem" id="tog-event" onclick="selectAblation('event')">
+            <div>
+              <span class="titem-name">Event-Triggered Routing</span>
+              <span class="titem-sub">Query only when blocked (vs. 10 Hz polling)</span>
+            </div>
+            <span class="switch-pill switch-on" id="pill-event">ON</span>
+          </div>
+
+          <div class="titem" id="tog-blend" onclick="selectAblation('blend')">
+            <div>
+              <span class="titem-name">Steering Blending</span>
+              <span class="titem-sub">Smooth transition across lane changes</span>
+            </div>
+            <span class="switch-pill switch-on" id="pill-blend">ON</span>
+          </div>
+        </div>
+
+        <div class="readout-box">
+          <div class="metric-row">
+            <div class="metric-top"><span>Route Completion</span><span class="mono" id="ab-succ">94.0%</span></div>
+            <div class="bar-track"><div id="ab-succ-bar" class="bar-fill" style="width:94%; background:#059669; transition:all 0.25s;"></div></div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-top"><span>Safety Cost (lower is safer)</span><span class="mono" id="ab-cost">1.30</span></div>
+            <div class="bar-track"><div id="ab-cost-bar" class="bar-fill" style="width:8%; background:#059669; transition:all 0.25s;"></div></div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-top"><span>Router Calls per Episode</span><span class="mono" id="ab-calls">2.1 calls</span></div>
+            <div class="bar-track"><div id="ab-calls-bar" class="bar-fill" style="width:4%; background:#059669; transition:all 0.25s;"></div></div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-top"><span>Peak Steering Change (lower is smoother)</span><span class="mono" id="ab-snap">0.54</span></div>
+            <div class="bar-track"><div id="ab-snap-bar" class="bar-fill" style="width:54%; background:#059669; transition:all 0.25s;"></div></div>
+          </div>
+
+          <div id="ab-banner" class="verdict-banner" style="background:#ecfdf5; color:#065f46;">
+            Full stack (all ON): 94.0% completion, 1.30 safety cost, and 2.1 calls per episode. Click any component on the left to disable it.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05. VLM Evaluation on Irregular Scenes -->
+  <section id="vlm-scenes" class="block">
+    <div class="col-wide">
+      <div class="col-text" style="padding:0;">
+        <div class="kicker">05 · VLM Evaluation on Irregular Scenes (1,200 Episodes)</div>
+        <h2>Where the VLM adds value over LiDAR alone</h2>
+        <p class="section-lead">
+          LiDAR measures geometry, not semantics—so without a VLM, the vehicle drives past a road worker holding a
+          STOP sign <strong>50 out of 50 times</strong>. Triggering <strong>Qwen3-VL-8B</strong> on unfamiliar visual
+          frames halves STOP violations while leaving clean roads untouched.
+        </p>
+      </div>
+
+      <div class="vtable-card">
+        <table class="vtable">
+          <thead>
+            <tr>
+              <th>Scene (50 maps each)</th>
+              <th>Ours (No VLM, Normal)</th>
+              <th>Ours (No VLM, Careful)</th>
+              <th>Ours + Event-Triggered VLM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="ours">
+              <td><strong>Worker holding STOP sign</strong></td>
+              <td><span class="chip chip-red">50 / 50 ran STOP</span></td>
+              <td><span class="chip chip-red">50 / 50 ran STOP</span></td>
+              <td><span class="chip chip-green">25 / 50 ran STOP</span> <span class="mono" style="color:#6b7280; font-size:0.8rem;">(5.0 calls)</span></td>
+            </tr>
+            <tr class="ours">
+              <td><strong>Wet road closure</strong></td>
+              <td><span class="chip chip-amber">2 / 50 crashed</span></td>
+              <td><span class="chip chip-green">0 / 50 crashed</span></td>
+              <td><span class="chip chip-green">0 / 50 crashed</span> <span class="mono" style="color:#6b7280; font-size:0.8rem;">(21.5 calls)</span></td>
+            </tr>
+            <tr>
+              <td><strong>Clean road</strong> (30 s route progress)</td>
+              <td><span class="chip chip-gray">54% completed</span></td>
+              <td><span class="chip chip-amber">47% completed</span></td>
+              <td><span class="chip chip-green">54% completed</span> <span class="mono" style="color:#059669; font-size:0.8rem;">(0.1 calls)</span></td>
+            </tr>
+            <tr>
+              <td><strong>Rain, no obstacle</strong> (30 s progress)</td>
+              <td><span class="chip chip-gray">54% completed</span></td>
+              <td><span class="chip chip-amber">47% completed</span></td>
+              <td><span class="chip chip-amber">47% completed</span> <span class="mono" style="color:#6b7280; font-size:0.8rem;">(9.6 calls)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Two Extra Simulators -->
+      <div class="sim-pair">
+        <div class="sim-mini">
+          <div class="kicker" style="margin-bottom:4px;">Generalization Check 1</div>
+          <h3>Waymo &amp; nuScenes Traffic Replays</h3>
+          <div class="kpi-row">
+            <div class="kpi"><strong>76.9%</strong><span>crash-free (vs. 61.5% without filter)</span></div>
+            <div class="kpi"><strong>80.0%</strong><span>crash-free on nuScenes</span></div>
+          </div>
+          <p style="margin:0; font-size:0.88rem; color:var(--ink-soft);">
+            Evaluated across 13 recorded real-world traffic logs at 0.045 ms per step.
+          </p>
+        </div>
+
+        <div class="sim-mini">
+          <div class="kicker" style="margin-bottom:4px;">Generalization Check 2</div>
+          <h3>highway-env (750 Episodes, 1.5 s Delay)</h3>
+          <div class="kpi-row">
+            <div class="kpi"><strong>80.0%</strong><span>crash-free (100% on merges)</span></div>
+            <div class="kpi"><strong>-98.4%</strong><span>fewer calls (128 → 2.1)</span></div>
+          </div>
+          <p style="margin:0; font-size:0.88rem; color:var(--ink-soft);">
+            Outperforms 10 Hz polling without a safety filter (34%) and a static safety filter (68%).
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06. Limitations -->
+  <section id="limits" class="block">
+    <div class="col-wide">
+      <div class="col-text" style="padding:0;">
+        <div class="kicker">06 · Limitations</div>
+        <h2>What remains unsolved</h2>
+        <p class="section-lead">
+          Our experiments also highlight clear failure modes that remain open:
+        </p>
+      </div>
+
+      <div class="limits-grid">
+        <div class="limit-card">
+          <strong>1. Zero-shot VLM still misses 25 / 50 STOP signs</strong>
+          <p>Halving violations from 50/50 to 25/50 shows real semantic signal, but 50% compliance is far from sufficient for deployment.</p>
+        </div>
+        <div class="limit-card">
+          <strong>2. Conservative waiting on wet closures</strong>
+          <p>On wet road closures, the VLM avoids collisions (0/50) largely by holding the vehicle stopped for most of the episode (16% route progress).</p>
+        </div>
+        <div class="limit-card">
+          <strong>3. Visual trigger false-alarms on rain</strong>
+          <p>Rain streaks trigger 9.6 VLM calls per episode on empty roads, causing unnecessary caution and reducing progress from 54% to 47%.</p>
+        </div>
+        <div class="limit-card">
+          <strong>4. Reserve helps only at long delays (4+ s)</strong>
+          <p>At typical 0.25 s local GPU latency, the 8 m stopping reserve has minimal effect; its benefit appears when delays exceed 4 seconds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="col-text">
+      <div class="kicker">Citation</div>
+      <div class="bib-box">
+        <button class="copy-btn" onclick="copyBib()">Copy BibTeX</button>
+        <pre id="bibtex">@misc{ravi2026safefastcontrol,
+  title  = {Safe Fast Control While a Slow Language Model Thinks:
+            Combining RL Skills, Event-Triggered Routing, and a Delay-Aware Safety Filter},
+  author = {Ravi, Akash and Shah, Harsh and Chadderwala, Ved},
+  year   = {2026},
+  note   = {CS 642 Course Project}
+}</pre>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const VIDEOS = [
+      { src: "assets/stall-final.mp4", poster: "assets/stall-final-frame.png" },
+      { src: "assets/two_trap-proposed.mp4", poster: "assets/two_trap-frame.png" },
+      { src: "assets/dense_highway-final.mp4", poster: "assets/dense_highway-final-frame.png" }
+    ];
+
+    function switchVideo(idx) {
+      const v = document.getElementById("heroVideo");
+      const s = document.getElementById("heroSource");
+      s.src = VIDEOS[idx].src;
+      v.poster = VIDEOS[idx].poster;
+      v.load();
+      v.play().catch(() => {});
+      document.querySelectorAll(".vtab").forEach((el, i) => {
+        el.classList.toggle("active", i === idx);
+      });
+    }
+
+    /* Interactive Road Delay Simulator */
+    const canvas = document.getElementById("roadSim");
+    const ctx = canvas.getContext("2d");
+    let simDelay = 6;
+    let useReserve = true;
+    let simTime = 0;
+    let egoX = 70, egoY = 142, egoHeading = 0, egoV = 58;
+    let replyReceived = false;
+    let trapped = false;
+
+    const MEASURED = {
+      1: [100, 100, 0], 2: [100, 100, 0], 3: [100, 100, 0],
+      4: [100, 92, 2], 5: [100, 33, 16], 6: [100, 33, 16],
+      7: [100, 33, 16], 8: [100, 33, 16], 9: [100, 33, 16],
+      10: [100, 33, 16], 11: [100, 33, 16], 12: [100, 33, 16],
+      13: [100, 33, 16], 14: [100, 33, 16], 15: [100, 33, 16],
+      16: [100, 33, 16], 17: [100, 33, 16], 18: [100, 33, 16]
+    };
+
+    function resetSim() {
+      simTime = 0;
+      egoX = 70;
+      egoY = 142;
+      egoHeading = 0;
+      egoV = 62;
+      replyReceived = false;
+      trapped = false;
+    }
+
+    function setReserve(val) {
+      useReserve = val;
+      document.getElementById("btnReserveOn").className = val ? "mpill active-good" : "mpill";
+      document.getElementById("btnReserveOff").className = !val ? "mpill active-bad" : "mpill";
+      updateSimBanner();
+      resetSim();
+    }
+
+    function updateSimParams() {
+      simDelay = parseInt(document.getElementById("delaySlider").value, 10);
+      document.getElementById("delayReadout").textContent = simDelay.toFixed(1) + " seconds";
+      updateSimBanner();
+      resetSim();
+    }
+
+    function updateSimBanner() {
+      const [onPct, offPct, stalls] = MEASURED[simDelay] || [100, 33, 16];
+      const el = document.getElementById("simOutcomeText");
+      if (simDelay <= 3) {
+        el.innerHTML = `<strong>Measured at ${simDelay} s delay:</strong> Reply arrives before stopping — both finish <strong>100% (24/24)</strong>.`;
+      } else if (simDelay === 4) {
+        el.innerHTML = `<strong>Tipping point (${simDelay} s delay):</strong> With 8 m reserve = <strong>100% (24/24)</strong> · Without reserve = <strong>92% (22/24, 2 stalled)</strong>.`;
+      } else {
+        el.innerHTML = `<strong>Measured at ${simDelay} s delay:</strong> With 8 m reserve = <strong>100% (24/24)</strong> · Without reserve = <strong>33% (8/24 — ${stalls} stalled)</strong>.`;
+      }
+    }
+
+    function stepSim() {
+      const dt = 0.04;
+      simTime += dt;
+      const stallX = 560;
+      const stopTargetX = useReserve ? (stallX - 135) : (stallX - 56);
+      const triggerTime = 0.35;
+      const arrivalTime = triggerTime + simDelay * 0.42;
+
+      if (simTime >= arrivalTime && !replyReceived) {
+        replyReceived = true;
+        if (!useReserve && (stallX - egoX) < 72) {
+          trapped = true;
+        }
+      }
+
+      if (!replyReceived) {
+        const dist = stopTargetX - egoX;
+        egoV = Math.max(0, Math.min(68, dist * 0.95));
+        egoX += egoV * dt;
+      } else if (trapped) {
+        egoV = 0;
+        egoHeading = -0.08;
+      } else {
+        egoV = Math.min(82, egoV + 55 * dt);
+        const dy = 68 - egoY;
+        egoHeading = Math.max(-0.32, Math.min(0.32, dy * 0.012));
+        egoX += egoV * Math.cos(egoHeading) * dt * 1.4;
+        egoY += egoV * Math.sin(egoHeading) * dt * 1.9;
+      }
+
+      if (egoX > 990 || (trapped && simTime > arrivalTime + 3.2)) {
+        resetSim();
+      }
+    }
+
+    function drawCar(x, y, ang, color, label) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(ang);
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.roundRect(-24, -12, 48, 24, 5);
+      ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,0.82)";
+      ctx.fillRect(4, -9, 11, 18);
+      ctx.restore();
+      if (label) {
+        ctx.fillStyle = "#e2e8f0";
+        ctx.font = "600 12px 'Plus Jakarta Sans', sans-serif";
+        ctx.fillText(label, x - 24, y - 20);
+      }
+    }
+
+    function renderSim() {
+      stepSim();
+      ctx.clearRect(0, 0, 960, 210);
+
+      ctx.fillStyle = "#1e293b";
+      ctx.fillRect(0, 26, 960, 158);
+
+      ctx.strokeStyle = "#94a3b8";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, 28); ctx.lineTo(960, 28);
+      ctx.moveTo(0, 182); ctx.lineTo(960, 182);
+      ctx.stroke();
+
+      ctx.strokeStyle = "rgba(255,255,255,0.35)";
+      ctx.setLineDash([18, 14]);
+      ctx.beginPath();
+      ctx.moveTo(0, 105); ctx.lineTo(960, 105);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      const stallX = 560;
+      if (useReserve && !replyReceived) {
+        ctx.fillStyle = "rgba(16, 185, 129, 0.18)";
+        ctx.strokeStyle = "#34d399";
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5, 4]);
+        ctx.fillRect(stallX - 115, 114, 82, 58);
+        ctx.strokeRect(stallX - 115, 114, 82, 58);
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#6ee7b7";
+        ctx.font = "600 11.5px 'JetBrains Mono', monospace";
+        ctx.fillText("8 m reserve", stallX - 96, 100);
+      }
+
+      drawCar(stallX, 142, 0, "#ef4444", "Stopped vehicle");
+      drawCar(egoX, egoY, egoHeading, "#3b82f6", "");
+
+      let badgeText = "";
+      let badgeBg = "#1d4ed8";
+      if (!replyReceived) {
+        badgeText = `VLM call pending (${simDelay}s delay)...`;
+        badgeBg = "#2563eb";
+      } else if (trapped) {
+        badgeText = "Reply: 'Pass Left' — Stopped too close to turn (STALLED)";
+        badgeBg = "#dc2626";
+      } else {
+        badgeText = "Reply: 'Pass Left' — Reserve released, overtaking!";
+        badgeBg = "#059669";
+      }
+
+      ctx.font = "600 12px 'Plus Jakarta Sans', sans-serif";
+      const tw = ctx.measureText(badgeText).width + 20;
+      const bx = Math.max(12, Math.min(948 - tw, egoX - tw / 2));
+      const by = Math.max(34, egoY - 42);
+      ctx.fillStyle = badgeBg;
+      ctx.beginPath();
+      ctx.roundRect(bx, by, tw, 24, 999);
+      ctx.fill();
+      ctx.fillStyle = "#ffffff";
+      ctx.fillText(badgeText, bx + 10, by + 16);
+
+      requestAnimationFrame(renderSim);
+    }
+
+    renderSim();
+
+    /* Interactive Ablations */
+    let activeAblation = null;
+
+    const ABLATIONS = {
+      all: {
+        succ: "94.0%", succW: 94, succCol: "#059669",
+        cost: "1.30", costW: 8, costCol: "#059669",
+        calls: "2.1 calls", callsW: 4, callsCol: "#059669",
+        snap: "0.54", snapW: 54, snapCol: "#059669",
+        bg: "#ecfdf5", fg: "#065f46",
+        msg: "Full stack (all ON): 94.0% completion, 1.30 safety cost, and 2.1 calls per episode. Click any component on the left to disable it."
+      },
+      safety: {
+        succ: "84.0%", succW: 84, succCol: "#d97706",
+        cost: "17.00 (13× worse)", costW: 100, costCol: "#dc2626",
+        calls: "2.0 calls", callsW: 4, callsCol: "#059669",
+        snap: "0.47", snapW: 47, snapCol: "#059669",
+        bg: "#fef2f2", fg: "#991b1b",
+        msg: "Safety Filter OFF: Safety cost increases 13× (1.30 → 17.00) and zero-cost completion drops from 84% to 56%."
+      },
+      replan: {
+        succ: "40.0% (-54 pts)", succW: 40, succCol: "#dc2626",
+        cost: "1.62", costW: 10, costCol: "#059669",
+        calls: "0.0 calls", callsW: 1, callsCol: "#6b7280",
+        snap: "0.41", snapW: 41, snapCol: "#059669",
+        bg: "#fef2f2", fg: "#991b1b",
+        msg: "Maneuver Replanning OFF: The Safety Filter avoids crashes, but stalls behind blocked lanes—completion drops from 94% to 40%."
+      },
+      event: {
+        succ: "94.0%", succW: 94, succCol: "#059669",
+        cost: "1.30", costW: 8, costCol: "#059669",
+        calls: "512.2 calls (244×)", callsW: 100, callsCol: "#dc2626",
+        snap: "0.54", snapW: 54, snapCol: "#059669",
+        bg: "#fffbeb", fg: "#92400e",
+        msg: "Event-Triggered Routing OFF (10 Hz polling): No gain in completion or safety, while burning 244× more calls (512.2 vs. 2.1)."
+      },
+      blend: {
+        succ: "94.0%", succW: 94, succCol: "#059669",
+        cost: "1.42", costW: 9, costCol: "#059669",
+        calls: "2.2 calls", callsW: 4, callsCol: "#059669",
+        snap: "0.74 (+37%)", snapW: 86, snapCol: "#dc2626",
+        bg: "#fffbeb", fg: "#92400e",
+        msg: "Steering Blending OFF: Hard switches between lane targets increase peak steering change by 37% (0.54 → 0.74)."
+      }
+    };
+
+    function selectAblation(key) {
+      activeAblation = (activeAblation === key) ? null : key;
+      ["safety", "replan", "event", "blend"].forEach(k => {
+        const isOff = (activeAblation === k);
+        document.getElementById("tog-" + k).classList.toggle("off", isOff);
+        const pill = document.getElementById("pill-" + k);
+        pill.textContent = isOff ? "OFF" : "ON";
+        pill.className = "switch-pill " + (isOff ? "switch-off" : "switch-on");
+      });
+
+      const d = ABLATIONS[activeAblation || "all"];
+      document.getElementById("ab-succ").textContent = d.succ;
+      document.getElementById("ab-succ-bar").style.width = d.succW + "%";
+      document.getElementById("ab-succ-bar").style.background = d.succCol;
+
+      document.getElementById("ab-cost").textContent = d.cost;
+      document.getElementById("ab-cost-bar").style.width = d.costW + "%";
+      document.getElementById("ab-cost-bar").style.background = d.costCol;
+
+      document.getElementById("ab-calls").textContent = d.calls;
+      document.getElementById("ab-calls-bar").style.width = d.callsW + "%";
+      document.getElementById("ab-calls-bar").style.background = d.callsCol;
+
+      document.getElementById("ab-snap").textContent = d.snap;
+      document.getElementById("ab-snap-bar").style.width = d.snapW + "%";
+      document.getElementById("ab-snap-bar").style.background = d.snapCol;
+
+      const ban = document.getElementById("ab-banner");
+      ban.style.background = d.bg;
+      ban.style.color = d.fg;
+      ban.textContent = d.msg;
+    }
+
+    function copyBib() {
+      const text = document.getElementById("bibtex").innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector(".copy-btn");
+        btn.textContent = "Copied!";
+        setTimeout(() => (btn.textContent = "Copy BibTeX"), 1500);
+      });
+    }
+  </script>
+</body>
+</html>

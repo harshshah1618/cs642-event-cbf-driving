@@ -1,0 +1,22 @@
+{
+  "workspace": "ved29022004",
+  "volume": "cs642-irregular",
+  "remote_path": "closedloop/final-qwen3vl-8b",
+  "retrieved_date": "2026-11-25",
+  "episode_files": 16,
+  "episodes": 400,
+  "complete_map_coverage": true,
+  "ppo_matches_local_controls": true,
+  "ppo_sha256": "30d4d0ff2fa6cf63e9477af293a61bee955312974f94ef6edda91f0cc6f201d4",
+  "detector_bank_sha256": "d57f63affcc948793aec66e63a764aa2a08754e908c9cb90d5ef8b7a73b5a5f5",
+  "detector_bank_local_path": "/home/harsh/Projects/cs642-event-cbf-driving/runs/ved-workspace-audit-20261125/dinov2_small-v1.pt",
+  "detector_bank_remote_path": "banks/dinov2_small-v1.pt",
+  "replay_pilot": {
+    "episodes": 24,
+    "strict_matches": 9,
+    "used_for_historical_collision_counts": false
+  },
+  "no_cloud_jobs_started": true,
+  "no_new_inference": true,
+  "audit_source_sha256": "3a7bb548b9efc77d523ca01f500a81cb0ac54516a7405cfc1bd51d595217d36b"
+}

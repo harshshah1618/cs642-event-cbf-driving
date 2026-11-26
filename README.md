@@ -1,5 +1,13 @@
 # Driving project
 
+Ved's shared-workspace records are now available: [audited historical Qwen
+results and corrected comparison](reports/irregular/ved-saved-audit-2026-11-25/README.md).
+
+Latest result audit: [800 local irregular-scene control episodes](reports/irregular/local-controls-2026-11-25/README.md),
+with saved raw rows and corrected whole-episode collision counts. Ved's
+[historical irregular results](reports/irregular/final-test.md) retain their
+original aggregates with the collision-accounting limitation marked.
+
 > **SafeMetaDrive handoff:** Start with [TEAMMATE_HANDOFF.md](TEAMMATE_HANDOFF.md).
 > Training records, datasets, resumable checkpoints and large weights are exported
 > as checksummed private-release bundles; restore them with
