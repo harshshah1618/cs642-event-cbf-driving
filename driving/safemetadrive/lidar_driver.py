@@ -28,7 +28,6 @@ from dataclasses import dataclass
 
 import numpy as np
 
-
 TOTAL_WIDTH_SCALE = 18.0
 MAX_LANE_WIDTH = 4.5
 STANDARD_LANE_WIDTH = 3.5
@@ -119,6 +118,138 @@ def decode_observation(obs: np.ndarray) -> DecodedObs:
     )
 
 
+def lidar_clusters(d: DecodedObs, gap_m: float = 1.2) -> list[np.ndarray]:
+    """Group adjacent LiDAR hits into object clusters; returns centroids (x fwd, y left)."""
+    valid = d.lidar_m < (LIDAR_RANGE - 0.6)
+    if not np.any(valid):
+        return []
+    px = d.lidar_m * _RAY_COS
+    py = d.lidar_m * _RAY_SIN
+    clusters: list[list[int]] = []
+    current: list[int] = []
+    for i in range(NUM_LIDAR):
+        if not valid[i]:
+            if current:
+                clusters.append(current)
+                current = []
+            continue
+        if current and math.hypot(px[i] - px[current[-1]], py[i] - py[current[-1]]) > gap_m:
+            clusters.append(current)
+            current = []
+        current.append(i)
+    if current:
+        clusters.append(current)
+    # The scan is circular: merge the last cluster into the first if they touch at ray 0.
+    if len(clusters) > 1 and clusters[0][0] == 0 and clusters[-1][-1] == NUM_LIDAR - 1:
+        a, b = clusters[0][0], clusters[-1][-1]
+        if math.hypot(px[a] - px[b], py[a] - py[b]) <= gap_m:
+            clusters[0] = clusters.pop() + clusters[0]
+    return [np.array([px[c].mean(), py[c].mean()]) for c in clusters]
+
+
+class CrossingTrafficGuard:
+    """Yield to converging moving objects using only consecutive LiDAR scans.
+
+    Tracks LiDAR clusters frame to frame, compensating ego motion with speed and
+    the observed yaw rate (|obs[7]| signed by the steering command), estimates
+    each object's ground velocity, and predicts whether a moving object will
+    enter the ego's swept corridor (along its current arc) within ``horizon_s``.
+    Lead vehicles already inside the corridor are left to the headway filter.
+    """
+
+    def __init__(self, horizon_s: float = 3.0, min_speed: float = 1.5, hold_s: float = 0.5,
+                 dt: float = 0.1):
+        self.horizon_s = horizon_s
+        self.min_speed = min_speed
+        self.hold_steps = int(round(hold_s / dt))
+        self.dt = dt
+        self.tracks: list[dict] = []
+        self.hold = 0
+        self.last_conflict_s: float | None = None
+        self.next_id = 0
+        self.window = 8  # frames in the least-squares velocity fit
+
+    @staticmethod
+    def ego_yaw_rate(d: DecodedObs) -> float:
+        return math.copysign(min(1.0, d.yaw_rate), d.steering_norm) if d.steering_norm != 0 else 0.0
+
+    def update(self, d: DecodedObs) -> bool:
+        """Advance one control step; True when the ego should yield (stop)."""
+        dt, v, w = self.dt, d.speed_mps, self.ego_yaw_rate(d)
+        cos_w, sin_w = math.cos(-w * dt), math.sin(-w * dt)
+        cents = lidar_clusters(d)
+        new_tracks: list[dict] = []
+        used: set[int] = set()
+        rot = np.array([[cos_w, -sin_w], [sin_w, cos_w]])
+        for tr in self.tracks:
+            # Re-express the track history in the current ego frame (ego moved v*dt, turned w*dt):
+            # a static object keeps the same compensated coordinates, so the history's slope is
+            # the object's ground velocity.
+            hist = (tr["hist"] - np.array([v * dt, 0.0])) @ rot.T
+            pred = hist[-1] + tr["v"] * dt
+            best, best_d = -1, 2.5
+            for j, c in enumerate(cents):
+                if j in used:
+                    continue
+                dist = float(np.hypot(*(c - pred)))
+                if dist < best_d:
+                    best, best_d = j, dist
+            if best < 0:
+                continue
+            used.add(best)
+            c = cents[best]
+            hist = np.vstack([hist, c])[-self.window:]
+            if len(hist) >= 3:
+                t = np.arange(len(hist)) * dt
+                t = t - t.mean()
+                vel = (t @ (hist - hist.mean(axis=0))) / float(t @ t)  # least-squares slope
+            else:
+                vel = (hist[-1] - hist[0]) / dt
+            new_tracks.append(dict(p=c, v=vel, hist=hist, age=tr["age"] + 1, id=tr["id"]))
+        for j, c in enumerate(cents):
+            if j not in used:
+                new_tracks.append(dict(p=c, v=np.zeros(2), hist=c[None, :], age=0, id=self.next_id))
+                self.next_id += 1
+        self.tracks = new_tracks
+
+        conflict = self._first_conflict(v, w)
+        self.last_conflict_s = conflict
+        if conflict is not None:
+            self.hold = self.hold_steps
+            return True
+        if self.hold > 0:
+            self.hold -= 1
+            return True
+        return False
+
+    def static_objects(self, min_age: int = 3, max_speed: float = 1.0) -> list[dict]:
+        """Tracked objects that are not moving over the ground (signs, people, cones, stopped cars)."""
+        return [t for t in self.tracks if t["age"] >= min_age and float(np.hypot(*t["v"])) < max_speed]
+
+    def _first_conflict(self, v: float, w: float) -> float | None:
+        corridor_half_w, front, rear = 2.2, 6.5, -4.0  # front margin: stop clear of the crossing path
+        steps = int(round(self.horizon_s / self.dt))
+        for tr in self.tracks:
+            if tr["age"] < 3 or float(np.hypot(*tr["v"])) < self.min_speed:
+                continue
+            p0 = tr["p"]
+            if p0[0] < -1.0 or abs(p0[1]) <= corridor_half_w or float(np.hypot(*p0)) > 35.0:
+                continue  # behind us, already in our corridor, or far away
+            for k in range(1, steps + 1):
+                t = k * self.dt
+                psi = w * t
+                if abs(w) > 1e-3:
+                    ex, ey = v * math.sin(psi) / w, v * (1.0 - math.cos(psi)) / w
+                else:
+                    ex, ey = v * t, 0.0
+                ox, oy = p0[0] + tr["v"][0] * t - ex, p0[1] + tr["v"][1] * t - ey
+                c, s = math.cos(-psi), math.sin(-psi)
+                rx, ry = c * ox - s * oy, s * ox + c * oy
+                if rear < rx < front and abs(ry) < corridor_half_w:
+                    return t
+        return None
+
+
 class LidarOptionReserveDriver:
     """Pure observation-only driver with LiDAR safety filter and option-preserving reserve."""
 
@@ -135,8 +266,11 @@ class LidarOptionReserveDriver:
         decision_delay_steps: int = 0,
         protection: bool = True,
         change_period: int = 10,
+        crossing_guard: bool = True,
     ):
         self.observation = np.asarray(observation, dtype=np.float32)
+        self.crossing = CrossingTrafficGuard() if crossing_guard else None
+        self.crossing_yield_steps = 0
         self.max_speed_kmh = float(max_speed_kmh)
         self.lateral_accel = float(lateral_accel)
         self.headway = float(headway)
@@ -369,11 +503,16 @@ class LidarOptionReserveDriver:
             )
             desired_speed = min(desired_speed, max(0.0, cap))
 
+            # Yield to converging traffic (roundabout entries, intersections, cut-ins)
+            yield_now = self.crossing.update(d) if self.crossing is not None else False
+            if yield_now:
+                desired_speed = 0.0
+                self.crossing_yield_steps += 1
             # Emergency close-range stop only for true direct-nose collision risk
             if nose_d < max(2.8, d.speed_mps * 0.65):
                 desired_speed = 0.0
             # Anti-deadlock creep: if transitioning into a clear target lane and nose has >2.8 m, allow slow creep
-            elif in_transition and tgt_front > 8.0 and nose_d >= 2.8 and desired_speed < 2.2:
+            elif in_transition and not yield_now and tgt_front > 8.0 and nose_d >= 2.8 and desired_speed < 2.2:
                 desired_speed = 2.2
 
             if desired_speed < cruise_cap - 0.15:

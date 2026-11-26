@@ -1,0 +1,32 @@
+af56a8bd5cf194df32e34ee3a0dd2f863880fb30
+ driving/irregular/escalation.py       | 100 ++++++++++++++++++++++--
+ driving/irregular/vlm.py              |  59 ++++++++++++++
+ driving/safemetadrive/lidar_driver.py | 143 +++++++++++++++++++++++++++++++++-
+ driving/safemetadrive/unified.py      |   4 +-
+ tools/benchmark_highway_env.py        | 101 +++++++++++++++++++++---
+ tools/irregular_modal.py              |  19 +++++
+ tools/safemetadrive_modal.py          |  32 ++++++++
+ tools/safemetadrive_train.py          |  13 +++-
+ 8 files changed, 449 insertions(+), 22 deletions(-)
+20ec0c1dc0461f50a4b5812f1e5363818694ce569c9cd5cea921838c3d92b085  driving/safemetadrive/camera_planner.py
+0cdb4f04bf5ddbc28bd1fdcdfbda5d1f6512f8ccd68d08c01ad40503d4cf34a8  driving/safemetadrive/campaign.py
+7bcde39b18e055c94ed7cb34bbeb3f13a80cc8bd78e64c3ceb65d5ff95399238  driving/safemetadrive/__init__.py
+462bf5a936414ec53b48eebef61f65a664265b5cc26f17384e24ff5f3cb6ab28  driving/safemetadrive/lidar_driver.py
+6326983c3845a6c3ce9aca256e94b48d5216de7b6ed364926443370025cf4524  driving/safemetadrive/maneuvers.py
+a00b935a5a452d1573e772a13a2274f1c39339a05e5c7048ceff390fa4a173cd  driving/safemetadrive/omnisafe_env.py
+f4ce59167d712378c8a4c75a36d98cf232d833f82362824e9b5e9aaf3c90028c  driving/safemetadrive/policies.py
+1ee8d8f075a5d015c3f30c5cdf35a66874dd3b04022ab3bdf9ef23117acb05b9  driving/safemetadrive/protocol.py
+244ee4a43a4f0a80c8f470130d7683d79fc17392ef49527566da7c3c6a294d10  driving/safemetadrive/selection.py
+d67209494cea6961da92703324cee444ee595140da9ea2fbcb6c13a649b65f72  driving/safemetadrive/skill_env.py
+8bb1c99b2c6975089580287c933807ecfff1aef9f60942f69ccbe0a9f6670775  driving/safemetadrive/slip_adapter.py
+d52b6dc88b984f04ed12f47733db8bc26eb3f3b2c2327a981d851501ff87f5ec  driving/safemetadrive/training_state.py
+f2dba5addb2144f4af4e7a2414b7c52e804d4f7ad1443bb277bae6f890584132  driving/safemetadrive/unified.py
+f9dadea9ff06773015dda6d6b780b4353ec13bf8b19f248908531a61a933a399  driving/safemetadrive/viability.py
+6a804156fd0efb5a87c4969ee1b9ab9fbf93c92db7d849a591da997695e0103f  driving/irregular/escalation.py
+5311cf69969b3e76bf57f9bd9bc1da7d70ee924cf08d3681b5d83920e16ac09e  driving/irregular/frames.py
+d0d5dbf7d8890115a1bc828343726efb9bd6b791c57392f801458baebfde5237  driving/irregular/__init__.py
+28a3b40180bf5e9d0ecc35650b5fcdd1cfdbe2d0752256e4564b9b409cc395a1  driving/irregular/patchcore.py
+19849646642f91de1c3d059cd2bced06cdfc66916ea141bc504c56f0bfdb13f1  driving/irregular/props.py
+c3f23c95be720dc975fd32fa107b3a67f8ddd257b5c38018d961df243d4f2e19  driving/irregular/scene.py
+a59e2d1117161ce008af1be03749dffcba342f6ce651620cf76b938bba5c74dd  driving/irregular/vlm.py
+0d93a1cc3abe1f11369e8ae3e2442415b4f58e2d18c5387e81f7303d19ae78f8  driving/irregular/weather.py

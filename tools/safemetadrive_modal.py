@@ -765,6 +765,38 @@ def cloud_run(stage: str = "pilot", run: str = "pilot-v1", steps: int = 1000000,
         volume.commit()
 
 
+@app.function(image=training_image, volumes={"/results": volume}, cpu=8, memory=16384,
+              timeout=6 * 3600, max_containers=6)
+def train_baseline_v2(spec):
+    """Longer-budget baselines with OmniSafe default hyperparameters (8 env workers)."""
+    import subprocess
+    import sys
+    import time
+
+    run, algorithm, seed, steps = spec
+    out = f"/results/{run}/{algorithm}-seed{seed}"
+    Path(out).mkdir(parents=True, exist_ok=True)
+    with open(f"{out}/train.log", "w") as log:
+        proc = subprocess.Popen([
+            sys.executable, "/workspace/tools/safemetadrive_train.py", "--algorithm", algorithm,
+            "--seed", str(seed), "--steps", str(steps), "--output", out, "--workers", "8",
+            "--defaults", "--save-freq", "25"], stdout=log, stderr=subprocess.STDOUT)
+        while proc.poll() is None:
+            time.sleep(60)
+            volume.commit()
+    volume.commit()
+    if proc.returncode:
+        raise RuntimeError(Path(f"{out}/train.log").read_text()[-8000:])
+    return json.loads(Path(f"{out}/manifest.json").read_text())
+
+
+@app.local_entrypoint()
+def baselines_v2(run: str = "baselines-5m-defaults-v2", steps: int = 5_000_000):
+    specs = [(run, algorithm, seed, steps) for algorithm in ("PPOLag", "CPO") for seed in range(3)]
+    for record in train_baseline_v2.map(specs, return_exceptions=True):
+        print(json.dumps(record if isinstance(record, dict) else repr(record))[:2000], flush=True)
+
+
 @app.local_entrypoint()
 def main(stage: str = "pilot", run: str = "pilot-v1", steps: int = 1000000,
          camera_step: int = 200):

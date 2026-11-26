@@ -27,7 +27,6 @@ from typing import Any
 import numpy as np
 
 from driving.safemetadrive.lidar_driver import (
-    LIDAR_RANGE,
     DecodedObs,
     LidarOptionReserveDriver,
     decode_observation,
@@ -38,6 +37,7 @@ def _load_sb3_mlp_actor(zip_path: str):
     """Load the deterministic actor MLP from an SB3 .zip checkpoint using pure PyTorch."""
     import io
     import zipfile
+
     import torch
 
     torch.set_num_threads(1)
@@ -73,6 +73,7 @@ class UnifiedConfig:
     # Layer 1: Fast Safety Filter
     use_safety_filter: bool = True
     option_reserve_m: float = 6.5
+    crossing_guard: bool = True           # yield to converging traffic (LiDAR tracking)
     use_viability_reserve: bool = False  # Upgrade #3: closed-form Option-Viability Barrier
     expected_delay_s: float = 0.5        # Expected slow-planner latency for viability reserve
     headway: float = 1.15
@@ -118,6 +119,7 @@ class UnifiedDrivingSystem:
             decision_delay_steps=config.decision_delay_steps,
             protection=config.use_safety_filter,
             change_period=config.change_period,
+            crossing_guard=config.crossing_guard,
         )
 
         # Optional trained PPO tracker (Layer 2) loaded directly from SB3 zip in pure PyTorch

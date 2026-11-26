@@ -455,6 +455,25 @@ def main(stage: str = "smoke", encoder: str = "dinov2_small", run: str = "eval-d
         for result in closed_loop_l4.map(specs, return_exceptions=True):
             print(json.dumps(result if isinstance(result, dict) else repr(result)), flush=True)
         return
+    elif stage in ("dev-v3", "dev-v3b", "final-v3"):
+        # v3 stack: LiDAR Layer 1 with crossing guard + analytic Layer 2 + PatchCore/LiDAR-triggered
+        # Qwen3-VL-8B with verified hold release. dev-v3 runs on the (now development) maps
+        # 1000-1049; final-v3 runs once, frozen, on untouched maps 3000-3099.
+        if stage in ("dev-v3", "dev-v3b"):
+            scenes = ("flagger", "billboard", "pedestrian-shoulder", "clean")
+            split, starts, tag = "irregular-test", (1000, 1025), f"{stage}-qwen3vl-8b"
+        else:
+            scenes = ("flagger", "billboard", "pedestrian-shoulder", "pedestrian-lane",
+                      "lane-closed", "wet-closed", "rain-clean", "clean")
+            split, starts, tag = "irregular-final", range(3000, 3100, 25), "final-v3-qwen3vl-8b"
+        specs = [dict(model="Qwen/Qwen3-VL-8B-Instruct", tag=tag, scene=scene,
+                      trigger="novelty+lidar", hi_res=True, driver_kind="unified", split=split,
+                      config=dict(verified_release=True),
+                      seeds=list(range(start, start + 25)))
+                 for scene in scenes for start in starts]
+        for result in closed_loop_l4.map(specs, return_exceptions=True):
+            print(json.dumps(result if isinstance(result, dict) else repr(result)), flush=True)
+        return
     elif stage == "final-unified":
         # Unified 3-layer zero-peeking stack (LiDAR Layer 1 + PPO Layer 2 + PatchCore/Qwen3-VL-8B Layer 3)
         # 8 irregular scenes x 50 fresh maps (1000-1049), 2 shards per scene, irregular-episode-v2 logger.

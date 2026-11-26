@@ -1,4 +1,138 @@
-# SafeMetaDrive teammate handoff
+# Teammate handoff: paper-ready evaluation (updated 2026-11-26)
+
+Branch **`harsh-testing`**. Read [reports/PAPER-RESULTS.md](reports/PAPER-RESULTS.md) first: it holds
+the protocol, every final table that exists so far, and the limitations. Older reports carry a
+"Superseded" banner; do not quote their numbers.
+
+## Ground rules (do not break these)
+
+- **Final maps are evaluated once, frozen:** SafeMetaDrive **2000–2199**, irregular **3000–3099**,
+  highway-env seeds **1000–1199**. Never tune anything while looking at results on them.
+- Development maps: SafeMetaDrive 100–149, 500–549, 600–649; irregular 1000–1049; highway-env 100–149.
+- Layer 1 (safety filter + crossing guard) and Layer 2 are frozen. Checksums of the frozen files are in
+  [reports/final/evidence/code-version.txt](reports/final/evidence/code-version.txt).
+
+## Where things stand
+
+| Piece | Status |
+|---|---|
+| Crossing-traffic guard (LiDAR tracking, yields to converging traffic) | Done, frozen ([lidar_driver.py](driving/safemetadrive/lidar_driver.py) `CrossingTrafficGuard`) |
+| SafeMetaDrive final, 200 maps, all methods + ablations + delay sweep | **Done** (Table 1, Figure 1, Table 2) |
+| highway-env final, 600 episodes per method | **Done** (Table 4) |
+| PPO-Lag / CPO retrained 5M steps, OmniSafe defaults | **Training on Modal** (started 2026-11-25 ~20:10 PT; CPO ~1.5 h, PPO-Lag ~3.5 h) |
+| VLM v3 (LiDAR backup trigger, second look at 20 m, verified hold release) | Dev pilots done; **final run not started** |
+| Irregular final (VLM + 5 no-VLM arms on 3000–3099) | **Not started** (Table 3 is a placeholder) |
+| Project site [site/index.html](site/index.html) | **Still shows old numbers** |
+
+Raw evidence for finished tables is in [reports/final/evidence/](reports/final/evidence/) (gzipped JSON +
+logs + SHA256SUMS). `runs/` is git-ignored; regenerate or copy evidence into `reports/final/evidence/`.
+
+## Modal access
+
+Both jobs run in **Harsh's Modal workspace** (`harshshah1618`):
+
+- Baselines: app `cs642-safemetadrive`, volume `cs642-safemetadrive`, folder `baselines-5m-defaults-v2/`.
+- VLM: app `cs642-irregular`, volume `cs642-irregular`. The PatchCore bank was uploaded to
+  `banks/dinov2_small-v1.pt` (SHA256 `d57f63af…a5f5`, identical to the audited bank).
+
+Either get access to that workspace, or ask Harsh to download the baseline folder for you. To run the
+VLM from your own workspace, upload the bank to your `cs642-irregular` volume first (Harsh has it at
+`runs/ved-workspace-audit-20261125/dinov2_small-v1.pt`). Spend so far ≈ $10–15; the final VLM run is
+≈ $20–25 (800 episodes, mostly A10G time).
+
+## Remaining steps (in order)
+
+### 1. Collect and select the retrained baselines
+
+```bash
+.venv/bin/modal volume get cs642-safemetadrive baselines-5m-defaults-v2 runs/
+PYTHONPATH=. .venv/bin/python tools/select_baselines.py --root runs/baselines-5m-defaults-v2 \
+    --label-suffix "(5M, OmniSafe defaults)" --out runs/final/baselines-5m.json
+```
+
+Selection uses development maps 100–149 only (one common epoch per algorithm, by mean zero-cost success).
+**Sanity check first:** these checkpoints use OmniSafe observation normalization, which
+`NativeLearnedDriver` now applies ([policies.py](driving/safemetadrive/policies.py)). The dev success/cost
+of the selected epoch should be in the same range as `Metrics/EpRet`/`Metrics/EpCost` in that run's
+`train.log`. If the evaluated policy is far worse than training, the normalizer is wrong; fix that
+before step 2.
+
+### 2. Add them to the SafeMetaDrive final table
+
+```bash
+PYTHONPATH=. .venv/bin/python tools/final_eval.py --first 2000 --count 200 \
+    --baselines runs/final/baselines-5m.json --only 5M --merge --out runs/final/safemetadrive-2000-2199.json
+```
+
+This appends the new rows to the existing results (same maps) and prints the full table. Replace Table 1 in
+`PAPER-RESULTS.md` and remove its "Pending" note. Keep the 1M rows, labelled as the earlier budget.
+
+### 3. Freeze the VLM and run its final test
+
+Recommendation: freeze VLM v3 as is (pilot v3b: 12/49 STOP violations vs 25/50 before, 8/49 stuck, decoys
+clean). More tuning on 50 dev maps risks overfitting. If the team wants one more attempt, the remaining
+misreads are first looks that say `careful` while the sign shows STOP. Pilot rows:
+`modal volume get cs642-irregular closedloop/dev-v3b-qwen3vl-8b runs/dev/dev-v3b`.
+
+```bash
+PYTHONPATH=. .venv/bin/modal run --detach tools/irregular_modal.py --stage final-v3
+# when done (watch the Modal dashboard):
+.venv/bin/modal volume get cs642-irregular closedloop/final-v3-qwen3vl-8b runs/final/irregular-vlm
+```
+
+### 4. No-VLM arms on the same final maps (local CPU, ~5 min, free)
+
+```bash
+PYTHONPATH=. .venv/bin/python tools/irregular_controls.py --seeds 3000 3100 \
+    --arms normal careful oracle lidar-careful lidar-stop --out runs/final/irregular-arms-3000-3099.json
+```
+
+### 5. Build Table 3
+
+```bash
+.venv/bin/python tools/irregular_final_report.py --arm vlm=runs/final/irregular-vlm \
+    --arm normal,careful,oracle,lidar-careful,lidar-stop=runs/final/irregular-arms-3000-3099.json
+```
+
+Paste both tables into Table 3 of `PAPER-RESULTS.md`. Report honestly whatever comes out: the expected
+story is "the VLM is the only non-oracle arm that obeys the STOP sign at all, without the needless stops
+of LiDAR→stop", not "the VLM solves it".
+
+### 6. Archive evidence, update the site, commit
+
+- Gzip new result JSONs into `reports/final/evidence/` and regenerate `SHA256SUMS` there. Rename `.log`
+  files to `.log.txt` (`*.log` is git-ignored).
+- Update [site/index.html](site/index.html): the benchmark bars (~line 740–820: old 98.0/89.3/84.0/59.3/56.0/0.0),
+  the ablation widget (~line 830–900), the VLM section (~line 905–980: old 25/50, highway 80.0%/−98.4%,
+  replay 76.9%), the delay section (~line 685: use `reports/final/delay-reserve.png`), and limitations (~line 986).
+
+## Honest findings to keep in the paper
+
+- The PPO tracker is significantly worse than the analytic tracker (likely because it was trained on
+  simulator lane features but receives sensor-reconstructed ones), so the analytic tracker is the reference.
+- Steering blending has no measurable effect; the turning-room reserve only matters at ≥ 4 s delay.
+- The event trigger saves slow-model calls (57× fewer); it does not improve safety over a fair always-ask.
+- Waymo/nuScenes (13 scenes) is too small to support a claim and uses an older, separate driver.
+- highway-env uses a port of the architecture (different observation/action spaces), not the unified code.
+
+## Optional follow-ups
+
+- Port the replay benchmark to `UnifiedDrivingSystem` (120-ray input) and download full nuScenes for 200+
+  scenes (needs a nuScenes account and licence acceptance).
+- Retrain the PPO tracker on sensor-reconstructed features.
+
+## New tools added in this round
+
+`tools/final_eval.py` (all SafeMetaDrive methods, same maps, CIs, paired tests) ·
+`tools/select_baselines.py` · `tools/irregular_controls.py` (no-VLM arms) ·
+`tools/irregular_final_report.py` · `tools/plot_final_delay.py` · `tools/stats.py` ·
+`tools/dev_eval.py` (development-split comparisons) · tests in `tests/test_crossing_guard.py`,
+`tests/test_paper_stats.py`.
+
+---
+
+# Older handoff (2026-11-20, camera/maneuver study; branch `harsh-testing-further-runs`)
+
 
 Use branch **`harsh-testing-further-runs`**. Start here; the older straight-road study and its camera adapter under `models/camera/` are a separate experiment.
 

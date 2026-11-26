@@ -1,3 +1,7 @@
+> **Superseded (2026-11-26).** These numbers predate the crossing-traffic guard and were measured on map
+> splits that have since been used for development (500-549, 600-649, 1000-1049). Use
+> [PAPER-RESULTS.md](PAPER-RESULTS.md) for the frozen final evaluation on untouched maps.
+
 # Fair Equal-Observation SafeMetaDrive Benchmark (2026-11-25)
 
 This study removes **all** simulator-state peeking from our SafeMetaDrive driver.

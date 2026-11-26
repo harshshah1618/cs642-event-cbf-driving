@@ -303,7 +303,13 @@ class NativeLearnedDriver:
 
         self.torch = torch
         torch.set_num_threads(1)
-        state = torch.load(checkpoint, map_location="cpu", weights_only=True)["pi"]
+        saved = torch.load(checkpoint, map_location="cpu", weights_only=True)
+        state = saved["pi"]
+        # OmniSafe obs_normalize=True saves its running normalizer; apply it exactly as
+        # omnisafe.common.normalizer.Normalizer.normalize does: clamp((x - mean) / std, -clip, clip).
+        norm = saved.get("obs_normalizer")
+        self.norm = None if norm is None else (norm["_mean"].float(), norm["_std"].float(),
+                                               norm["_clip"].float())
         parameters = {k.removeprefix("mean."): v for k, v in state.items() if k.startswith("mean.")}
         weights = sorted((int(k.split(".")[0]), value) for k, value in parameters.items() if k.endswith("weight"))
         layers: list[Any] = []
@@ -324,7 +330,11 @@ class NativeLearnedDriver:
 
     def act(self):
         with self.torch.inference_mode():
-            action = self.actor(self.torch.as_tensor(self.observation, dtype=self.torch.float32))
+            x = self.torch.as_tensor(self.observation, dtype=self.torch.float32)
+            if self.norm is not None:
+                mean, std, clip = self.norm
+                x = self.torch.maximum(self.torch.minimum((x - mean) / std, clip), -clip)
+            action = self.actor(x)
             if not self.deterministic:
                 action = action+self.torch.randn(action.shape, generator=self.generator)*self.std
             return action.numpy()

@@ -1,0 +1,308 @@
+Note that running a local entrypoint in detached mode only keeps the last triggered Modal function alive after the parent process has been killed or disconnected.
+✓ Initialized. View run at 
+https://modal.com/apps/harshshah1618/main/ap-XePYiC1FDqty2Qo06PDbF7
+✓ Created objects.
+├── ✓ Uploaded 
+│   /home/harsh/Projects/cs642-event-cbf-driving/tools/irregular_modal.py
+├── ✓ Uploaded /home/harsh/Projects/cs642-event-cbf-driving/driving/irregular
+├── ✓ Uploaded 
+│   /home/harsh/Projects/cs642-event-cbf-driving/driving/safemetadrive
+├── ✓ Created Function collect_shard.
+├── ✓ Created Function pack_shard.
+├── ✓ Created Function build_bank.
+├── ✓ Created Function score_frames.
+├── ✓ Created Function vlm_eval_t4.
+├── ✓ Created Function vlm_eval_l4.
+├── ✓ Created Function vlm_eval_a100.
+├── ✓ Created Function closed_loop_l4.
+└── ✓ Created Function closed_loop_a100.
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+
+[1ALoading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+[1ALoading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+
+[1ALoading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+[1ALoading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  1.60it/s]
+[1ALoading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]`torch_dtype` is deprecated! Use `dtype` instead!
+
+[1ALoading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  1.58it/s]
+[1ALoading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.05it/s]`torch_dtype` is deprecated! Use `dtype` instead!
+
+[1ALoading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+[1ALoading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+[1ALoading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.03it/s]`torch_dtype` is deprecated! Use `dtype` instead!
+
+[1ALoading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.38it/s]
+[1ALoading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+[1ALoading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.77it/s]
+[1ALoading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  1.94it/s]
+[1ALoading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.30it/s]
+[1ALoading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  1.53it/s]
+[1ALoading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.76it/s]
+[1ALoading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.11it/s]
+[1ALoading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.31it/s]
+[1ALoading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.69it/s]
+[1ALoading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.56it/s]
+[1ALoading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.67it/s]
+[1ALoading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.26it/s]
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  2.04it/s]
+[1ALoading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.30it/s]
+[1ALoading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.81it/s]
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.94it/s]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.57it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.50it/s]
+
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  2.01it/s]
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.92it/s]
+
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.50it/s]
+[1ALoading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.58it/s]
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.43it/s]
+
+[1ALoading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.72it/s]
+[1ALoading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.39it/s]
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.93it/s]
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.81it/s]
+
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  2.06it/s]
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.96it/s]
+
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.62it/s]
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.52it/s]
+`torch_dtype` is deprecated! Use `dtype` instead!
+
+[1ALoading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]:device(error): Error adding inotify watch on /dev/input: No such file or directory
+:device(error): Error opening directory /dev/input: No such file or directory
+
+[1A
+[1ALoading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.04s/it]:device(error): Error adding inotify watch on /dev/input: No such file or directory
+:device(error): Error opening directory /dev/input: No such file or directory
+:device(error): Error adding inotify watch on /dev/input: No such file or directory
+:device(error): Error opening directory /dev/input: No such file or directory
+:device(error): :deviceError adding inotify watch on /dev/input: No such file or directory
+:device(error): Error opening directory /dev/input: No such file or directory
+(error): Error adding inotify watch on /dev/input: No such file or directory
+:device(error): Error opening directory /dev/input: No such file or directory
+
+[1A
+[1ALoading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.21s/it]:device(error): Error adding inotify watch on /dev/input: No such file or directory
+:device(error): Error opening directory /dev/input: No such file or directory
+:device(error): Error adding inotify watch on /dev/input: No such file or directory
+:device(error): Error opening directory /dev/input: No such file or directory
+
+[1ALoading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.27s/it]
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.07s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.12s/it]
+:device(error): Error adding inotify watch on /dev/input: No such file or directory
+:device(error): Error opening directory /dev/input: No such file or directory
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1025, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 151}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1025, "passed_stop": true, "calls": 2, "stopped": 0.0, "crash": false, "steps": 151}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1025, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 151}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1000, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 120}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1000, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 142}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1000, "passed_stop": false, "calls": 11, "stopped": 20.3, "crash": false, "steps": 367}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1000, "passed_stop": false, "calls": 5, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1026, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 134}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1026, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 140}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1001, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 168}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1001, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 149}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1001, "passed_stop": true, "calls": 2, "stopped": 0.0, "crash": false, "steps": 149}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1027, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 142}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1001, "passed_stop": false, "calls": 0, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1027, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 131}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1025, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1002, "passed_stop": false, "calls": 5, "stopped": 0.0, "crash": false, "steps": 162}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1002, "passed_stop": false, "calls": 7, "stopped": 2.6, "crash": false, "steps": 170}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1026, "passed_stop": false, "calls": 17, "stopped": 54.1, "crash": false, "steps": 600}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1028, "passed_stop": false, "calls": 4, "stopped": 0.4, "crash": false, "steps": 157}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1028, "passed_stop": false, "calls": 6, "stopped": 0.0, "crash": false, "steps": 158}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1002, "passed_stop": false, "calls": 10, "stopped": 19.5, "crash": false, "steps": 344}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1003, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 161}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1002, "passed_stop": false, "calls": 6, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1003, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 162}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1029, "passed_stop": false, "calls": 1, "stopped": 0.0, "crash": false, "steps": 142}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1029, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 128}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1026, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1027, "passed_stop": false, "calls": 12, "stopped": 22.5, "crash": false, "steps": 384}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1004, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 160}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1004, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 154}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1030, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 144}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1030, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 162}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1003, "passed_stop": false, "calls": 9, "stopped": 19.700000000000003, "crash": false, "steps": 381}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1003, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1005, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 145}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1005, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 142}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1031, "passed_stop": false, "calls": 6, "stopped": 0.0, "crash": false, "steps": 172}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1027, "passed_stop": false, "calls": 6, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1031, "passed_stop": false, "calls": 6, "stopped": 0.0, "crash": false, "steps": 175}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1004, "passed_stop": false, "calls": 8, "stopped": 17.1, "crash": false, "steps": 352}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1004, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1028, "passed_stop": false, "calls": 19, "stopped": 54.5, "crash": false, "steps": 600}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1006, "passed_stop": false, "calls": 5, "stopped": 0.0, "crash": false, "steps": 166}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1032, "passed_stop": false, "calls": 3, "stopped": 0.1, "crash": false, "steps": 142}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1006, "passed_stop": false, "calls": 5, "stopped": 0.30000000000000004, "crash": false, "steps": 175}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1032, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 141}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1028, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1007, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 149}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1033, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 167}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1005, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1033, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 175}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1007, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 146}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1005, "passed_stop": false, "calls": 10, "stopped": 20.1, "crash": false, "steps": 349}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1029, "passed_stop": false, "calls": 10, "stopped": 19.8, "crash": false, "steps": 357}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1008, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 176}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1008, "passed_stop": false, "calls": 1, "stopped": 0.0, "crash": false, "steps": 168}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1034, "passed_stop": false, "calls": 2, "stopped": 1.6, "crash": false, "steps": 178}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1034, "passed_stop": false, "calls": 2, "stopped": 1.6, "crash": false, "steps": 178}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1006, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1029, "passed_stop": false, "calls": 1, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1030, "passed_stop": true, "calls": 4, "stopped": 3.3000000000000003, "crash": false, "steps": 198}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1009, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 128}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1009, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 139}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1035, "passed_stop": false, "calls": 4, "stopped": 0.5, "crash": false, "steps": 195}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1035, "passed_stop": false, "calls": 7, "stopped": 0.5, "crash": false, "steps": 216}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1006, "passed_stop": false, "calls": 18, "stopped": 54.7, "crash": false, "steps": 600}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1007, "passed_stop": false, "calls": 0, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1010, "passed_stop": false, "calls": 7, "stopped": 1.1, "crash": false, "steps": 197}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1030, "passed_stop": false, "calls": 0, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1010, "passed_stop": false, "calls": 7, "stopped": 0.4, "crash": false, "steps": 183}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1036, "passed_stop": false, "calls": 6, "stopped": 0.0, "crash": false, "steps": 158}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1036, "passed_stop": false, "calls": 6, "stopped": 0.0, "crash": false, "steps": 158}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1031, "passed_stop": false, "calls": 15, "stopped": 24.3, "crash": false, "steps": 419}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1007, "passed_stop": true, "calls": 2, "stopped": 0.0, "crash": false, "steps": 149}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1008, "passed_stop": false, "calls": 0, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1011, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 164}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1011, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 157}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1037, "passed_stop": false, "calls": 5, "stopped": 0.0, "crash": false, "steps": 153}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1037, "passed_stop": false, "calls": 6, "stopped": 0.0, "crash": false, "steps": 155}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1009, "passed_stop": false, "calls": 0, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1032, "passed_stop": false, "calls": 9, "stopped": 16.5, "crash": false, "steps": 318}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1008, "passed_stop": false, "calls": 9, "stopped": 20.5, "crash": false, "steps": 399}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1031, "passed_stop": false, "calls": 5, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1012, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 179}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1012, "passed_stop": false, "calls": 5, "stopped": 0.2, "crash": false, "steps": 181}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1038, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 154}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1038, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 157}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1013, "passed_stop": false, "calls": 3, "stopped": 1.4000000000000001, "crash": false, "steps": 157}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1039, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 127}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1009, "passed_stop": false, "calls": 9, "stopped": 15.700000000000001, "crash": false, "steps": 316}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1013, "passed_stop": false, "calls": 3, "stopped": 1.7000000000000002, "crash": false, "steps": 181}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1010, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1039, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 141}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1033, "passed_stop": false, "calls": 13, "stopped": 27.3, "crash": false, "steps": 467}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1032, "passed_stop": false, "calls": 5, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1014, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 140}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1014, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 137}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1011, "passed_stop": false, "calls": 0, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1040, "passed_stop": false, "calls": 4, "stopped": 0.7000000000000001, "crash": false, "steps": 182}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1040, "passed_stop": false, "calls": 5, "stopped": 2.0, "crash": false, "steps": 207}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1034, "passed_stop": true, "calls": 2, "stopped": 1.3, "crash": false, "steps": 176}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1015, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 163}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1010, "passed_stop": false, "calls": 12, "stopped": 21.400000000000002, "crash": false, "steps": 368}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1015, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 140}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1033, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1041, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 177}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1041, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 168}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1012, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1011, "passed_stop": true, "calls": 2, "stopped": 0.0, "crash": false, "steps": 164}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1016, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 166}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1016, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 150}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1042, "passed_stop": false, "calls": 2, "stopped": 2.6, "crash": false, "steps": 197}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1042, "passed_stop": false, "calls": 2, "stopped": 2.5, "crash": false, "steps": 195}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1035, "passed_stop": false, "calls": 19, "stopped": 54.6, "crash": false, "steps": 600}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1013, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1017, "passed_stop": false, "calls": 5, "stopped": 0.4, "crash": false, "steps": 195}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1034, "passed_stop": false, "calls": 1, "stopped": 0.0, "crash": false, "steps": 300}{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1017, "passed_stop": false, "calls": 5, "stopped": 0.0, "crash": false, "steps": 186}
+
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1012, "passed_stop": false, "calls": 9, "stopped": 16.900000000000002, "crash": false, "steps": 359}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1043, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 132}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1043, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 145}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1014, "passed_stop": false, "calls": 0, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1018, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 174}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1018, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 167}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1044, "passed_stop": false, "calls": 6, "stopped": 0.5, "crash": false, "steps": 177}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1044, "passed_stop": false, "calls": 4, "stopped": 0.5, "crash": false, "steps": 155}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1019, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 150}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1013, "passed_stop": false, "calls": 12, "stopped": 27.5, "crash": false, "steps": 432}{"scene": "clean", "trigger": "novelty+lidar", "seed": 1035, "passed_stop": false, "calls": 5, "stopped": 0.0, "crash": false, "steps": 300}
+
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1019, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 168}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1036, "passed_stop": false, "calls": 19, "stopped": 0.0, "crash": false, "steps": 600}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1015, "passed_stop": false, "calls": 1, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1045, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 182}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1045, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 176}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1020, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 135}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1020, "passed_stop": false, "calls": 4, "stopped": 0.5, "crash": false, "steps": 150}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1014, "passed_stop": false, "calls": 9, "stopped": 18.1, "crash": false, "steps": 324}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1046, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 171}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1046, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 171}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1016, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1037, "passed_stop": false, "calls": 10, "stopped": 9.1, "crash": false, "steps": 260}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1036, "passed_stop": false, "calls": 6, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1021, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 181}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1021, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 176}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1015, "passed_stop": true, "calls": 2, "stopped": 0.0, "crash": false, "steps": 147}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1047, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 145}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1047, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 142}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1017, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1022, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 147}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1038, "passed_stop": false, "calls": 7, "stopped": 12.4, "crash": false, "steps": 303}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1022, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 146}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1016, "passed_stop": true, "calls": 2, "stopped": 0.0, "crash": false, "steps": 150}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1048, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 154}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1048, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 150}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1018, "passed_stop": false, "calls": 0, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1023, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 126}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1023, "passed_stop": false, "calls": 2, "stopped": 0.30000000000000004, "crash": false, "steps": 158}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1037, "passed_stop": false, "calls": 6, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1049, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 165}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1049, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 172}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1017, "passed_stop": false, "calls": 10, "stopped": 20.3, "crash": false, "steps": 387}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1019, "passed_stop": false, "calls": 0, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1039, "passed_stop": false, "calls": 18, "stopped": 54.6, "crash": false, "steps": 600}
+{"scene": "billboard", "trigger": "novelty+lidar", "seed": 1024, "passed_stop": false, "calls": 5, "stopped": 0.0, "crash": false, "steps": 171}
+{"scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "seed": 1024, "passed_stop": false, "calls": 5, "stopped": 0.30000000000000004, "crash": false, "steps": 182}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1018, "passed_stop": false, "calls": 7, "stopped": 13.700000000000001, "crash": false, "steps": 329}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1020, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1038, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1040, "passed_stop": true, "calls": 3, "stopped": 2.1, "crash": false, "steps": 193}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1019, "passed_stop": true, "calls": 2, "stopped": 0.0, "crash": false, "steps": 150}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1021, "passed_stop": false, "calls": 0, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1041, "passed_stop": false, "calls": 9, "stopped": 20.1, "crash": false, "steps": 380}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1039, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1022, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1042, "passed_stop": true, "calls": 2, "stopped": 2.5, "crash": false, "steps": 195}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1020, "passed_stop": false, "calls": 17, "stopped": 54.6, "crash": false, "steps": 600}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1023, "passed_stop": false, "calls": 0, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1040, "passed_stop": false, "calls": 1, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1021, "passed_stop": false, "calls": 9, "stopped": 20.5, "crash": false, "steps": 393}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1043, "passed_stop": false, "calls": 13, "stopped": 27.700000000000003, "crash": false, "steps": 435}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1024, "passed_stop": false, "calls": 4, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1041, "passed_stop": false, "calls": 3, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1022, "passed_stop": false, "calls": 10, "stopped": 16.1, "crash": false, "steps": 333}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1044, "passed_stop": false, "calls": 12, "stopped": 23.900000000000002, "crash": false, "steps": 404}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1042, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1023, "passed_stop": false, "calls": 10, "stopped": 20.5, "crash": false, "steps": 364}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1045, "passed_stop": false, "calls": 11, "stopped": 27.3, "crash": false, "steps": 461}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1043, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1024, "passed_stop": false, "calls": 13, "stopped": 22.900000000000002, "crash": false, "steps": 412}
+{"tag": "dev-v3b-qwen3vl-8b", "scene": "flagger", "trigger": "novelty+lidar", "episodes": 25, "wall_seconds": 419}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1046, "passed_stop": false, "calls": 17, "stopped": 54.7, "crash": false, "steps": 600}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1044, "passed_stop": false, "calls": 5, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1047, "passed_stop": false, "calls": 11, "stopped": 18.2, "crash": false, "steps": 334}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1048, "passed_stop": true, "calls": 3, "stopped": 0.0, "crash": false, "steps": 154}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1045, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "flagger", "trigger": "novelty+lidar", "seed": 1049, "passed_stop": false, "calls": 12, "stopped": 27.200000000000003, "crash": false, "steps": 459}
+{"tag": "dev-v3b-qwen3vl-8b", "scene": "flagger", "trigger": "novelty+lidar", "episodes": 25, "wall_seconds": 472}
+{"tag": "dev-v3b-qwen3vl-8b", "scene": "billboard", "trigger": "novelty+lidar", "episodes": 25, "wall_seconds": 308}
+{"tag": "dev-v3b-qwen3vl-8b", "scene": "billboard", "trigger": "novelty+lidar", "episodes": 25, "wall_seconds": 298}
+{"tag": "dev-v3b-qwen3vl-8b", "scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "episodes": 25, "wall_seconds": 308}
+{"tag": "dev-v3b-qwen3vl-8b", "scene": "pedestrian-shoulder", "trigger": "novelty+lidar", "episodes": 25, "wall_seconds": 298}
+{"tag": "dev-v3b-qwen3vl-8b", "scene": "clean", "trigger": "novelty+lidar", "episodes": 25, "wall_seconds": 368}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1046, "passed_stop": false, "calls": 1, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1047, "passed_stop": false, "calls": 5, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1048, "passed_stop": false, "calls": 0, "stopped": 0.0, "crash": false, "steps": 300}
+{"scene": "clean", "trigger": "novelty+lidar", "seed": 1049, "passed_stop": false, "calls": 2, "stopped": 0.0, "crash": false, "steps": 300}
+{"tag": "dev-v3b-qwen3vl-8b", "scene": "clean", "trigger": "novelty+lidar", "episodes": 25, "wall_seconds": 529}
+[modal-client] 2026-11-25T20:40:44-0800 Timed out waiting for final app logs.
+✓ App completed. View run at 
+https://modal.com/apps/harshshah1618/main/ap-XePYiC1FDqty2Qo06PDbF7

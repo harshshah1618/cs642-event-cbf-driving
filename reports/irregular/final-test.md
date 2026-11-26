@@ -1,3 +1,7 @@
+> **Superseded (2026-11-26).** These numbers predate the crossing-traffic guard and were measured on map
+> splits that have since been used for development (500-549, 600-649, 1000-1049). Use
+> [PAPER-RESULTS.md](../PAPER-RESULTS.md) for the frozen final evaluation on untouched maps.
+
 # Irregular-situation escalation: final test (2026-11-21)
 
 **Workspace access restored November 25:** all 400 original Qwen episode rows

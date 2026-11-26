@@ -24,7 +24,7 @@ import numpy as np
 
 from driving.safemetadrive.policies import LaneCautionDriver
 
-TRIGGERS = ("none", "poll", "novelty", "cbf", "novelty+cbf", "oracle")
+TRIGGERS = ("none", "poll", "novelty", "cbf", "novelty+cbf", "oracle", "novelty+lidar", "lidar")
 
 
 @dataclass
@@ -51,6 +51,16 @@ class EscalationConfig:
     median_weather_tau: float = 24.0 # median_patch above this without local spike -> 1-shot weather check
     # Upgrade #1: Grounded 3D constraint compilation (VLM hazard -> 3D stop wall / wet friction / detour)
     grounded_constraints: bool = False
+    # v3: LiDAR backup trigger -- ask once about each new static object near the path ahead
+    lidar_min_fwd: float = 10.0
+    lidar_max_fwd: float = 40.0
+    lidar_max_lateral: float = 20.0
+    camera_fov_deg: float = 65.0
+    # v3: verified release -- a hold is released only on a confident "proceed" to a hold question
+    verified_release: bool = False
+    release_threshold: float = 0.47  # P(proceed) to release; chosen on dev maps 1000-1049 (tau=0.53)
+    lidar_second_look: float = 20.0  # ask again about an object once it is this close (m); 0 = off
+    release_to: str = "careful"     # what a released hold becomes
 
     def __post_init__(self):
         if self.trigger not in TRIGGERS:
@@ -99,6 +109,14 @@ class UnifiedEscalatingDriver:
     @property
     def interventions(self):
         return self.system.interventions
+
+    def planner_feedback(self):
+        """Lane state for the VLM prompt, from the 259-dim observation (no simulator lane graph)."""
+        from driving.safemetadrive.lidar_driver import decode_observation
+        d = decode_observation(self.system.observation)
+        centers = self.system._core._lane_centers_from_left(d)
+        lane = self.system._core._current_lane_idx(d, centers)
+        return dict(current_lane=lane, target_lane=lane, lane_count=d.n_lanes)
 
     def synchronize_lane(self):
         pass
@@ -157,6 +175,10 @@ class Escalation:
         self.last_cx_norm = 0.5
         self.weather_checked = False
         self.confirming = False
+        self.asked_tracks: set = set()  # track ids (first look) and (id, 2) (second look)
+        self.lidar_target: tuple[float, float] | None = None
+        self.lidar_candidate: int | None = None
+        self.crop_track: int | None = None   # LiDAR track the current hold is about
         self.calls: list[dict[str, Any]] = []
         self.debug_dir: str | None = None
 
@@ -174,7 +196,6 @@ class Escalation:
         cfg = self.cfg
         # Upgrade #1: Grounded 3D semantic constraint compilation into Layer 1
         if cfg.grounded_constraints and hasattr(driver, "system"):
-            from driving.safemetadrive.viability import project_patch_to_lidar_distance
 
             if action == "benign_clear" or action == "continue":
                 self._clear(driver)
@@ -262,6 +283,28 @@ class Escalation:
             if self.stall_steps * dt >= cfg.stall_seconds:
                 fired.append("cbf-stall")
         self.last_interventions = driver.interventions
+        if "lidar" in cfg.trigger:
+            guard = getattr(getattr(getattr(driver, "system", None), "_core", None), "crossing", None)
+            if guard is not None:
+                for t in guard.static_objects():
+                    x, y = float(t["p"][0]), float(t["p"][1])
+                    if not (cfg.lidar_min_fwd <= x <= cfg.lidar_max_fwd) or abs(y) > cfg.lidar_max_lateral:
+                        continue
+                    # First look on detection; one second look once the object is close
+                    # (more pixels), unless we are already holding for it.
+                    second = (cfg.lidar_second_look > 0 and x <= cfg.lidar_second_look
+                              and (t["id"], 2) not in self.asked_tracks and self.lease_action != "stop")
+                    if t["id"] in self.asked_tracks and not second:
+                        continue
+                    key = (t["id"], 2) if t["id"] in self.asked_tracks else t["id"]
+                    # PatchCore already raised this object: that call covers this look
+                    if "novelty" in fired or "novelty-local" in fired:
+                        self.asked_tracks.add(key)
+                        continue
+                    self.lidar_candidate = key
+                    self.lidar_target = (x, y)
+                    fired.append("lidar-object")
+                    break
         if cfg.trigger == "poll" and frame_step and now - self.last_poll >= cfg.poll_period:
             self.last_poll = now
             fired.append("poll")
@@ -308,25 +351,47 @@ class Escalation:
             fired.append("hold-recheck")
         if not fired or self.pending is not None:
             return
-        if now - self.last_call < cfg.cooldown and "hold-recheck" not in fired:
+        second_look = "lidar-object" in fired and isinstance(self.lidar_candidate, tuple)
+        if now - self.last_call < cfg.cooldown and "hold-recheck" not in fired and not second_look:
             return
         # 4. Ask the VLM (synchronous in wall time, delayed in simulation time).
         if image is None and state is None:
             image, state = capture()
+        guard = getattr(getattr(getattr(driver, "system", None), "_core", None), "crossing", None)
+        if "lidar-object" in fired:
+            self.asked_tracks.add(self.lidar_candidate)
+            key = self.lidar_candidate
+            self.crop_track = key[0] if isinstance(key, tuple) else key
+        elif "hold-recheck" not in fired:
+            self.crop_track = None
+        if self.crop_track is not None and guard is not None:
+            live = [t for t in guard.tracks if t["id"] == self.crop_track]
+            self.lidar_target = (float(live[0]["p"][0]), float(live[0]["p"][1])) if live else None
         crop = None
-        if cfg.use_crop and image is not None and self.last_map is not None:
+        if cfg.use_crop and image is not None and self.crop_track is not None and self.lidar_target:
+            from driving.irregular.vlm import bearing_crop
+            hi = self.hi_capture() if self.hi_capture is not None else None
+            bearing = math.degrees(math.atan2(self.lidar_target[1], self.lidar_target[0]))
+            crop = bearing_crop(image, bearing, cfg.camera_fov_deg, hi=hi)
+        elif cfg.use_crop and image is not None and self.last_map is not None:
             from driving.irregular.vlm import anomaly_crop
             hi = self.hi_capture() if self.hi_capture is not None else None
             crop = anomaly_crop(image, self.last_map, hi=hi)
         if getattr(self, "debug_dir", None) and crop is not None:
             crop.save(f"{self.debug_dir}/crop-t{now:05.1f}.jpg", quality=92)
-        action, seconds = self.vlm(image, state, crop, truth)
+        keep_p = None
+        if cfg.verified_release and self.lease_action == "stop" and hasattr(self.vlm, "verify_hold"):
+            keep_p, seconds = self.vlm.verify_hold(image, state, crop, truth)
+            action = "stop" if (1.0 - keep_p) < cfg.release_threshold else cfg.release_to
+        else:
+            action, seconds = self.vlm(image, state, crop, truth)
         if self.lease_action == "stop":
             self.lease_until = math.inf  # keep holding until the re-check answer arrives
         self.recheck_due = False
         self.last_call = now
         self.pending = dict(t=now, triggers=fired, action=action, seconds=seconds,
                             ready_at=now + seconds + cfg.extra_delay,
+                            keep_p=keep_p,
                             forward=None if not truth else truth["forward"],
                             face=None if not truth else truth.get("face"))
         self.calls.append(self.pending)
@@ -473,6 +538,25 @@ class OracleVLM:
             action = "careful"
         return action, self.latency
 
+    def verify_hold(self, image, state, crop, truth):
+        face = truth.get("face") if truth else None
+        keep = (self.scene == "flagger" and face == "stop") or self.scene in ("pedestrian-lane",
+                                                                             "cyclist-lane")
+        return (1.0 if keep else 0.0), self.latency
+
+
+class FixedVLM:
+    """Non-semantic baseline: every trigger gets the same answer (e.g. careful or stop)."""
+
+    def __init__(self, action, latency=0.2):
+        self.action, self.latency = action, latency
+
+    def __call__(self, image, state, crop, truth):
+        return self.action, self.latency
+
+    def verify_hold(self, image, state, crop, truth):
+        return (1.0 if self.action == "stop" else 0.0), self.latency
+
 
 # --- GPU components ----------------------------------------------------------
 
@@ -513,6 +597,15 @@ class VLMCaller:
                 total[a] = total.get(a, 0.0) + p
         return max(total, key=lambda action: total[action]), seconds
 
+    def verify_hold(self, image, state, crop, truth):
+        """P(keep waiting), averaged over both option orders."""
+        import time
+        started = time.monotonic()
+        keep = 0.0
+        for order in (("keep", "proceed"), ("proceed", "keep")):
+            keep += self.vlm.hold_answer(image, order, crop=crop)["keep"] / 2.0
+        return keep, time.monotonic() - started
+
 
 class GroundedVLMCaller:
     """Upgrade #1: Order-debiased 5-class semantic hazard classifier for 3D constraint compilation."""
@@ -524,6 +617,7 @@ class GroundedVLMCaller:
 
     def __call__(self, image, state, crop, truth):
         import random
+
         from driving.irregular.vlm import HAZARD_CLASSES
 
         total: dict[str, float] = {}
@@ -585,7 +679,8 @@ def capture_front_hi(env):
     return Image.fromarray(front[..., :3][..., ::-1].astype(np.uint8), "RGB")
 
 
-IRREGULAR_TEST = (1000, 50)  # fresh maps for the final test, never used in development
+IRREGULAR_TEST = (1000, 50)  # first test maps; used for development since 2026-11-25
+IRREGULAR_FINAL = (3000, 100)  # untouched maps for the frozen v3 final test
 
 
 def irregular_config(split):
@@ -594,5 +689,9 @@ def irregular_config(split):
     if split == "irregular-test":
         config = environment_config("validation")
         config.update(start_seed=IRREGULAR_TEST[0], num_scenarios=IRREGULAR_TEST[1])
+        return config
+    if split == "irregular-final":
+        config = environment_config("validation")
+        config.update(start_seed=IRREGULAR_FINAL[0], num_scenarios=IRREGULAR_FINAL[1])
         return config
     return environment_config(split)

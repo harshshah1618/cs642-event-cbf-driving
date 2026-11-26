@@ -1,3 +1,7 @@
+> **Superseded (2026-11-26).** These numbers predate the crossing-traffic guard and were measured on map
+> splits that have since been used for development (500-549, 600-649, 1000-1049). Use
+> [PAPER-RESULTS.md](PAPER-RESULTS.md) for the frozen final evaluation on untouched maps.
+
 # Three-Benchmark Fair Evaluation Summary (2026-11-25)
 
 All three benchmarks below were run locally on CPU (**$0 cloud compute**) using **strictly observation-only**

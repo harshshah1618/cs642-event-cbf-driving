@@ -7,6 +7,7 @@ bias. Answers are read from the logits of the option letters, so every call is
 one forward pass with no free-text parsing.
 """
 
+import math
 import random
 from typing import Any, cast
 
@@ -79,6 +80,44 @@ def anomaly_crop(image, patch_map, patch=14, size=(128, 72), hi=None):
     return image.crop((x0, y0, x0 + w, y0 + h)).resize(image.size, Image.Resampling.LANCZOS)
 
 
+def bearing_crop(image, bearing_deg, fov_deg=65.0, size=(128, 72), hi=None):
+    """Enlarge the region of the frame in the direction of a LiDAR object (bearing, + = left)."""
+    from PIL import Image
+
+    half = math.radians(fov_deg) / 2.0
+    u = 0.5 - math.tan(math.radians(bearing_deg)) / (2.0 * math.tan(half))  # 0 = left edge
+    u = min(max(u, 0.0), 1.0)
+    w, h = size
+    cx, cy = u * image.width, image.height * 0.5
+    x0 = int(min(max(cx - w / 2, 0), image.width - w))
+    y0 = int(min(max(cy - h / 2, 0), image.height - h))
+    if hi is not None:
+        k = hi.width / image.width
+        return hi.crop((int(x0 * k), int(y0 * k), int((x0 + w) * k), int((y0 + h) * k))).resize(
+            image.size, Image.Resampling.LANCZOS)
+    return image.crop((x0, y0, x0 + w, y0 + h)).resize(image.size, Image.Resampling.LANCZOS)
+
+
+HOLD_OPTIONS = {
+    "keep": "keep waiting: there is still a reason the car must stay stopped",
+    "proceed": "proceed slowly: nothing requires the car to stay stopped any more",
+}
+
+
+def hold_prompt(order, crop=False):
+    """Verification question asked while the car is holding at a stop (scenario-neutral)."""
+    options = "\n".join(f"{LETTERS[i]}. {HOLD_OPTIONS[o]}" for i, o in enumerate(order))
+    return (
+        "You are assisting the driver of a car that has stopped because of something ahead. "
+        "The image is the view from the car's forward-facing camera.\n"
+        + ("The second image is an enlarged view of one region of the first image.\n" if crop else "")
+        + "Look carefully at the road and its surroundings, including anything at the side of the "
+        "road and any signal being given to drivers, and decide whether the car may move on.\n"
+        f"{options}\n"
+        "Answer with the single letter of the best option."
+    )
+
+
 def prompt(state, order, crop=False, speed=True):
     lane = state.get("current_lane", 0)
     count = state.get("lane_count", 1)
@@ -139,6 +178,25 @@ class ZeroShotVLM:
         return best, by_action, time.monotonic() - started
 
 
+def _hold_answer(self, image, order, crop=None):
+    """P(option) for the hold-verification question, one forward pass."""
+    import torch
+
+    images = [image] if crop is None else [image, crop]
+    content = [{"type": "image", "image": im} for im in images]
+    content.append({"type": "text", "text": hold_prompt(order, crop is not None)})
+    text = self.processor.apply_chat_template([{"role": "user", "content": content}],
+                                              tokenize=False, add_generation_prompt=True)
+    inputs = self.processor(text=[text], images=images, return_tensors="pt").to("cuda")
+    with torch.inference_mode():
+        logits = self.model(**inputs).logits[0, -1, self.letter_ids[:len(order)]].float()
+    probs = logits.softmax(-1).cpu().tolist()
+    return {o: probs[i] for i, o in enumerate(order)}
+
+
+ZeroShotVLM.hold_answer = _hold_answer  # type: ignore[attr-defined]
+
+
 def action_prob(by_action, action):
     return by_action[action]
 
@@ -183,6 +241,7 @@ class GroundedConstraintVLM(ZeroShotVLM):
 
     def classify_hazard(self, image, state, order, crop=None):
         import time
+
         import torch
 
         started = time.monotonic()
