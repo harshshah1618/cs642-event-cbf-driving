@@ -65,6 +65,7 @@ def _load_sb3_mlp_actor(zip_path: str):
         with torch.inference_mode():
             return net(torch.as_tensor(feats, dtype=torch.float32)).numpy()
 
+    predict.input_dim = int(w0.shape[1])  # type: ignore[attr-defined]
     return predict
 
 
@@ -205,6 +206,32 @@ class UnifiedDrivingSystem:
             dtype=np.float32,
         )
 
+    def _build_ppo_features_v2(self, d: DecodedObs, target_offset_m: float, desired_speed: float) -> np.ndarray:
+        """12-dim strictly observation-only tracker input (adds signed bend, road edges, prev steer)."""
+        look = max(3.0, 0.6 * d.speed_mps)
+        alpha = math.atan2(-target_offset_m, look) + d.heading_err
+        alpha = math.atan2(math.sin(alpha), math.cos(alpha))
+        lane_lat = -target_offset_m
+        signed_k1 = (d.bend1_dir / d.bend1_radius_m) if math.isfinite(d.bend1_radius_m) else 0.0
+        signed_k2 = (d.bend2_dir / d.bend2_radius_m) if math.isfinite(d.bend2_radius_m) else 0.0
+        return np.array(
+            [
+                alpha,
+                d.speed_mps / 15.0,
+                desired_speed / 15.0,
+                lane_lat / 5.0,
+                d.heading_err,
+                signed_k1 * 10.0,
+                signed_k2 * 10.0,
+                d.dist_left / 10.0,
+                d.dist_right / 10.0,
+                d.ckpt1_fwd / 30.0,
+                d.ckpt1_left / 15.0,
+                self._prev_steer,
+            ],
+            dtype=np.float32,
+        )
+
     def act(self) -> list[float]:
         c = self.config
         d = decode_observation(self.observation)
@@ -291,7 +318,10 @@ class UnifiedDrivingSystem:
                 desired_est = min(desired_est, 0.7 * (c.max_speed_kmh / 3.6))
             if self.semantic_stop:
                 desired_est = 0.0
-            feats = self._build_ppo_features(d, target_offset_m, desired_est)
+            if getattr(self._ppo, "input_dim", 6) == 12:
+                feats = self._build_ppo_features_v2(d, target_offset_m, desired_est)
+            else:
+                feats = self._build_ppo_features(d, target_offset_m, desired_est)
             learned = self._ppo(feats)
             steer = float(np.clip(learned[0], -1.0, 1.0))
             # Layer 1 longitudinal protection always caps Layer 2 throttle!

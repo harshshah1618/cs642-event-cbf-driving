@@ -1,0 +1,88 @@
+{
+ "CPO": {
+  "25": {
+   "dev_zero_cost": 0.027,
+   "dev_cost": 6.08
+  },
+  "50": {
+   "dev_zero_cost": 0.067,
+   "dev_cost": 38.64
+  },
+  "75": {
+   "dev_zero_cost": 0.107,
+   "dev_cost": 16.147
+  },
+  "100": {
+   "dev_zero_cost": 0.16,
+   "dev_cost": 16.1
+  },
+  "125": {
+   "dev_zero_cost": 0.173,
+   "dev_cost": 12.293
+  },
+  "150": {
+   "dev_zero_cost": 0.16,
+   "dev_cost": 3.98
+  },
+  "175": {
+   "dev_zero_cost": 0.22,
+   "dev_cost": 8.847
+  },
+  "200": {
+   "dev_zero_cost": 0.207,
+   "dev_cost": 1.647
+  },
+  "225": {
+   "dev_zero_cost": 0.247,
+   "dev_cost": 12.667
+  },
+  "250": {
+   "dev_zero_cost": 0.247,
+   "dev_cost": 10.033
+  },
+  "selected_epoch": 250
+ },
+ "PPOLag": {
+  "25": {
+   "dev_zero_cost": 0.007,
+   "dev_cost": 29.987
+  },
+  "50": {
+   "dev_zero_cost": 0.013,
+   "dev_cost": 26.1
+  },
+  "75": {
+   "dev_zero_cost": 0.013,
+   "dev_cost": 3.407
+  },
+  "100": {
+   "dev_zero_cost": 0.02,
+   "dev_cost": 14.2
+  },
+  "125": {
+   "dev_zero_cost": 0.027,
+   "dev_cost": 31.62
+  },
+  "150": {
+   "dev_zero_cost": 0.04,
+   "dev_cost": 21.06
+  },
+  "175": {
+   "dev_zero_cost": 0.047,
+   "dev_cost": 21.327
+  },
+  "200": {
+   "dev_zero_cost": 0.02,
+   "dev_cost": 36.027
+  },
+  "225": {
+   "dev_zero_cost": 0.027,
+   "dev_cost": 25.827
+  },
+  "250": {
+   "dev_zero_cost": 0.053,
+   "dev_cost": 21.133
+  },
+  "selected_epoch": 250
+ }
+}

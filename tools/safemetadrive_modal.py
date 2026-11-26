@@ -33,6 +33,7 @@ def sources(img):
             .add_local_file(ROOT / "tools" / "safemetadrive_eval.py", "/workspace/tools/safemetadrive_eval.py")
             .add_local_file(ROOT / "tools" / "safemetadrive_analyze.py", "/workspace/tools/safemetadrive_analyze.py")
             .add_local_file(ROOT / "tools" / "safemetadrive_train_skills.py", "/workspace/tools/safemetadrive_train_skills.py")
+            .add_local_file(ROOT / "tools" / "safemetadrive_train_skills_v2.py", "/workspace/tools/safemetadrive_train_skills_v2.py")
             .add_local_file(ROOT / "tools" / "safemetadrive_camera_data.py", "/workspace/tools/safemetadrive_camera_data.py")
             .add_local_file(ROOT / "tools" / "safemetadrive_train_camera.py", "/workspace/tools/safemetadrive_train_camera.py")
             .add_local_file(ROOT / "tools" / "safemetadrive_camera_eval.py", "/workspace/tools/safemetadrive_camera_eval.py")
@@ -788,6 +789,38 @@ def train_baseline_v2(spec):
     if proc.returncode:
         raise RuntimeError(Path(f"{out}/train.log").read_text()[-8000:])
     return json.loads(Path(f"{out}/manifest.json").read_text())
+
+
+@app.function(image=training_image, volumes={"/results": volume}, cpu=8, memory=16384,
+              timeout=4 * 3600, max_containers=3)
+def train_skills_v2(spec):
+    """Shielded 12-dim sensor-feature PPO tracker (BC warm-start + PPO fine-tune)."""
+    import subprocess
+    import sys
+    import time
+
+    run, seed, steps, demos = spec
+    out = f"/results/{run}/skills-v2-seed{seed}"
+    Path(out).mkdir(parents=True, exist_ok=True)
+    with open(f"{out}/train.log", "w") as log:
+        proc = subprocess.Popen([
+            sys.executable, "/workspace/tools/safemetadrive_train_skills_v2.py",
+            "--seed", str(seed), "--steps", str(steps), "--demos", str(demos),
+            "--workers", "8", "--output", out], stdout=log, stderr=subprocess.STDOUT)
+        while proc.poll() is None:
+            time.sleep(30)
+            volume.commit()
+    volume.commit()
+    if proc.returncode:
+        raise RuntimeError(Path(f"{out}/train.log").read_text()[-8000:])
+    return json.loads(Path(f"{out}/manifest.json").read_text())
+
+
+@app.local_entrypoint()
+def skills_v2(run: str = "skills-v2-shielded", steps: int = 500_000, demos: int = 30_000):
+    specs = [(run, seed, steps, demos) for seed in range(3)]
+    for record in train_skills_v2.map(specs, return_exceptions=True):
+        print(json.dumps(record if isinstance(record, dict) else repr(record))[:2000], flush=True)
 
 
 @app.local_entrypoint()
