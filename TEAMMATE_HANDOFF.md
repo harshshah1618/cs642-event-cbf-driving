@@ -22,7 +22,7 @@ the protocol, every final table that exists so far, and the limitations. Older r
 | PPO-Lag / CPO retrained 5M steps, OmniSafe defaults | **Done** (Table 1) |
 | VLM v3 (LiDAR backup trigger, second look at 20 m, verified hold release) | **Done**: frozen at `68dd2b2`, final run on 3000–3099 on 2026-11-26 (Ved's Modal) |
 | Irregular final (VLM + 5 no-VLM arms on 3000–3099) | **Done** (Table 3; evidence `irregular-vlm-3000-3099.json.gz`, `irregular-arms-3000-3099.json.gz`) |
-| Project site [site/index.html](site/index.html) | **Still shows old numbers** |
+| Project site [site/index.html](site/index.html) | **Updated 2026-11-26** to the frozen final numbers (Tables 1–4) |
 
 Raw evidence for finished tables is in [reports/final/evidence/](reports/final/evidence/) (gzipped JSON +
 logs + SHA256SUMS). `runs/` is git-ignored; regenerate or copy evidence into `reports/final/evidence/`.
